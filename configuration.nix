@@ -14,10 +14,10 @@
   #networking.firewall.allowedTCPPorts = [ 22 ];
 
   environment.systemPackages = with pkgs; [
-   vimHugeX
+   vim
    mkpasswd
    (vim_configurable.customize {
-      name = "vimHugeX";
+      name = "vim";
       vimrcConfig.customRC = ''
         syntax on
         set mouse-=a
