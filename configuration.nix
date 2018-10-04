@@ -13,6 +13,9 @@
   #networking.firewall.allowPing = true;
   #networking.firewall.allowedTCPPorts = [ 22 ];
 
+  virtualisation.docker.enable = true;
+  virtualisation.docker.storageDriver = "devicemapper";
+
   environment.systemPackages = with pkgs; [
    vimHugeX
    mkpasswd
@@ -37,7 +40,7 @@
     # Created https://github.com/NixOS/nixpkgs/issues/47813 (user passwords dont get removed after removing it in configuration.nix)
     hashedPassword = "$6$pl5e7mhKtY06a$PPVQmGq9dhdldzKfR0rhCVbO74UEJQmfg/zweSiHQaBF9.0o5BdXGiA.ecasgsc2Wy2Bhgjmrsm1m0TEyaZvx."; # not expected to overwrite a shadow file during nixos-rebuild
     description = "Miguel Bernadin";
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "docker" ];
     packages = [
       pkgs.lsof
       pkgs.nmap
