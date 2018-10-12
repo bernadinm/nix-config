@@ -32,7 +32,9 @@
   #  syntax on
   #  set mouse-=a
   #'';
-
+  
+  # this allows nix to control user creds on entire host
+  users.mutableUsers = false;
   users.extraUsers.mb =
   {
     isNormalUser = true;
