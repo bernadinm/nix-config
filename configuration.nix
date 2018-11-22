@@ -27,6 +27,11 @@
       '';
     })
   ];
+  
+  # adding mb to trusted users list
+  nix.extraOptions = ''
+    trusted-users = root mb
+  '';
 
   #environment.etc."vimrc".text = ''
   #  syntax on
