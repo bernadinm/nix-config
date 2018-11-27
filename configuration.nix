@@ -62,6 +62,7 @@
       pkgs.jq
       pkgs.stack
       pkgs.youtube-dl
+      pkgs.fuse
     ];
     openssh.authorizedKeys.keys =
   [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCziuN8QzK0XAvmXVJ2glkVJuGySd2KwGBrQlCP4UFyGOWeh5FEXgL7/kdfx0TZKLMEXrDs8al1Ve7tL9DBnTWpVAimqjj3T+5G2S8Z/KG2eoG+ADd26KkjJOh3MhVBk6CLY3vTJzIK2jr7ljn/fZ01NS/KOTYvmzqQo6r/cIYt9NoNxS9KfzGDrAR+IA+QhbI2SojzVt6GcmJpKmKwtevANIhL/qCZ1x+Z+hZ1cPW2EwVazkpeGluMXv08zVkoivXjkxks3Pjj11EyuBD1UmuRkyE7ve24U0Cvk+jgjP2aA6ElTNf/p20QA1Wpi/84vICoAsIVt7F28n4j/4u2TgeD mbernadin@mesospheres-MacBook-Pro-2.local" ];
