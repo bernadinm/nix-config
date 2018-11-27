@@ -57,6 +57,7 @@
       pkgs.tree
       pkgs.bc
       pkgs.git
+      pkgs.lynx
       pkgs.ipfs
       pkgs.jq
       pkgs.stack
