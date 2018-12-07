@@ -33,10 +33,20 @@
     trusted-users = root mb
   '';
 
-  #environment.etc."vimrc".text = ''
-  #  syntax on
-  #  set mouse-=a
-  #'';
+  # when running un multiple environments sync them on login
+  environment.etc."profile.local".text =
+   ''
+   # /etc/profile.local: DO NOT EDIT - this file has been generated automatically.
+
+   wget -q https://raw.githubusercontent.com/bernadinm/nix-config/master/configuration.nix -O $PWD/configuration.nix || exit 1
+   diff configuration.nix /etc/nixos/configuration.nix; if [ $? -eq 0 ]; then rm configuration.nix; exit 0; fi
+   sudo cp configuration.nix /etc/nixos/configuration.nix
+   sudo nixos-rebuild switch
+
+   if test -f "$HOME/.profile"; then
+     . "$HOME/.profile"
+   fi
+   '';
   
   # this allows nix to control user creds on entire host
   users.mutableUsers = false;
