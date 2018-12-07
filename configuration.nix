@@ -43,7 +43,7 @@
      sudo cp configuration.nix /etc/nixos/configuration.nix;
      sudo nixos-rebuild switch;
    fi
-   sudo rm configuration.nix;
+   rm configuration.nix;
 
    if test -f "$HOME/.profile"; then
      . "$HOME/.profile"
