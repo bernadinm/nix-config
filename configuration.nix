@@ -38,7 +38,7 @@
    ''
    # /etc/profile.local: DO NOT EDIT - this file has been generated automatically.
 
-   wget -q https://raw.githubusercontent.com/bernadinm/nix-config/master/configuration.nix -O $PWD/configuration.nix || exit 1
+   wget -q https://raw.githubusercontent.com/bernadinm/nix-config/master/configuration.nix -O $PWD/configuration.nix
    diff configuration.nix /etc/nixos/configuration.nix; if [ $? -eq 0 ]; then rm configuration.nix; fi
    sudo cp configuration.nix /etc/nixos/configuration.nix
    sudo nixos-rebuild switch
