@@ -46,9 +46,12 @@
    rm configuration.nix;
    
    # Persist NixOS on GCP
-   # Prereq: gsutil mb gs://nixos-persist
+   # Prereq: gsutil mb -c regional -l us-west1 gs://nixos-persist
    mkdir -p ~/g
    gcsfuse nixos-persist ~/g
+   
+   # Setting vi alias to vim
+   alias vi="vim"
 
    if test -f "$HOME/.profile"; then
      . "$HOME/.profile"
