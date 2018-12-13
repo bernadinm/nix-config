@@ -48,7 +48,7 @@
    # Persist NixOS on GCP
    # Prereq: gsutil mb -c regional -l us-west1 gs://nixos-persist
    mkdir -p ~/g
-   gcsfuse nixos-persist ~/g
+   if ! pgrep -x gcsfuse &>/dev/null; then gcsfuse nixos-persist ~/g; echo mounting ~/g; fi 
    
    # Setting vi alias to vim
    alias vi="vim"
