@@ -44,6 +44,11 @@
      sudo nixos-rebuild switch;
    fi
    rm configuration.nix;
+   
+   # Persist NixOS on GCP
+   # Prereq: gsutil mb gs://nixos-persist
+   mkdir -p ~/g
+   gcsfuse nixos-persist ~/g
 
    if test -f "$HOME/.profile"; then
      . "$HOME/.profile"
