@@ -52,7 +52,13 @@
    
    # Setting vi alias to vim
    alias vi="vim"
-
+ 
+   # configurating SSH keys
+   ln -s ~/g/.ssh ~/.ssh
+   
+   # configuring gpg keys
+   ln -s ~/g/.gnupg ~/.gnupg
+   
    if test -f "$HOME/.profile"; then
      . "$HOME/.profile"
    fi
