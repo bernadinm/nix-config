@@ -54,10 +54,10 @@
    alias vi="vim"
  
    # configurating SSH keys
-   ln -s ~/g/.ssh ~/.ssh
+   if [[ ( -d ~/.ssh ) ]]; then ln -s ~/g/.ssh ~/.ssh; fi
    
    # configuring gpg keys
-   ln -s ~/g/.gnupg ~/.gnupg
+   if [[ ( -d ~/.ssh ) ]]; then ln -s ~/g/.gnupg ~/.gnupg; fi
    
    if test -f "$HOME/.profile"; then
      . "$HOME/.profile"
