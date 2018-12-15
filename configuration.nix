@@ -59,6 +59,10 @@
    # configuring gpg keys
    if ! [[ ( -d ~/.ssh ) ]]; then ln -s ~/g/.gnupg ~/.gnupg; fi
    
+   # add ssh keys
+   eval $(ssh-agent)
+   grep -slR "PRIVATE" ~/.ssh/ | xargs ssh-add
+   
    if test -f "$HOME/.profile"; then
      . "$HOME/.profile"
    fi
