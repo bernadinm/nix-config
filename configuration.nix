@@ -45,6 +45,12 @@
    fi
    rm configuration.nix;
    
+   # Login to GCP if application default credentials doesn't exist
+   if ! [[ ( -d ~/.config/gcloud/application_default_credentials.json ) ]]
+     then 
+       gcloud auth application-default login
+   fi
+   
    # Persist NixOS on GCP
    # Prereq: gsutil mb -c regional -l us-west1 gs://nixos-persist
    mkdir -p ~/g
