@@ -67,6 +67,9 @@
    
    # configuring msmtp creds
    if ! [[ ( -f ~/.msmtprc ) ]]; then ln -s ~/g/.msmtprc ~/.msmtprc; fi
+      
+   # configuring offlineimaprc creds
+   if ! [[ ( -f ~/.offlineimaprc ) ]]; then ln -s ~/g/.offlineimaprc ~/.offlineimaprc; fi
    
    # add ssh keys
    eval $(ssh-agent)
