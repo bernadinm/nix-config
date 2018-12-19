@@ -63,7 +63,10 @@
    if ! [[ ( -d ~/.ssh ) ]]; then ln -s ~/g/.ssh ~/.ssh; fi
    
    # configuring gpg keys
-   if ! [[ ( -d ~/.ssh ) ]]; then ln -s ~/g/.gnupg ~/.gnupg; fi
+   if ! [[ ( -d ~/.gnupg ) ]]; then ln -s ~/g/.gnupg ~/.gnupg; fi
+   
+   # configuring msmtp creds
+   if ! [[ ( -f ~/.msmtprc ) ]]; then ln -s ~/g/.msmtprc ~/.msmtprc; fi
    
    # add ssh keys
    eval $(ssh-agent)
