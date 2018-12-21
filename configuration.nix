@@ -59,19 +59,11 @@
    # Setting vi alias to vim
    alias vi="vim"
  
-   # configurating SSH keys
+   # configurating SSH, GPG, MSMTP, IMAP, GIT keys
    if ! [[ ( -d ~/.ssh ) ]]; then ln -s ~/g/.ssh ~/.ssh; fi
-   
-   # configuring gpg keys
    if ! [[ ( -d ~/.gnupg ) ]]; then ln -s ~/g/.gnupg ~/.gnupg; fi
-   
-   # configuring msmtp creds
    if ! [[ ( -f ~/.msmtprc ) ]]; then ln -s ~/g/.msmtprc ~/.msmtprc; fi
-      
-   # configuring offlineimaprc creds
    if ! [[ ( -f ~/.offlineimaprc ) ]]; then ln -s ~/g/.offlineimaprc ~/.offlineimaprc; fi
-   
-   # configuring gitconfig
    if ! [[ ( -f ~/.gitconfig ) ]]; then ln -s ~/g/.gitconfig ~/.gitconfig; fi
    
    # add ssh keys
@@ -119,7 +111,7 @@
       pkgs.msmtp
       pkgs.reptyr
       pkgs.gnupg
-      pkgs.hub
+      pkgs.gitAndTools.hub
       pkgs.openssl
     ];
     openssh.authorizedKeys.keys =
