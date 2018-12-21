@@ -71,6 +71,9 @@
    # configuring offlineimaprc creds
    if ! [[ ( -f ~/.offlineimaprc ) ]]; then ln -s ~/g/.offlineimaprc ~/.offlineimaprc; fi
    
+   # configuring gitconfig
+   if ! [[ ( -f ~/.gitconfig ) ]]; then ln -s ~/g/.gitconfig ~/.gitconfig; fi
+   
    # add ssh keys
    eval $(ssh-agent)
    grep -slR "PRIVATE" ~/.ssh/ | xargs ssh-add
