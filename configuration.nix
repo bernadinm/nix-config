@@ -69,7 +69,9 @@
    # add ssh keys
    eval $(ssh-agent)
    grep -slR "PRIVATE" ~/.ssh/ | xargs ssh-add
-   
+
+   export GPG_TTY="$(tty)" #TODO(bernadinm): https://github.com/keybase/keybase-issues/issues/2798
+
    if test -f "$HOME/.profile"; then
      . "$HOME/.profile"
    fi
