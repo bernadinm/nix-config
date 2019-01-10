@@ -109,7 +109,6 @@
       pkgs.pup
       pkgs.terraform
       pkgs.sup
-      pkgs.notmuch
       pkgs.offlineimap
       pkgs.msmtp
       pkgs.reptyr
