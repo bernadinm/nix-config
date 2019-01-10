@@ -14,7 +14,7 @@
   #networking.firewall.allowedTCPPorts = [ 22 ];
 
   virtualisation.docker.enable = true;
-  virtualisation.docker.storageDriver = "devicemapper";
+  virtualisation.docker.storageDriver = "overlay";
 
   environment.systemPackages = with pkgs; [
    vimHugeX
