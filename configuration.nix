@@ -58,6 +58,7 @@
    
    # Setting vi alias to vim
    alias vi="vim"
+   alias ncdu="docker run -it -v /:/mount bernadinm/ncdu /mount"
  
    # configurating SSH, GPG, MSMTP, IMAP, GIT keys
    if ! [[ ( -d ~/.ssh ) ]]; then ln -s ~/g/.ssh ~/.ssh; fi
