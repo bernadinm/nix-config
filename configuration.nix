@@ -116,6 +116,7 @@
       pkgs.gnupg
       pkgs.gitAndTools.hub
       pkgs.openssl
+      pkgs.gnumake
     ];
     openssh.authorizedKeys.keys =
   [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDAOWoNpiBAo2/fAodKOKnWRRFDhMKIYJ2OxOVw3haLOROoST2SyNW0XAxQ9eWTPB3DseRBCkYVkNNDmwkl/vHLVhUW8cn2pEg8Rgf38Yn5HL/rU4kMPpxTHI+30Y0F6cQabRkHosP91TE5vQVXdxDcwu2wxkrlipJaa+Ra5PyzMXfGXRygFrehBDvPicABTO54uJ0f0uE2NadoTc1+fiOsxLSSXSttyS/XQhsdC9w/tV6ZRLN0ZevpQTQG3506Lg6KOp0csODbXtI32rcXwJ7YrtIUJxwL8VbO7MUB4P73kL1iHwNdHAAf4WoBOwV/PlvwbBgvXKWNS7ybyobPjjCWuwAi6sWaIuaJwtBbCm47uVyVDMkJ1/N2qO6ZzfnR1QbpI7y2GGEli0C0BSlJrwNRRVXwJZjcf/hbBt4VNffGk2OwqkESjPrvNt8hBUwKfxNXwJ0gz9P6UX6FOxdlLNWLARn3R3etP8CkEciUwNBgRJDziDHP3xCHZUqDN6wfcMyk7P5lFe2opSPkqoELAoc3IvgObORmKYqujODiITYCbidDQ3W57jN5GziGJ+nWliBFMOR3PSanF3nximwVk1jO6Aq8YYuiEksYq8H65O+FPQ6If4pONQpm0Gn5FXBaMwvET6gpqrTKrT+cb3/hmezLlG0xNVYkicgxhREW06ikrQ== loaner" ];
