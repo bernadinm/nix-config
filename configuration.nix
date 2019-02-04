@@ -70,10 +70,17 @@
    if ! [[ ( -f ~/.gitconfig ) ]]; then ln -s ~/g/.gitconfig ~/.gitconfig; fi
    
    # add ssh keys
-   eval $(ssh-agent)
+   if ps -p $SSH_AGENT_PID > /dev/null
+   then
+   else
+       eval $(ssh-agent -s)
+   fi
    grep -slR "PRIVATE" ~/.ssh/ | xargs ssh-add
 
    export GPG_TTY="$(tty)" #TODO(bernadinm): https://github.com/keybase/keybase-issues/issues/2798
+
+   # vimrc
+   echo "set mouse -=a" > ~/.vimrc
 
    if test -f "$HOME/.profile"; then
      . "$HOME/.profile"
