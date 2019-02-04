@@ -70,7 +70,7 @@
    if ! [[ ( -f ~/.gitconfig ) ]]; then ln -s ~/g/.gitconfig ~/.gitconfig; fi
    
    # add ssh keys
-   if ! ps -p $SSH_AGENT_PID > /dev/null; then eval $(ssh-agent -s); fi
+   ps -ef | grep ssh-agent | grep mb | tail -1 | while read x; do if [[ "$x" = "" ]]; then eval $(ssh-agent -s); fi; done
    grep -slR "PRIVATE" ~/.ssh/ | xargs ssh-add
 
    export GPG_TTY="$(tty)" #TODO(bernadinm): https://github.com/keybase/keybase-issues/issues/2798
