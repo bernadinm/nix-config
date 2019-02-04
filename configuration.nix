@@ -35,6 +35,20 @@
     trusted-users = root mb
   '';
 
+  # bash profil env
+  environment.interactiveShellInit = ''
+   # add ssh keys
+   if [[ "$(ps -ef | grep ssh-agent | grep mb | grep -v grep | tail -1)" = "" ]]; then
+     eval $(ssh-agent -s -a ~/.ssh-agent-socket);
+   else
+     SSH_AGENT_PID="$(ps -ef | grep ssh-agent | grep mb | awk '{print $2}' | head -1)";
+     SSH_AUTH_SOCK="$HOME/.ssh-agent-socket";
+     export SSH_AGENT_PID="$(ps -ef | grep ssh-agent | grep mb | grep -v grep | awk '{print $2}' | head -1)";
+     export SSH_AUTH_SOCK="$HOME/.ssh-agent-socket";
+   fi
+   grep -slR "PRIVATE" ~/.ssh/ | xargs ssh-add
+  '';
+
   # when running un multiple environments sync them on login
   environment.etc."profile.local".text =
    ''
@@ -69,17 +83,6 @@
    if ! [[ ( -f ~/.offlineimaprc ) ]]; then ln -s ~/g/.offlineimaprc ~/.offlineimaprc; fi
    if ! [[ ( -f ~/.gitconfig ) ]]; then ln -s ~/g/.gitconfig ~/.gitconfig; fi
    
-   # add ssh keys
-   if [[ "$(ps -ef | grep ssh-agent | grep mb | grep -v grep | tail -1)" = "" ]]; then
-     eval $(ssh-agent -s -a ~/.ssh-agent-socket);
-   else
-     SSH_AGENT_PID="$(ps -ef | grep ssh-agent | grep mb | awk '{print $2}' | head -1)";
-     SSH_AUTH_SOCK="$HOME/.ssh-agent-socket";
-     export SSH_AGENT_PID="$(ps -ef | grep ssh-agent | grep mb | grep -v grep | awk '{print $2}' | head -1)";
-     export SSH_AUTH_SOCK="$HOME/.ssh-agent-socket";
-   fi
-   grep -slR "PRIVATE" ~/.ssh/ | xargs ssh-add
-
    export GPG_TTY="$(tty)" #TODO(bernadinm): https://github.com/keybase/keybase-issues/issues/2798
 
    # vimrc
