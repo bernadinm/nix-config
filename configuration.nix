@@ -77,6 +77,7 @@
 
    # vimrc
    echo "set mouse -=a" > ~/.vimrc
+   echo "set bs=2" > ~/.vimrc
 
    if test -f "$HOME/.profile"; then
      . "$HOME/.profile"
