@@ -122,7 +122,7 @@
       pkgs.borgbackup
       pkgs.aws
       pkgs.google-cloud-sdk
-      pkgs.azure-cli
+      # pkgs.azure-cli # https://github.com/NixOS/nixpkgs/issues/40073
       pkgs.gcsfuse
       pkgs.pup
       pkgs.terraform
