@@ -122,6 +122,7 @@
       pkgs.borgbackup
       pkgs.aws
       pkgs.google-cloud-sdk
+      pkgs.azure-cli
       pkgs.gcsfuse
       pkgs.pup
       pkgs.terraform
