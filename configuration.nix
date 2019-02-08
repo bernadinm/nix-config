@@ -5,7 +5,6 @@
   <nixpkgs/nixos/modules/installer/virtualbox-demo.nix>
   #"${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos"
   ];
-  services.openssh.enable = true;
 
   # Setting the hostname of NixOS
   networking.hostName = "miguel-nixos";
@@ -31,6 +30,7 @@
 
  services = {
     nixosManual.showManual = true;
+    openssh.enable = true;
     services.keybase.enable = true;
     locate.enable = true;
     ntp.enable = true;
