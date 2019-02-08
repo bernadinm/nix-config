@@ -92,6 +92,10 @@
    if test -f "$HOME/.profile"; then
      . "$HOME/.profile"
    fi
+
+   if [ "$TERM" != "linux" ]; then
+     source ~/Sites/chris-marsh/pureline/pureline ~/.pureline.conf
+   fi
    '';
   
   # this allows nix to control user creds on entire host
