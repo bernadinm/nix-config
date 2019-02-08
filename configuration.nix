@@ -9,6 +9,7 @@
 
   # Setting the hostname of NixOS
   networking.hostName = "miguel-nixos";
+  time.timeZone = "America/Los_Angeles";
 
   #networking.firewall.allowPing = true;
   #networking.firewall.allowedTCPPorts = [ 22 ];
@@ -82,6 +83,7 @@
    if ! [[ ( -f ~/.msmtprc ) ]]; then ln -s ~/g/.msmtprc ~/.msmtprc; fi
    if ! [[ ( -f ~/.offlineimaprc ) ]]; then ln -s ~/g/.offlineimaprc ~/.offlineimaprc; fi
    if ! [[ ( -f ~/.gitconfig ) ]]; then ln -s ~/g/.gitconfig ~/.gitconfig; fi
+   if ! [[ ( -f ~/.pureline.conf ) ]]; then ln -s ~/g/.pureline.conf ~/.pureline.conf; fi
    
    export GPG_TTY="$(tty)" #TODO(bernadinm): https://github.com/keybase/keybase-issues/issues/2798
 
@@ -94,7 +96,7 @@
    fi
 
    if [ "$TERM" != "linux" ]; then
-     source ~/Sites/chris-marsh/pureline/pureline ~/.pureline.conf
+     source ~/g/pureline/pureline ~/.pureline.conf
    fi
    '';
   
