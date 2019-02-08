@@ -31,7 +31,7 @@
  services = {
     nixosManual.showManual = true;
     openssh.enable = true;
-    services.keybase.enable = true;
+    keybase.enable = true;
     locate.enable = true;
     ntp.enable = true;
   };
