@@ -29,6 +29,13 @@
     })
   ];
 
+ services = {
+    nixosManual.showManual = true;
+    services.keybase.enable = true;
+    locate.enable = true;
+    ntp.enable = true;
+  };
+
   environment.variables = { GOROOT = [ "${pkgs.go.out}/share/go" ]; };
   
   # adding mb to trusted users list
