@@ -17,6 +17,7 @@
   virtualisation.docker.storageDriver = "overlay";
 
   environment.systemPackages = with pkgs; [
+   colordiff
    vimHugeX
    mkpasswd
    (vim_configurable.customize {
@@ -64,7 +65,7 @@
    # /etc/profile.local: DO NOT EDIT - this file has been generated automatically.
 
    wget -q https://raw.githubusercontent.com/bernadinm/nix-config/master/configuration.nix -O $PWD/configuration.nix
-   diff configuration.nix /etc/nixos/configuration.nix; if [ $? -eq 1 ]; then
+   colordiff configuration.nix /etc/nixos/configuration.nix; if [ $? -eq 1 ]; then
      sudo cp configuration.nix /etc/nixos/configuration.nix;
      sudo nixos-rebuild switch;
    fi
