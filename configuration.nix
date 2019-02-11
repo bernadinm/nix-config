@@ -65,11 +65,11 @@
    # /etc/profile.local: DO NOT EDIT - this file has been generated automatically.
 
    wget -q https://raw.githubusercontent.com/bernadinm/nix-config/master/configuration.nix -O $PWD/configuration.nix
-   colordiff configuration.nix /etc/nixos/configuration.nix; if [ $? -eq 1 ]; then
+   colordiff -u -d /etc/nixos/configuration.nix configuration.nix; if [ $? -eq 1 ]; then
      sudo cp configuration.nix /etc/nixos/configuration.nix;
      sudo nixos-rebuild switch;
    fi
-   rm configuration.nix;
+   rm configuration.nix &> /dev/null;
    
    # Login to GCP if application default credentials doesn't exist
    if ! [[ ( -f ~/.config/gcloud/application_default_credentials.json ) ]]
