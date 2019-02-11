@@ -47,6 +47,7 @@
   environment.interactiveShellInit = ''
    # add ssh keys
    if [[ "$(ps -ef | grep ssh-agent | grep mb | grep -v grep | tail -1)" = "" ]]; then
+     rm ~/.ssh-agent-socket
      eval $(ssh-agent -s -a ~/.ssh-agent-socket);
    else
      SSH_AGENT_PID="$(ps -ef | grep ssh-agent | grep mb | awk '{print $2}' | head -1)";
