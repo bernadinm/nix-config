@@ -2,7 +2,7 @@
 
 {
   imports = [
-  ./installer/virtualbox-personal.nix
+  <nixpkgs/nixos/modules/installer/virtualbox-demo.nix>
   #"${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos"
   ];
 
