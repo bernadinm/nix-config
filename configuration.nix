@@ -25,7 +25,6 @@
       vimrcConfig.customRC = ''
         syntax on
         set mouse-=a
-        set tabstop=4
       '';
     })
   ];
@@ -98,8 +97,11 @@
    export GPG_TTY="$(tty)" #TODO(bernadinm): https://github.com/keybase/keybase-issues/issues/2798
 
    # vimrc
-   echo "set mouse -=a" > ~/.vimrc
-   echo "set bs=2" > ~/.vimrc
+   cat <<EOF > ~/.vimrc
+set mouse -=a
+set bs=2
+set tabstop=4
+EOF
 
    if test -f "$HOME/.profile"; then
      . "$HOME/.profile"
