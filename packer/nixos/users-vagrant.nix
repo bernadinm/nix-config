@@ -109,6 +109,9 @@ EOF
    if [ "$TERM" != "linux" ]; then
      source ~/g/pureline/pureline ~/.pureline.conf
    fi
+
+   # lynx config
+   export WWW_HOME=duckduckgo.com
    '';
   
   # this allows nix to control user creds on entire host
