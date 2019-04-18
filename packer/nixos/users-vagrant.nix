@@ -111,7 +111,7 @@ EOF
    fi
 
    # lynx config
-   export WWW_HOME=duckduckgo.com
+   export WWW_HOME=https://duckduckgo.com/lite/
    '';
   
   # this allows nix to control user creds on entire host
