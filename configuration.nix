@@ -113,6 +113,11 @@ EOF
 
    # lynx config
    export WWW_HOME=https://duckduckgo.com/lite/
+
+   # Private ENV vars
+   if test -f "$HOME/g/.private.env"; then
+     . "$HOME/g/.private.env"
+   fi
    '';
   
   # this allows nix to control user creds on entire host
