@@ -171,6 +171,7 @@ EOF
       pkgs.pandoc
       pkgs.shellcheck
       pkgs.atop
+      pkgs.perf-tools
     ];
     openssh.authorizedKeys.keys =
   [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC36zQor41pnBqbIaww7hJRz8IQtyWEW1RGlwuSpZiQpClyjIdm5Lg3Y/irVKJF3O0bN7pw7v5B6w7nojBVjQyzW360lJGUUjcTH0r2cq7g5wJWl9YKIpzGymsTUf+f65aMin9Dq+lLHSnKpeZXrv8fPVj4dy2Um2oLGNb1vjtnGPUuApA8HL51HUTNY7wNlqkxJLjGoXKGu+siAJygB4Qn310l0QH/lFlAFdXnMNjLSC7+nEV/5/vgyKlIU2SbGr9/kj2w+iZdOMxG6PzXfcyvpLKtxvLTIFlJXFqlrr8UCfS1ghnEMUsbOu35A8EDpt2wjjgLdpMIh6n/uYJHg9VxAYFk9u3d+Szxv2iG92au9JaiCub3mUSDBzOTV6ecO3eNHiyeYL1H8hgwH/CLyMDkKqp1XKS5l27kDf8/LTbc0uvjDYuYa90NRa4GQYZhd6fUufVl0q3uPEFHQs0mvOKyuWjEVNz1Rifn304hvwuJpEzVzDNIfuLtPN46Ft4p3ridf3VbF4+etfXJ9pUdJpF2Ll2Wnrix5aS4coCxlNLUn838qbYQI9t50CL7YNC61whRU4RVx4tWLFRUAhZ0bHsfQhs0FRzbO/JzkiAuMiIFSx17UqG3aVsSCWvRD/psqN+TYqCdvO5QZj3eLMqUjH8tpcpSfro9klHQ8donDotf7w== Mesospheres-MacBook-Pro-2.local" ];
