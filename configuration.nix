@@ -159,6 +159,7 @@ EOF
       pkgs.reptyr
       pkgs.gnupg
       pkgs.gitAndTools.hub
+      pkgs.gist
       pkgs.openssl
       pkgs.gnumake
       pkgs.go
