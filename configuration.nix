@@ -86,6 +86,7 @@
    # Setting vi alias to vim
    alias vi="vim"
    alias ncdu="docker run -it -v /:/mount bernadinm/ncdu /mount"
+   alias matrix='echo -e "1"; while $t; do for i in `seq 1 40`;do r="$[($RANDOM % 2)]";h="$[($RANDOM % 4)]";if [ $h -eq 1 ]; then v="0 $r";else v="1 $r";fi;v2="$v2 $v";done;echo -e $v2 | GREP_COLOR="1;32" grep --color "[^ ]";v2=""; sleep .01;done;'
  
    # configurating SSH, GPG, MSMTP, IMAP, GIT keys
    if ! [[ ( -d ~/.ssh ) ]]; then ln -s ~/g/.ssh ~/.ssh; fi
