@@ -73,17 +73,6 @@ in
   networking.interfaces.enp5s0.useDHCP = true;
   networking.interfaces.wlp4s0.useDHCP = true;
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Select internationalisation properties.
-  # i18n.defaultLocale = "en_US.UTF-8";
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  # };
-
   environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw 
   services.xserver = {
     enable = true;
@@ -123,12 +112,6 @@ in
   ## services.xserver.displayManager.sddm.enable = true;
   #services.xserver.displayManager.lightdm.enable = true;
   #services.xserver.desktopManager.pantheon.enable = true;
-  #services.openvpn.servers = {
-  #  protonVPNsecureUSAswissTCP  = { config = '' config /home/miguel/Creds/protonvpn/ch-us-01.protonvpn.com.tcp.ovpn '';
-  #                                  updateResolvConf = true; 
-  #                                  #autoStart = false;
-  #              };
-  #};
 
   environment.etc = {
     "resolv.conf".text = "nameserver 8.8.8.8\n";
@@ -287,30 +270,6 @@ in
     kubelet.extraOpts = "--fail-swap-on=false";
   };
 
-  #security.pki.certificateFiles = [ "/var/lib/acme/nebula-lumina-miguel-engineer/" ];
-
-  #services.lighttpd = {
-  #  enable = true;
-  #  port = 80;
-  #  document-root = "/var/www";
-  #};
-
-  #system.activationScripts.create-srv-dir = ''
-  #  echo "ensuring ${config.services.lighttpd.document-root}" exists...
-  #  mkdir -p ${config.services.lighttpd.document-root}
-  #'';
-
-  #security.acme = {
-  #  certs.${config.networking.domain} = {
-  #    webroot = "/var/www";
-  #    email = "you@example.com";
-  #  };
-  #};
-
-  # Configure keymap in X11
-  # services.xserver.layout = "us";
-  # services.xserver.xkbOptions = "eurosign:e";
-
   # Enable CUPS to print documents.
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.hplip ];
@@ -333,15 +292,6 @@ in
     enable = true;
     package = pkgs.bluezFull;
   };
-
-  # Long story short - after about an hour of research and 
-  # trying things I added this udev rules to enable Steam 
-  # to have permissions to use the device.
-  # https://edofic.com/posts/2020-06-07-linux-gaming/
-  #services.udev.extraRules = ''
-  #  # DualShock 4 over bluetooth hidraw
-  #  KERNEL=="hidraw*", KERNELS=="*054C:05C4*", MODE="0666"
-  #'';
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver = {
@@ -506,24 +456,12 @@ in
 
   # Monitor Control via CLI
   services.ddccontrol.enable = true;
-  #services.ddccontrol.enable = false;
   hardware.i2c.enable = true;
-  #hardware.i2c.enable = false;
 
   services.xrdp.enable = true;
   services.xrdp.defaultWindowManager = "plasmashell";
-  #services.xrdp.defaultWindowManager = "${pkgs.xfce4-12.xfce4-session}/bin/xfce4-session";
-  # Open ports in the firewall.
 
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # networking.firewall.allowedTCPPortRanges = [ 
-  #  { from = 1714; to = 1764; } # KDE Connect
-  # ];
-  # networking.firewall.allowedUDPPortRanges = [ 
-  #  { from = 1714; to = 1764; } # KDE Connect
-  # ];
-  # networking.firewall.enable = false;
+  # Open ports in the firewall.
   networking.enableIPv6 = false;
   networking.firewall.allowedTCPPorts = [ 3389 80 443 4242 ];
   networking.firewall.allowedTCPPortRanges = [{ from = 1714; to = 1764; }];
@@ -545,41 +483,11 @@ in
     enable = true;
     wheelNeedsPassword = false;
   };
-  #  security.sudo.extraRules = [
-  #    { users = [ "miguel" ];
-  #      commands = [
-  #        { command = "${pkgs.protonvpn-cli}/bin/protonvpn";
-  #          options = [ "NOPASSWD" ];
-  #        }
-  #      ];
-  #    }
-  #  ];
-
-  #services.openvpn.providers.protonvpn = {
-  #  # The path to the file containing your credentials.
-  #  credentials = /home/miguel/Creds/protonvpn/login;
-  #
-  #  # The list of available regions can be found in the regions.nix file
-  #  countries = [
-  #    { region = "fr"; }
-  #    { region = "us"; autoStart = true;  }
-  #    { region = "ca"; }
-  #  ];
-  #};
-
 
   programs.steam.enable = true;
   hardware.steam-hardware.enable = true;
   hardware.opengl.extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
   hardware.opengl.driSupport32Bit = true;
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  #programs.gnupg.agent = {
-  #  enable = true;
-  #  enableSSHSupport = true;
-  #};
 
   # Install the flakes edition
   nix.package = pkgs.nixFlakes;
@@ -600,8 +508,5 @@ in
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "21.05"; # Did you read the comment?
-  #system.stateVersion = "21.11"; # Did you read the comment?
-  #system.autoUpgrade.enable = true;
-  #system.autoUpgrade.allowReboot = true;
 }
 
