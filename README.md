@@ -4,6 +4,14 @@
 
 When installing NixOS, you want to use a configuration.nix file to configure your entire OS. This includes setting up users and installing particular system level programs and/or user specific programs. Here is my configuration file that I use to configure my personal NixOS environment. Starting out on nix? Check out the cheatsheet [vector wiki](https://nixos.wiki/index.php?title=Cheatsheet&useskin=vector) page.
 
+### How to install Computers
+
+Since this is a custom nix-config, you can configure your computers by running the following command below:
+
+```bash
+NIX_PATH=/home/miguel/git/bernadinm/nix-config/computers/lumina sudo nixos-rebuild switch
+```
+
 [configuration.nix](./configuration.nix)
 
 ## Next Steps
