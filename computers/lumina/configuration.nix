@@ -83,10 +83,7 @@
     package = pkgs.pulseaudioFull;
   };
 
-  hardware.bluetooth = {
-    enable = true;
-    package = pkgs.bluezFull;
-  };
+  hardware.bluetooth.enable = true; # enable bluethooth
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver = {
