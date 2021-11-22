@@ -25,12 +25,17 @@
     lxqt.compton-conf
 
     feh # wallpaper manager
-    vifm ranger nnn # text file manager
+
+    # text file managers
+    vifm
+    ranger
+    nnn
+
     rofi
     dmenu
 
     w3m-full
- 
+
     spectacle # screenshot capture util
     kile # latex authoring tool for kde
     (texlive.combine {

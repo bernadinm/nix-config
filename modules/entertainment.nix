@@ -22,7 +22,7 @@
     eidolon
     krb5
     cmatrix
-     _2048-in-terminal
+    _2048-in-terminal
 
     # drone configuration
     betaflight-configurator
