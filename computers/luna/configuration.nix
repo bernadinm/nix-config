@@ -6,7 +6,8 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../modules/gdrivesync.nix
       ../../modules/entertainment.nix
@@ -23,7 +24,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "Luna"; # Define your hostname.
-  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.wireless.enable = true; # Enables wireless support via wpa_supplicant.
   hardware.bluetooth.enable = true; # enable bluethooth
 
   # Set your time zone.
@@ -38,7 +39,7 @@
 
   boot.kernelPackages = pkgs.linuxPackages_latest; #- for WiFi support
   services.fprintd.enable = true; #for fingerprint support
-  
+
   nixpkgs.config.allowUnfree = true;
 
   environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw 
@@ -51,7 +52,7 @@
     Option "DRI" "2"
     Option "TearFree" "true"
   '';
-  
+
 
   services.xserver = {
     # small addition from desktop.nix import
@@ -65,7 +66,7 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-  services.printing.drivers = [ pkgs.hplip pkgs.canon-cups-ufr2];
+  services.printing.drivers = [ pkgs.hplip pkgs.canon-cups-ufr2 ];
 
   # Enable sound.
   sound.enable = true;
@@ -86,10 +87,10 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-     ddcutil
-     i2c-tools
-     libinput-gestures
-     pulseeffects-legacy
+    ddcutil
+    i2c-tools
+    libinput-gestures
+    pulseeffects-legacy
   ];
 
   # Monitor Control via CLI
