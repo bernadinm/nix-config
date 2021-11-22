@@ -3,28 +3,6 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-let
-  baseconfig = { allowUnfree = true; };
-  unstable = import <nixos-unstable> { config = baseconfig; };
-  kubeMasterIP = "192.168.1.24";
-  #kubeMasterHostname = "api.k8s.lumina.miguel.engineer";
-  kubeMasterHostname = "localhost";
-  kubeMasterAPIServerPort = 8443;
-  keyCloakHttpPort = 8081;
-  keyCloakHttpsPort = 8445;
-in
-#let
-  #  unstable = import
-  #    (builtins.fetchTarball https://github.com/nixos/nixpkgs/tarball/master)
-  #    # reuse the current configuration
-  #    { config = config.nixpkgs.config; };
-  #in
-  #{
-  #  environment.systemPackages = with pkgs; [
-  #    x2goserver
-  #    unstable.certbot
-  #  ];
-  #}
 {
   imports =
     [
@@ -33,25 +11,15 @@ in
       <nixos-unstable/nixos/modules/services/networking/nebula.nix>
       # <nixos-unstable/nixos/modules/services/web-apps/keycloak.nix>
       ../../modules/gdrivesync.nix
+      ../../modules/entertainment.nix
+      ../../modules/security.nix
+      ../../modules/virtualization.nix
+      ../../modules/communication.nix
     ];
-  disabledModules = [
-    "services/networking/nebula.nix"
-    # "services/web-apps/keycloak.nix"
-  ];
-  nixpkgs.config = baseconfig // {
-    packageOverrides = pkgs: {
-      #nebula = unstable.nebula;
-      #  keycloak = unstable.keycloak;
-    };
-  };
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  virtualisation.docker.enable = true;
-  virtualisation.docker.storageDriver = "overlay";
-  virtualisation.libvirtd.enable = true; # qemu/kvm
 
   # networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -132,144 +100,6 @@ in
     ];
   };
 
-  ## Now we can configure ACME
-  #security.acme.acceptTerms = true;
-  #security.acme.email = "admin+acme@example.com";
-  #security.acme.certs."example.com" = {
-  #  domain = "*.example.com";
-  #  dnsProvider = "rfc2136";
-  #  credentialsFile = "/var/lib/secrets/certs.secret";
-  #  # We don't need to wait for propagation since this is a local DNS server
-  #  dnsPropagationCheck = false;
-  #};
-
-  # This didnt work below |
-  #security.acme = {
-  #  acceptTerms = true;
-  #  certs."lumina.miguel.engineer" = {
-  #    email = "miguel@capitalblockchain.group";
-  #    domain = "*.lumina.miguel.engineer";
-  #    dnsProvider = "rfc2136";
-  #    credentialsFile = "/var/lib/secrets/certs.secret";
-  #    # We don't need to wait for propagation since this is a local DNS server
-  #    dnsPropagationCheck = false;
-  #  };
-  #};
-  # This didnt work above |
-
-  services.nginx.enable = true;
-  #services.nginx.virtualHosts."lumina.miguel.engineer" = {
-  #    forceSSL = true;
-  #    enableACME = true;
-  #    root = "/var/www/lumina.miguel.engineer";
-  #};
-  #services.nginx.virtualHosts."k8s.lumina.miguel.engineer" = {
-  #    forceSSL = true;
-  #    enableACME = true;
-  #    #root = "/var/www/k8s.lumina.miguel.engineer";
-  #    locations."/" = {
-  #      proxyPass = "http://localhost:${toString kubeMasterAPIServerPort}";
-  #    };
-  #};
-  #services.nginx.virtualHosts."key.lumina.miguel.engineer" = {
-  #    forceSSL = true;
-  #    enableACME = true;
-  #    #root = "/var/www/key.lumina.miguel.engineer";
-  #    locations."/auth" = {
-  #      proxyPass = "http://localhost:${toString keyCloakHttpPort}";
-  #    };
-  #};
-  #services.nginx.virtualHosts."nebula.lumina.miguel.engineer" = {
-  #    forceSSL = true;
-  #    enableACME = true;
-  #    #root = "/var/www/nebula.lumina.miguel.engineer";
-  #};
-  #security.acme.acceptTerms = true;
-  #security.acme.email = "miguel@capitalblockchain.group";
-  #security.acme.certs = {
-  #  lumina-miguel-engineer = {
-  #    #credentialvarle = "/home/miguel/Sites/bernadinm/infra/lumina.key";
-  #    email = "miguel@capitalblockchain.group";
-  #    directory = "/var/lib/acme/lumina.miguel.engineer";
-  #    dnsPropagationCheck = true;
-  #    dnsProvider = null;
-  #    domain = "key.lumina.miguel.engineer";
-  #    #extraDomains = { };
-  #    keyType = "ec384";
-  #    #postRun = "systemctl restart lumina.service";
-  #    server = null;
-  #    webroot = "/var/lib/acme/acme-challenge";
-  #  };
-  #  key-lumina-miguel-engineer = {
-  #    #credentialvarle = "/home/miguel/Sites/bernadinm/infra/lumina.key";
-  #    email = "miguel@capitalblockchain.group";
-  #    directory = "/var/lib/acme/key.lumina.miguel.engineer";
-  #    dnsPropagationCheck = true#;
-  #    dnsProvider = null;
-  #    domain = "key.lumina.miguel.engineer";
-  #    #extraDomains = { };
-  #    keyType = "ec384";
-  #    #postRun = "systemctl restart lumina.service";
-  #    server = null;
-  #    webroot = "/var/lib/acme/acme-challenge";
-  #  };
-  #  k8s-lumina-miguel-engineer = {
-  #    #credentialvarle = "/home/miguel/Sites/bernadinm/infra/lumina.k8s";
-  #    email = "miguel@capitalblockchain.group";
-  #    directory = "/var/lib/acme/k8s.lumina.miguel.engineer";
-  #    dnsPropagationCheck = true;
-  #    dnsProvider = null;
-  #    domain = "k8s.lumina.miguel.engineer";
-  #    extraDomainNames = [ "api.k8s.lumina.miguel.engineer" ];
-  #    #extraDomains = { };
-  #    keyType = "ec384";
-  #    #postRun = "systemctl restart lumina.service";
-  #    server = null;
-  #    webroot = "/var/lib/acme/acme-challenge";
-  #  };
-  #  nebula-lumina-miguel-engineer = {
-  #    email = "miguel@capitalblockchain.group";
-  #    directory = "/var/lib/acme/nebula.lumina.miguel.engineer";
-  #    dnsPropagationCheck = true;
-  #    domain = "nebula.lumina.miguel.engineer";
-  #    keyType = "rsa2048";
-  #    server = null;
-  #    webroot = "/var/lib/acme/acme-challenge";
-  #  };
-  #};
-
-  #services.nebula.networks = {
-  #  "lumina.miguel.engineer" = {
-  #    enable = true;
-  #    ca = "/home/miguel/Sites/slackhq/nebula/ca.crt";
-  #    cert = "/home/miguel/Sites/slackhq/nebula/lighthouse-lumina.crt";
-  #    key = "/home/miguel/Sites/slackhq/nebula/lighthouse-lumina.key";
-  #    firewall.inbound = [ { port = "any"; proto = "any"; host = "any"; } ];
-  #    firewall.outbound = [ { port = "any"; proto = "any"; host = "any"; } ];
-  #    isLighthouse = true;
-  #  };
-  #};
-
-  # resolve master hostname
-  # networking.extraHosts = "${kubeMasterIP} ${kubeMasterHostname}";
-  services.kubernetes = {
-    roles = [ "master" "node" ];
-    masterAddress = kubeMasterHostname;
-    apiserverAddress = "https://${kubeMasterHostname}:${toString kubeMasterAPIServerPort}";
-    easyCerts = true;
-    #caFile = "/var/lib/acme/k8s-lumina-miguel-engineer/fullchain.pem";
-    apiserver = {
-      securePort = kubeMasterAPIServerPort;
-      advertiseAddress = kubeMasterIP;
-    };
-
-    # use coredns
-    addons.dns.enable = true;
-
-    # needed if you use swap
-    kubelet.extraOpts = "--fail-swap-on=false";
-  };
-
   # Enable CUPS to print documents.
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.hplip ];
@@ -313,9 +143,7 @@ in
     description = "Rachelle Bernadin";
   };
 
-  services.teamviewer.enable = true;
   hardware.acpilight.enable = true;
-
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -337,12 +165,9 @@ in
     glib
     ddcutil
     i2c-tools
-    eidolon
     terraform
-    zoom-us
     fast-cli
     libinput-gestures
-    docker-compose
     pcmanfm
     gspeech
     lynx
@@ -353,7 +178,6 @@ in
     xsel
     mimic
     picotts
-    discord
     bind
     ag
     ripgrep
@@ -361,56 +185,21 @@ in
     aria
     killall
     w3m-full
-    openssl
     bc
     gh
     nnn
     nixpkgs-fmt
 
-    # Kubernetes
-    kompose
-    kubectl
-    kubernetes
-
-    virt-manager
-
-    ardour
-
     #(import (builtins.fetchTarball https://github.com/hercules-ci/arion/tarball/master) {}).arion
 
-    # wineWowPackages.staging
-    # (winetricks.override {
-    #   wine = wineWowPackages.staging;
-    # })
-    wineWowPackages.full
-    winetricks
-    sc-controller
-    steam-run
-    vulkan-tools
-    minecraft
-    multimc
-    lutris
-    krb5
     unstable.x2goserver
     x2goclient
-    mumble
-    weechat
-    profanity
     ncdu
 
     betaflight-configurator
 
-    electrum
-    electron-cash
-    ledger-live-desktop
-    monero-gui
-    nodejs_latest
-
-
     torbrowser
     chromium
-
-    openvpn
 
     kdeplasma-addons
     kdeconnect
@@ -428,17 +217,7 @@ in
       inherit (texlive) scheme-small titling collection-langfrench cm-super;
     })
 
-    gimp
-    libreoffice
-    vlc
-
-    go
-    goaccess
-
-    pass
-
-    protonvpn-cli
-    protonvpn-gui
+    nodejs_latest
 
     # Fonts
     font-awesome
@@ -449,9 +228,6 @@ in
 
     # ML
     gpt2tc
-
-    # base
-    gnupg pinentry
   ];
 
   # Monitor Control via CLI
@@ -467,27 +243,10 @@ in
   networking.firewall.allowedTCPPortRanges = [{ from = 1714; to = 1764; }];
   networking.firewall.allowedUDPPortRanges = [{ from = 1714; to = 1764; }];
 
-  #services.keycloak = {
-  #  enable = true;
-  #  #frontendUrl = "key.lumina.miguel.engineer/auth";
-  #  frontendUrl = "localhost";
-  #  #forceBackendUrlToFrontendUrl = true;
-  #  #sslCertificate = "/var/lib/acme/key-lumina-miguel-engineer/fullchain.pem";
-  #  #sslCertificateKey = "/var/lib/acme/key-lumina-miguel-engineer/key.pem";
-  #  database.passwordFile = "/run/keys/db_password";
-  #  httpPort = "${toString keyCloakHttpPort}";
-  #  httpsPort = "${toString keyCloakHttpsPort}";
-  #};
-
   security.sudo = {
     enable = true;
     wheelNeedsPassword = false;
   };
-
-  programs.steam.enable = true;
-  hardware.steam-hardware.enable = true;
-  hardware.opengl.extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
-  hardware.opengl.driSupport32Bit = true;
 
   # Install the flakes edition
   nix.package = pkgs.nixFlakes;
@@ -498,9 +257,6 @@ in
 
   # List services that you want to enable:
 
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
@@ -509,4 +265,3 @@ in
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "21.05"; # Did you read the comment?
 }
-
