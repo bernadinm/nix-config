@@ -8,16 +8,14 @@
     weechat
     profanity
     discord
+    slack
+
+    # visual comm
+    tigervnc
   ];
 
   disabledModules = [
     "services/networking/nebula.nix"
     # "services/web-apps/keycloak.nix"
   ];
-  nixpkgs.config = baseconfig // {
-    packageOverrides = pkgs: {
-      #nebula = unstable.nebula;
-      #  keycloak = unstable.keycloak;
-    };
-  };
 }

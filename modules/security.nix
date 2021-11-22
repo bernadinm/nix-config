@@ -25,9 +25,11 @@
 
     # encryption
     openssl
+    step-cli
 
     # port analyzer
     rustscan
+    nmap
   ];
 
   #services.keycloak = {
