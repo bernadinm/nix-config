@@ -15,6 +15,7 @@
       ../../modules/security.nix
       ../../modules/virtualization.nix
       ../../modules/communication.nix
+      ../../modules/monitoring.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
