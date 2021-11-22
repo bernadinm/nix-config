@@ -50,6 +50,19 @@
       set bs=2
       set tabstop=4
       EOF
+      # bashrc
+      cat <<EOF > ~/.bashrc
+      alias pbcopy='xclip -selection clipboard'
+      alias pbpaste='xclip -selection clipboard -o'
+      #alias pp='ddcutil -d 1 -i 18 >/dev/null; cd - ; # hdmi-2'
+      #alias ww='ddcutil -d 1 -i 27 >/dev/null; cd - ; # USB-C'
+      alias docker-compose='arion'
+      alias tts='xsel | mimic --setf duration_stretch=0.6 --setf int_f0_target_mean=130 -voice slt'
+      alias testtts='echo "xsel | mimic --setf duration_stretch=0.6 --setf int_f0_target_mean=120 -voice rms"'
+      alias ww='sudo ddccontrol -r 0x60 -w 27 dev:/dev/i2c-5 &> /dev/null'
+      alias pp='sudo ddccontrol -r 0x60 -w 18 dev:/dev/i2c-5 &> /dev/null'
+      source /etc/profile.local
+      EOF
       if test -f "$HOME/.profile"; then
         . "$HOME/.profile"
       fi
