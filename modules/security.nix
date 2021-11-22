@@ -3,7 +3,8 @@
 {
   environment.systemPackages = with pkgs; [
     # base
-    gnupg pinentry
+    gnupg
+    pinentry
 
     # crypto 
     electrum
