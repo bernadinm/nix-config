@@ -22,5 +22,8 @@
 
     # crypto mon
     cointop
+
+    # visualizer
+    cava # music visualizer
   ];
 }
