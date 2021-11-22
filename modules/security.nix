@@ -100,7 +100,7 @@
   #security.acme.email = "miguel@capitalblockchain.group";
   #security.acme.certs = {
   #  lumina-miguel-engineer = {
-  #    #credentialvarle = "/home/miguel/Sites/bernadinm/infra/lumina.key";
+  #    #credentialvarle = "/home/miguel/git/bernadinm/infra/lumina.key";
   #    email = "miguel@capitalblockchain.group";
   #    directory = "/var/lib/acme/lumina.miguel.engineer";
   #    dnsPropagationCheck = true;
@@ -113,7 +113,7 @@
   #    webroot = "/var/lib/acme/acme-challenge";
   #  };
   #  key-lumina-miguel-engineer = {
-  #    #credentialvarle = "/home/miguel/Sites/bernadinm/infra/lumina.key";
+  #    #credentialvarle = "/home/miguel/git/bernadinm/infra/lumina.key";
   #    email = "miguel@capitalblockchain.group";
   #    directory = "/var/lib/acme/key.lumina.miguel.engineer";
   #    dnsPropagationCheck = true#;
@@ -126,7 +126,7 @@
   #    webroot = "/var/lib/acme/acme-challenge";
   #  };
   #  k8s-lumina-miguel-engineer = {
-  #    #credentialvarle = "/home/miguel/Sites/bernadinm/infra/lumina.k8s";
+  #    #credentialvarle = "/home/miguel/git/bernadinm/infra/lumina.k8s";
   #    email = "miguel@capitalblockchain.group";
   #    directory = "/var/lib/acme/k8s.lumina.miguel.engineer";
   #    dnsPropagationCheck = true;
@@ -151,9 +151,9 @@
   #};
 
   #    enable = true;
-  #    ca = "/home/miguel/Sites/slackhq/nebula/ca.crt";
-  #    cert = "/home/miguel/Sites/slackhq/nebula/lighthouse-lumina.crt";
-  #    key = "/home/miguel/Sites/slackhq/nebula/lighthouse-lumina.key";
+  #    ca = "/home/miguel/git/slackhq/nebula/ca.crt";
+  #    cert = "/home/miguel/git/slackhq/nebula/lighthouse-lumina.crt";
+  #    key = "/home/miguel/git/slackhq/nebula/lighthouse-lumina.key";
   #    firewall.inbound = [ { port = "any"; proto = "any"; host = "any"; } ];
   #    firewall.outbound = [ { port = "any"; proto = "any"; host = "any"; } ];
   #    isLighthouse = true;
