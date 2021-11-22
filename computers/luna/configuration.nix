@@ -14,6 +14,8 @@
       ../../modules/virtualization.nix
       ../../modules/communication.nix
       ../../modules/monitoring.nix
+      ../../modules/desktop.nix
+      ../../modules/utilities.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -52,41 +54,10 @@
   
 
   services.xserver = {
-    enable = true;
-
-    desktopManager = {
-      xterm.enable = false;
-    };
+    # small addition from desktop.nix import
     monitorSection = ''
       DisplaySize 408 306
     '';
- 
-     # i3 display  
-     displayManager = {
-         defaultSession = "none+i3";
-     };
- 
-     windowManager.i3 = {
-       enable = true;
-       package = pkgs.i3-gaps;
-       extraPackages = with pkgs; [
-         dmenu #application launcher most people use
-         rofi
-         polybar
-         clipit
-         xorg.xprop
-         xautolock # timer to lock screen
-         i3status # gives you the default i3 status bar
-         i3lock-fancy-rapid #default i3 screen locker
-         i3blocks #if you are planning on using i3blocks over i3status
-         
-         compton
-         lxqt.compton-conf
- 
-         feh # wallpaper manager
-         vifm # graphic file manager
-      ];
-     };
   };
 
   boot.initrd.luks.devices.root.device = "/dev/disk/by-uuid/508642b3-eced-4e85-9c67-e6e85d946d96";
@@ -107,13 +78,6 @@
   services.xserver.libinput.mouse.disableWhileTyping = true;
   #hardware.trackpoint.programs.light.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.miguel = {
-     isNormalUser = true;
-     extraGroups = [ "wheel" "docker" "video" "audio" ]; # Enable ‘sudo’ for the user.
-     description = "Miguel Bernadin";
-  };
   security.sudo = {
     enable = true;
     wheelNeedsPassword = false;
@@ -122,73 +86,10 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-     wget vim unzip
-     python3 python37Packages.virtualenv python37Packages.pip gcc libffi
-     python37Packages.pillow
-     python37Packages.setuptools
-     git
-     bash xclip
-     google-chrome glib
-     ddgr
      ddcutil
      i2c-tools
-     terraform
-     fast-cli
      libinput-gestures
-     pcmanfm
-     gspeech
-     lynx
-     whois
-     trash-cli
-     gnumake
-     xsel
-     mimic
-     picotts
-     bind
-     ag
-     ripgrep
-     aria
-     killall
-     w3m-full
-     bc
-     gh
-     termite
      pulseeffects-legacy
-     neofetch
-
-     #(import (builtins.fetchTarball https://github.com/hercules-ci/arion/tarball/master) {}).arion
-
-     x2goclient
-
-     torbrowser
-     chromium
-
-     kdeplasma-addons
-     kdeconnect
-     kdenlive
-     okular
-     konversation
-     fusuma
-     gwenview
-     navi fzf
-     spectacle
-     kile
-     (texlive.combine {
-       inherit (texlive) scheme-small titling collection-langfrench cm-super;
-     })
-
-     go
-
-     # Fonts
-     font-awesome
-     compton
-     lxqt.compton-conf
-
-     feh # wallpaper manager
-     vifm ranger nnn # text file manager
-     rofi
-     dmenu
-
   ];
 
   # Monitor Control via CLI
