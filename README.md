@@ -9,7 +9,7 @@ When installing NixOS, you want to use a configuration.nix file to configure you
 Since this is a custom nix-config, you can configure your computers by running the following command below:
 
 ```bash
-NIX_PATH=/home/miguel/git/bernadinm/nix-config/computers/lumina sudo nixos-rebuild switch
+sudo nixos-rebuild switch -I nixos-config=/home/miguel/git/bernadinm/nix-config/computers/lumina/configuration.nix
 ```
 
 [configuration.nix](./configuration.nix)
