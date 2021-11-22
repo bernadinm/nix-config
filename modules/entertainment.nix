@@ -22,6 +22,7 @@
     eidolon
     krb5
     cmatrix
+     _2048-in-terminal
 
     # drone configuration
     betaflight-configurator
@@ -30,6 +31,9 @@
     vlc
     gimp
     libreoffice
+
+    # Latex
+    texlive.combined.scheme-full
   ];
 
   programs.steam.enable = true;

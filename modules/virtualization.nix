@@ -22,28 +22,35 @@ in
     virt-manager
   ];
 
+  nixpkgs.config = baseconfig // {
+    packageOverrides = pkgs: {
+      #nebula = unstable.nebula;
+      #  keycloak = unstable.keycloak;
+    };
+  };
+
   virtualisation.docker.enable = true;
   virtualisation.docker.storageDriver = "overlay";
   virtualisation.libvirtd.enable = true; # qemu/kvm
 
   # resolve master hostname
   # networking.extraHosts = "${kubeMasterIP} ${kubeMasterHostname}";
-  services.kubernetes = {
-    roles = [ "master" "node" ];
-    masterAddress = kubeMasterHostname;
-    apiserverAddress = "https://${kubeMasterHostname}:${toString kubeMasterAPIServerPort}";
-    easyCerts = true;
-    #caFile = "/var/lib/acme/k8s-lumina-miguel-engineer/fullchain.pem";
-    apiserver = {
-      securePort = kubeMasterAPIServerPort;
-      advertiseAddress = kubeMasterIP;
-    };
-
-    # use coredns
-    addons.dns.enable = true;
-
-    # needed if you use swap
-    kubelet.extraOpts = "--fail-swap-on=false";
-  };
+  #services.kubernetes = {
+  #  roles = [ "master" "node" ];
+  #  masterAddress = kubeMasterHostname;
+  #  apiserverAddress = "https://${kubeMasterHostname}:${toString kubeMasterAPIServerPort}";
+  #  easyCerts = true;
+  #  #caFile = "/var/lib/acme/k8s-lumina-miguel-engineer/fullchain.pem";
+  #  apiserver = {
+  #    securePort = kubeMasterAPIServerPort;
+  #    advertiseAddress = kubeMasterIP;
+  #  };
+  #
+  #  # use coredns
+  #  addons.dns.enable = true;
+  #
+  #  # needed if you use swap
+  #  kubelet.extraOpts = "--fail-swap-on=false";
+  #};
 
 }
