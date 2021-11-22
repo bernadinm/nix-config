@@ -147,6 +147,18 @@
   #  };
   #};
 
+  #    enable = true;
+  #    ca = "/home/miguel/Sites/slackhq/nebula/ca.crt";
+  #    cert = "/home/miguel/Sites/slackhq/nebula/lighthouse-lumina.crt";
+  #    key = "/home/miguel/Sites/slackhq/nebula/lighthouse-lumina.key";
+  #    firewall.inbound = [ { port = "any"; proto = "any"; host = "any"; } ];
+  #    firewall.outbound = [ { port = "any"; proto = "any"; host = "any"; } ];
+  #    isLighthouse = true;
+  #  };
+  #};
+
+
+
   services.teamviewer.enable = true;
 
   # Enable the OpenSSH daemon.
