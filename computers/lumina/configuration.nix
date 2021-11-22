@@ -16,6 +16,8 @@
       ../../modules/virtualization.nix
       ../../modules/communication.nix
       ../../modules/monitoring.nix
+      ../../modules/desktop.nix
+      ../../modules/utilities.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -43,44 +45,6 @@
   networking.interfaces.wlp4s0.useDHCP = true;
 
   environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw 
-  services.xserver = {
-    enable = true;
-
-    desktopManager = {
-      xterm.enable = false;
-    };
-
-    displayManager = {
-      defaultSession = "none+i3";
-    };
-
-    windowManager.i3 = {
-      enable = true;
-      extraPackages = with pkgs; [
-        dmenu #application launcher most people use
-        rofi
-        clipit
-        xorg.xprop
-        xautolock # timer to lock screen
-        i3status # gives you the default i3 status bar
-        i3lock-fancy-rapid #default i3 screen locker
-        i3blocks #if you are planning on using i3blocks over i3status
-        compton
-        lxqt.compton-conf
-
-        feh # wallpaper manager
-        vifm # graphic file manager
-      ];
-    };
-  };
-
-  ## Enable the X11 windowing system.
-  #services.xserver.enable = true;
-
-  ## Enable the Plasma 5 Desktop Environment.
-  ## services.xserver.displayManager.sddm.enable = true;
-  #services.xserver.displayManager.lightdm.enable = true;
-  #services.xserver.desktopManager.pantheon.enable = true;
 
   environment.etc = {
     "resolv.conf".text = "nameserver 8.8.8.8\n";
@@ -130,105 +94,14 @@
     libinput.enable = true;
   };
 
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.miguel = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "video" "i2c" ]; # Enable ‘sudo’ for the user.
-    description = "Miguel Bernadin";
-  };
-
-  users.users.rachelle = {
-    isNormalUser = true;
-    extraGroups = [ ]; # Enable ‘sudo’ for the user.
-    description = "Rachelle Bernadin";
-  };
-
   hardware.acpilight.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    wget
-    vim
-    unzip
-    python3
-    python37Packages.virtualenv
-    python37Packages.pip
-    gcc
-    libffi
-    python37Packages.pillow
-    python37Packages.setuptools
-    git
-    bash
-    xclip
-    google-chrome
-    glib
     ddcutil
     i2c-tools
-    terraform
-    fast-cli
     libinput-gestures
-    pcmanfm
-    gspeech
-    lynx
-    whois
-    trash-cli
-    gnumake
-    geekbench
-    xsel
-    mimic
-    picotts
-    bind
-    ag
-    ripgrep
-    tigervnc
-    aria
-    killall
-    w3m-full
-    bc
-    gh
-    nnn
-    nixpkgs-fmt
-
-    #(import (builtins.fetchTarball https://github.com/hercules-ci/arion/tarball/master) {}).arion
-
-    unstable.x2goserver
-    x2goclient
-    ncdu
-
-    betaflight-configurator
-
-    torbrowser
-    chromium
-
-    kdeplasma-addons
-    kdeconnect
-    kdenlive
-    okular
-    yakuake
-    termite
-    konversation
-    fusuma
-    gwenview
-    navi
-    spectacle
-    kile
-    (texlive.combine {
-      inherit (texlive) scheme-small titling collection-langfrench cm-super;
-    })
-
-    nodejs_latest
-
-    # Fonts
-    font-awesome
-
-    # monitoring
-    cointop
-    htop
-
-    # ML
-    gpt2tc
   ];
 
   # Monitor Control via CLI
