@@ -45,6 +45,7 @@
       export GPG_TTY="$(tty)" #TODO(bernadinm): https://github.com/keybase/keybase-issues/issues/2798
       # vimrc
       cat <<EOF > ~/.vimrc
+      syntax on
       set mouse -=a
       set bs=2
       set tabstop=4
