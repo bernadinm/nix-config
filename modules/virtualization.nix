@@ -14,6 +14,10 @@ in
     # base
     docker-compose
 
+    # docker-compose alternative
+    #(import (builtins.fetchTarball https://github.com/hercules-ci/arion/tarball/master) {}).arion
+
+
     # Kubernetes
     kompose
     kubectl
