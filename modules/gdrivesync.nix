@@ -61,6 +61,7 @@
       alias testtts='echo "xsel | mimic --setf duration_stretch=0.6 --setf int_f0_target_mean=120 -voice rms"'
       alias ww='sudo ddccontrol -r 0x60 -w 27 dev:/dev/i2c-5 &> /dev/null'
       alias pp='sudo ddccontrol -r 0x60 -w 18 dev:/dev/i2c-5 &> /dev/null'
+      set -o ignoreeof
       source /etc/profile.local
       EOF
       if test -f "$HOME/.profile"; then
