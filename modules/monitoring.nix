@@ -19,6 +19,7 @@
     geekbench
     pciutils
     ncdu
+    lsof
 
     # crypto mon
     cointop
