@@ -29,8 +29,6 @@
     mimic
     picotts
     bind
-    ag
-    ripgrep
     aria
     killall
     bc
@@ -46,6 +44,13 @@
     # ML
     gpt2tc
 
-    bat
+    bat # cut alt
+    duf # df alt
+    fd # find alt
+    ag # ack alt
+    ripgrep # grep alt
+    tldr # man alt
+    gping # ping alt
+    hck # cut alt
   ];
 }
