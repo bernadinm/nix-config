@@ -9,6 +9,7 @@
     profanity
     discord
     slack
+    signal-desktop
 
     # visual comm
     tigervnc
