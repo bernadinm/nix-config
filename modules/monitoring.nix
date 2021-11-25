@@ -5,7 +5,9 @@
     # base
     iperf
     htop
+    gtop
     iotop
+    bottom
     dstat
     sysstat
     procps
