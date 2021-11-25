@@ -14,6 +14,7 @@
     python37Packages.pillow
     python37Packages.setuptools
     git
+    delta
     bash
     glib
     ddgr
@@ -45,5 +46,6 @@
     # ML
     gpt2tc
 
+    bat
   ];
 }
