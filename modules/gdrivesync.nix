@@ -40,7 +40,7 @@
       if ! [[ ( -f ~/.msmtprc ) ]]; then ln -s ~/g/.msmtprc ~/.msmtprc; fi
       if ! [[ ( -f ~/.offlineimaprc ) ]]; then ln -s ~/g/.offlineimaprc ~/.offlineimaprc; fi
       if ! [[ ( -f ~/.gitconfig ) ]]; then ln -s ~/g/.gitconfig ~/.gitconfig; fi
-      if ! [[ ( -f ~/.pureline.conf ) ]]; then ln -s ~/g/.pureline.conf ~/.pureline.conf; fi
+      if ! [[ ( -f ~/.pureline.conf ) ]]; then cp ~/g/.pureline.conf ~/.pureline.conf; fi
 
       export GPG_TTY="$(tty)" #TODO(bernadinm): https://github.com/keybase/keybase-issues/issues/2798
       # vimrc
@@ -61,15 +61,18 @@
       alias testtts='echo "xsel | mimic --setf duration_stretch=0.6 --setf int_f0_target_mean=120 -voice rms"'
       alias ww='sudo ddccontrol -r 0x60 -w 27 dev:/dev/i2c-5 &> /dev/null'
       alias pp='sudo ddccontrol -r 0x60 -w 18 dev:/dev/i2c-5 &> /dev/null'
+      alias cat='bat'
       set -o ignoreeof
       source /etc/profile.local
       EOF
       if test -f "$HOME/.profile"; then
         . "$HOME/.profile"
       fi
+
       if [ "$TERM" != "linux" ]; then
         source ~/g/pureline/pureline ~/.pureline.conf
       fi
+
       # lynx config
       export WWW_HOME=https://duckduckgo.com/lite/
       # Private ENV vars
