@@ -64,6 +64,7 @@
         clipit
         xorg.xprop
         xautolock # timer to lock screen
+        i3-layout-manager
         i3status # gives you the default i3 status bar
         i3lock-fancy-rapid #default i3 screen locker
         i3blocks #if you are planning on using i3blocks over i3status
