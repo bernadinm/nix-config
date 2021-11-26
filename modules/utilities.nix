@@ -52,5 +52,6 @@
     tldr # man alt
     gping # ping alt
     hck # cut alt
+    xh # curl alt
   ];
 }
