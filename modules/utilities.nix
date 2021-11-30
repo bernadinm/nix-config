@@ -36,6 +36,7 @@
     gh
     termite
     neofetch
+    gcalcli
 
     navi
     fzf
