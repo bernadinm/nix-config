@@ -14,6 +14,7 @@
     python37Packages.pillow
     python37Packages.setuptools
     git
+    inetutils
     delta
     bash
     glib
