@@ -17,6 +17,7 @@
       ../../modules/monitoring.nix
       ../../modules/desktop.nix
       ../../modules/utilities.nix
+      ../../modules/coding.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
