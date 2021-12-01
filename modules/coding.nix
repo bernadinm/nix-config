@@ -15,6 +15,7 @@
     shellcheck # used with bash
     gnumake # coding make files
     glib # c wrappers
+    cargo # coding for rust
 
     pandoc # convert markdown to any file
 
