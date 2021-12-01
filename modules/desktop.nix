@@ -33,6 +33,7 @@
 
     rofi
     dmenu
+    dunst # system notification
 
     w3m-full
 
