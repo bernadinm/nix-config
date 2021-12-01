@@ -16,6 +16,7 @@
     gnumake # coding make files
     glib # c wrappers
     cargo # coding for rust
+    pkg-config # packging with rust
 
     pandoc # convert markdown to any file
 
