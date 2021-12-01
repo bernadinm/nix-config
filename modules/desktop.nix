@@ -34,6 +34,7 @@
     rofi
     dmenu
     dunst # system notification
+    libnotify # system notification
 
     w3m-full
 
