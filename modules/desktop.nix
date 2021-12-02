@@ -46,6 +46,18 @@
 
   ];
 
+  # San Francisco, California for Redshift for screen color changing
+  location.provider = "manual";
+  location.latitude = 37.773972;
+  location.longitude = -122.431297;
+  services.redshift = {
+    enable = true;
+    temperature = {
+      day = 5500;
+      night = 3200;
+    };
+  };
+
   services.xserver = {
     enable = true;
 
