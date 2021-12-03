@@ -3,7 +3,8 @@
 {
   environment.systemPackages = with pkgs; [
     # music producing software
-    ardour
+    ardour # daw
+    mixxx # audio mixer
 
     # gaming
 
