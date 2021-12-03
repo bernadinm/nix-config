@@ -4,6 +4,7 @@
   environment.systemPackages = with pkgs; [
     # music producing software
     ardour # daw
+    lmms # daw
     mixxx # audio mixer for dj
     calf # audio plugins for daw
 
