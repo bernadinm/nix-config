@@ -71,6 +71,10 @@
       alias grhom='git reset --hard origin/master'
       alias gp='git pull'
       alias gph='git pull --hard'
+      alias gd='git diff'
+      alias gs='git status'
+      alias gds='git diff --staged'
+      alias gau='git add -u'
       freshfetch # bash init
       EOF
       if test -f "$HOME/.profile"; then
