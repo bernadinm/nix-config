@@ -44,6 +44,7 @@
       inherit (texlive) scheme-small titling collection-langfrench cm-super;
     })
 
+    pavucontrol # visual sound control
   ];
 
   # San Francisco, California for Redshift for screen color changing
@@ -91,6 +92,15 @@
       ];
     };
   };
+
+  # Enable sound.
+  sound.enable = true;
+  hardware.pulseaudio = {
+    enable = true;
+    package = pkgs.pulseaudioFull;
+  };
+
+  hardware.bluetooth.enable = true; # enable bluethooth
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.miguel = {

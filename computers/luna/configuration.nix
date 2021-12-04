@@ -26,7 +26,6 @@
 
   networking.hostName = "Luna"; # Define your hostname.
   networking.wireless.enable = true; # Enables wireless support via wpa_supplicant.
-  hardware.bluetooth.enable = true; # enable bluethooth
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
@@ -68,10 +67,6 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.hplip pkgs.canon-cups-ufr2 ];
-
-  # Enable sound.
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;

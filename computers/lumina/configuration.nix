@@ -74,15 +74,6 @@
   services.flatpak.enable = true;
   xdg.portal.enable = true;
 
-  # Enable sound.
-  sound.enable = true;
-  hardware.pulseaudio = {
-    enable = true;
-    package = pkgs.pulseaudioFull;
-  };
-
-  hardware.bluetooth.enable = true; # enable bluethooth
-
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver = {
     libinput.touchpad.naturalScrolling = true;
