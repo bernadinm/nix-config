@@ -63,6 +63,15 @@
       alias pp='sudo ddccontrol -r 0x60 -w 18 dev:/dev/i2c-5 &> /dev/null'
       set -o ignoreeof
       source /etc/profile.local
+      alias bc='bc <<< '
+      alias gpom='git pull origin master'
+      alias gcb='git checkout -b '
+      alias gc='git checkout'
+      alias grh='git reset --hard'
+      alias grhom='git reset --hard origin/master'
+      alias gp='git pull'
+      alias gph='git pull --hard'
+      freshfetch # bash init
       EOF
       if test -f "$HOME/.profile"; then
         . "$HOME/.profile"
