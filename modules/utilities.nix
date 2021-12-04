@@ -17,6 +17,7 @@
     killall # system kill
     termite # terminal
     bc # calc
+    jq # jsonquery
 
     navi # cheat files
     fzf # fuzzy find
