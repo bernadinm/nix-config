@@ -18,6 +18,7 @@
     termite # terminal
     bc # calc
     jq # jsonquery
+    youtubeDL # youtube dl
 
     navi # cheat files
     fzf # fuzzy find
