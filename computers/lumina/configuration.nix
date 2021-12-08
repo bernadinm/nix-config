@@ -19,6 +19,7 @@
       ../../modules/desktop.nix
       ../../modules/utilities.nix
       ../../modules/coding.nix
+      ../../modules/music.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
