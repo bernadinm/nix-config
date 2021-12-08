@@ -16,10 +16,11 @@ sudo nixos-rebuild switch -I nixos-config=/home/miguel/git/bernadinm/nix-config/
 [configuration.nix](./configuration.nix)
 
 ## Next Steps
-- [ ] Setting up [Home Manager](https://nixos.wiki/wiki/Home_Manager)
-- [ ] Installing local apps using [Home Manager](https://nixos.wiki/wiki/Home_Manager)
+- [x] Import specific groups of apps via modules
+- [x] Source external git repositories using git submodules
+- [ ] Consider Setting up [Home Manager](https://nixos.wiki/wiki/Home_Manager)
 - [ ] Installing instructions for cloud and local use (virtualbox)
-- [ ] _and more_
+- [ ] Installing instructions for Rasberry Pi
 
 # Authors
 
