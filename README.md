@@ -9,6 +9,7 @@ When installing NixOS, you want to use a configuration.nix file to configure you
 Since this is a custom nix-config, you can configure your computers by running the following command below:
 
 ```bash
+git submodule update --init --recursive # fetch external vendor as submodules
 sudo nixos-rebuild switch -I nixos-config=/home/miguel/git/bernadinm/nix-config/computers/lumina/configuration.nix
 ```
 
