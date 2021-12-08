@@ -10,6 +10,7 @@
     discord
     slack
     signal-desktop
+    keybase-gui
 
     # visual comm
     tigervnc
