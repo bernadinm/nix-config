@@ -28,7 +28,8 @@
 
   boot.initrd.luks.devices.nixos.device = "/dev/disk/by-uuid/0ec6024a-636d-4736-a299-83b3c071d9a9";
   boot.initrd.luks.devices.nixos.preLVM = true;
-  services.ddclient = { enable = true; configFile = "/home/miguel/configs/ddclient/ddclient.conf"; }; # dynamicdns
+  #Bug introduced here: https://github.com/NixOS/nixpkgs/issues/149519
+  #services.ddclient = { enable = true; configFile = "/home/miguel/configs/ddclient/ddclient.conf"; }; # dynamicdns
   services.xserver.videoDrivers = [ "nvidia" ];
   # nixpkgs.config.allowUnfree = true;
 
@@ -46,9 +47,10 @@
 
   environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw 
 
-  environment.etc = {
-    "resolv.conf".text = "nameserver 8.8.8.8\n";
-  };
+  # Removing becuase it conflicts with protonvpn
+  # environment.etc = {
+  #   "resolv.conf".text = "nameserver 8.8.8.8\n";
+  # };
 
   services.bind = {
     enable = true;
