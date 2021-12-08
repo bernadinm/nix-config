@@ -1,0 +1,3 @@
+[submodule "vendors/musnix"]
+	path = vendors/musnix
+	url = https://github.com/musnix/musnix
