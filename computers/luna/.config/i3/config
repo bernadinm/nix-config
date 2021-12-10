@@ -33,7 +33,7 @@ for_window [class=".*"] border pixel 1
 exec_always "xrandr --output eDP1 --dpi 120"
 
 # Screen (enable second monitor)
-exec_always "xrandr --output DP1 --auto --right-of eDP1"
+exec_always "if [[ $(xrandr --listmonitors | grep 'Monitors: 1') ]]; then xrandr --output DP1 --off; else xrandr --output DP1 --auto --right-of eDP1; fi"
 
 # Trackpad
 exec_always "xinput set-float-prop 12 'libinput Accel Speed' .65"
