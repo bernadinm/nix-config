@@ -33,7 +33,7 @@ for_window [class=".*"] border pixel 1
 exec_always "xrandr --output eDP1 --dpi 120"
 
 # Screen (enable second monitor)
-exec_always "if [[ $(xrandr --listmonitors | grep 'Monitors: 1') ]]; then xrandr --output DP1 --off; else xrandr --output DP1 --auto --right-of eDP1; fi"
+exec_always "if [[ $(xrandr --current | grep ' connected' | wc -l) > 1 ]]; then xrandr --output DP2 --auto --right-of eDP1; else xrandr --output DP1 --off; fi"
 
 # Trackpad
 exec_always "xinput set-float-prop 12 'libinput Accel Speed' .65"
@@ -205,3 +205,12 @@ bindsym $mod+r mode "resize"
 bar {
         status_command i3status
 }
+
+bindsym --release Print exec scrot '%Y-%m-%d-%H-%M-%S_$wx$h.png' -e 'mv $f ~/Pictures/Screenshots'
+
+new_window pixel 0
+
+gaps inner 12
+gaps outer 0
+
+exec --no-startup-id unclutter --timeout 3 &
