@@ -26,6 +26,11 @@
 
     feh # wallpaper manager
 
+    scrot # screen capture
+    screenfetch # used with scrot
+
+    unclutter # hides mouse during inactivity 
+
     # text file managers
     vifm
     ranger
