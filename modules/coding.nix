@@ -18,6 +18,9 @@
     cargo # coding for rust
     pkg-config # packging with rust
 
+    deno # javascript runtime
+    nodejs # javascript runtime
+
     pandoc # convert markdown to any file
 
     gh # github util
