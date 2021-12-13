@@ -91,6 +91,7 @@
     ddcutil
     i2c-tools
     libinput-gestures
+    nvtop # nvidia gpu monitor
   ];
 
   # Monitor Control via CLI
