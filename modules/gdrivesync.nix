@@ -63,6 +63,7 @@
       source /etc/profile.local
       alias bc='bc <<< '
       alias gpom='git pull origin master'
+      alias gPom='git push origin master'
       alias gcb='git checkout -b '
       alias gc='git checkout'
       alias grh='git reset --hard'
