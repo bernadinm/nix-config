@@ -19,6 +19,7 @@
     bc # calc
     jq # jsonquery
     youtubeDL # youtube dl
+    ts # task spooler batch queue
 
     navi # cheat files
     fzf # fuzzy find
