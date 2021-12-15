@@ -31,6 +31,9 @@
   #Bug introduced here: https://github.com/NixOS/nixpkgs/issues/149519
   #services.ddclient = { enable = true; configFile = "/home/miguel/configs/ddclient/ddclient.conf"; }; # dynamicdns
   services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.deviceSection = ''
+    Option "TearFree" "true"
+  '';
   # nixpkgs.config.allowUnfree = true;
 
   # Setting the hostname of NixOS
