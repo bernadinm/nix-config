@@ -3,26 +3,20 @@
 {
   environment.systemPackages = with pkgs; [
     # base
-    google-chrome
-    xclip
-    xsel
-    x2goclient
-    torbrowser
-    chromium
+    xclip # clipboard history
+    xsel # clipboard select
+    xorg.xev # discover keybindings
+    x2goclient # remote desktop client
 
-    # Plasma desktop
-    kdeplasma-addons
-    kdeconnect
-    kdenlive
-    okular
-    konversation
-    fusuma
-    gwenview
+    torbrowser # browser
+    chromium # browser
+    google-chrome # browser
 
-    # Fonts
-    font-awesome
-    compton
-    lxqt.compton-conf
+    playerctl # music control
+
+    font-awesome # font
+    compton # window property changer
+    lxqt.compton-conf # window property config
 
     feh # wallpaper manager
 
@@ -32,24 +26,31 @@
     unclutter # hides mouse during inactivity 
 
     # text file managers
-    vifm
-    ranger
-    nnn
+    vifm # text file manager
+    ranger # text file manager
+    nnn # text file manager
+
+    pavucontrol # visual sound control
 
     rofi
     dmenu
     dunst # system notification
     libnotify # system notification
 
-    w3m-full
-
     spectacle # screenshot capture util
-    kile # latex authoring tool for kde
     (texlive.combine {
       inherit (texlive) scheme-small titling collection-langfrench cm-super;
     })
 
-    pavucontrol # visual sound control
+    # Plasma desktop
+    kdeplasma-addons
+    kdeconnect
+    kdenlive
+    okular
+    konversation
+    fusuma
+    kile # latex authoring tool for kde
+    gwenview # gui file manager
   ];
 
   # San Francisco, California for Redshift for screen color changing
@@ -77,7 +78,7 @@
 
     windowManager.i3 = {
       enable = true;
-      package =  pkgs.i3-gaps;
+      package = pkgs.i3-gaps;
       extraPackages = with pkgs; [
         dmenu #application launcher most people use
         rofi
