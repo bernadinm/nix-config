@@ -32,8 +32,8 @@
 
     pavucontrol # visual sound control
 
-    rofi
-    dmenu
+    rofi # program launcher
+    dmenu # program launcher
     dunst # system notification
     libnotify # system notification
 
