@@ -28,5 +28,6 @@
 
     # visualizer
     cava # music visualizer
+    projectm # music visualizer
   ];
 }
