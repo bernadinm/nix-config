@@ -65,6 +65,8 @@
     };
   };
 
+  services.atd.enable = true;
+
   services.xserver = {
     enable = true;
 
