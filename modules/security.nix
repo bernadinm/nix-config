@@ -30,6 +30,10 @@
     # port analyzer
     rustscan
     nmap
+
+    # network probe
+    tshark # terminal wshark
+    wireshark # gui wshark
   ];
 
   #services.keycloak = {
