@@ -4,6 +4,7 @@
   environment.systemPackages = with pkgs; [
     # base
     python3 # coding
+    python37Full # python3.7 full
     libffi # coding used with pip
     python37Packages.virtualenv # coding
     python37Packages.pip # coding
