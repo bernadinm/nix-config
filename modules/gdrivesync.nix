@@ -68,6 +68,8 @@
       alias gc='git checkout'
       alias grh='git reset --hard'
       alias grhom='git reset --hard origin/master'
+      alias gfa='git fetch --all'
+      alias grom='git rebase origin/master'
       alias gp='git pull'
       alias gph='git pull --hard'
       alias gd='git diff'
