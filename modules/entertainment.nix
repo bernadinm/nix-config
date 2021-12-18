@@ -37,6 +37,9 @@
 
     # Latex
     texlive.combined.scheme-full
+
+    # photography
+    darktable # editing
   ];
 
   programs.steam.enable = true;
