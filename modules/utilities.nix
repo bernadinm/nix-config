@@ -26,7 +26,7 @@
     nixpkgs-fmt # nixfmt
 
     # ML
-    gpt2tc # machine learning
+    # gpt2tc # machine learning
 
     bat # cut alt
     duf # df alt
