@@ -109,6 +109,9 @@
     package = pkgs.pulseaudioFull;
   };
 
+  # See: https://github.com/NixOS/nixpkgs/commit/224a6562a4880195afa5c184e755b8ecaba41536
+  boot.loader.systemd-boot.configurationLimit = 50;
+
   hardware.bluetooth.enable = true; # enable bluethooth
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
