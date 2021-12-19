@@ -206,3 +206,13 @@ bindsym $mod+r mode "resize"
 bar {
         status_command i3status
 }
+
+# On desktop start-up. Synaptics device id is (12).
+exec synclient TapButton1=1
+exec synclient TapButton2=3
+exec synclient ClickFinger2=1
+exec synclient TapButton3=0
+exec synclient ClickFinger3=0
+exec synclient HorizTwoFingerScroll=1
+exec synclient VertTwoFingerScroll=1
+exec xinput set-prop 12 "Device Accel Constant Deceleration" 0.9

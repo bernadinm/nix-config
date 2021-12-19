@@ -113,6 +113,7 @@
   boot.loader.systemd-boot.configurationLimit = 50;
 
   hardware.bluetooth.enable = true; # enable bluethooth
+  services.touchegg.enable = true; # enable multi touch gesture
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.miguel = {
