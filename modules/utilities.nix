@@ -20,6 +20,7 @@
     jq # jsonquery
     youtubeDL # youtube dl
     ts # task spooler batch queue
+    bind # dns utils dig nslookup
 
     navi # cheat files
     fzf # fuzzy find
