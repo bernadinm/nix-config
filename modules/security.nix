@@ -36,6 +36,9 @@
     wireshark # gui wshark
   ];
 
+  # Block failed login attempts from SSH 
+  services.fail2ban.enable = true;
+
   #services.keycloak = {
   #  enable = true;
   #  #frontendUrl = "key.lumina.miguel.engineer/auth";
