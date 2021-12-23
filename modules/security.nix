@@ -168,12 +168,12 @@
   #};
 
   # Internal Private Mesh Network
-  services.nebula.networks.hamachi = {
-      enable = true;
-      cert = "/home/miguel/git/slackhq/nebula/server.crt";
-      key = "/home/miguel/git/slackhq/nebula/server.key";
-      firewall.inbound = [ { port = "any"; proto = "any"; host = "any"; } ];
-      firewall.outbound = [ { port = "any"; proto = "any"; host = "any"; } ];
+  services.nebula.networks.mesh = {
+    enable = true;
+    cert = "/home/miguel/git/slackhq/nebula/server.crt";
+    key = "/home/miguel/git/slackhq/nebula/server.key";
+    firewall.inbound = [ { port = "any"; proto = "any"; host = "any"; } ];
+    firewall.outbound = [ { port = "any"; proto = "any"; host = "any"; } ];
   };
 
   services.teamviewer.enable = true;

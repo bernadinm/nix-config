@@ -8,7 +8,7 @@
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      # <nixos-unstable/nixos/modules/services/networking/nebula.nix>
+      <nixos-unstable/nixos/modules/services/networking/nebula.nix>
       # <nixos-unstable/nixos/modules/services/web-apps/keycloak.nix>
       ../../modules/gdrivesync.nix
       ../../modules/entertainment.nix
@@ -115,18 +115,17 @@
   };
 
   # Enable Nebula Mesh Network
-  services.nebula.networks.hamachi = {
-      ca = "/home/miguel/git/slackhq/nebula/ca.crt";
-      isLighthouse = true;
-    };
+  services.nebula.networks.mesh = {
+    ca = "/home/miguel/git/slackhq/nebula/ca.crt";
+    isLighthouse = true;
   };
 
-  # Install the flakes edition
-  nix.package = pkgs.nixFlakes;
-  # Enable the nix 2.0 CLI and flakes support feature-flags
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes 
-  '';
+  # # Install the flakes edition
+  # nix.package = pkgs.nixFlakes;
+  # # Enable the nix 2.0 CLI and flakes support feature-flags
+  # nix.extraOptions = ''
+  #   experimental-features = nix-command flakes 
+  # '';
 
   # List services that you want to enable:
 
