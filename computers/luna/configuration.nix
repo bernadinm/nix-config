@@ -93,6 +93,12 @@
   services.ddccontrol.enable = true;
   hardware.i2c.enable = true;
 
+  # Enable Nebula Mesh Network
+  services.nebula.networks.hamachi = {
+      staticHostMap = { 192.168.1.24 = [ "lumina.miguel.engineer:4242" ] ; } 
+    };
+  };
+
   # Install the flakes edition
   nix.package = pkgs.nixFlakes;
   # Enable the nix 2.0 CLI and flakes support feature-flags
