@@ -5,7 +5,6 @@
     # base
     zoom-us
     mumble
-    weechat
     profanity
     discord
     slack
@@ -14,6 +13,12 @@
 
     # visual comm
     tigervnc
+
+    # weechat
+    weechat
+    weechatScripts.wee-slack 
+    weechatScripts.weechat-notify-send
+    weechatScripts.weechat-matrix-bridge
   ];
 
   disabledModules = [
