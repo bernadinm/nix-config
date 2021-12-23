@@ -114,20 +114,11 @@
     wheelNeedsPassword = false;
   };
 
-  # Enable Nebula Mesh Network
+  # Enable Nebula Mesh Network and set as lighthouse
   services.nebula.networks.mesh = {
     ca = "/home/miguel/git/slackhq/nebula/ca.crt";
     isLighthouse = true;
   };
-
-  # # Install the flakes edition
-  # nix.package = pkgs.nixFlakes;
-  # # Enable the nix 2.0 CLI and flakes support feature-flags
-  # nix.extraOptions = ''
-  #   experimental-features = nix-command flakes 
-  # '';
-
-  # List services that you want to enable:
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
