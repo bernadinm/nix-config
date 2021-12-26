@@ -18,6 +18,7 @@
       ../../modules/desktop.nix
       ../../modules/utilities.nix
       ../../modules/coding.nix
+      <nixos-unstable/nixos/modules/services/networking/nebula.nix>
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -68,6 +69,9 @@
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.hplip pkgs.canon-cups-ufr2 ];
 
+  services.avahi.enable = true; # sometimes needed for finding on network
+  services.avahi.nssmdns = true;
+
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
   services.xserver.libinput.touchpad.naturalScrolling = true;
@@ -94,17 +98,9 @@
   hardware.i2c.enable = true;
 
   # Enable Nebula Mesh Network
-  services.nebula.networks.hamachi = {
-      staticHostMap = { 192.168.1.24 = [ "lumina.miguel.engineer:4242" ] ; } 
-    };
+  services.nebula.networks.mesh = {
+    staticHostMap = { "192.168.100.2" = [ "lumina.miguel.engineer:4242" ] ; };
   };
-
-  # Install the flakes edition
-  nix.package = pkgs.nixFlakes;
-  # Enable the nix 2.0 CLI and flakes support feature-flags
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes 
-  '';
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -112,6 +108,6 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "21.05"; # Did you read the comment?
+  system.stateVersion = "21.11"; # Did you read the comment?
 
 }
