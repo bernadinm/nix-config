@@ -40,6 +40,9 @@
 
     # photography
     darktable # editing
+
+    # graphics editing
+    inkscape # vector graphic editor
   ];
 
   programs.steam.enable = true;
