@@ -103,12 +103,6 @@
   services.xrdp.enable = true;
   services.xrdp.defaultWindowManager = "plasmashell";
 
-  # Open ports in the firewall.
-  networking.enableIPv6 = false;
-  networking.firewall.allowedTCPPorts = [ 80 443 4242 ]; # http https nebula
-  networking.firewall.allowedTCPPortRanges = [{ from = 1714; to = 1764; }]; # kde
-  networking.firewall.allowedUDPPortRanges = [{ from = 1714; to = 1764; }]; # kde
-
   security.sudo = {
     enable = true;
     wheelNeedsPassword = false;
@@ -116,7 +110,6 @@
 
   # Enable Nebula Mesh Network and set as lighthouse
   services.nebula.networks.mesh = {
-    ca = "/home/miguel/git/slackhq/nebula/ca.crt";
     isLighthouse = true;
   };
 

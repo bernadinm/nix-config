@@ -76,7 +76,7 @@
   #};
   # This didnt work above |
 
-  services.nginx.enable = true;
+  #services.nginx.enable = true;
   #services.nginx.virtualHosts."lumina.miguel.engineer" = {
   #    forceSSL = true;
   #    enableACME = true;
@@ -167,9 +167,16 @@
   #  };
   #};
 
+  # Open ports in the firewall.
+  networking.enableIPv6 = false;
+  networking.firewall.allowedTCPPorts = [ 80 443 4242 ]; # http https nebula
+  # networking.firewall.allowedTCPPortRanges = [{ from = 1714; to = 1764; }]; # kde
+  # networking.firewall.allowedUDPPortRanges = [{ from = 1714; to = 1764; }]; # kde
+
   # Internal Private Mesh Network
   services.nebula.networks.mesh = {
     enable = true;
+    ca = "/home/miguel/git/slackhq/nebula/ca.crt";
     cert = "/home/miguel/git/slackhq/nebula/server.crt";
     key = "/home/miguel/git/slackhq/nebula/server.key";
     firewall.inbound = [ { port = "any"; proto = "any"; host = "any"; } ];
