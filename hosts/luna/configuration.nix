@@ -69,9 +69,6 @@
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.hplip pkgs.canon-cups-ufr2 ];
 
-  services.avahi.enable = true; # sometimes needed for finding on network
-  services.avahi.nssmdns = true;
-
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
   services.xserver.libinput.touchpad.naturalScrolling = true;

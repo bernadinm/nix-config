@@ -73,9 +73,6 @@
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.hplip ];
 
-  services.avahi.enable = true; # sometimes needed for finding on network
-  services.avahi.nssmdns = true;
-
   services.flatpak.enable = true;
   xdg.portal.enable = true;
 
