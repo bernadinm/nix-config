@@ -31,7 +31,7 @@
   services.ddclient = { enable = true; configFile = "/home/miguel/configs/ddclient/ddclient.conf"; }; # dynamicdns
   services.xserver.videoDrivers = [ "nvidia" ];
   services.xserver.deviceSection = ''
-    Option "TearFree" "true"
+    Option "metamodes" "nvidia-auto-select +0+0 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On}"
   '';
   # nixpkgs.config.allowUnfree = true;
 
