@@ -34,5 +34,8 @@
     nodejs # javascript runtime
 
     pandoc # convert markdown to any file
+
+    # nix
+    nix-prefetch-git # git package util
   ];
 }

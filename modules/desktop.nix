@@ -3,7 +3,7 @@
 {
   imports =
     [
-      ../vendors/nixos-addblock-hosts/hosts.nix # enable adblocker
+      ../modules/adblock.nix
     ];
 
   environment.systemPackages = with pkgs; [
