@@ -1,6 +1,11 @@
 { config, pkgs, ... }:
 
 {
+  imports =
+    [
+      ../vendors/nixos-addblock-hosts/hosts.nix # enable adblocker
+    ];
+
   environment.systemPackages = with pkgs; [
     # base
     xclip # clipboard history
