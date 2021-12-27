@@ -1,3 +1,6 @@
 [submodule "vendors/musnix"]
 	path = vendors/musnix
 	url = https://github.com/musnix/musnix
+[submodule "vendors/nixos-addblock-hosts"]
+	path = vendors/nixos-addblock-hosts
+	url = https://github.com/fps/nixos-addblock-hosts
