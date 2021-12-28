@@ -20,7 +20,7 @@ let
     installPhase = ''
       mkdir -p $out/etc
       # filter whitelist
-      grep -Ev '(${whitelist})' hosts > $out/etc/hosts
+      grep -Ev '(${whitelist})' alternates/fakenews-gambling/hosts > $out/etc/hosts
       # filter blacklist
       cat << EOF >> $out/etc/hosts
       ${blacklist}
