@@ -30,8 +30,8 @@
   boot.initrd.luks.devices.nixos.preLVM = true;
   services.ddclient = { enable = true; configFile = "/home/miguel/configs/ddclient/ddclient.conf"; }; # dynamicdns
   services.xserver.videoDrivers = [ "nvidia" ];
-  services.xserver.deviceSection = ''
-    Option "metamodes" "nvidia-auto-select +0+0 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On}"
+  services.xserver.screenSection = ''
+    Option "metamodes" "nvidia-auto-select +0+0 { ForceCompositionPipeline = On }"
   '';
   # nixpkgs.config.allowUnfree = true;
 
