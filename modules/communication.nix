@@ -14,7 +14,7 @@
     # visual comm
     tigervnc
 
-    # weechat
+    # weechat irc
     weechat
     weechatScripts.wee-slack 
     weechatScripts.weechat-notify-send
