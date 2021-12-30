@@ -75,6 +75,7 @@
   services.avahi.nssmdns = true;
 
   services.atd.enable = true;
+  services.locate.enable = true;
 
   services.xserver = {
     enable = true;
