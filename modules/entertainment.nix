@@ -43,6 +43,9 @@
 
     # graphics editing
     inkscape # vector graphic editor
+
+    # audio editing
+    audacity
   ];
 
   programs.steam.enable = true;
