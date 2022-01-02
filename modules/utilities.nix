@@ -15,7 +15,7 @@
     gspeech # tts
     picotts # tts
     killall # system kill
-    termite # terminal
+    alacritty # terminal
     bc # calc
     jq # jsonquery
     youtubeDL # youtube dl
