@@ -9,6 +9,8 @@
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
+  # Crosshair Mouse Driver
+  hardware.ckb-next.enable = true;
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ "kvm-amd" ];
