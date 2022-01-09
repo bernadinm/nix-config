@@ -118,7 +118,8 @@ bindsym $mod+e layout toggle split
 bindsym $mod+Shift+space floating toggle
 
 # Lock
-bindsym $mod+Shift+q exec i3lock-fancy-rapid 50 15 # -i /home/miguel/Documents/lumina-d-cube-wallpaper.png
+exec xautolock -detectsleep -time 30 -locker "i3lock-fancy-rapid 15 30" -notify 30 -notifier "notify-send -u critical -t 10000 -- 'LOCKING screen in 30 seconds'"
+bindsym $mod+Shift+q exec xautolock -locknow # lock screen
 bindsym $mod+$sup+Shift+q exec --no-startup-id systemctl suspend # suspend
 
 # change focus between tiling / floating windows
