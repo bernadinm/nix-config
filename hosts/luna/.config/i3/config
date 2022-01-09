@@ -215,6 +215,11 @@ gaps outer 0
 
 exec --no-startup-id unclutter --timeout 3 &
 
+# Lock
+exec xautolock -detectsleep -time 30 -locker "i3lock-fancy-rapid 15 30" -notify 30 -notifier "notify-send -u critical -t 10000 -- 'LOCKING screen in 30 seconds'"
+bindsym $mod+Shift+q exec xautolock -locknow # lock screen
+bindsym $mod+$sup+Shift+q exec --no-startup-id systemctl suspend # suspend
+
 # On desktop start-up. Synaptics device id is (12).
 exec synclient TapButton1=1
 exec synclient TapButton2=3
