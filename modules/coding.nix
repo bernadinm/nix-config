@@ -3,12 +3,12 @@
 {
   environment.systemPackages = with pkgs; [
     # python 
-    python3 # coding
-    python37Full # python3.7 full
-    python37Packages.virtualenv # coding
-    python37Packages.pip # coding
-    python37Packages.pillow # coding
-    python37Packages.setuptools # coding
+    python39Full # python3.9 full
+    python39Packages.virtualenv # coding
+    python39Packages.pip # coding
+    python39Packages.pillow # coding
+    python39Packages.setuptools # coding
+    python39Packages.numpy
     libffi # coding used with pip
     gcc # coding used with pip
 
