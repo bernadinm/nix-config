@@ -108,6 +108,8 @@
 
         feh # wallpaper manager
         vifm # graphic file manager
+
+        brightnessctl # brightness ctrl
       ];
     };
   };
