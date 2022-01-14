@@ -26,7 +26,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "Luna"; # Define your hostname.
-  networking.networkmanager.enable = true; # Use networkmanager for wifi
+  networking.wireless.enable = true; # Enables wireless support via wpa_supplicant.
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
