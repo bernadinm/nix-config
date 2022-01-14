@@ -81,6 +81,17 @@
     wheelNeedsPassword = false;
   };
 
+  # hybrid sleep when press power button
+  services.logind.extraConfig = ''
+    HandlePowerKey=hybrid-sleep
+    HandleLidSwitch=hybrid-sleep
+    HandleLidSwitchExternalPower=suspend
+  '';
+
+  # screen locker
+  programs.xss-lock.enable = true;
+  programs.xss-lock.lockerCommand = "${pkgs.i3lock-fancy-rapid}/bin/i3lock-fancy-rapid 15 30";
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
