@@ -34,6 +34,7 @@
     nodejs # javascript runtime
 
     pandoc # convert markdown to any file
+    hugo # website engine
 
     # nix
     nix-prefetch-git # git package util
