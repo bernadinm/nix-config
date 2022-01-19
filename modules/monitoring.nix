@@ -29,5 +29,8 @@
     # visualizer
     cava # music visualizer
     projectm # music visualizer
+
+    lshw # hw probe
+    dmidecode # hw probe
   ];
 }
