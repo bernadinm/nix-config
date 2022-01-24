@@ -5,6 +5,9 @@
     google-cloud-sdk
     colordiff
     gcsfuse
+
+    git-annex # sync remote files
+    rclone # sync remote files
   ];
 
   # when running un multiple environments sync them on login
