@@ -20,6 +20,7 @@
       ../../modules/utilities.nix
       ../../modules/coding.nix
       ../../modules/music.nix
+      ../../modules/3d-rendering.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
