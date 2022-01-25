@@ -34,6 +34,7 @@
     vifm # text file manager
     ranger # text file manager
     nnn # text file manager
+    dolphin # gui file manager
 
     pavucontrol # visual sound control
 
