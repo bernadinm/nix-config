@@ -6,6 +6,7 @@
     wget # system
     vim # system
     unzip # system
+    rar # archives
     bash # system interface
     terraform # automation
     whois # domain info
