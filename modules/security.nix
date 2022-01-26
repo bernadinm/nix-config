@@ -34,6 +34,9 @@
     # network probe
     tshark # terminal wshark
     wireshark # gui wshark
+
+    yubikey-manager # yubikey
+    yubikey-personalization # yubikey
   ];
 
   # Block failed login attempts from SSH 
