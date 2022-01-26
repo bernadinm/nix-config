@@ -4,6 +4,7 @@
   environment.systemPackages = with pkgs; [
     # base
     gnupg
+    paperkey
     pinentry
 
     # crypto 
