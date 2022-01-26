@@ -188,6 +188,9 @@
 
   services.teamviewer.enable = true;
 
+  # Enable Yubikey Smartcard Mode
+  services.pcscd.enable = true;
+
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
