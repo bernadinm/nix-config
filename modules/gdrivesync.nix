@@ -29,23 +29,30 @@
           gcloud auth application-default login
       fi
 
-      # Persist NixOS on GCP
+      # Fetch git annex shared files
       # Prereq: gsutil mb -c regional -l us-west1 gs://nixos-persist
-      mkdir -p ~/g
-      if ! pgrep -x gcsfuse &>/dev/null; then gcsfuse -file-mode=600 nixos-persist ~/g; fi
-      ls -l ~/g &>/dev/null; if [ $? -eq 2 ]; then fusermount -uz ~/g && gcsfuse -file-mode=600 nixos-persist ~/g; echo Restored gcsfuse connection...; fi
+      gpg --list-key 915FA8A6391DDAC6 2>&1 > /dev/null || error_code=$?
+      if [[ "$error_code" -eq 2 ]]; then curl -sSL gpg.miguel.engineer | gpg --import -; fi
+      if ! [[ ( -d ~/git/bernadinm/g) ]]; then 
+         WD="~/git/bernadinm/g"
+         mkdir -p $WD;
+         git clone https://github.com/bernadinm/g $WD;
+         cd $WD;
+         git annex init
+         # TODO(bernadinm): fetch IAM for GCS, source it, and run git annex enableremote; and get essentials
+      fi
 
       # Setting vi alias to vim
       alias vi="vim"
       alias matrix='echo -e "1"; while $t; do for i in `seq 1 40`;do r="$[($RANDOM % 2)]";h="$[($RANDOM % 4)]";if [ $h -eq 1 ]; then v="0 $r";else v="1 $r";fi;v2="$v2 $v";done;echo -e $v2 | GREP_COLOR="1;32" grep --color "[^ ]";v2=""; sleep .01;done;'
 
       # configurating SSH, GPG, MSMTP, IMAP, GIT keys
-      if ! [[ ( -d ~/.ssh ) ]]; then ln -s ~/g/.ssh ~/.ssh; fi
-      if ! [[ ( -d ~/.gnupg ) ]]; then ln -s ~/g/.gnupg ~/.gnupg; fi
-      if ! [[ ( -f ~/.msmtprc ) ]]; then ln -s ~/g/.msmtprc ~/.msmtprc; fi
-      if ! [[ ( -f ~/.offlineimaprc ) ]]; then ln -s ~/g/.offlineimaprc ~/.offlineimaprc; fi
-      if ! [[ ( -f ~/.gitconfig ) ]]; then ln -s ~/g/.gitconfig ~/.gitconfig; fi
-      if ! [[ ( -f ~/.pureline.conf ) ]]; then cp ~/g/.pureline.conf ~/.pureline.conf; fi
+      if ! [[ ( -d ~/.ssh ) ]]; then ln -s ~/git/bernadinm/g/.ssh ~/.ssh; fi
+      if ! [[ ( -d ~/.gnupg ) ]]; then ln -s ~/git/bernadinm/g/.gnupg ~/.gnupg; fi
+      if ! [[ ( -f ~/.msmtprc ) ]]; then ln -s ~/git/bernadinm/g/.msmtprc ~/.msmtprc; fi
+      if ! [[ ( -f ~/.offlineimaprc ) ]]; then ln -s ~/git/bernadinm/g/.offlineimaprc ~/.offlineimaprc; fi
+      if ! [[ ( -f ~/.gitconfig ) ]]; then ln -s ~/git/bernadinm/g/.gitconfig ~/.gitconfig; fi
+      if ! [[ ( -f ~/.pureline.conf ) ]]; then ln -s ~/git/bernadinm/g/.pureline.conf ~/.pureline.conf; fi
 
       export GPG_TTY="$(tty)" #TODO(bernadinm): https://github.com/keybase/keybase-issues/issues/2798
       # vimrc
@@ -92,7 +99,7 @@
       fi
 
       if [ "$TERM" != "linux" ]; then
-        source ~/g/pureline/pureline ~/.pureline.conf
+        source ~/git/bernadinm/g/pureline/pureline ~/.pureline.conf
       fi
 
       # lynx config
@@ -101,5 +108,9 @@
       if test -f "$HOME/g/.private.env"; then
         . "$HOME/g/.private.env"
       fi
+
+      # Use agent socket per terminal
+      gpg-connect-agent /bye
+      export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
     '';
 }
