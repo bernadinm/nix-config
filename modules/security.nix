@@ -192,8 +192,23 @@
   # Enable Yubikey Smartcard Mode
   services.pcscd.enable = true;
 
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  # Enable the Gnugp daemon instead of SSH.
+    programs = {
+      ssh.startAgent = false;
+      ssh.extraConfig = ''
+      Host github.com
+          StrictHostKeyChecking no
+      '';
+      gnupg.agent = {
+        enable = true;
+        enableSSHSupport = true;
+      };
+    };
+
+  environment.shellInit = ''
+    gpg-connect-agent /bye
+    export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+  '';
 
   # Audit all programs run
   security.auditd.enable = true;
