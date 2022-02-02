@@ -55,20 +55,21 @@
   #   "resolv.conf".text = "nameserver 8.8.8.8\n";
   # };
 
-  services.bind = {
-    enable = true;
-    extraConfig = ''
-      include "/var/lib/secrets/dnskeys.conf";
-    '';
-    zones = [
-      rec {
-        name = "lumina.miguel.engineer";
-        file = "/var/db/bind/${name}";
-        master = true;
-        extraConfig = "allow-update { key rfc2136key.lumina.miguel.engineer.; };";
-      }
-    ];
-  };
+  # TODO(bernadinm): removing as it's not needed at the moment
+  # services.bind = {
+  #   enable = true;
+  #   extraConfig = ''
+  #     include "/var/lib/secrets/dnskeys.conf";
+  #   '';
+  #   zones = [
+  #     rec {
+  #       name = "lumina.miguel.engineer";
+  #       file = "/var/db/bind/${name}";
+  #       master = true;
+  #       extraConfig = "allow-update { key rfc2136key.lumina.miguel.engineer.; };";
+  #     }
+  #   ];
+  # };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
