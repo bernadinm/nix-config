@@ -22,6 +22,7 @@
     pciutils
     ncdu
     lsof
+    glances
 
     # crypto mon
     cointop
