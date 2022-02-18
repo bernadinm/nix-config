@@ -16,6 +16,7 @@
     # })
     wineWowPackages.full
     winetricks
+    bottles
     sc-controller
     steam-run
     vulkan-tools
