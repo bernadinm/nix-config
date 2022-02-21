@@ -211,6 +211,13 @@
     export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
   '';
 
+  # TODO(bernadinm): enable challenge-response logins with:
+  # security.pam.yubico = {
+  #   enable = true;
+  #   debug = true;
+  #   mode = "challenge-response";
+  # };
+
   # Audit all programs run
   security.auditd.enable = true;
   security.audit.enable = true;
