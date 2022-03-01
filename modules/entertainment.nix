@@ -27,6 +27,7 @@
     krb5
     cmatrix
     _2048-in-terminal
+    uchess
 
     # drone configuration
     betaflight-configurator
