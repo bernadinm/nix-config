@@ -44,7 +44,7 @@
     pcmanfm # desktop cli
     neofetch # sysinfo
     freshfetch # sysinfo
-	speedtest-cli # internet speed chk
+    speedtest-cli # internet speed chk
     fast-cli # internet speed chk
     lynx # text browser
     aria # torrent
