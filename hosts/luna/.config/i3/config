@@ -237,3 +237,7 @@ exec synclient ClickFinger3=0
 exec synclient HorizTwoFingerScroll=1
 exec synclient VertTwoFingerScroll=1
 exec xinput set-prop 12 "Device Accel Constant Deceleration" 0.9
+
+# TODO(bernadinm): observed this bug after recent nix upgrade where mouse freezes after sleep.
+# This resolves always with this below.
+exec_always sudo modprobe -r psmouse && sudo modprobe psmouse
