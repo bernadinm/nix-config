@@ -20,9 +20,12 @@
 
     # password management
     pass
-    pass-otp
-    pass-tomb
-    tomb
+    passExtensions.pass-otp
+    passExtensions.pass-tomb
+    passExtensions.pass-audit
+    passExtensions.pass-import
+    passExtensions.pass-update
+    passExtensions.pass-genphrase
 
     # log analyzer
     goaccess
@@ -30,6 +33,7 @@
     # encryption
     openssl
     step-cli
+    tomb
 
     # port analyzer
     rustscan
