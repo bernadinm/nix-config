@@ -186,8 +186,8 @@
     ca = "/home/miguel/git/slackhq/nebula/ca.crt";
     cert = "/home/miguel/git/slackhq/nebula/server.crt";
     key = "/home/miguel/git/slackhq/nebula/server.key";
-    firewall.inbound = [ { port = "any"; proto = "any"; host = "any"; } ];
-    firewall.outbound = [ { port = "any"; proto = "any"; host = "any"; } ];
+    firewall.inbound = [{ port = "any"; proto = "any"; host = "any"; }];
+    firewall.outbound = [{ port = "any"; proto = "any"; host = "any"; }];
   };
 
   services.teamviewer.enable = true;
@@ -196,18 +196,18 @@
   services.pcscd.enable = true;
 
   # Enable the Gnugp daemon instead of SSH.
-    programs = {
-      ssh.startAgent = false;
-      ssh.extraConfig = ''
+  programs = {
+    ssh.startAgent = false;
+    ssh.extraConfig = ''
       Host github.com
           StrictHostKeyChecking no
-      '';
-      gnupg.agent = {
-        enable = true;
-        enableSSHSupport = true;
-        pinentryFlavor = "curses";
-      };
+    '';
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+      pinentryFlavor = "curses";
     };
+  };
 
   environment.shellInit = ''
     gpg-connect-agent /bye
