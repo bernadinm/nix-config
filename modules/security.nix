@@ -20,6 +20,9 @@
 
     # password management
     pass
+    pass-otp
+    pass-tomb
+    tomb
 
     # log analyzer
     goaccess
