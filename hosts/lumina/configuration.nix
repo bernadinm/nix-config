@@ -75,9 +75,6 @@
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.hplip ];
 
-  services.flatpak.enable = true;
-  xdg.portal.enable = true;
-
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver = {
     libinput.touchpad.naturalScrolling = true;
