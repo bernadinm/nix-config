@@ -231,5 +231,9 @@
   # security.audit.enable = true;
   # security.audit.rules = [
   #   "-a exit,always -F arch=b64 -S execve"
+
+  services.fprintd.enable = true;
+  security.pam.services.login.fprintAuth = true;
+  security.pam.services.xscreensaver.fprintAuth = true;
   # ];
 }
