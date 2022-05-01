@@ -111,6 +111,10 @@
     staticHostMap = { "192.168.100.2" = [ "lumina.miguel.engineer:4242" ] ; };
   };
 
+  services.fprintd.enable = true;
+  security.pam.services.login.fprintAuth = true;
+  security.pam.services.xscreensaver.fprintAuth = true;
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
