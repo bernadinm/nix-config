@@ -39,7 +39,6 @@
   networking.interfaces.wlp170s0.useDHCP = true;
 
   boot.kernelPackages = pkgs.linuxPackages_latest; #- for WiFi support
-  services.fprintd.enable = true; #for fingerprint support
 
   nixpkgs.config.allowUnfree = true;
 
@@ -113,7 +112,7 @@
 
   services.fprintd.enable = true;
   security.pam.services.login.fprintAuth = true;
-  security.pam.services.xscreensaver.fprintAuth = true;
+  security.pam.services.xautolock.fprintAuth = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
