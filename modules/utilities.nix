@@ -7,6 +7,7 @@
     vim # system
     unzip # system
     rar # archives
+    cksfv # sfv checksum
     bash # system interface
     terraform # automation
     whois # domain info
