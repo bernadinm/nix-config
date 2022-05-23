@@ -24,6 +24,8 @@ in
     kubernetes
 
     virt-manager
+
+    ignite # microvm
   ];
 
   nixpkgs.config = baseconfig // {
