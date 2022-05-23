@@ -83,6 +83,7 @@
       alias bc='bc <<< '
       alias gpom='git pull origin master'
       alias gPom='git push origin master'
+      alias ga='git add '
       alias gcm='git commit -m '
       alias gcma='git commit --amend -m '
       alias gcb='git checkout -b '
@@ -95,6 +96,7 @@
       alias gph='git pull --hard'
       alias gd='git diff'
       alias gs='git status'
+      alias gsp='git stash pop'
       alias gds='git diff --staged'
       alias gau='git add -u'
       freshfetch # bash init
