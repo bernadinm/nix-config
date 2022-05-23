@@ -84,7 +84,7 @@
       alias gpom='git pull origin master'
       alias gPom='git push origin master'
       alias gcm='git commit -m '
-      alias gcma='git commit --append -m '
+      alias gcma='git commit --amend -m '
       alias gcb='git checkout -b '
       alias gc='git checkout'
       alias grh='git reset --hard'
