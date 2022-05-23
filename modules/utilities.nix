@@ -5,6 +5,7 @@
     # base
     wget # system
     vim # system
+    neovim # system
     tmux # system
     unzip # system
     rar # archives
