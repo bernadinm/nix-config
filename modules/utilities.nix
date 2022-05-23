@@ -5,6 +5,7 @@
     # base
     wget # system
     vim # system
+    tmux # system
     unzip # system
     rar # archives
     cksfv # sfv checksum

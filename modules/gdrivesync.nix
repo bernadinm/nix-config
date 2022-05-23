@@ -56,6 +56,9 @@
 
       export GPG_TTY="$(tty)" #TODO(bernadinm): https://github.com/keybase/keybase-issues/issues/2798
       # vimrc
+      cat <<EOF > ~/.tmux.conf
+      setw -g mode-keys vi
+      EOF
       cat <<EOF > ~/.vimrc
       syntax on
       set list
@@ -80,6 +83,8 @@
       alias bc='bc <<< '
       alias gpom='git pull origin master'
       alias gPom='git push origin master'
+      alias gcm='git commit -m '
+      alias gcma='git commit --append -m '
       alias gcb='git checkout -b '
       alias gc='git checkout'
       alias grh='git reset --hard'
