@@ -53,7 +53,7 @@
     Option "TearFree" "true"
   '';
 
-
+  services.upower.enable = true;
   services.xserver = {
     # small addition from desktop.nix import
     monitorSection = ''
