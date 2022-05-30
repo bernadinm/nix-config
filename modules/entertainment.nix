@@ -7,6 +7,7 @@
     lmms # daw
     mixxx # audio mixer for dj
     calf # audio plugins for daw
+    vcv-rack # modular synth
 
     # gaming
 
