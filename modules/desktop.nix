@@ -16,6 +16,7 @@
     torbrowser # browser
     chromium # browser
     google-chrome # browser
+    firefox # browser
 
     playerctl # music control
 
