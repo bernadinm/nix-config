@@ -47,9 +47,6 @@
     yubikey-personalization # yubikey
   ];
 
-  # Block failed login attempts from SSH 
-  services.fail2ban.enable = true;
-
   #services.keycloak = {
   #  enable = true;
   #  #frontendUrl = "key.lumina.miguel.engineer/auth";
@@ -196,8 +193,14 @@
 
   services.teamviewer.enable = true;
 
+  # Block failed login attempts from SSH 
+  services.fail2ban.enable = true;
+
   # Enable Yubikey Smartcard Mode
   services.pcscd.enable = true;
+
+  # Enable OpenSSH Server
+  services.sshd.enable = true;
 
   # Enable the Gnugp daemon instead of SSH.
   programs = {
