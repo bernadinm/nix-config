@@ -55,7 +55,7 @@
     bat # cut alt
     duf # df alt
     fd # find alt
-    ag # ack alt
+    silver-searcher # ack alt
     ripgrep # grep alt
     tldr # man alt
     gping # ping alt
