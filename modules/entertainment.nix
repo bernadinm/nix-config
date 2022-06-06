@@ -22,7 +22,7 @@
     steam-run
     vulkan-tools
     minecraft
-    multimc
+    polymc
     lutris
     eidolon
     krb5
