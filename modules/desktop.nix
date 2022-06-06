@@ -13,7 +13,7 @@
     xorg.xev # discover keybindings
     x2goclient # remote desktop client
 
-    torbrowser # browser
+    tor-browser-bundle-bin # browser
     chromium # browser
     google-chrome # browser
     firefox # browser
