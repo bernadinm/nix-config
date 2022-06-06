@@ -40,7 +40,7 @@
     nmap
 
     # network probe
-    tshark # terminal wshark
+    # tshark # terminal wshark
     wireshark # gui wshark
 
     yubikey-manager # yubikey
