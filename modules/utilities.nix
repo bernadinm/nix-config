@@ -40,7 +40,7 @@
     termite # terminal
     bc # calc
     jq # jsonquery
-    youtubeDL # youtube dl
+    youtube-dl # youtube dl
     ts # task spooler batch queue
     bind # dns utils dig nslookup
     ffmpeg # multimedia tool
