@@ -33,6 +33,7 @@
     deno # javascript runtime
     nodejs # javascript runtime
 
+    glow # markdown reader
     pandoc # convert markdown to any file
     hugo # website engine
 
