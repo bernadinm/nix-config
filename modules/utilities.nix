@@ -44,6 +44,7 @@
     ts # task spooler batch queue
     bind # dns utils dig nslookup
     ffmpeg # multimedia tool
+    visidata # csv parsing tool
 
     navi # cheat files
     fzf # fuzzy find
