@@ -1,9 +1,12 @@
 { config, pkgs, ... }:
-
+let
+  baseconfig = { allowUnfree = true; };
+  unstable = import <nixos-unstable> { config = baseconfig; };
+in
 {
   environment.systemPackages = with pkgs; [
     # base
-    zoom-us
+    unstable.zoom-us
     mumble
     profanity
     discord
