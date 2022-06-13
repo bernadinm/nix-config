@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 let
   baseconfig = { allowUnfree = true; };
-  unstable = import <nixos-unstable> { config = baseconfig; };
+  porcupine = import <nixos-porcupine> { config = baseconfig; };
 in
 {
   environment.systemPackages = with pkgs; [
@@ -17,8 +17,8 @@ in
     monero-gui
 
     # VPN
-    unstable.protonvpn-cli
-    unstable.protonvpn-gui
+    porcupine.protonvpn-cli
+    porcupine.protonvpn-gui
     openvpn
 
     # password management
