@@ -1,5 +1,8 @@
 { config, pkgs, ... }:
-
+let
+  baseconfig = { allowUnfree = true; };
+  unstable = import <nixos-unstable> { config = baseconfig; };
+in
 {
   environment.systemPackages = with pkgs; [
     # base
@@ -14,8 +17,8 @@
     monero-gui
 
     # VPN
-    protonvpn-cli
-    protonvpn-gui
+    unstable.protonvpn-cli
+    unstable.protonvpn-gui
     openvpn
 
     # password management
