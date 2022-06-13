@@ -12,7 +12,7 @@
     libffi # coding used with pip
     gcc # coding used with pip
 
-    git # svm
+    git gti # svm
     gh # github util
     delta # git diff tool
 
