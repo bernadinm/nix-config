@@ -73,6 +73,7 @@
   services.xserver.libinput.touchpad.naturalScrolling = true;
   services.xserver.libinput.touchpad.disableWhileTyping = true;
   services.xserver.libinput.mouse.disableWhileTyping = true;
+
   #hardware.trackpoint.programs.light.enable = true;
 
   security.sudo = {
