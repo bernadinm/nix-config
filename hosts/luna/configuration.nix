@@ -86,7 +86,7 @@
     HandlePowerKeyLongPress=poweroff
     HandlePowerKey=hybrid-sleep
     HandleLidSwitch=hybrid-sleep
-    HandleLidSwitchExternalPower=suspend
+    HandleLidSwitchExternalPower=hybrid-sleep
   '';
 
   # screen locker
