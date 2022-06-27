@@ -162,6 +162,6 @@
 
       # Adding Navi Widget for bash
       # TODO(bernadinm): move this to git and nix homemanager
-      eval $(cat /etc/profile.navi)
+      . /etc/profile.navi
      '';
 }
