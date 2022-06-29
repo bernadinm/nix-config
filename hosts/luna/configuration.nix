@@ -81,6 +81,9 @@
     wheelNeedsPassword = false;
   };
 
+  # Installing TLP for Battery Life Optimization
+  services.tlp.enable = true;
+
   # hybrid sleep when press power button
   services.logind.extraConfig = ''
     HandlePowerKeyLongPress=poweroff
