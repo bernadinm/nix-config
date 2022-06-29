@@ -58,6 +58,7 @@
     fd # find alt
     silver-searcher # ack alt
     ripgrep # grep alt
+    ripgrep-all # grep alt
     tldr # man alt
     gping # ping alt
     hck # cut alt
