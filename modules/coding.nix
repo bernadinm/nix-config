@@ -35,6 +35,7 @@
 
     glow # markdown reader
     pandoc # convert markdown to any file
+    ocrmypdf # convert pdt fo ocr pdf
     hugo # website engine
 
     lice # license generator
