@@ -38,6 +38,9 @@
     ocrmypdf # convert pdt fo ocr pdf
     hugo # website engine
 
+    # build tool
+    bazel
+
     lice # license generator
 
     # nix
