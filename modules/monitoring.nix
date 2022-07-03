@@ -23,6 +23,7 @@
     ncdu
     lsof
     glances
+    bandwhich
 
     # crypto mon
     cointop
