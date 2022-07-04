@@ -36,6 +36,7 @@
     ranger # text file manager
     nnn # text file manager
     dolphin # gui file manager
+    tree # directory list
 
     pavucontrol # visual sound control
 
