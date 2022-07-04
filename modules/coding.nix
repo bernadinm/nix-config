@@ -1,5 +1,9 @@
 { config, pkgs, ... }:
-
+let
+  baseconfig = { allowUnfree = true; };
+  porcupine = import <nixos-porcupine> { config = baseconfig; };
+  unstable = import <nixos-unstable> { config = baseconfig; };
+in
 {
   environment.systemPackages = with pkgs; [
     # python 
@@ -39,7 +43,7 @@
     hugo # website engine
 
     # build tool
-    bazel
+    unstable.bazel
 
     lice # license generator
 
