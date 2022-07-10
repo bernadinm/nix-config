@@ -1,0 +1,52 @@
+{
+  "codeLens.enable": true,
+  "coc.preferences.formatOnSaveFiletypes": ["*"],
+  "suggest.floatEnable": true,
+  "signature.target": "float",
+  "signature.floatConfig": {
+    "border": true
+  },
+  "suggest.floatConfig": {
+    "border": true
+  },
+  "suggest.echodocSupport": true,
+  "diagnostic.virtualText": false,
+  "diagnostic.checkCurrentLine": true,
+  "diagnostic.separateRelatedInformationAsDiagnostics": true,
+  "diagnostic.floatConfig": {
+    "border": true
+  },
+  "hover.floatConfig": {
+    "border": true
+  },
+  "diagnostic.format": "%message [%source]",
+  // python
+  "python.formatting.provider": "black",
+  "python.linting.flake8Enabled": true,
+  // golang
+  "languageserver": {
+    "golang": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "filetypes": ["go"]
+    }
+  },
+  // js
+  "javascript.format.enabled": true,
+  "eslint.filetypes": [
+    "javascript",
+    "typescript",
+    "typescriptreact",
+    "javascriptreact"
+  ],
+  "eslint.options": {
+    "env": {
+      "browser": true,
+      "node": true
+    }
+  },
+  "yaml.format.enable": false,
+  "yaml.schemas": {
+    "kubernetes": "k8s/**/*.yaml"
+  }
+}
