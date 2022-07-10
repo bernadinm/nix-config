@@ -6,6 +6,7 @@
     iperf
     htop
     gtop
+    bmon
     iotop
     bottom
     dstat
