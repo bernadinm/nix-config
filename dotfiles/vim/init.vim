@@ -327,9 +327,21 @@ let g:user_emmet_leader_key='<C-Z>'
 " Plug 'evanleck/vim-svelte', {'branch': 'main'}
 let g:svelte_preprocessors = ['typescript']
 
-" TODO(bernadinm): commenting out dark colorscheme)
-" let base16colorspace=256        " Let base16 access colors present in 256 colorspace
-" colorscheme base16-default-dark
+let base16colorspace=256        " Let base16 access colors present in 256 colorspace
+" Using Tokyonight vim theme
+" let g:tokyonight_transparent = "true"
+let g:tokyonight_style = "night"
+let g:tokyonight_italic_functions = 1
+let g:tokyonight_sidebars = [ "qf", "vista_kind", "terminal", "packer" ]
+
+" Change the "hint" color to the "orange" color, and make the "error" color bright red
+let g:tokyonight_colors = {
+  \ 'hint': 'orange',
+  \ 'error': '#ff0000'
+\ }
+
+" Load the colorscheme
+colorscheme tokyonight
 
 " https://github.com/google/vim-codefmt
 augroup autoformat_settings
