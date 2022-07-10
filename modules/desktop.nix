@@ -155,6 +155,15 @@ in
   };
   home-manager.users.miguel.home.file.".config/nvim/coc-settings.json".source =
     ../dotfiles/vim/coc-settings.json;
+  home-manager.users.miguel.home.file.".config/base16-shell" = {
+    recursive = true;
+    source = pkgs.fetchFromGitHub {
+      owner = "chriskempson";
+      repo = "base16-shell";
+      rev = "ce8e1e540367ea83cc3e01eec7b2a11783b3f9e1";
+      sha256 = "sha256-OMhC6paqEOQUnxyb33u0kfKpy8plLSRgp8X8T8w0Q/o=";
+    };
+  };
   home-manager.users.miguel.home.stateVersion = "22.05";
   home-manager.users.miguel.programs.neovim = {
     enable = true;
@@ -343,6 +352,20 @@ in
           cp -r ./ $out
         '';
       };
+      tokyonight.nvim = pkgs.vimUtils.buildVimPlugin {
+        name = "tokyonight.nvim";
+        src = pkgs.fetchFromGitHub {
+          owner = "folke";
+          repo = "tokyonight.nvim";
+          rev = "8223c970677e4d88c9b6b6d81bda23daf11062bb";
+          sha256 = "sha256-EUiuGaX//mqv8v+UWfOQwxvV6UaQq1ZjdlqOpQAE7+c=";
+        };
+        dontBuild = true;
+        installPhase = ''
+          mkdir -p $out
+          cp -r ./ $out
+        '';
+      };
     in
     [
       vim-rooter
@@ -392,6 +415,7 @@ in
       vim-maktaba
       vim-codefmt
       vim-glaive
+      tokyonight.nvim
       vim-bazel
     ];
   };
