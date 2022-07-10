@@ -352,20 +352,6 @@ in
           cp -r ./ $out
         '';
       };
-      tokyonight.nvim = pkgs.vimUtils.buildVimPlugin {
-        name = "tokyonight.nvim";
-        src = pkgs.fetchFromGitHub {
-          owner = "folke";
-          repo = "tokyonight.nvim";
-          rev = "8223c970677e4d88c9b6b6d81bda23daf11062bb";
-          sha256 = "sha256-EUiuGaX//mqv8v+UWfOQwxvV6UaQq1ZjdlqOpQAE7+c=";
-        };
-        dontBuild = true;
-        installPhase = ''
-          mkdir -p $out
-          cp -r ./ $out
-        '';
-      };
     in
     [
       vim-rooter
@@ -415,7 +401,7 @@ in
       vim-maktaba
       vim-codefmt
       vim-glaive
-      tokyonight.nvim
+      tokyonight-nvim
       vim-bazel
     ];
   };
