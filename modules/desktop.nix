@@ -403,6 +403,8 @@ in
       vim-glaive
       tokyonight-nvim
       vim-bazel
+      telescope-nvim
+      telescope-fzf-native-nvim
     ];
   };
 
