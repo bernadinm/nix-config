@@ -34,6 +34,7 @@
     betaflight-configurator
     opentx
     edgetx
+    dfu-util
 
     # multimedia
     vlc
