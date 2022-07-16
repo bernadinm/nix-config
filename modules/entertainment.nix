@@ -32,6 +32,7 @@
 
     # drone configuration
     betaflight-configurator
+    opentx
 
     # multimedia
     vlc
