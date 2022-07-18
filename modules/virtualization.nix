@@ -26,6 +26,8 @@ in
     virt-manager
 
     ignite # microvm
+
+    vmware-workstation # vmware virt
   ];
 
   nixpkgs.config = baseconfig // {
@@ -37,6 +39,9 @@ in
 
   virtualisation.docker.enable = true;
   virtualisation.docker.storageDriver = "overlay";
+  virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox.host.enableExtensionPack = true;
+  users.extraGroups.vboxusers.members = [ "miguel" ];
   virtualisation.libvirtd.enable = true; # qemu/kvm
 
   # resolve master hostname
