@@ -45,6 +45,7 @@
     bind # dns utils dig nslookup
     ffmpeg # multimedia tool
     visidata # csv parsing tool
+    usbutils # lsusb
 
     navi # cheat files
     fzf # fuzzy find
