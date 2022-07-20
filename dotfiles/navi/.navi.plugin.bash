@@ -31,7 +31,7 @@ _navi_widget_legacy() {
 
 if [ ${BASH_VERSION:0:1} -lt 4 ]; then
    bind '"\C-g": " \C-b\C-k \C-u`_navi_widget_legacy`\e\C-e\C-a\C-y\C-h\C-e\e \C-y\ey\C-x\C-x\C-f"'
-else
+ elif [[ -z "${BASH_VERSION}" ]]; then
    bind -x '"\C-g": _navi_widget'
 fi
 

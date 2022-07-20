@@ -6,7 +6,6 @@ alias testtts='echo "xsel | mimic --setf duration_stretch=0.6 --setf int_f0_targ
 alias ww='sudo ddcutil setvcp 60 27' # USB-C
 alias pp='sudo ddcutil setvcp 60 18' # HDMI-1
 set -o ignoreeof
-source /etc/profile.local
 alias bc='bc <<< '
 alias gpom='git pull origin master'
 alias gPom='git push origin master'
@@ -29,5 +28,5 @@ alias gau='git add -u'
 freshfetch # bash init
 
 if test -f "$HOME/.config/navi/.navi.plugin.bash"; then
-  . "$HOME/.config/navi/.navi.plugin.bash"
+  eval "$(cat $HOME/.config/navi/.navi.plugin.bash)"
 fi
