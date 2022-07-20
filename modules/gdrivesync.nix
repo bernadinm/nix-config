@@ -12,46 +12,6 @@
     git-annex-utils # sync remote files
   ];
 
-  # when running un multiple environments sync them on login
-  environment.etc."profile.navi".text =
-    ''
-      #!/run/current-system/sw/bin/bash
-     
-      _navi_call() {
-         local result="''$(navi "''$@" </dev/tty)"
-         printf "%s" "''$result"
-      }
-     
-      _navi_widget() {
-         local -r input="''${READLINE_LINE}"
-         local -r last_command="''$(echo "''${input}" | navi fn widget::last_command)"
-     
-         if [ -z "''${last_command}" ]; then
-            local -r output="''$(_navi_call --print)"
-         else
-            local -r find="''${last_command}_NAVIEND"
-            local -r replacement="''$(_navi_call --print --query "''$last_command")"
-            local output="''$input"
-            if [ -n "''$replacement" ]; then
-               output="''${input}_NAVIEND"
-               output="''${output//''$find/''$replacement}"
-            fi
-         fi
-     
-         READLINE_LINE="''$output"
-         READLINE_POINT=''${#READLINE_LINE}
-      }
-     
-      _navi_widget_legacy() {
-         _navi_call --print
-      }
-     
-      if [ ''${BASH_VERSION:0:1} -lt 4 ]; then
-         bind '"\C-g": " \C-b\C-k \C-u`_navi_widget_legacy`\e\C-e\C-a\C-y\C-h\C-e\e \C-y\ey\C-x\C-x\C-f"'
-      else
-         bind -x '"\C-g": _navi_widget'
-      fi
-    '';
   environment.etc."profile.local".text =
     ''
       # /etc/profile.local: DO NOT EDIT - this file has been generated automatically.
@@ -72,7 +32,7 @@
       # Prereq: gsutil mb -c regional -l us-west1 gs://nixos-persist
       gpg --list-key 915FA8A6391DDAC6 2>&1 > /dev/null || error_code=$?
       if [[ "$error_code" -eq 2 ]]; then curl -sSL gpg.miguel.engineer | gpg --import -; fi
-      if ! [[ ( -d ~/git/bernadinm/g) ]]; then 
+      if ! [[ ( -d ~/git/bernadinm/g) ]]; then
          WD="~/git/bernadinm/g"
          mkdir -p $WD;
          git clone https://github.com/bernadinm/g $WD;
@@ -81,9 +41,6 @@
          # TODO(bernadinm): fetch IAM for GCS, source it, and run git annex enableremote; and get essentials
       fi
 
-      # Setting vi alias to vim
-      # TODO(bernadinm): removing for now until nvim plugins and config is installed with nix
-      # alias vi="nvim"
       alias matrix='echo -e "1"; while $t; do for i in `seq 1 40`;do r="$[($RANDOM % 2)]";h="$[($RANDOM % 4)]";if [ $h -eq 1 ]; then v="0 $r";else v="1 $r";fi;v2="$v2 $v";done;echo -e $v2 | GREP_COLOR="1;32" grep --color "[^ ]";v2=""; sleep .01;done;'
 
       # configurating SSH, GPG, MSMTP, IMAP, GIT keys
@@ -95,52 +52,6 @@
       if ! [[ ( -f ~/.pureline.conf ) ]]; then ln -s ~/git/bernadinm/g/.pureline.conf ~/.pureline.conf; fi
 
       export GPG_TTY="$(tty)" #TODO(bernadinm): https://github.com/keybase/keybase-issues/issues/2798
-      # vimrc
-      cat <<EOF > ~/.tmux.conf
-      setw -g mode-keys vi
-      EOF
-      cat <<EOF > ~/.vimrc
-      syntax on
-      set list
-      set number
-      set mouse -=a
-      set bs=2
-      set tabstop=4
-      " Easy toggle off list and number
-      map <C-l> :set number! list!<CR>
-      EOF
-      # bashrc
-      cat <<EOF > ~/.bashrc
-      alias pbcopy='xclip -selection clipboard'
-      alias pbpaste='xclip -selection clipboard -o'
-      alias docker-compose='arion'
-      alias tts='xsel | mimic --setf duration_stretch=0.6 --setf int_f0_target_mean=130 -voice slt'
-      alias testtts='echo "xsel | mimic --setf duration_stretch=0.6 --setf int_f0_target_mean=120 -voice rms"'
-      alias ww='sudo ddcutil setvcp 60 27' # USB-C
-      alias pp='sudo ddcutil setvcp 60 18' # HDMI-1
-      set -o ignoreeof
-      source /etc/profile.local
-      alias bc='bc <<< '
-      alias gpom='git pull origin master'
-      alias gPom='git push origin master'
-      alias ga='git add '
-      alias gcm='git commit -m '
-      alias gcma='git commit --amend -m '
-      alias gcb='git checkout -b '
-      alias gc='git checkout'
-      alias grh='git reset --hard'
-      alias grhom='git reset --hard origin/master'
-      alias gfa='git fetch --all'
-      alias grom='git rebase origin/master'
-      alias gp='git pull'
-      alias gph='git pull --hard'
-      alias gd='git diff'
-      alias gs='git status'
-      alias gsp='git stash pop'
-      alias gds='git diff --staged'
-      alias gau='git add -u'
-      freshfetch # bash init
-      EOF
       if test -f "$HOME/.profile"; then
         . "$HOME/.profile"
       fi
@@ -159,9 +70,5 @@
       # Use agent socket per terminal
       gpg-connect-agent /bye
       export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-
-      # Adding Navi Widget for bash
-      # TODO(bernadinm): move this to git and nix homemanager
-      . /etc/profile.navi
     '';
 }
