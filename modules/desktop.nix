@@ -139,7 +139,7 @@ in
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.miguel = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "video" "i2c" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "docker" "video" "i2c" "vboxusers"]; # Enable ‘sudo’ for the user.
     description = "Miguel Bernadin";
   };
 
