@@ -155,6 +155,14 @@ in
   };
   home-manager.users.miguel.home.file.".config/nvim/coc-settings.json".source =
     ../dotfiles/vim/coc-settings.json;
+  home-manager.users.miguel.home.file.".vimrc".source =
+    ../dotfiles/.vimrc;
+  home-manager.users.miguel.home.file.".bashrc".source =
+    ../dotfiles/.bashrc;
+  home-manager.users.miguel.home.file.".tmux.conf".source =
+    ../dotfiles/.tmux.conf;
+  home-manager.users.miguel.home.file.".config/navi/.navi.plugin.bash".source =
+    ../dotfiles/navi/.navi.plugin.bash;
   home-manager.users.miguel.home.file.".config/base16-shell" = {
     recursive = true;
     source = pkgs.fetchFromGitHub {
