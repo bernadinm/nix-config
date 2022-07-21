@@ -1,7 +1,8 @@
 { config, pkgs, ... }:
 
 let
-  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
+  home-manager = builtins.fetchTarball
+ "https://github.com/nix-community/home-manager/archive/master.tar.gz";
 in
 {
   imports =
@@ -9,132 +10,6 @@ in
       ../modules/adblock.nix
       (import "${home-manager}/nixos")
     ];
-
-  environment.systemPackages = with pkgs; [
-    # base
-    yarn # used for home manager neovim
-    xclip # clipboard history
-    xsel # clipboard select
-    xorg.xev # discover keybindings
-    x2goclient # remote desktop client
-
-    tor-browser-bundle-bin # browser
-    chromium # browser
-    google-chrome # browser
-    firefox # browser
-
-    playerctl # music control
-
-    font-awesome # font
-    compton # window property changer
-    lxqt.compton-conf # window property config
-
-    feh # wallpaper manager
-
-    scrot # screen capture
-    screenfetch # used with scrot
-
-    unclutter # hides mouse during inactivity
-
-    # text file managers
-    vifm # text file manager
-    ranger # text file manager
-    nnn # text file manager
-    dolphin # gui file manager
-    tree # directory list
-
-    pavucontrol # visual sound control
-
-    rofi # program launcher
-    dmenu # program launcher
-    dunst # system notification
-    libnotify # system notification
-
-    spectacle # screenshot capture util
-    (texlive.combine {
-      inherit (texlive) scheme-small titling collection-langfrench cm-super;
-    })
-
-    # Plasma desktop
-    kdeplasma-addons
-    kdeconnect
-    kdenlive
-    okular
-    konversation
-    fusuma
-    kile # latex authoring tool for kde
-    gwenview # gui file manager
-  ];
-
-  # San Francisco, California for Redshift for screen color changing
-  location.provider = "manual";
-  location.latitude = 37.773972;
-  location.longitude = -122.431297;
-  services.redshift = {
-    enable = true;
-    temperature = {
-      day = 5500;
-      night = 3200;
-    };
-  };
-
-  # Allows services and hosts exposed on the local network via mDNS/DNS-SD
-  services.avahi.enable = true;
-  services.avahi.nssmdns = true;
-
-  services.atd.enable = true;
-  services.locate.enable = true;
-
-  services.xserver = {
-    enable = true;
-
-    desktopManager = {
-      xterm.enable = false;
-    };
-
-    displayManager = {
-      defaultSession = "none+i3";
-    };
-
-    windowManager.i3 = {
-      enable = true;
-      package = pkgs.i3-gaps;
-      extraPackages = with pkgs; [
-        dmenu #application launcher most people use
-        rofi
-        polybar
-        clipit
-        xorg.xprop
-        xautolock # timer to lock screen
-        i3-layout-manager
-        i3status # gives you the default i3 status bar
-        i3lock-fancy-rapid #default i3 screen locker
-        i3blocks #if you are planning on using i3blocks over i3status
-        raiseorlaunch # i3 app launcher
-
-        compton
-        lxqt.compton-conf
-
-        feh # wallpaper manager
-        vifm # graphic file manager
-
-        brightnessctl # brightness ctrl
-      ];
-    };
-  };
-
-  # Enable sound.
-  sound.enable = true;
-  hardware.pulseaudio = {
-    enable = true;
-    package = pkgs.pulseaudioFull;
-  };
-
-  # See: https://github.com/NixOS/nixpkgs/commit/224a6562a4880195afa5c184e755b8ecaba41536
-  boot.loader.systemd-boot.configurationLimit = 50;
-
-  hardware.bluetooth.enable = true; # enable bluethooth
-  services.touchegg.enable = true; # enable multi touch gesture
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.miguel = {
@@ -153,6 +28,8 @@ in
     url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim";
     sha256 = "sha256-4tvXyNcyrnl+UFnA3B6WS5RSmjLQfQUdXQWHJ0YqQ/0=";
   };
+
+  # TODO(bernadinm): move the lines below into a single scope for improved read
   home-manager.users.miguel.home.file.".config/nvim/coc-settings.json".source =
     ../dotfiles/vim/coc-settings.json;
   home-manager.users.miguel.home.file.".vimrc".source =
@@ -418,4 +295,129 @@ in
     ];
   };
 
+  environment.systemPackages = with pkgs; [
+    # base
+    yarn # used for home manager neovim
+    xclip # clipboard history
+    xsel # clipboard select
+    xorg.xev # discover keybindings
+    x2goclient # remote desktop client
+
+    tor-browser-bundle-bin # browser
+    chromium # browser
+    google-chrome # browser
+    firefox # browser
+
+    playerctl # music control
+
+    font-awesome # font
+    compton # window property changer
+    lxqt.compton-conf # window property config
+
+    feh # wallpaper manager
+
+    scrot # screen capture
+    screenfetch # used with scrot
+
+    unclutter # hides mouse during inactivity
+
+    # text file managers
+    vifm # text file manager
+    ranger # text file manager
+    nnn # text file manager
+    dolphin # gui file manager
+    tree # directory list
+
+    pavucontrol # visual sound control
+
+    rofi # program launcher
+    dmenu # program launcher
+    dunst # system notification
+    libnotify # system notification
+
+    spectacle # screenshot capture util
+    (texlive.combine {
+      inherit (texlive) scheme-small titling collection-langfrench cm-super;
+    })
+
+    # Plasma desktop
+    kdeplasma-addons
+    kdeconnect
+    kdenlive
+    okular
+    konversation
+    fusuma
+    kile # latex authoring tool for kde
+    gwenview # gui file manager
+  ];
+
+  # San Francisco, California for Redshift for screen color changing
+  location.provider = "manual";
+  location.latitude = 37.773972;
+  location.longitude = -122.431297;
+  services.redshift = {
+    enable = true;
+    temperature = {
+      day = 5500;
+      night = 3200;
+    };
+  };
+
+  # Allows services and hosts exposed on the local network via mDNS/DNS-SD
+  services.avahi.enable = true;
+  services.avahi.nssmdns = true;
+
+  services.atd.enable = true;
+  services.locate.enable = true;
+
+  services.xserver = {
+    enable = true;
+
+    desktopManager = {
+      xterm.enable = false;
+    };
+
+    displayManager = {
+      defaultSession = "none+i3";
+    };
+
+    windowManager.i3 = {
+      enable = true;
+      package = pkgs.i3-gaps;
+      extraPackages = with pkgs; [
+        dmenu #application launcher most people use
+        rofi
+        polybar
+        clipit
+        xorg.xprop
+        xautolock # timer to lock screen
+        i3-layout-manager
+        i3status # gives you the default i3 status bar
+        i3lock-fancy-rapid #default i3 screen locker
+        i3blocks #if you are planning on using i3blocks over i3status
+        raiseorlaunch # i3 app launcher
+
+        compton
+        lxqt.compton-conf
+
+        feh # wallpaper manager
+        vifm # graphic file manager
+
+        brightnessctl # brightness ctrl
+      ];
+    };
+  };
+
+  # Enable sound.
+  sound.enable = true;
+  hardware.pulseaudio = {
+    enable = true;
+    package = pkgs.pulseaudioFull;
+  };
+
+  # See: https://github.com/NixOS/nixpkgs/commit/224a6562a4880195afa5c184e755b8ecaba41536
+  boot.loader.systemd-boot.configurationLimit = 50;
+
+  hardware.bluetooth.enable = true; # enable bluethooth
+  services.touchegg.enable = true; # enable multi touch gesture
 }
