@@ -52,9 +52,6 @@
       if ! [[ ( -f ~/.pureline.conf ) ]]; then ln -s ~/git/bernadinm/g/.pureline.conf ~/.pureline.conf; fi
 
       export GPG_TTY="$(tty)" #TODO(bernadinm): https://github.com/keybase/keybase-issues/issues/2798
-      if test -f "$HOME/.bashrc"; then
-        . "$HOME/.bashrc"
-      fi
 
       if [ "$TERM" != "linux" ]; then
         source ~/git/bernadinm/g/pureline/pureline ~/.pureline.conf

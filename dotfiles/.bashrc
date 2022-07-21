@@ -30,3 +30,6 @@ freshfetch # bash init
 if test -f "$HOME/.config/navi/.navi.plugin.bash"; then
   eval "$(cat $HOME/.config/navi/.navi.plugin.bash)"
 fi
+
+# Source system wide bash settings
+. /etc/profile.local
