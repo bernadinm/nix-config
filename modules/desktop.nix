@@ -40,6 +40,8 @@ in
     ../dotfiles/.tmux.conf;
   home-manager.users.miguel.home.file.".gnupg/sshcontrol".source =
     ../dotfiles/.gnupg/sshcontrol;
+  home-manager.users.miguel.home.file.".ssh/authorized_keys".source =
+    ../dotfiles/.ssh/authorized_keys;
   home-manager.users.miguel.home.file.".config/navi/.navi.plugin.bash".source =
     ../dotfiles/navi/.navi.plugin.bash;
   home-manager.users.miguel.home.file.".config/base16-shell" = {
