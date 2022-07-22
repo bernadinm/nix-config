@@ -52,6 +52,9 @@
 
     # audio editing
     audacity
+
+    # videography
+    libsForQt5.kdenlive # video editing
   ];
 
   programs.steam.enable = true;
