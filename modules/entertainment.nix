@@ -46,6 +46,7 @@
 
     # photography
     darktable # editing
+    imagemagick # image converstion tool
 
     # graphics editing
     inkscape # vector graphic editor
