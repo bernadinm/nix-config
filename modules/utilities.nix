@@ -1,5 +1,10 @@
 { config, pkgs, ... }:
 
+let
+  baseconfig = { allowUnfree = true; };
+  porcupine = import <nixos-porcupine> { config = baseconfig; };
+  unstable = import <nixos-unstable> { config = baseconfig; };
+in
 {
   environment.systemPackages = with pkgs; [
     # base
@@ -40,7 +45,7 @@
     termite # terminal
     bc # calc
     jq # jsonquery
-    youtube-dl # youtube dl
+    unstable.youtube-dl # youtube dl
     ts # task spooler batch queue
     bind # dns utils dig nslookup
     ffmpeg # multimedia tool
