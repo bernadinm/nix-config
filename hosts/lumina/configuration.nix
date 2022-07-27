@@ -3,6 +3,11 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
+
+let
+  home-manager = builtins.fetchTarball
+    "https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz";
+in
 {
   imports =
     [
@@ -48,7 +53,13 @@
   networking.interfaces.enp5s0.useDHCP = true;
   networking.interfaces.wlp4s0.useDHCP = true;
 
-  environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw 
+  environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
+
+  home-manager.users.miguel.home.file =
+    {
+      ".config/i3/config".source =
+        .config/i3/config;
+    };
 
   # Removing becuase it conflicts with protonvpn
   # environment.etc = {
