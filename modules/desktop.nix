@@ -2,7 +2,7 @@
 
 let
   home-manager = builtins.fetchTarball
- "https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz";
+    "https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz";
 in
 {
   imports =
@@ -14,7 +14,7 @@ in
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.miguel = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "video" "i2c" "vboxusers"]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "docker" "video" "i2c" "vboxusers" ]; # Enable ‘sudo’ for the user.
     description = "Miguel Bernadin";
   };
 
@@ -29,21 +29,24 @@ in
     sha256 = "sha256-4tvXyNcyrnl+UFnA3B6WS5RSmjLQfQUdXQWHJ0YqQ/0=";
   };
 
-  # TODO(bernadinm): move the lines below into a single scope for improved read
-  home-manager.users.miguel.home.file.".config/nvim/coc-settings.json".source =
-    ../dotfiles/vim/coc-settings.json;
-  home-manager.users.miguel.home.file.".vimrc".source =
-    ../dotfiles/.vimrc;
-  home-manager.users.miguel.home.file.".bashrc".source =
-    ../dotfiles/.bashrc;
-  home-manager.users.miguel.home.file.".tmux.conf".source =
-    ../dotfiles/.tmux.conf;
-  home-manager.users.miguel.home.file.".gnupg/sshcontrol".source =
-    ../dotfiles/.gnupg/sshcontrol;
-  home-manager.users.miguel.home.file.".ssh/authorized_keys".source =
-    ../dotfiles/.ssh/authorized_keys;
-  home-manager.users.miguel.home.file.".config/navi/.navi.plugin.bash".source =
-    ../dotfiles/navi/.navi.plugin.bash;
+  home-manager.users.miguel.home.file =
+    {
+      ".config/navi/.navi.plugin.bash".source =
+        ../dotfiles/navi/.navi.plugin.bash;
+      ".ssh/authorized_keys".source =
+        ../dotfiles/.ssh/authorized_keys;
+      ".gnupg/sshcontrol".source =
+        ../dotfiles/.gnupg/sshcontrol;
+      ".tmux.conf".source =
+        ../dotfiles/.tmux.conf;
+      ".bashrc".source =
+        ../dotfiles/.bashrc;
+      ".vimrc".source =
+        ../dotfiles/.vimrc;
+      ".config/nvim/coc-settings.json".source =
+        ../dotfiles/vim/coc-settings.json;
+    };
+
   home-manager.users.miguel.home.file.".config/base16-shell" = {
     recursive = true;
     source = pkgs.fetchFromGitHub {
