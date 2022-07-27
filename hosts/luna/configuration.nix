@@ -4,6 +4,10 @@
 
 { config, pkgs, ... }:
 
+let
+  home-manager = builtins.fetchTarball
+    "https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz";
+in
 {
   imports =
     [
@@ -42,7 +46,7 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw 
+  environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
   # Enable the X11 windowing system.
 
   # Required for Framework Laptop to help avoid screen tearing:
@@ -52,6 +56,12 @@
     Option "DRI" "2"
     Option "TearFree" "true"
   '';
+
+  home-manager.users.miguel.home.file =
+    {
+      ".config/i3/config".source =
+        .config/i3/config;
+    };
 
   services.upower.enable = true;
   services.xserver = {
