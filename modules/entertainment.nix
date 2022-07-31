@@ -56,6 +56,7 @@
 
     # videography
     libsForQt5.kdenlive # video editing
+    davinci-resolve # video editing
   ];
 
   programs.steam.enable = true;
