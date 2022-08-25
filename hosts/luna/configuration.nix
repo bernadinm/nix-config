@@ -63,6 +63,12 @@ in
         .config/i3/config;
     };
 
+  home-manager.users.rachelle.home.file =
+    {
+      ".config/i3/config".source =
+        .config/i3/config;
+    };
+
   services.upower.enable = true;
   services.xserver = {
     # small addition from desktop.nix import
