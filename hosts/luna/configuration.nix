@@ -102,8 +102,7 @@ in
 
   # hybrid sleep when press power button
   services.logind.extraConfig = ''
-    HandlePowerKeyLongPress=poweroff
-    HandlePowerKey=hybrid-sleep
+    HandlePowerKey=poweroff
     HandleLidSwitch=hybrid-sleep
     HandleLidSwitchExternalPower=hybrid-sleep
   '';
