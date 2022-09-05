@@ -1,5 +1,10 @@
 { config, pkgs, ... }:
 
+let
+  baseconfig = { allowUnfree = true; };
+  porcupine = import <nixos-porcupine> { config = baseconfig; };
+  unstable = import <nixos-unstable> { config = baseconfig; };
+in
 {
   environment.systemPackages = with pkgs; [
     # music producing software
@@ -7,7 +12,7 @@
     lmms # daw
     mixxx # audio mixer for dj
     calf # audio plugins for daw
-    vcv-rack # modular synth
+    unstable.vcv-rack # modular synth
 
     # gaming
 
