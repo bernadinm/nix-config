@@ -19,9 +19,11 @@ in
 
     # weechat irc
     weechat
-    weechatScripts.wee-slack 
+    weechatScripts.wee-slack
     weechatScripts.weechat-notify-send
     weechatScripts.weechat-matrix-bridge
+
+    rustdesk # teamviewer oss
   ];
 
   disabledModules = [
