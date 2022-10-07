@@ -6,7 +6,7 @@ let
 in
 {
   environment.systemPackages = with pkgs; [
-    # python 
+    # python
     python39Full # python3.9 full
     python39Packages.virtualenv # coding
     python39Packages.pip # coding
@@ -18,6 +18,7 @@ in
 
     git gti # svm
     gh # github util
+    unstable.gh-dash # github dashboard
     delta # git diff tool
 
     # golang
