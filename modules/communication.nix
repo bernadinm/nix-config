@@ -15,7 +15,7 @@ in
     keybase-gui
 
     # visual comm
-    tigervnc
+    realvnc-vnc-viewer
 
     # weechat irc
     weechat
