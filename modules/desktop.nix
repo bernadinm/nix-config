@@ -33,6 +33,8 @@ in
     {
       ".config/navi/.navi.plugin.bash".source =
         ../dotfiles/navi/.navi.plugin.bash;
+      ".config/helix/config.toml".source =
+        ../dotfiles/.config/helix/config.toml;
       ".ssh/authorized_keys".source =
         ../dotfiles/.ssh/authorized_keys;
       ".gnupg/sshcontrol".source =
