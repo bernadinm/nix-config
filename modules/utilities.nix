@@ -46,6 +46,7 @@ in
     termite # terminal
     bc # calc
     jq # jsonquery
+    yq # yamlquery
     unstable.youtube-dl # youtube dl
     ts # task spooler batch queue
     bind # dns utils dig nslookup
