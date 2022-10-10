@@ -26,6 +26,7 @@ alias gsp='git stash pop'
 alias gds='git diff --staged'
 alias gau='git add -u'
 alias g='cd ~/git'
+alias n='cd ~/git/bernadinm/nix-config'
 alias vi='hx'
 freshfetch # bash init
 
