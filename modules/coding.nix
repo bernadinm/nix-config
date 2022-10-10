@@ -33,6 +33,7 @@ in
 
     # rust
     cargo # coding for rust
+    rustc # rust compiler
     pkg-config # packging with rust
 
     deno # javascript runtime
