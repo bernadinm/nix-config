@@ -12,6 +12,13 @@ servers:
       # Channels to automatically join
       join:
           - "#tiny"
+          - "#nixos-aarch64"
+          - "#nixos-infra"
+          - "#nixos-kubernetes"
+          - "#nixos-officehours"
+          - "#nixos-on-your-router"
+          - "#nixos-rust"
+          - "#nixos-security"
 
       # Three authentication methods: pass, sasl, and nickserv_ident
       # These are optional and you probably only need one of these, delete
@@ -35,6 +42,9 @@ servers:
       tls: true
       realname: Miguel
       nicks: [bernadinm]
+      join:
+          - "#nix-bitcoin"
+          - "#nix-darwin"
 
       # (optional) Server alias for display in tab line
       # alias: OFTC
