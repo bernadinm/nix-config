@@ -35,6 +35,8 @@ in
         ../dotfiles/navi/.navi.plugin.bash;
       ".config/helix/config.toml".source =
         ../dotfiles/.config/helix/config.toml;
+      ".config/tiny/config.yml".source =
+        ../dotfiles/.config/tiny/config.yml;
       ".ssh/authorized_keys".source =
         ../dotfiles/.ssh/authorized_keys;
       ".gnupg/sshcontrol".source =
