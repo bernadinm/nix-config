@@ -21,9 +21,12 @@ in
     weechat
     weechatScripts.wee-slack
     weechatScripts.weechat-notify-send
-    weechatScripts.weechat-matrix-bridge
 
     rustdesk # teamviewer oss
+
+    #irc clients
+    tiny # rust irc client
+    fractal # matrix irc client
   ];
 
   disabledModules = [
