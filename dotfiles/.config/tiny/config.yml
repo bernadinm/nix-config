@@ -30,6 +30,21 @@ servers:
       # nickserv_ident: 'hunter2'
 
 # Defaults used when connecting to servers via the /connect command
+    - addr: irc.us.libera.chat
+      port: 6697
+      tls: true
+      realname: Miguel
+      nicks: [bernadinm]
+
+      # (optional) Server alias for display in tab line
+      # alias: OFTC
+
+      # Channels to automatically join
+      #join:
+          #- "#tiny"
+
+      # Three authentication methods: pass, sasl, and nickserv_ident
+      # These are optional and you probably only need one of these, delete
 defaults:
     nicks: [bernadinm]
     realname: Miguel
@@ -143,7 +158,7 @@ colors:
 # Custom key mappings (optional)
 # [key_name]: [key_action]
 # Set a key to "disable" to disable it
-# key_map:
+key_map:
     ### Defaults ###
     # ctrl_c: exit
     # ctrl_x: run_editor
@@ -179,6 +194,8 @@ colors:
     # pgdown:     messages_page_down
     # home:       messages_scroll_top
     # end:        messages_scroll_bottom
+    ctrl_t:       messages_scroll_top
+    ctrl_b:       messages_scroll_bottom
 
     # left:       input_move_curs_left
     # right:      input_move_curs_right
