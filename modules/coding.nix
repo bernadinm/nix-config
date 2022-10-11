@@ -32,9 +32,9 @@ in
     glib # c wrappers
 
     # rust
-    cargo # coding for rust
-    rustc # rust compiler
-    pkg-config # packging with rust
+    unstable.cargo # coding for rust
+    unstable.rustc # rust compiler
+    unstable.pkg-config # packging with rust
 
     deno # javascript runtime
     nodejs # javascript runtime
