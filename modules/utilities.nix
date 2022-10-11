@@ -53,6 +53,7 @@ in
     ffmpeg # multimedia tool
     visidata # csv parsing tool
     usbutils # lsusb
+    parquet-tools # parquet viewer
 
     navi # cheat files
     fzf # fuzzy find
