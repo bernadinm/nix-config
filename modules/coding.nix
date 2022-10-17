@@ -45,6 +45,9 @@ in
     mupdf # pdf viewer
     hugo # website engine
 
+    # cuelang
+    cue
+
     # build tool
     unstable.bazel
 
