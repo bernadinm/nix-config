@@ -42,6 +42,7 @@ in
     glow # markdown reader
     pandoc # convert markdown to any file
     ocrmypdf # convert pdt fo ocr pdf
+    mupdf # pdf viewer
     hugo # website engine
 
     # build tool
