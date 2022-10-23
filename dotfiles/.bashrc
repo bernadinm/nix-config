@@ -30,6 +30,9 @@ alias n='cd ~/git/bernadinm/nix-config'
 alias vi='hx'
 freshfetch # bash init
 
+# Environment Variables
+EDITOR='hx' # default editor
+
 if test -f "$HOME/.config/navi/.navi.plugin.bash"; then
   eval "$(cat $HOME/.config/navi/.navi.plugin.bash)"
 fi
