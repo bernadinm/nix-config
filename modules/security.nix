@@ -22,13 +22,15 @@ in
     openvpn
 
     # password management
+    (pass.withExtensions (ext: with ext; [
+      pass-otp
+      pass-tomb
+      pass-audit
+      pass-import
+      pass-update
+      pass-genphrase
+    ]))
     pass
-    passExtensions.pass-otp
-    passExtensions.pass-tomb
-    passExtensions.pass-audit
-    passExtensions.pass-import
-    passExtensions.pass-update
-    passExtensions.pass-genphrase
 
     # log analyzer
     goaccess
