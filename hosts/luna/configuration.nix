@@ -107,7 +107,7 @@ in
     HandleLidSwitch=hybrid-sleep
     HandleLidSwitchExternalPower=hybrid-sleep
     IdleAction=hyrbid-sleep
-    IdleActionSec=30min
+    IdleActionSec=15min
   '';
 
   # screen locker
