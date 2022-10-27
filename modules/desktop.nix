@@ -405,7 +405,6 @@ in
         i3lock-fancy-rapid #default i3 screen locker
         i3blocks #if you are planning on using i3blocks over i3status
         raiseorlaunch # i3 app launcher
-        xfce.xfce4-power-manager # power manager notification
 
         compton
         lxqt.compton-conf
