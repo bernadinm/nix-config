@@ -1,42 +1,27 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
-let
-  home-manager = builtins.fetchTarball
-    "https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz";
-in
 {
   imports =
     [
-      # Include the results of the hardware scan.
-      #../../modules/gdrivesync.nix
-      #../../modules/entertainment.nix
-      #../../modules/security.nix
-      #../../modules/virtualization.nix
-      #../../modules/communication.nix
-      #../../modules/monitoring.nix
-      #../../modules/desktop.nix
-      #../../modules/utilities.nix
-      #../../modules/coding.nix
-      #<nixos-unstable/nixos/modules/services/networking/nebula.nix>
+      ../../../modules/utilities.nix
     ];
 
-  nixpkgs.config.allowUnfree = true;
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
 
-  home-manager.users.miguel.home.file =
-    {
-      ".config/i3/config".source =
-        .config/i3/config;
-    };
+  # Home Manager needs a bit of information about you and the
+  # paths it should manage.
+  home.username = "miguel.bernadin";
+  home.homeDirectory = "/home/miguel.bernadin";
 
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "21.11"; # Did you read the comment?
-
+  # This value determines the Home Manager release that your
+  # configuration is compatible with. This helps avoid breakage
+  # when a new Home Manager release introduces backwards
+  # incompatible changes.
+  #
+  # You can update Home Manager without changing this value. See
+  # the Home Manager release notes for a list of state version
+  # changes in each release.
+  home.stateVersion = "21.05";
 }
+
