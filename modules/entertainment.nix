@@ -27,7 +27,7 @@ in
     steam-run
     vulkan-tools
     minecraft
-    polymc
+    unstable.prismlauncher
     lutris
     eidolon
     krb5
