@@ -92,6 +92,11 @@ in
     libinput.enable = true;
   };
 
+  # hybrid sleep when press power button
+  services.logind.extraConfig = ''
+    IdleActionSec=60min
+  '';
+
   hardware.acpilight.enable = true;
 
   # List packages installed in system profile. To search, run:
