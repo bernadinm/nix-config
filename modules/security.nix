@@ -50,6 +50,8 @@ in
 
     yubikey-manager # yubikey
     yubikey-personalization # yubikey
+
+    nftables # iptable alternative
   ];
 
   #services.keycloak = {
