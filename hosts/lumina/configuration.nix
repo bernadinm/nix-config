@@ -52,6 +52,10 @@ in
   networking.useDHCP = false;
   networking.interfaces.enp5s0.useDHCP = true;
   networking.interfaces.wlp4s0.useDHCP = true;
+  networking.extraHosts =
+    ''
+      192.168.100.3 luna
+    '';
 
   environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
 
