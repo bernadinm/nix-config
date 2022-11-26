@@ -209,7 +209,10 @@ in
   services.pcscd.enable = true;
 
   # Enable OpenSSH Server
-  services.sshd.enable = true;
+  services.openssh = {
+    enable = true;
+    openFirewall = false; # keep this disabled but open through nebula.mesh
+  };
 
   # Enable the Gnugp daemon instead of SSH.
   programs = {
