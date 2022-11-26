@@ -198,6 +198,9 @@ in
 
   services.teamviewer.enable = true;
 
+  # Browser passwordstore native client
+  programs.browserpass.enable = true;
+
   # Block failed login attempts from SSH 
   services.fail2ban.enable = true;
 
