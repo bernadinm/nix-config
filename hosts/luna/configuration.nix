@@ -42,6 +42,11 @@ in
   networking.useDHCP = false;
   networking.interfaces.wlp170s0.useDHCP = true;
 
+  networking.extraHosts =
+    ''
+      192.168.100.2 lumina
+    '';
+
   boot.kernelPackages = pkgs.linuxPackages_latest; #- for WiFi support
 
   nixpkgs.config.allowUnfree = true;
@@ -129,7 +134,7 @@ in
 
   # Enable Nebula Mesh Network
   services.nebula.networks.mesh = {
-    staticHostMap = { "192.168.100.2" = [ "lumina.miguel.engineer:4242" ] ; };
+    staticHostMap = { "192.168.100.2" = [ "lumina.miguel.engineer:4242" ]; };
   };
 
   services.fprintd.enable = true;
