@@ -327,6 +327,7 @@ in
 
     scrot # screen capture
     screenfetch # used with scrot
+    kazam # popup screen capture
 
     unclutter # hides mouse during inactivity
 
