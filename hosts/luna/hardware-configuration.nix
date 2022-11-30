@@ -11,8 +11,11 @@
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "kvm-intel" "hid-apple" ];
   boot.extraModulePackages = [ ];
+  boot.extraModprobeConfig = ''
+      options hid_apple fnmode=2
+  '';
 
   fileSystems."/" =
     {
