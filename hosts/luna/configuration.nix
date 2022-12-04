@@ -108,10 +108,10 @@ in
   # hybrid sleep when press power button
   services.logind.extraConfig = ''
     HandlePowerKeyLongPress=poweroff
-    HandlePowerKey=hybrid-sleep
-    HandleLidSwitch=hybrid-sleep
+    HandlePowerKey=hibernate
+    HandleLidSwitch=suspend-then-hibernate
     HandleLidSwitchExternalPower=hybrid-sleep
-    IdleAction=hyrbid-sleep
+    IdleAction=hibernate
     IdleActionSec=15min
   '';
 
