@@ -186,6 +186,11 @@ in
   networking.enableIPv6 = false;
   networking.firewall.allowedTCPPorts = [ 80 443 4242 ]; # http https nebula
   networking.firewall.trustedInterfaces = [ "nebula.mesh" ];
+  networking.firewall.extraCommands = ''
+  iptables -A nixos-fw -p tcp --source 192.168.1.0/24 --dport 22 -j nixos-fw-accept
+  iptables -A nixos-fw -p udp --source 192.168.1.0/24 --dport 80 -j nixos-fw-accept
+  iptables -A nixos-fw -p udp --source 192.168.1.0/24 --dport 443 -j nixos-fw-accept
+  ''; # allow private connnectivity
   # networking.firewall.allowedTCPPortRanges = [{ from = 1714; to = 1764; }]; # kde
   # networking.firewall.allowedUDPPortRanges = [{ from = 1714; to = 1764; }]; # kde
 
