@@ -6,8 +6,6 @@ let
   #kubeMasterHostname = "api.k8s.lumina.miguel.engineer";
   kubeMasterHostname = "localhost";
   kubeMasterAPIServerPort = 8443;
-  keyCloakHttpPort = 8081;
-  keyCloakHttpsPort = 8445;
 in
 {
   environment.systemPackages = with pkgs; [

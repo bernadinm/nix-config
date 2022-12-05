@@ -2,6 +2,8 @@
 let
   baseconfig = { allowUnfree = true; };
   porcupine = import <nixos-porcupine> { config = baseconfig; };
+  keyCloakHttpPort = 8081;
+  keyCloakHttpsPort = 8445;
 in
 {
   environment.systemPackages = with pkgs; [
@@ -54,17 +56,17 @@ in
     nftables # iptable alternative
   ];
 
-  #services.keycloak = {
-  #  enable = true;
-  #  #frontendUrl = "key.lumina.miguel.engineer/auth";
-  #  frontendUrl = "localhost";
-  #  #forceBackendUrlToFrontendUrl = true;
-  #  #sslCertificate = "/var/lib/acme/key-lumina-miguel-engineer/fullchain.pem";
-  #  #sslCertificateKey = "/var/lib/acme/key-lumina-miguel-engineer/key.pem";
-  #  database.passwordFile = "/run/keys/db_password";
-  #  httpPort = "${toString keyCloakHttpPort}";
-  #  httpsPort = "${toString keyCloakHttpsPort}";
-  #};
+  services.keycloak = {
+    enable = true;
+    #frontendUrl = "key.lumina.miguel.engineer/auth"; # no longer used
+    #frontendUrl = "localhost"; # no longer used
+    #forceBackendUrlToFrontendUrl = true;
+    #sslCertificate = "/var/lib/acme/key-lumina-miguel-engineer/fullchain.pem";
+    #sslCertificateKey = "/var/lib/acme/key-lumina-miguel-engineer/key.pem";
+    #database.passwordFile = "/run/keys/db_password";
+    httpPort = "${toString keyCloakHttpPort}";
+    httpsPort = "${toString keyCloakHttpsPort}";
+  };
 
   ## Now we can configure ACME
   #security.acme.acceptTerms = true;
