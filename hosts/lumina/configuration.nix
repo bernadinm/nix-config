@@ -26,6 +26,7 @@ in
       ../../modules/coding.nix
       ../../modules/music.nix
       ../../modules/3d-rendering.nix
+      ../../modules/pci-passthrough.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
