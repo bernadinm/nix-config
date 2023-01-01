@@ -2,7 +2,7 @@
 
 let
   home-manager = builtins.fetchTarball
-    "https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz";
+    "https://github.com/nix-community/home-manager/archive/release-22.11.tar.gz";
 in
 {
   imports =
@@ -60,7 +60,7 @@ in
       sha256 = "sha256-OMhC6paqEOQUnxyb33u0kfKpy8plLSRgp8X8T8w0Q/o=";
     };
   };
-  home-manager.users.miguel.home.stateVersion = "22.05";
+  home-manager.users.miguel.home.stateVersion = "22.11";
   home-manager.users.miguel.programs.neovim = {
     enable = true;
     viAlias = true;
