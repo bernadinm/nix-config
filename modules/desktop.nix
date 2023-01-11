@@ -61,6 +61,7 @@ in
     };
   };
   home-manager.users.miguel.home.stateVersion = "22.11";
+  home-manager.users.rachelle.home.stateVersion = "22.11";
   home-manager.users.miguel.programs.neovim = {
     enable = true;
     viAlias = true;
@@ -316,6 +317,7 @@ in
     chromium # browser
     google-chrome # browser
     firefox # browser
+    (firefox.override { extraNativeMessagingHosts = [ passff-host ]; })
 
     playerctl # music control
 
