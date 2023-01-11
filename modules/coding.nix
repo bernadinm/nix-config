@@ -38,6 +38,7 @@ in
 
     deno # javascript runtime
     nodejs # javascript runtime
+    nodePackages.typescript # installing typescript
 
     glow # markdown reader
     pandoc # convert markdown to any file
