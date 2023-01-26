@@ -66,12 +66,16 @@ in
     {
       ".config/i3/config".source =
         .config/i3/config;
+      ".config/libinput-gestures.conf".source =
+        .config/libinput-gestures.conf;
     };
 
   home-manager.users.rachelle.home.file =
     {
       ".config/i3/config".source =
         .config/i3/config;
+      ".config/libinput-gestures.conf".source =
+        .config/libinput-gestures.conf;
     };
 
   services.upower.enable = true;
@@ -90,7 +94,6 @@ in
   services.printing.drivers = [ pkgs.hplip pkgs.canon-cups-ufr2 ];
 
   # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
   services.xserver.libinput.touchpad.naturalScrolling = true;
   services.xserver.libinput.touchpad.disableWhileTyping = true;
   services.xserver.libinput.mouse.disableWhileTyping = true;
