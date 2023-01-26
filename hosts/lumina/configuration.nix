@@ -65,6 +65,8 @@ in
     {
       ".config/i3/config".source =
         .config/i3/config;
+      ".config/libinput-gestures.conf".source =
+        .config/libinput-gestures.conf;
     };
 
   # Removing becuase it conflicts with protonvpn
@@ -95,7 +97,6 @@ in
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver = {
     libinput.touchpad.naturalScrolling = true;
-    libinput.enable = true;
   };
 
   # hybrid sleep when press power button

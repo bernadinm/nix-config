@@ -14,7 +14,7 @@ in
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.miguel = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "video" "i2c" "vboxusers" "libvirtd" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "docker" "input" "video" "i2c" "vboxusers" "libvirtd" ]; # Enable ‘sudo’ for the user.
     description = "Miguel Bernadin";
   };
 
@@ -384,6 +384,7 @@ in
 
   services.xserver = {
     enable = true;
+    libinput.enable = true;
 
     desktopManager = {
       xterm.enable = false;
@@ -408,6 +409,7 @@ in
         i3lock-fancy-rapid #default i3 screen locker
         i3blocks #if you are planning on using i3blocks over i3status
         raiseorlaunch # i3 app launcher
+        xdotool # commandline automation for x11
 
         compton
         lxqt.compton-conf

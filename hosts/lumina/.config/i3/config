@@ -259,3 +259,6 @@ exec xinput set-prop 12 "Device Accel Constant Deceleration" 0.9
 
 # Enable polybar
 # exec ~/.config/polybar/launch.sh --forest
+
+# Adding gesture support
+exec --no-startup-id libinput-gestures
