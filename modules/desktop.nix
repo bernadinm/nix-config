@@ -59,6 +59,8 @@ in
         ../dotfiles/.launch_gmailwork.sh;
       ".launch_businessmail.sh".source =
         ../dotfiles/.launch_businessmail.sh;
+      ".launch_bible.sh".source =
+        ../dotfiles/.launch_bible.sh;
       ".launch_github.sh".source =
         ../dotfiles/.launch_github.sh;
       ".launch_googlekeep.sh".source =
