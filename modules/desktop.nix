@@ -47,6 +47,26 @@ in
         ../dotfiles/.bashrc;
       ".vimrc".source =
         ../dotfiles/.vimrc;
+      ".launch_notion.sh".source =
+        ../dotfiles/.launch_notion.sh;
+      ".launch_youtube.sh".source =
+        ../dotfiles/.launch_youtube.sh;
+      ".launch_music.sh".source =
+        ../dotfiles/.launch_music.sh;
+      ".launch_gmail.sh".source =
+        ../dotfiles/.launch_gmail.sh;
+      ".launch_gmailwork.sh".source =
+        ../dotfiles/.launch_gmailwork.sh;
+      ".launch_businessmail.sh".source =
+        ../dotfiles/.launch_businessmail.sh;
+      ".launch_github.sh".source =
+        ../dotfiles/.launch_github.sh;
+      ".launch_googlekeep.sh".source =
+        ../dotfiles/.launch_googlekeep.sh;
+      ".launch_protonmail.sh".source =
+        ../dotfiles/.launch_protonmail.sh;
+      ".launch_drive.sh".source =
+        ../dotfiles/.launch_drive.sh;
       ".config/nvim/coc-settings.json".source =
         ../dotfiles/vim/coc-settings.json;
     };
@@ -410,6 +430,7 @@ in
         i3blocks #if you are planning on using i3blocks over i3status
         raiseorlaunch # i3 app launcher
         xdotool # commandline automation for x11
+        xorg.xwininfo # fetch window infomation
 
         compton
         lxqt.compton-conf

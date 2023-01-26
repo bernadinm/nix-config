@@ -262,3 +262,20 @@ exec xinput set-prop 12 "Device Accel Constant Deceleration" 0.9
 
 # Adding gesture support
 exec --no-startup-id libinput-gestures
+
+## App Launch Keybindings
+# always start in scratchpad
+## for_window [class="^notion$"] floating enable, move scratchpad, scratchpad show
+# keybind to show or hide it
+## bindsym $mod+n [class="^notion$"] scratchpad show
+# keybind to launch it the way i like it
+bindsym $sup+n exec sh $HOME/.launch_notion.sh
+bindsym $sup+y exec sh $HOME/.launch_youtube.sh
+bindsym $sup+m exec sh $HOME/.launch_music.sh
+bindsym $sup+w exec sh $HOME/.launch_gmailwork.sh
+bindsym $sup+e exec sh $HOME/.launch_businessmail.sh
+bindsym $sup+g exec sh $HOME/.launch_gmail.sh
+bindsym $sup+o exec sh $HOME/.launch_github.sh
+bindsym $sup+k exec sh $HOME/.launch_googlekeep.sh
+bindsym $sup+p exec sh $HOME/.launch_protonmail.sh
+bindsym $sup+d exec sh $HOME/.launch_drive.sh
