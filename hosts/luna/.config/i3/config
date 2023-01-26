@@ -257,6 +257,8 @@ bindsym $sup+y exec sh $HOME/.launch_youtube.sh
 bindsym $sup+m exec sh $HOME/.launch_music.sh
 bindsym $sup+w exec sh $HOME/.launch_gmailwork.sh
 bindsym $sup+b exec sh $HOME/.launch_bible.sh
+bindsym $sup+c exec sh $HOME/.launch_chatgpt.sh
+bindsym $sup+a exec sh $HOME/.launch_ai.sh
 bindsym $sup+e exec sh $HOME/.launch_businessmail.sh
 bindsym $sup+g exec sh $HOME/.launch_gmail.sh
 bindsym $sup+o exec sh $HOME/.launch_github.sh

@@ -69,6 +69,10 @@ in
         ../dotfiles/.launch_protonmail.sh;
       ".launch_drive.sh".source =
         ../dotfiles/.launch_drive.sh;
+      ".launch_chatgpt.sh".source =
+        ../dotfiles/.launch_chatgpt.sh;
+      ".launch_ai.sh".source =
+        ../dotfiles/.launch_ai.sh;
       ".config/nvim/coc-settings.json".source =
         ../dotfiles/vim/coc-settings.json;
     };
