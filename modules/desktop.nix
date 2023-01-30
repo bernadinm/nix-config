@@ -461,4 +461,5 @@ in
 
   hardware.bluetooth.enable = true; # enable bluethooth
   services.touchegg.enable = true; # enable multi touch gesture
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }

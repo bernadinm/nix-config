@@ -24,7 +24,6 @@ in
       ../../modules/coding.nix
       <nixos-unstable/nixos/modules/services/networking/nebula.nix>
     ];
-
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
