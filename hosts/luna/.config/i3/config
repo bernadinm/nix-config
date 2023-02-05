@@ -259,6 +259,7 @@ exec_always --no-startup-id libinput-gestures
 # keybind to launch it the way i like it
 bindsym $sup+n exec sh $HOME/.launch_notion.sh
 bindsym $sup+y exec sh $HOME/.launch_youtube.sh
+bindsym $sup+i exec sh $HOME/.launch_instagram.sh
 bindsym $sup+m exec sh $HOME/.launch_music.sh
 bindsym $sup+f exec sh $HOME/.launch_googlefi.sh
 bindsym $sup+w exec sh $HOME/.launch_gmailwork.sh

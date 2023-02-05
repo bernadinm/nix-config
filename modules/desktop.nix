@@ -49,6 +49,8 @@ in
         ../dotfiles/.vimrc;
       ".launch_notion.sh".source =
         ../dotfiles/.launch_notion.sh;
+      ".launch_instagram.sh".source =
+        ../dotfiles/.launch_instagram.sh;
       ".launch_youtube.sh".source =
         ../dotfiles/.launch_youtube.sh;
       ".launch_music.sh".source =
