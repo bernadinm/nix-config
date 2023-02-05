@@ -53,6 +53,8 @@ in
         ../dotfiles/.launch_youtube.sh;
       ".launch_music.sh".source =
         ../dotfiles/.launch_music.sh;
+      ".launch_googlefi.sh".source =
+        ../dotfiles/.launch_googlefi.sh;
       ".launch_gmail.sh".source =
         ../dotfiles/.launch_gmail.sh;
       ".launch_gmailwork.sh".source =

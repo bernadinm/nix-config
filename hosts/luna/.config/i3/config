@@ -255,6 +255,7 @@ exec_always --no-startup-id libinput-gestures
 bindsym $sup+n exec sh $HOME/.launch_notion.sh
 bindsym $sup+y exec sh $HOME/.launch_youtube.sh
 bindsym $sup+m exec sh $HOME/.launch_music.sh
+bindsym $sup+f exec sh $HOME/.launch_googlefi.sh
 bindsym $sup+w exec sh $HOME/.launch_gmailwork.sh
 bindsym $sup+b exec sh $HOME/.launch_bible.sh
 bindsym $sup+c exec sh $HOME/.launch_chatgpt.sh
