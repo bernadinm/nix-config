@@ -54,6 +54,7 @@ in
     visidata # csv parsing tool
     usbutils # lsusb
     parquet-tools # parquet viewer
+    epr # ebook reader
 
     navi # cheat files
     fzf # fuzzy find
