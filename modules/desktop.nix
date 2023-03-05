@@ -460,6 +460,12 @@ in
     package = pkgs.pulseaudioFull;
   };
 
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 60d";
+  };
+
   # See: https://github.com/NixOS/nixpkgs/commit/224a6562a4880195afa5c184e755b8ecaba41536
   boot.loader.systemd-boot.configurationLimit = 50;
 
