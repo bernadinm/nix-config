@@ -52,6 +52,7 @@ in
     yubikey-personalization # yubikey
 
     nftables # iptable alternative
+    tor # security network
   ];
 
   #services.keycloak = {
