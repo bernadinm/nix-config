@@ -113,10 +113,10 @@ in
     HandlePowerKey=hibernate
     HandleLidSwitch=suspend-then-hibernate
     HandleLidSwitchExternalPower=ignore
+    HandleLidSwitchDocked=ignore
     IdleAction=hibernate
     IdleActionSec=15min
   '';
-
   # screen locker
   programs.xss-lock.enable = true;
   programs.xss-lock.lockerCommand = "${pkgs.i3lock-fancy-rapid}/bin/i3lock-fancy-rapid 15 30";
