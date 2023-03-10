@@ -6,11 +6,6 @@ let
   unstable = import <nixos-unstable> { config = baseconfig; };
 in
 {
-  imports =
-    [
-      ../pkgs/npm.nix
-    ];
-
   environment.systemPackages = with pkgs; [
     # base
     wget # system
