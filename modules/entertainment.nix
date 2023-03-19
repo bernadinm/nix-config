@@ -43,8 +43,10 @@ in
 
     # multimedia
     vlc
-    gimp
-    libreoffice
+    libreoffice # alt word
+    gimp # alt photoshop
+    scribus # alt indesign
+    krita # alt illustrator
 
     # Latex
     texlive.combined.scheme-full
