@@ -33,6 +33,7 @@ in
     krb5
     cmatrix
     _2048-in-terminal
+    vitetris
     uchess
 
     # drone configuration
