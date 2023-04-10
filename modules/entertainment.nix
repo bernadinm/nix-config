@@ -20,7 +20,7 @@ in
     # (winetricks.override {
     #   wine = wineWowPackages.staging;
     # })
-    wineWowPackages.full
+    unstable.wineWowPackages.full
     winetricks
     bottles
     sc-controller
@@ -28,7 +28,7 @@ in
     vulkan-tools
     minecraft
     unstable.prismlauncher
-    lutris
+    unstable.lutris
     eidolon
     krb5
     cmatrix
