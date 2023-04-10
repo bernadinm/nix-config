@@ -22,7 +22,8 @@
   # These modules are required for PCI passthrough, and must come before early modesetting stuff
   boot.kernelModules = [ "vfio" "vfio_iommu_type1" "vfio_pci" "vfio_virqfd" "pcie_aspm=off" ];
   boot.initrd.availableKernelModules = [ "vfio-pci" ];
-  boot.blacklistedKernelModules = [ "nvidia" "nouveau" ];
+  #boot.blacklistedKernelModules = [ "nvidia" "nouveau" ];
+  boot.blacklistedKernelModules = [ "nouveau" ];
 
   # CHANGE: Don't forget to put your own PCI IDs here
   #boot.extraModprobeConfig = "options vfio-pci ids=10de:2204,10de:1aef";

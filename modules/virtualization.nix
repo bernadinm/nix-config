@@ -27,7 +27,7 @@ in
 
     ignite # microvm
 
-    vmware-workstation # vmware virt
+    unstable.vmware-workstation # vmware virt
   ];
 
   nixpkgs.config = baseconfig // {

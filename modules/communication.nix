@@ -15,14 +15,14 @@ in
     keybase-gui
 
     # visual comm
-    realvnc-vnc-viewer
+    #unstable.realvnc-vnc-viewer
 
     # weechat irc
     weechat
     weechatScripts.wee-slack
     weechatScripts.weechat-notify-send
 
-    rustdesk # teamviewer oss
+    #unstable.rustdesk # teamviewer oss
 
     #irc clients
     tiny # rust irc client
