@@ -6,7 +6,7 @@ in
 {
   environment.systemPackages = with pkgs; [
     # base
-    zoom-us
+    unstable.zoom-us
     mumble
     profanity
     discord
