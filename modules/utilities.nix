@@ -37,6 +37,7 @@ in
     bash # system interface
     terraform # automation
     whois # domain info
+    file # linux description of file
     inetutils # telnet
     trash-cli # system
     mimic # tts
