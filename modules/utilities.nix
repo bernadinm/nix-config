@@ -60,6 +60,7 @@ in
     navi # cheat files
     fzf # fuzzy find
     nixpkgs-fmt # nixfmt
+    nix-index # nix-locate
 
     # ML
     # gpt2tc # machine learning
