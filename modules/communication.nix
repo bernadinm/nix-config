@@ -22,7 +22,7 @@ in
     weechatScripts.wee-slack
     weechatScripts.weechat-notify-send
 
-    #unstable.rustdesk # teamviewer oss
+    rustdesk # teamviewer oss
     anydesk # remote desktop sharing
 
     #irc clients
