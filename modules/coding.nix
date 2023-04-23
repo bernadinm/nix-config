@@ -16,7 +16,7 @@ in
     libffi # coding used with pip
     gcc # coding used with pip
 
-    git gti # svm
+    git gti git-lfs# svm
     gh # github util
     unstable.gh-dash # github dashboard
     delta # git diff tool
