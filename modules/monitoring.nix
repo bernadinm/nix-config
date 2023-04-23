@@ -25,7 +25,6 @@
     lsof
     glances
     bandwhich
-    ntopng # web-based traffic analysis 
 
     # crypto mon
     cointop
@@ -37,4 +36,7 @@
     lshw # hw probe
     dmidecode # hw probe
   ];
+
+  # High-speed web-based traffic analysis and flow collection tool
+  services.ntopng.enable = true;
 }
