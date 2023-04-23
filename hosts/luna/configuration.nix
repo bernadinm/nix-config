@@ -41,10 +41,11 @@ in
   networking.useDHCP = false;
   networking.interfaces.wlp170s0.useDHCP = true;
 
-  networking.extraHosts =
-    ''
-      192.168.100.2 lumina
-    '';
+  # bernadinm(todo): remove me
+  # networking.extraHosts =
+  #   ''
+  #     192.168.100.2 lumina
+  #   '';
 
   boot.kernelPackages = pkgs.linuxPackages_latest; #- for WiFi support
 

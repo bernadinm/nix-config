@@ -25,6 +25,7 @@
     lsof
     glances
     bandwhich
+    ntopng # web-based traffic analysis 
 
     # crypto mon
     cointop
