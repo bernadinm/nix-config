@@ -2,6 +2,7 @@
 let
   baseconfig = { allowUnfree = true; };
   porcupine = import <nixos-porcupine> { config = baseconfig; };
+  hostname = config.networking.hostName;
 in
 {
   environment.systemPackages = with pkgs; [
@@ -93,20 +94,19 @@ in
   #};
   # This didnt work above |
 
-  #services.nginx.enable = true;
+  services.nginx.enable = true;
   #services.nginx.virtualHosts."lumina.miguel.engineer" = {
   #    forceSSL = true;
   #    enableACME = true;
   #    root = "/var/www/lumina.miguel.engineer";
   #};
-  #services.nginx.virtualHosts."k8s.lumina.miguel.engineer" = {
-  #    forceSSL = true;
-  #    enableACME = true;
-  #    #root = "/var/www/k8s.lumina.miguel.engineer";
-  #    locations."/" = {
-  #      proxyPass = "http://localhost:${toString kubeMasterAPIServerPort}";
-  #    };
-  #};
+  services.nginx.virtualHosts."${hostname}" = {
+      #forceSSL = true;
+      # enableACME = true;
+      locations."/ntop" = {
+        proxyPass = "http://localhost:3000/";
+      };
+  };
   #services.nginx.virtualHosts."key.lumina.miguel.engineer" = {
   #    forceSSL = true;
   #    enableACME = true;
