@@ -37,6 +37,9 @@ in
     };
   };
 
+  # TODO(bernadinm): enable when I migrate from i3wm -> sway
+  # virtualisation.waydroid.enable = true;
+  # virtualisation.lxd.enable = true;
   virtualisation.docker.enable = true;
   virtualisation.docker.storageDriver = "overlay";
   virtualisation.virtualbox.host.enable = true;
