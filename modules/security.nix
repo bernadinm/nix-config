@@ -100,12 +100,17 @@ in
   #    enableACME = true;
   #    root = "/var/www/lumina.miguel.engineer";
   #};
-  services.nginx.virtualHosts."${hostname}" = {
+  services.nginx.virtualHosts."ntop" = {
       #forceSSL = true;
       # enableACME = true;
-      locations."/ntop" = {
+      locations."/" = {
         proxyPass = "http://localhost:3000/";
       };
+  };
+  networking = {
+    extraHosts = ''
+      127.0.0.1 ntop.luna
+    '';
   };
   #services.nginx.virtualHosts."key.lumina.miguel.engineer" = {
   #    forceSSL = true;
