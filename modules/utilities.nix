@@ -33,6 +33,7 @@ in
     tmux # system
     unzip # system
     rar # archives
+    zip # archives
     cksfv # sfv checksum
     bash # system interface
     terraform # automation
