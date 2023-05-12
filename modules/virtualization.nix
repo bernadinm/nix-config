@@ -42,7 +42,7 @@ in
   # virtualisation.lxd.enable = true;
   virtualisation.docker.enable = true;
   virtualisation.docker.storageDriver = "overlay";
-  virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox.host.enable = false;
   virtualisation.virtualbox.host.enableExtensionPack = true;
   users.extraGroups.vboxusers.members = [ "miguel" ];
   virtualisation.libvirtd.enable = true; # qemu/kvm
