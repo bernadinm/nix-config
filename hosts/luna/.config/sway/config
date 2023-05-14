@@ -72,6 +72,9 @@ bindsym $mod+Shift+w kill
 # start dmenu (a program launcher)
 bindsym $mod+space exec wofi --show drun
 
+exec dbus-sway-environment
+exec configure-gtk
+
 # change focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down
