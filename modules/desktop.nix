@@ -339,7 +339,6 @@ in
     # base
     yarn # used for home manager neovim
     wl-clipboard # clipboard history
-    wl-clipboard-rs # clipboard select
     wev # discover keybindings
     x2goclient # remote desktop client
 
@@ -356,6 +355,24 @@ in
     # compton removed as Sway has a built-in compositor
     # lxqt.compton-conf removed as it is not needed with Sway
 
+    alacritty # gpu accelerated terminal
+    sway
+    dbus-sway-environment
+    configure-gtk
+    wayland
+    xdg-utils # for opening default programs when clicking links
+    glib # gsettings
+    dracula-theme # gtk theme
+    gnome3.adwaita-icon-theme  # default gnome cursors
+    swaylock
+    swayidle
+    grim # screenshot functionality
+    slurp # screenshot functionality
+    wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
+    bemenu # wayland clone of dmenu
+    mako # notification system developed by swaywm maintainer
+    wdisplays # tool to configure displays
+    
     feh # wallpaper manager (can be replaced with Sway output configuration)
 
     grim # screen capture
@@ -395,20 +412,6 @@ in
     gwenview # gui file manager
   ];
 
-  # San Francisco, California for Redshift for screen color changing
-  location.provider = "manual";
-  location.latitude = 37.773972;
-  location.longitude = -122.431297;
-  services.redshift = {
-    enable = false;
-    temperature = {
-      day = 5500;
-      night = 3200;
-    };
-  };
-
-  services.gammastep.enable = true; # Wayland alternative to Redshift
-
   # Allows services and hosts exposed on the local network via mDNS/DNS-SD
   services.avahi.enable = true;
   services.avahi.nssmdns = true;
@@ -416,49 +419,21 @@ in
   services.atd.enable = true;
   services.locate.enable = true;
 
-  # Replace services.xserver with services.wayland
-  services.wayland = {
+
+  # enable sway window manager
+  programs.sway = {
     enable = true;
-    libinput.enable = true;
-
-    desktopManager = {
-      xterm.enable = false;
-    };
-
-    displayManager = {
-      defaultSession = "none+sway";
-    };
-
-    windowManager.sway = {
-      enable = true;
-      extraPackages = with pkgs; [
-        bemenu #application launcher most people use
-        wofi
-        polybar
-        clipman
-        xorg.xprop
-        xautolock # timer to lock screen
-        i3status # gives you the default i3 status bar
-        swaylock #default Sway screen locker
-        raiseorlaunch # i3 app launcher
-        ydotool # commandline automation for Wayland
-        xorg.xwininfo # fetch window infomation
-
-        # compton and lxqt.compton-conf removed as Sway has a built-in compositor
-
-        feh # wallpaper manager (can be replaced with Sway output configuration)
-        vifm # graphic file manager
-
-        brightnessctl # brightness ctrl
-      ];
-    };
+    wrapperFeatures.gtk = true;
   };
+
+
 
   # Enable sound.
   sound.enable = true;
-  hardware.pulseaudio = {
+  services.pipewire = {
     enable = true;
-    package = pkgs.pulseaudioFull;
+    alsa.enable = true;
+    pulse.enable = true;
   };
 
   nix.gc = {

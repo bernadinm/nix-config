@@ -47,16 +47,6 @@ in
 
   environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
   # Enable the Wayland windowing system and the Sway desktop environment.
-  services.wayland = {
-    enable = true;
-    sway = {
-      enable = true;
-      extraPackages = with pkgs; [ swaylock swayidle swaynag ];
-      extraSessionCommands = ''
-        # Add any additional commands that should run when starting the sway session
-      '';
-    };
-  };
 
   home-manager.users.miguel.home.file =
     {
@@ -66,6 +56,16 @@ in
       ".config/libinput-gestures.conf".source =
         .config/libinput-gestures.conf;
     };
+  
+  # San Francisco, California for Redshift for screen color changing
+  home-manager.users.miguel = {
+    services.gammastep = {
+      enable = true;
+      provider = "manual";
+      latitude = 37.773972;
+      longitude = -122.431297;
+    };
+  };
 
   home-manager.users.rachelle.home.file =
     {
