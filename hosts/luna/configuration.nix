@@ -41,50 +41,42 @@ in
   networking.useDHCP = false;
   networking.interfaces.wlp170s0.useDHCP = true;
 
-  # bernadinm(todo): remove me
-  # networking.extraHosts =
-  #   ''
-  #     192.168.100.2 lumina
-  #   '';
-
   boot.kernelPackages = pkgs.linuxPackages_latest; #- for WiFi support
 
   nixpkgs.config.allowUnfree = true;
 
   environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
-  # Enable the X11 windowing system.
-
-  # Required for Framework Laptop to help avoid screen tearing:
-  # https://discourse.nixos.org/t/eliminate-screen-tearing-with-intel-mesa/14724
-  services.xserver.videoDrivers = [ "intel" ];
-  services.xserver.deviceSection = ''
-    Option "DRI" "2"
-    Option "TearFree" "true"
-  '';
+  # Enable the Wayland windowing system and the Sway desktop environment.
+  services.wayland = {
+    enable = true;
+    sway = {
+      enable = true;
+      extraPackages = with pkgs; [ swaylock swayidle swaynag ];
+      extraSessionCommands = ''
+        # Add any additional commands that should run when starting the sway session
+      '';
+    };
+  };
 
   home-manager.users.miguel.home.file =
     {
-      ".config/i3/config".source =
-        .config/i3/config;
+      # Update file paths for Sway
+      ".config/sway/config".source =
+        .config/sway/config;
       ".config/libinput-gestures.conf".source =
         .config/libinput-gestures.conf;
     };
 
   home-manager.users.rachelle.home.file =
     {
-      ".config/i3/config".source =
-        .config/i3/config;
+      # Update file paths for Sway
+      ".config/sway/config".source =
+        .config/sway/config;
       ".config/libinput-gestures.conf".source =
         .config/libinput-gestures.conf;
     };
 
   services.upower.enable = true;
-  services.xserver = {
-    # small addition from desktop.nix import
-    monitorSection = ''
-      DisplaySize 408 306
-    '';
-  };
 
   boot.initrd.luks.devices.root.device = "/dev/disk/by-uuid/508642b3-eced-4e85-9c67-e6e85d946d96";
   boot.initrd.luks.devices.root.preLVM = true;
@@ -93,12 +85,10 @@ in
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.hplip pkgs.canon-cups-ufr2 ];
 
-  # Enable touchpad support (enabled default in most desktopManager).
+    # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.touchpad.naturalScrolling = true;
   services.xserver.libinput.touchpad.disableWhileTyping = true;
   services.xserver.libinput.mouse.disableWhileTyping = true;
-
-  #hardware.trackpoint.programs.light.enable = true;
 
   security.sudo = {
     enable = true;
@@ -118,9 +108,6 @@ in
     IdleAction=hibernate
     IdleActionSec=15min
   '';
-  # screen locker
-  programs.xss-lock.enable = true;
-  programs.xss-lock.lockerCommand = "${pkgs.i3lock-fancy-rapid}/bin/i3lock-fancy-rapid 15 30";
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
