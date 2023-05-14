@@ -364,7 +364,6 @@ in
     # base
     yarn # used for home manager neovim
     wl-clipboard # clipboard history
-    wl-clipboard-rs # clipboard select
     wev # discover keybindings
     x2goclient # remote desktop client
 
@@ -383,6 +382,24 @@ in
     # compton removed as Sway has a built-in compositor
     # lxqt.compton-conf removed as it is not needed with Sway
 
+    alacritty # gpu accelerated terminal
+    sway
+    dbus-sway-environment
+    configure-gtk
+    wayland
+    xdg-utils # for opening default programs when clicking links
+    glib # gsettings
+    dracula-theme # gtk theme
+    gnome3.adwaita-icon-theme  # default gnome cursors
+    swaylock
+    swayidle
+    grim # screenshot functionality
+    slurp # screenshot functionality
+    wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
+    bemenu # wayland clone of dmenu
+    mako # notification system developed by swaywm maintainer
+    wdisplays # tool to configure displays
+    
     feh # wallpaper manager (can be replaced with Sway output configuration)
 
     grim # screen capture
@@ -493,6 +510,15 @@ in
   # Disabled to upgrade to NixOS 24.11
   # sound.enable = true;
   # Add PipeWire configuration
+  # Allows services and hosts exposed on the local network via mDNS/DNS-SD
+  services.avahi.enable = true;
+  services.avahi.nssmdns = true;
+
+  services.atd.enable = true;
+  services.locate.enable = true;
+
+
+  # enable sway window manager
   services.pipewire = {
     enable = true;
     alsa.enable = true;

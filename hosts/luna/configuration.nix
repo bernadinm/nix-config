@@ -69,6 +69,16 @@ in
       ".config/libinput-gestures.conf".source =
         .config/libinput-gestures.conf;
     };
+  
+  # San Francisco, California for Redshift for screen color changing
+  home-manager.users.miguel = {
+    services.gammastep = {
+      enable = true;
+      provider = "manual";
+      latitude = 37.773972;
+      longitude = -122.431297;
+    };
+  };
 
   home-manager.users.rachelle.home.file =
     {
