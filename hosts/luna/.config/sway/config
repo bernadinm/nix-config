@@ -41,7 +41,12 @@ exec_always "swaymsg output DP-2 enable"
 exec_always "swaymsg input 12:libinput Accel Speed 0.65"
 
 # load nixos wallpaper
-exec --no-startup-id swaybg -i /home/miguel/Downloads/nixos-wallpaper.png
+exec_always --no-startup-id swaybg -i /home/miguel/Downloads/nixos-wallpaper.png
+
+# TODO(bernadinm): remove this workaround
+# https://github.com/swaywm/sway/issues/5054
+exec_always swaymsg input '2362:628:PIXA3854:00_093A:0274_Touchpad' natural_scroll enabled
+exec_always swaymsg input '2362:628:PIXA3854:00_093A:0274_Touchpad' tap enabled
 
 # Brightness
 exec_always "light -S 100"
