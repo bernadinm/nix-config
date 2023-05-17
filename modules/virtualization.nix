@@ -27,6 +27,8 @@ in
 
     ignite # microvm
     vagrant # vm cli
+    glib # waydroid requirement
+    gtk3 # waydroid requirement
 
     unstable.vmware-workstation # vmware virt
   ];
@@ -38,8 +40,7 @@ in
     };
   };
 
-  # TODO(bernadinm): enable when I migrate from i3wm -> sway
-  # virtualisation.waydroid.enable = true;
+  virtualisation.waydroid.enable = true;
   # virtualisation.lxd.enable = true;
   virtualisation.docker.enable = true;
   virtualisation.docker.storageDriver = "overlay";
