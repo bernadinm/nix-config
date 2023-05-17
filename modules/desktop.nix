@@ -3,40 +3,6 @@
 let
   home-manager = builtins.fetchTarball
     "https://github.com/nix-community/home-manager/archive/release-22.11.tar.gz";
-
-  dbus-sway-environment = pkgs.writeTextFile {
-    name = "dbus-sway-environment";
-    destination = "/bin/dbus-sway-environment";
-    executable = true;
-
-    text = ''
-  dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
-  systemctl --user stop pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr
-  systemctl --user start pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr
-      '';
-  };
-
-  # currently, there is some friction between sway and gtk:
-  # https://github.com/swaywm/sway/wiki/GTK-3-settings-on-Wayland
-  # the suggested way to set gtk settings is with gsettings
-  # for gsettings to work, we need to tell it where the schemas are
-  # using the XDG_DATA_DIR environment variable
-  # run at the end of sway config
-  configure-gtk = pkgs.writeTextFile {
-      name = "configure-gtk";
-      destination = "/bin/configure-gtk";
-      executable = true;
-      text = let
-        schema = pkgs.gsettings-desktop-schemas;
-        datadir = "${schema}/share/gsettings-schemas/${schema.name}";
-      in ''
-        export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
-        gnome_schema=org.gnome.desktop.interface
-        gsettings set $gnome_schema gtk-theme 'Dracula'
-        '';
-  };
-
-
 in
 {
   imports =
@@ -391,8 +357,6 @@ in
 
     alacritty # gpu accelerated terminal
     sway
-    dbus-sway-environment
-    configure-gtk
     wayland
     xdg-utils # for opening default programs when clicking links
     glib # gsettings
@@ -458,6 +422,25 @@ in
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
+    extraPackages = with pkgs; [
+      # base
+      yarn # used for home manager neovim
+      wl-clipboard # clipboard history
+      wayland
+      swaylock
+      swayidle
+      wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
+      bemenu # wayland clone of dmenu
+      mako # notification system developed by swaywm maintainer
+      wdisplays # tool to configure displays
+
+      feh # wallpaper manager (can be replaced with Sway output configuration)
+
+      wofi # program launcher (Wayland alternative to rofi)
+      bemenu # program launcher (Wayland alternative to dmenu)
+      dunst # system notification (supports Wayland)
+
+    ];
   };
 
   xdg.portal = {

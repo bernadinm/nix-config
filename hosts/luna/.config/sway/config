@@ -211,7 +211,7 @@ bar {
 
 bindsym --release Print exec grim -g "$(slurp)" -t png '%Y-%m-%d-%H-%M-%S_$wx$h.png' -o ~/Pictures/Screenshots
 
-new_window pixel 0
+default_border pixel 0
 
 gaps inner 12
 gaps outer 0
