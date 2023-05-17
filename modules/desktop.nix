@@ -538,6 +538,7 @@ in
       wayland
       swaylock
       swayidle
+      swaybg
       i3status
       wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
       bemenu # wayland clone of dmenu
