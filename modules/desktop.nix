@@ -356,14 +356,10 @@ in
     # lxqt.compton-conf removed as it is not needed with Sway
 
     alacritty # gpu accelerated terminal
-    sway
-    wayland
     xdg-utils # for opening default programs when clicking links
     glib # gsettings
     dracula-theme # gtk theme
     gnome3.adwaita-icon-theme  # default gnome cursors
-    swaylock
-    swayidle
     grim # screenshot functionality
     slurp # screenshot functionality
     wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
@@ -388,11 +384,6 @@ in
     tree # directory list
 
     pavucontrol # visual sound control
-
-    wofi # program launcher (Wayland alternative to rofi)
-    bemenu # program launcher (Wayland alternative to dmenu)
-    dunst # system notification (supports Wayland)
-    libnotify # system notification
 
     spectacle # screenshot capture util
     (texlive.combine {
@@ -429,6 +420,7 @@ in
       wayland
       swaylock
       swayidle
+      i3status
       wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
       bemenu # wayland clone of dmenu
       mako # notification system developed by swaywm maintainer
@@ -442,6 +434,14 @@ in
 
     ];
   };
+
+  # Make sway the default manager
+  services.xserver.enable = true;
+  services.xserver.displayManager.defaultSession = "sway";
+  services.xserver.displayManager.lightdm.enable = true;
+  services.xserver.libinput.enable = true;
+
+  programs.waybar.enable = true;
 
   xdg.portal = {
     enable = true;
