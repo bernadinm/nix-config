@@ -176,9 +176,7 @@ bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
-# restart Sway inplace (preserves your layout/session, can be used to upgrade Sway)
-bindsym $mod+Shift+r restart
+bindsym $mod+Shift+r reload
 # exit Sway (logs you out of your Wayland session)
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit Sway? This will end your Wayland session.' -b 'Yes, exit Sway' 'swaymsg exit'
 
