@@ -239,8 +239,8 @@ exec xfce4-power-manager
 exec_always --no-startup-id $HOME/.fehbg
 
 # Lock
-exec xautolock -detectsleep -time 30 -locker "swaylock -F" -notify 30 -notifier "notify-send -u critical -t 10000 -- 'LOCKING screen in 30 seconds'"
-bindsym $mod+Shift+q exec xautolock -locknow # lock screen
+exec swayidle -w timeout 30 'swaylock -c 333333' 'notify-send -u critical -t 10000 -- "LOCKING screen in 30 seconds"'
+bindsym $mod+Shift+q exec swaylockswaylock -c 333333 # lock screen
 
 # On desktop start-up. Synaptics device id is (12).
 exec synclient TapButton1=1
