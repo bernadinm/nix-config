@@ -40,6 +40,9 @@ exec_always "swaymsg output DP-2 enable"
 # Trackpad
 exec_always "swaymsg input 12:libinput Accel Speed 0.65"
 
+# load nixos wallpaper
+exec --no-startup-id swaybg -i /home/miguel/Downloads/nixos-wallpaper.png
+
 # Brightness
 exec_always "light -S 100"
 
