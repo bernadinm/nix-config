@@ -240,7 +240,7 @@ exec_always --no-startup-id $HOME/.fehbg
 
 # Lock
 exec swayidle -w timeout 30 'swaylock -c 333333' 'notify-send -u critical -t 10000 -- "LOCKING screen in 30 seconds"'
-bindsym $mod+Shift+q exec swaylockswaylock -c 333333 # lock screen
+bindsym $mod+Shift+q exec swaylock -c 333333 # lock screen
 
 # On desktop start-up. Synaptics device id is (12).
 exec synclient TapButton1=1
