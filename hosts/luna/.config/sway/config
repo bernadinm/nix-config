@@ -57,14 +57,15 @@ exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+# Volume controls
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +10%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -10%
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 # Set brightness for Framework keyboard
-bindsym XF86MonBrightnessDown exec light -U 1
-bindsym XF86MonBrightnessUp exec light -A 1
+bindsym XF86MonBrightnessDown exec brightnessctl set 1%-
+bindsym XF86MonBrightnessUp exec brightnessctl set +1%
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play-pause
@@ -225,9 +226,16 @@ gaps outer 0
 exec --no-startup-id unclutter --timeout 3 &
 exec xfce4-power-manager
 
+# enable notifications
+exec mako
+
 # Lock
-exec swayidle -w timeout 15 'swaylock -c 333333' 'notify-send -u critical -t 10000 -- "LOCKING screen in 30 seconds"'
-exec swayidle -w timeout 30 'swaymsg "exec systemctl suspend"'
+exec swayidle -w \
+    timeout 540 'notify-send -u critical -t 10000 -- "LOCKING screen in 10 minutes"' \
+    timeout 600 'swaylock -c 333333' \
+    timeout 1740 'notify-send -u critical -t 10000 -- "SUSPENDING in 1 minute"' \
+    timeout 1800 'swaymsg "exec systemctl suspend"'
+
 bindsym $mod+Shift+q exec swaylock -c 333333 # lock screen
 
 # On desktop start-up. Synaptics device id is (12).
