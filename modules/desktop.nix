@@ -350,6 +350,7 @@ in
     (firefox.override { extraNativeMessagingHosts = [ passff-host ]; })
 
     playerctl # music control
+    brightnessctl # brightness control
 
     font-awesome # font
     # compton removed as Sway has a built-in compositor
