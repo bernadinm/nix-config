@@ -79,7 +79,7 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
 # start a terminal
-bindsym $mod+Return exec termite --title termite
+bindsym $mod+Return exec termite
 
 # kill focused window
 bindsym $mod+Shift+w kill

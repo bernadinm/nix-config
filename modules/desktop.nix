@@ -396,6 +396,7 @@ in
 
     playerctl # music control
     pulseaudio # audio control
+    brightnessctl # brightness control
 
     font-awesome # font
     picom # window property changer
