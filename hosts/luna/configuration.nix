@@ -89,6 +89,7 @@ in
   services.xserver.libinput.touchpad.naturalScrolling = true;
   services.xserver.libinput.touchpad.disableWhileTyping = true;
   services.xserver.libinput.mouse.disableWhileTyping = true;
+  services.xserver.xkbOptions = "ctrl:swap_lfctl_lfwin"; # swap ctrl + fn keys
 
   security.sudo = {
     enable = true;
