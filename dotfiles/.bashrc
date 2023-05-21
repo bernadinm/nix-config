@@ -1,7 +1,8 @@
-alias pbcopy='xclip -selection clipboard'
-alias pbpaste='xclip -selection clipboard -o'
-alias c='xclip -selection clipboard'
-alias p='xclip -selection clipboard -o'
+alias pbcopy='wl-copy'
+alias pbpaste='wl-paste'
+alias c='wl-copy'
+alias p='wl-paste'
+alias docker-compose='arion'
 alias tts='xsel | mimic --setf duration_stretch=0.6 --setf int_f0_target_mean=130 -voice slt'
 alias testtts='echo "xsel | mimic --setf duration_stretch=0.6 --setf int_f0_target_mean=120 -voice rms"'
 alias ww='sudo ddcutil setvcp 60 27' # USB-C
