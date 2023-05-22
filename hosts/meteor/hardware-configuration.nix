@@ -5,7 +5,7 @@
 
 {
   # uncomment for enabling cross compilation
-  #nixpkgs.crossSystem.system = "armv6l-linux";
+  nixpkgs.crossSystem.system = "armv6l-linux";
   imports = [
     # This contains the default definition for the sdcard image build
     <nixpkgs/nixos/modules/installer/sd-card/sd-image-raspberrypi.nix>
