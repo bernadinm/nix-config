@@ -16,7 +16,9 @@ in
     libffi # coding used with pip
     gcc # coding used with pip
 
-    git gti git-lfs# svm
+    git
+    gti
+    git-lfs # svm
     gh # github util
     unstable.gh-dash # github dashboard
     delta # git diff tool
@@ -36,7 +38,9 @@ in
     unstable.rustc # rust compiler
     unstable.pkg-config # packging with rust
 
-    deno # javascript runtime
+    # TODO(bernadinm): deno doesn't have armv7
+    # deno # javascript runtime
+
     nodejs # javascript runtime
     nodePackages.typescript # installing typescript
 
