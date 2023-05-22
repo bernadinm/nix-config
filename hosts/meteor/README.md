@@ -111,7 +111,15 @@ In this tutorial, we will provide step-by-step instructions on how to install a 
 
    ```sh
    nix-build nixos-config/default.nix -I nixpkgs=https://nixos.org/channels/nixos-unstable
-   ```
+
+Optional:
+
+7. Write it to the SD card:
+Run the following command to write the image onto the SD card:
+
+```sh
+nix-build '<nixpkgs/nixos>' -A config.system.build.sdImage -I nixos-config=./configuration.nix   ```
+```
 
 4. After the build is complete, run the following command to install your NixOS configuration:
 
@@ -124,3 +132,4 @@ In this tutorial, we will provide step-by-step instructions on how to install a 
 Congratulations! You have successfully installed a Raspberry Pi operating system image, enabled SSH (optional), installed Git, and built and installed your NixOS configuration on the Raspberry Pi. You can now start customizing your Raspberry Pi for your specific needs.
 
 Happy hacking!
+

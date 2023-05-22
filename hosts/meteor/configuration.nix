@@ -13,10 +13,10 @@ in
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ../../modules/security.nix
-      ../../modules/monitoring.nix
-      ../../modules/utilities.nix
-      ../../modules/coding.nix
+      # ../../modules/security.nix
+      # ../../modules/monitoring.nix
+      # ../../modules/utilities.nix
+      # ../../modules/coding.nix
       # <nixos-unstable/nixos/modules/services/networking/nebula.nix>
     ];
 
