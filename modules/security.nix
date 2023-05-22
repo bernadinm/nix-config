@@ -54,7 +54,6 @@ in
 
     nftables # iptable alternative
     tor # security network
-    tor-browser-bundle-bin # security network browser
   ];
 
   #services.keycloak = {
