@@ -226,7 +226,8 @@ exec_always --no-startup-id $HOME/.config/polybar/forest/launch.sh
 #         status_command i3status
 # }
 
-bindsym --release Print exec grim -g "$(slurp)" -t png '%Y-%m-%d-%H-%M-%S_$wx$h.png' -o ~/Pictures/Screenshots
+bindsym --release Print exec grim -t png  ~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').png # Full Screen
+bindsym --release Print+Shift exec  grim -g "$(slurp)" -t png  ~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').png # Selection Screenshot
 
 default_border pixel 0
 
