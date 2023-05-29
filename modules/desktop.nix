@@ -14,7 +14,7 @@ in
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.miguel = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "input" "video" "i2c" "vboxusers" "libvirtd" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "docker" "input" "video" "i2c" "vboxusers" "libvirtd" "qemu-libvirtd" ]; # Enable ‘sudo’ for the user.
     description = "Miguel Bernadin";
   };
 
