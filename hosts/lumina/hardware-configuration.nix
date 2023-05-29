@@ -13,7 +13,7 @@
   hardware.ckb-next.enable = true;
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
-  boot.kernelModules = [ "kvm-amd" "vfio-pci" ];
+  boot.kernelModules = [ "kvm-amd" "kvm-intel" "vfio-pci" ];
   boot.kernelParams = [ "kvm.ignore_msrs=1" "iommu=pt" ];
   boot.extraModulePackages = [ ];
 
