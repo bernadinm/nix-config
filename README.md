@@ -22,6 +22,7 @@ sudo nixos-rebuild switch -I nixos-config=/home/miguel/git/bernadinm/nix-config/
 - [x] Consider Setting up [Home Manager](https://nixos.wiki/wiki/Home_Manager)
 - [ ] Installing instructions for cloud and local use (virtualbox)
 - [ ] Installing instructions for Rasberry Pi
+- [ ] Migrating from X11 to Wayland (Branch: [wayland-migration](https://github.com/bernadinm/nix-config/tree/wayland-migration))
 
 # Authors
 
