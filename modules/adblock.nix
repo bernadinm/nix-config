@@ -19,16 +19,16 @@ let
 
     installPhase = ''
       mkdir -p $out/etc
-      # filter whitelist
+      # filter allowlist
       grep -Ev '(${whitelist})' alternates/fakenews-gambling/hosts > $out/etc/hosts
-      # filter blacklist
+      # filter denylist
       cat << EOF >> $out/etc/hosts
       ${blacklist}
       EOF
     '';
   };
 
-  whitelist = concatStringsSep "|" [ ".*pirate(bay|proxy).*" ];
+  whitelist = concatStringsSep "|" [ ".*pirate(bay|proxy).*" "fe80::1%lo0" ];
 
   blacklist = concatStringsSep ''
     0.0.0.0 ''
