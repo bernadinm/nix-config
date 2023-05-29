@@ -26,6 +26,7 @@ in
     virt-manager
 
     ignite # microvm
+    vagrant # vm cli
 
     unstable.vmware-workstation # vmware virt
   ];
