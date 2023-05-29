@@ -346,6 +346,7 @@ in
     tor-browser-bundle-bin # browser
     chromium # browser
     google-chrome # browser
+    brave # browser
     firefox # browser
     (firefox.override { extraNativeMessagingHosts = [ passff-host ]; })
 
