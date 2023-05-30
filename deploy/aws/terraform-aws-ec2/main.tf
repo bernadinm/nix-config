@@ -82,6 +82,9 @@ resource "aws_instance" "example" {
 
   associate_public_ip_address = true  # Enable public IP address
 
+  root_block_device {
+    volume_size = 200
+  }
 
   tags = {
     Name = "example-instance"
