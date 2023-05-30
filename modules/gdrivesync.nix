@@ -5,6 +5,7 @@
     google-cloud-sdk
     colordiff
     gcsfuse
+    awscli
 
     git-annex # sync remote files
     rclone # sync remote files
