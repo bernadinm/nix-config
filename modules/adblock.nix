@@ -28,7 +28,7 @@ let
     '';
   };
 
-  whitelist = concatStringsSep "|" [ ".*pirate(bay|proxy).*" "fe80::1%lo0" ];
+  whitelist = concatStringsSep "|" [ ".*pirate(bay|proxy).*" "fe80::1%lo0" "*ten-x.com" ];
 
   blacklist = concatStringsSep ''
     0.0.0.0 ''
