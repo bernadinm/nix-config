@@ -237,6 +237,10 @@ exec swayidle -w \
     timeout 1740 'notify-send -u critical -t 10000 -- "SUSPENDING in 1 minute"' \
     timeout 1800 'swaymsg "exec systemctl suspend"'
 
+# Battery Indicator
+exec --no-startup-id swayidle -w \
+  timeout 60 "if [ \$(cat /sys/class/power_supply/BAT1/capacity) -lt 10 ] && [ \$(cat /sys/class/power_supply/ACAD/online) -eq 0 ]; then swaynag -t warning -y overlay -m 'Battery capacity is below 10%'; fi'
+
 bindsym $mod+Shift+q exec swaylock -c 333333 # lock screen
 
 # On desktop start-up. Synaptics device id is (12).
