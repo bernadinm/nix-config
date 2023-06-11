@@ -126,7 +126,7 @@ in
     HandleLidSwitch=hibernate
     HandleLidSwitchExternalPower=ignore
     HandleLidSwitchDocked=ignore
-    IdleAction=hibernate
+    IdleAction=hybrid-sleep
     IdleActionSec=15min
   '';
 
