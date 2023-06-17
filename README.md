@@ -20,6 +20,7 @@ sudo nixos-rebuild switch -I nixos-config=/home/miguel/git/bernadinm/nix-config/
 - [x] Import specific groups of apps via modules
 - [x] Source external git repositories using git submodules
 - [x] Consider Setting up [Home Manager](https://nixos.wiki/wiki/Home_Manager)
+- [x] Installing remote terraform configs for multi-arch builds
 - [ ] Installing instructions for cloud and local use (virtualbox)
 - [ ] Installing instructions for Rasberry Pi
 - [ ] Migrating from X11 to Wayland (Branch: [wayland-migration](https://github.com/bernadinm/nix-config/tree/wayland-migration))
