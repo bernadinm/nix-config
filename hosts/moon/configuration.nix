@@ -20,7 +20,7 @@ in
       # <nixos-unstable/nixos/modules/services/networking/nebula.nix>
     ];
 
-  networking.hostName = "Meteor"; # Define your hostname.
+  networking.hostName = "Moon"; # Define your hostname.
   networking.networkmanager.enable = true; # Use networkmanager for wifi
 
   # Set your time zone.
@@ -48,7 +48,7 @@ in
 
   # Enable Nebula Mesh Network
   #services.nebula.networks.mesh = {
-  #  staticHostMap = { "192.168.100.100" = [ "meteor.miguel.engineer:4242" ]; };
+  #  staticHostMap = { "192.168.100.100" = [ "moon.miguel.engineer:4242" ]; };
   #};
 
   # This value determines the NixOS release from which the default
