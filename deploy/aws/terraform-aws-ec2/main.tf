@@ -73,7 +73,7 @@ resource "aws_security_group" "example" {
 
 resource "aws_instance" "example" {
   ami           = "ami-07655b4bbf3eb3bd0"  # Ubuntu 20.04 LTS ARM64 AMI ID
-  instance_type = "m6g.xlarge"  # Replace with your desired instance type
+  instance_type = "m6g.4xlarge"  # Replace with your desired instance type
 
   key_name = aws_key_pair.personal.key_name  # Replace with the name of your key pair
 
