@@ -84,7 +84,6 @@ in
     nil # nix
     marksman # markdown
     python310Packages.python-lsp-server # python
-    python311Packages.python-lsp-server # python
     ccls # c/c++
     gopls # golang
     nodePackages.bash-language-server # bash
