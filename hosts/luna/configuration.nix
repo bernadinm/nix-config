@@ -22,17 +22,19 @@ in
       ../../modules/desktop.nix
       ../../modules/utilities.nix
       ../../modules/coding.nix
-      ../../modules/timemachinebackup.nix
+      # ../../modules/timemachinebackup.nix
       # TODO(bernadinm): Replace Mesh Network for Zero Trust
       # <nixos-unstable/nixos/modules/services/networking/nebula.nix>
     ];
+  # Enable Overlay Support
+  nixpkgs.overlays = [ (import ../../overlays/overlay.nix) ];
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "Luna"; # Define your hostname.
   networking.networkmanager.enable = true; # Use networkmanager for wifi
-
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
   #time.timeZone = "America/New_York";
