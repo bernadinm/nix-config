@@ -34,6 +34,7 @@ in
     unzip # system
     rar # archives
     zip # archives
+    p7zip # archives
     cksfv # sfv checksum
     bash # system interface
     terraform # automation
@@ -49,14 +50,17 @@ in
     bc # calc
     jq # jsonquery
     yq # yamlquery
-    unstable.youtube-dl # youtube dl
+    yt-dlp # youtube dl
     ts # task spooler batch queue
     bind # dns utils dig nslookup
     ffmpeg # multimedia tool
     visidata # csv parsing tool
     usbutils # lsusb
-    parquet-tools # parquet viewer
+    # TODO(bernadinm): remove parquet sa it cannot build in 23.05
+    # parquet-tools # parquet viewer
     epr # ebook reader
+    exa # replacement for ls
+    zoxide # alternative to cd
 
     navi # cheat files
     fzf # fuzzy find
@@ -88,5 +92,6 @@ in
 
     pup # html cli parser
     ddgr # search engine cli
+    twilio-cli # cloud platform
   ];
 }

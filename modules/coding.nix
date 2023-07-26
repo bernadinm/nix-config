@@ -46,6 +46,8 @@ in
     ocrmypdf # convert pdt fo ocr pdf
     mupdf # pdf viewer
     hugo # website engine
+    texlive.combined.scheme-full # latex
+    texstudio # latex
 
     # cuelang
     cue
