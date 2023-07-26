@@ -6,7 +6,7 @@
 
 let
   home-manager = builtins.fetchTarball
-    "https://github.com/nix-community/home-manager/archive/release-22.11.tar.gz";
+    "https://github.com/nix-community/home-manager/archive/release-23.05.tar.gz";
 in
 {
   imports =
@@ -22,15 +22,18 @@ in
       ../../modules/desktop.nix
       ../../modules/utilities.nix
       ../../modules/coding.nix
+      ../../overlays/packages.nix
       <nixos-unstable/nixos/modules/services/networking/nebula.nix>
     ];
+  # Enable Overlay Support
+  nixpkgs.overlays = [ (import ../../overlays/overlay.nix) ];
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "Luna"; # Define your hostname.
   networking.networkmanager.enable = true; # Use networkmanager for wifi
-
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
   #time.timeZone = "America/New_York";
@@ -132,12 +135,18 @@ in
   security.pam.services.login.fprintAuth = true;
   security.pam.services.xautolock.fprintAuth = true;
 
+  # TODO(bernadinm): required for home manager 23.05
+  nixpkgs.config.permittedInsecurePackages = [
+    "python-2.7.18.6"
+  ];
+
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "21.11"; # Did you read the comment?
+  system.stateVersion = "23.05"; # Did you read the comment?
 
 }
