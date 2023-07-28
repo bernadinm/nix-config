@@ -64,7 +64,8 @@ in
 
     # videography
     libsForQt5.kdenlive # video editing
-    davinci-resolve # video editing
+    # TODO(bernadinm): removing this below due to nixos 23.05 errors
+    # davinci-resolve # video editing
   ];
 
   programs.steam.enable = true;
