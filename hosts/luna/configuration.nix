@@ -144,6 +144,11 @@ in
   security.pam.services.login.fprintAuth = true;
   security.pam.services.xautolock.fprintAuth = true;
 
+  # TODO(bernadinm): required for home manager 23.05
+  nixpkgs.config.permittedInsecurePackages = [
+    "python-2.7.18.6"
+  ];     
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
