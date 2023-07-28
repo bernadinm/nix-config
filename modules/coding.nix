@@ -38,6 +38,7 @@ in
 
     deno # javascript runtime
     nodejs # javascript runtime
+    yarn2nix # helper nodejs yarn nix pkgs tool
     nodePackages.typescript # installing typescript
 
     glow # markdown reader
@@ -45,9 +46,14 @@ in
     ocrmypdf # convert pdt fo ocr pdf
     mupdf # pdf viewer
     hugo # website engine
+    texlive.combined.scheme-full # latex
+    texstudio # latex
 
     # cuelang
     cue
+
+    # github actions
+    act
 
     # build tool
     unstable.bazel
@@ -56,5 +62,18 @@ in
 
     # nix
     nix-prefetch-git # git package util
+
+    # language servers
+    nil # nix
+    marksman # markdown
+    python310Packages.python-lsp-server # python
+    ccls # c/c++
+    gopls # golang
+    nodePackages.bash-language-server # bash
+    nodePackages.dockerfile-language-server-nodejs # docker
+    vscode-extensions.rust-lang.rust-analyzer # rust
+    taplo # tolm
+    nodePackages.yaml-language-server # yaml
+    cuelsp # cuelang
   ];
 }
