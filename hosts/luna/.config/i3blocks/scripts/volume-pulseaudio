@@ -1,0 +1,4 @@
+#!/bin/sh
+
+pulsemixer --get-mute | grep 0 > /dev/null && echo "<span foreground='#81A1C1' size='large'></span> <span size='small' rise='2pt'>$(pulsemixer --get-volume | awk '{print $1}')%</span>" || echo "<span foreground='#bf616a' size='large'>ﱝ</span>"
+

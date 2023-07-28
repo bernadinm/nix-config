@@ -66,6 +66,16 @@ in
     {
       ".config/i3/config".source =
         .config/i3/config;
+      ".config/i3blocks/config".source =
+        .config/i3blocks/config;
+      ".config/i3blocks/scripts/volume-pulseaudio".source =
+        .config/i3blocks/scripts/volume-pulseaudio;
+      ".config/i3blocks/scripts/nm-vpn".source =
+        .config/i3blocks/scripts/nm-vpn;
+      ".config/i3blocks/scripts/memory".source =
+        .config/i3blocks/scripts/memory;
+      ".config/i3blocks/scripts/cpu_usage".source =
+        .config/i3blocks/scripts/cpu_usage;
       ".config/libinput-gestures.conf".source =
         .config/libinput-gestures.conf;
     };
@@ -74,6 +84,16 @@ in
     {
       ".config/i3/config".source =
         .config/i3/config;
+      ".config/i3blocks/config".source =
+        .config/i3blocks/config;
+      ".config/i3blocks/scripts/volume-pulseaudio".source =
+        .config/i3blocks/scripts/volume-pulseaudio;
+      ".config/i3blocks/scripts/nm-vpn".source =
+        .config/i3blocks/scripts/nm-vpn;
+      ".config/i3blocks/scripts/memory".source =
+        .config/i3blocks/scripts/memory;
+      ".config/i3blocks/scripts/cpu_usage".source =
+        .config/i3blocks/scripts/cpu_usage;
       ".config/libinput-gestures.conf".source =
         .config/libinput-gestures.conf;
     };
