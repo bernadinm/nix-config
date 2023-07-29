@@ -23,6 +23,8 @@ in
     kubectl
     kubernetes
 
+    anbox # android
+
     virt-manager
 
     ignite # microvm
