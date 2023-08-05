@@ -273,3 +273,7 @@ bindsym $sup+o exec sh $HOME/.launch_github.sh
 bindsym $sup+k exec sh $HOME/.launch_googlekeep.sh
 bindsym $sup+p exec sh $HOME/.launch_protonmail.sh
 bindsym $sup+d exec sh $HOME/.launch_drive.sh
+
+input * {
+  xkb_options ctrl:swap_lfctl_lfwin
+}
