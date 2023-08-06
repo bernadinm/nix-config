@@ -62,6 +62,8 @@ in
     # audio editing
     audacity
 
+    obs-studio # video recording/streaming
+
     # videography
     libsForQt5.kdenlive # video editing
     # TODO(bernadinm): removing this below due to nixos 23.05 errors
