@@ -9,7 +9,7 @@ in
   environment.systemPackages = with pkgs; [
     # base
     wget # system
-    unstable.helix # editor
+    helix # editor
     vim # system
     neovim
     #(neovim.override {
