@@ -61,6 +61,7 @@ in
     epr # ebook reader
     exa # replacement for ls
     zoxide # alternative to cd
+    restic # backup util
 
     navi # cheat files
     fzf # fuzzy find
