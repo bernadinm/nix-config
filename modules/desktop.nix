@@ -471,6 +471,16 @@ in
     options = "--delete-older-than 60d";
   };
 
+  # Enable folder syncing service
+  services = {
+    syncthing = {
+      enable = true;
+      user = "miguel";
+      dataDir = "/home/miguel";
+      openDefaultPorts = true;
+    };
+  };
+
   # See: https://github.com/NixOS/nixpkgs/commit/224a6562a4880195afa5c184e755b8ecaba41536
   boot.loader.systemd-boot.configurationLimit = 50;
 
