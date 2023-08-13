@@ -38,7 +38,8 @@ in
 
   boot.initrd.luks.devices.nixos.device = "/dev/disk/by-uuid/0ec6024a-636d-4736-a299-83b3c071d9a9";
   boot.initrd.luks.devices.nixos.preLVM = true;
-  services.ddclient = { enable = true; configFile = "/home/miguel/configs/ddclient/ddclient.conf"; }; # dynamicdns
+  # TODO(bernadinm): temporarily removing ddclient config 
+  # services.ddclient = { enable = true; configFile = "/home/miguel/configs/ddclient/ddclient.conf"; }; # dynamicdns
   services.xserver.videoDrivers = [ "nvidia" ];
   services.xserver.screenSection = ''
     Option "metamodes" "nvidia-auto-select +0+0 { ForceCompositionPipeline = On }"

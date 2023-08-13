@@ -239,8 +239,12 @@ bar {
 new_window pixel 0
 
 for_window [class=".*"] border pixel 2 # border for windows
-gaps inner 35 # inside gap 
-gaps outer 0 # side gap
+
+# FIX: Comments for single line inside and outside gap broke i3 on 23.11
+# inside gap
+gaps inner 35
+# outside gap
+gaps outer 0
 
 smart_borders on
 smart_borders no_gaps
