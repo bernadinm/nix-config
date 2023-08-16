@@ -42,6 +42,7 @@ in
     nodePackages.typescript # installing typescript
 
     glow # markdown reader
+    pdftk # pdf combine tool
     pandoc # convert markdown to any file
     ocrmypdf # convert pdt fo ocr pdf
     mupdf # pdf viewer
