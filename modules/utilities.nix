@@ -47,6 +47,7 @@ in
     picotts # tts
     killall # system kill
     termite # terminal
+    nap # code snippet save tool
     bc # calc
     jq # jsonquery
     yq # yamlquery
