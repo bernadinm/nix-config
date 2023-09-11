@@ -47,6 +47,7 @@ in
     bc # calc
     jq # jsonquery
     yq # yamlquery
+    nap # code snippet save tool
     unstable.youtube-dl # youtube dl
     ts # task spooler batch queue
     bind # dns utils dig nslookup

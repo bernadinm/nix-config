@@ -1,10 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      ../../../modules/utilities.nix
-    ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -14,6 +10,10 @@
   home.username = "miguel.bernadin";
   home.homeDirectory = "/home/miguel.bernadin";
 
+  home.packages = with pkgs; [
+    (import ../../../modules/utilities.nix pkgs).environment.systemPackages
+  ]; 
+  
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
   # when a new Home Manager release introduces backwards
