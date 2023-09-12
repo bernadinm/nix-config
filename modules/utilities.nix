@@ -71,6 +71,7 @@ in
 
     # ML
     # gpt2tc # machine learning
+    mods # gpt cli generative
 
     bat # cut alt
     duf # df alt
