@@ -14,6 +14,9 @@ in
     signal-desktop
     keybase-gui
 
+    # email client
+    unstable.pop # email cli
+
     # visual comm
     #unstable.realvnc-vnc-viewer
 
