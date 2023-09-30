@@ -251,6 +251,9 @@ exec_always sudo modprobe -r psmouse && sudo modprobe psmouse
 # Adding gesture support
 exec_always --no-startup-id libinput-gestures
 
+# Adding SMTP support
+exec protonmail-bridge -g
+
 ## App Launch Keybindings
 # always start in scratchpad
 ## for_window [class="^notion$"] floating enable, move scratchpad, scratchpad show

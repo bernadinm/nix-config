@@ -267,6 +267,9 @@ exec xinput set-prop 12 "Device Accel Constant Deceleration" 0.9
 # Adding gesture support
 exec --no-startup-id libinput-gestures
 
+# Adding SMTP support
+exec protonmail-bridge -g
+
 ## App Launch Keybindings
 # always start in scratchpad
 ## for_window [class="^notion$"] floating enable, move scratchpad, scratchpad show
