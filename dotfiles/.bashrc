@@ -28,6 +28,8 @@ alias gau='git add -u'
 alias g='cd ~/git'
 alias n='cd ~/git/bernadinm/nix-config'
 alias vi='hx'
+alias pop='pop -H 127.0.0.1 -p $(pass protonmail.com/bridge/$(hostname)/smtp/password) -U $(pass protonmail.com/bridge/$(hostname)/smtp/username) -P $(pass protonmail.com/bridge/$(hostname)/smtp/port) -i'
+alias mods='OPENAI_API_KEY=$(pass openai.com/$(hostname)/api-key) mods'
 freshfetch # bash init
 
 # Environment Variables
