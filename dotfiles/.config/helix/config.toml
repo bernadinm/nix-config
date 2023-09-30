@@ -3,6 +3,7 @@ theme = "onedark"
 [editor]
 line-number = "relative"
 mouse = false
+whitespace.render = "all"
 
 [editor.cursor-shape]
 insert = "bar"
