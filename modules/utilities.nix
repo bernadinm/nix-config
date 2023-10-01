@@ -30,6 +30,7 @@ in
     #    };
     #  };
     #})
+    gum # cli glue tool
     tmux # system
     unzip # system
     rar # archives
