@@ -12,6 +12,7 @@ in
   imports =
     [
       # Include the results of the hardware scan.
+      <nixos-hardware/framework>
       ./hardware-configuration.nix
       ../../modules/gdrivesync.nix
       ../../modules/entertainment.nix
@@ -140,6 +141,7 @@ in
     staticHostMap = { "192.168.100.2" = [ "lumina.miguel.engineer:4242" ]; };
   };
 
+  services.fwupd.enable = true; # firmware update tool
   services.fprintd.enable = true;
   security.pam.services.login.fprintAuth = true;
   security.pam.services.xautolock.fprintAuth = true;
