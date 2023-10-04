@@ -12,7 +12,6 @@ in
   imports =
     [
       # Include the results of the hardware scan.
-      <nixos-hardware/framework>
       ./hardware-configuration.nix
       ../../modules/gdrivesync.nix
       ../../modules/entertainment.nix
