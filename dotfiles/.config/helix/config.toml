@@ -4,6 +4,7 @@ theme = "onedark"
 line-number = "relative"
 mouse = false
 whitespace.render = "all"
+soft-wrap.enable = true
 
 [editor.cursor-shape]
 insert = "bar"
