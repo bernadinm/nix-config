@@ -266,7 +266,7 @@ bindsym $sup+y exec sh $HOME/.launch_youtube.sh
 bindsym $sup+i exec sh $HOME/.launch_instagram.sh
 bindsym $sup+m exec sh $HOME/.launch_music.sh
 bindsym $sup+f exec sh $HOME/.launch_googlefi.sh
-bindsym $sup+w exec sh $HOME/.launch_gmailwork.sh
+bindsym $sup+w exec sh $HOME/.launch_whatsapp.sh
 bindsym $sup+b exec sh $HOME/.launch_bible.sh
 bindsym $sup+c exec sh $HOME/.launch_chatgpt.sh
 bindsym $sup+a exec sh $HOME/.launch_ai.sh
