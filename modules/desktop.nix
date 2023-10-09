@@ -63,8 +63,8 @@ in
         ../dotfiles/.launch_googlefi.sh;
       ".launch_gmail.sh".source =
         ../dotfiles/.launch_gmail.sh;
-      ".launch_gmailwork.sh".source =
-        ../dotfiles/.launch_gmailwork.sh;
+      ".launch_whatsapp.sh".source =
+        ../dotfiles/.launch_whatsapp.sh;
       ".launch_businessmail.sh".source =
         ../dotfiles/.launch_businessmail.sh;
       ".launch_bible.sh".source =
