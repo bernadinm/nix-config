@@ -22,6 +22,7 @@ in
     kompose
     kubectl
     kubernetes
+    minikube
 
     anbox # android
 
