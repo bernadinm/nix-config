@@ -77,5 +77,7 @@ in
     taplo # tolm
     nodePackages.yaml-language-server # yaml
     cuelsp # cuelang
+
+    ngrok # development reverse proxy
   ];
 }
