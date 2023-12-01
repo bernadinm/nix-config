@@ -238,7 +238,8 @@ in
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
-      pinentryFlavor = "curses";
+      # TODO(bernadinm): disabled curses in favor gnome3
+      # pinentryFlavor = "curses";
     };
   };
 
