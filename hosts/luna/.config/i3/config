@@ -49,6 +49,8 @@ exec --no-startup-id nm-applet
 # Run compton
 exec_always compton --config /home/miguel/.compton.conf
 
+# Set Default Browser to Firefox
+exec xdg-settings set default-web-browser firefox.desktop
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
