@@ -4,7 +4,7 @@ let
   baseconfig = { allowUnfree = true; };
   unstable = import <nixos-unstable> { config = baseconfig; };
   home-manager = builtins.fetchTarball
-    "https://github.com/nix-community/home-manager/archive/release-23.05.tar.gz";
+    "https://github.com/nix-community/home-manager/archive/release-23.11.tar.gz";
 in
 {
   imports =
@@ -357,8 +357,7 @@ in
     playerctl # music control
 
     font-awesome # font
-    compton # window property changer
-    lxqt.compton-conf # window property config
+    picom # window property changer
 
     feh # wallpaper manager
 
@@ -447,8 +446,7 @@ in
         xdotool # commandline automation for x11
         xorg.xwininfo # fetch window infomation
 
-        compton
-        lxqt.compton-conf
+        picom # window property changer
 
         feh # wallpaper manager
         vifm # graphic file manager

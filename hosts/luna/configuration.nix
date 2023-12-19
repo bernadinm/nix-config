@@ -6,7 +6,7 @@
 
 let
   home-manager = builtins.fetchTarball
-    "https://github.com/nix-community/home-manager/archive/release-23.05.tar.gz";
+    "https://github.com/nix-community/home-manager/archive/release-23.11.tar.gz";
 in
 {
   imports =
@@ -148,7 +148,7 @@ in
 
   # TODO(bernadinm): required for home manager 23.05
   nixpkgs.config.permittedInsecurePackages = [
-    "python-2.7.18.6"
+    "electron-25.9.0" # used for logseq and obsidian
   ];     
 
   # This value determines the NixOS release from which the default
@@ -157,6 +157,6 @@ in
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.05"; # Did you read the comment?
+  system.stateVersion = "23.11"; # Did you read the comment?
 
 }
