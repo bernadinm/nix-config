@@ -7,12 +7,12 @@ in
 {
   environment.systemPackages = with pkgs; [
     # python
-    python39Full # python3.9 full
-    python39Packages.virtualenv # coding
-    python39Packages.pip # coding
-    python39Packages.pillow # coding
-    python39Packages.setuptools # coding
-    python39Packages.numpy
+    python311Full # python3.9 full
+    python311Packages.virtualenv # coding
+    python311Packages.pip # coding
+    python311Packages.pillow # coding
+    python311Packages.setuptools # coding
+    python311Packages.numpy
     libffi # coding used with pip
     gcc # coding used with pip
 
@@ -32,9 +32,9 @@ in
     glib # c wrappers
 
     # rust
-    unstable.cargo # coding for rust
-    unstable.rustc # rust compiler
-    unstable.pkg-config # packging with rust
+    cargo # coding for rust
+    rustc # rust compiler
+    pkg-config # packging with rust
 
     deno # javascript runtime
     nodejs # javascript runtime
@@ -49,7 +49,7 @@ in
     hugo # website engine
     texlive.combined.scheme-full # latex
     texstudio # latex
-    unstable.logseq # journal
+    logseq # journal
     obsidian # journal
 
     # cuelang

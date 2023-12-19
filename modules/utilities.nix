@@ -61,7 +61,7 @@ in
     # TODO(bernadinm): remove parquet sa it cannot build in 23.05
     # parquet-tools # parquet viewer
     epr # ebook reader
-    exa # replacement for ls
+    eza # replacement for ls
     zoxide # alternative to cd
     restic # backup util
 
