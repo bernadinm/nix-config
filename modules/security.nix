@@ -10,6 +10,7 @@ in
     gnupg
     paperkey
     pinentry
+    pinentry-rofi
 
     # crypto 
     electrum
@@ -235,18 +236,18 @@ in
       Host github.com
           StrictHostKeyChecking no
     '';
-    gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
-      # TODO(bernadinm): disabled curses in favor gnome3
-      # pinentryFlavor = "curses";
-    };
+    # gnupg.agent = {
+    #   enable = true;
+    #   enableSSHSupport = true;
+    #   # TODO(bernadinm): disabled curses in favor gnome3
+    #   pinentryFlavor = "gnome3";
+    # };
   };
 
-  environment.shellInit = ''
-    gpg-connect-agent /bye
-    export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-  '';
+  # environment.shellInit = ''
+  #   gpg-connect-agent /bye
+  #   export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+  # '';
 
   # TODO(bernadinm): enable challenge-response logins with:
   # security.pam.yubico = {
