@@ -45,7 +45,7 @@ in
   # virtualisation.waydroid.enable = true;
   # virtualisation.lxd.enable = true;
   virtualisation.docker.enable = true;
-  virtualisation.docker.storageDriver = "overlay";
+  virtualisation.docker.storageDriver = "overlay2";
   virtualisation.virtualbox.host.enable = false;
   virtualisation.virtualbox.host.enableExtensionPack = true;
   users.extraGroups.vboxusers.members = [ "miguel" ];
