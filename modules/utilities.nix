@@ -84,6 +84,7 @@ in
     gping # ping alt
     hck # cut alt
     xh # curl alt
+    httpie # curl alt
 
     pcmanfm # desktop cli
     neofetch # sysinfo
