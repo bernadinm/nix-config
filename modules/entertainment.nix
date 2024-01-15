@@ -35,6 +35,12 @@ in
     _2048-in-terminal
     vitetris
     uchess
+    nsnake
+    moon-buggy
+    nudoku
+    ninvaders
+    njam # pacman
+    bsdgames # install trek fortune boggle worm gomoku backgammon
 
     # drone configuration
     betaflight-configurator
