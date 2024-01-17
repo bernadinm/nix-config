@@ -31,6 +31,7 @@ in
     #irc clients
     tiny # rust irc client
     fractal # matrix irc client
+    calcurse # cal cli integration
   ];
 
   disabledModules = [
