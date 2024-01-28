@@ -81,6 +81,8 @@ in
         ../dotfiles/.launch_chatgpt.sh;
       ".launch_ai.sh".source =
         ../dotfiles/.launch_ai.sh;
+      ".battery_check.sh".source =
+        ../dotfiles/scripts/battery_check.sh;
       ".config/nvim/coc-settings.json".source =
         ../dotfiles/vim/coc-settings.json;
     };
@@ -379,6 +381,7 @@ in
     rofi # program launcher
     dmenu # program launcher
     dunst # system notification
+    acpi # battery status
     libnotify # system notification
 
     spectacle # screenshot capture util

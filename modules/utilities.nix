@@ -55,7 +55,7 @@ in
     yt-dlp # youtube dl
     ts # task spooler batch queue
     bind # dns utils dig nslookup
-    ffmpeg # multimedia tool
+    ffmpeg  # multimedia tool
     visidata # csv parsing tool
     usbutils # lsusb
     # TODO(bernadinm): remove parquet sa it cannot build in 23.05
@@ -72,7 +72,7 @@ in
 
     # ML
     # gpt2tc # machine learning
-    mods # gpt cli generative
+    unstable.mods # gpt cli generative
 
     bat # cut alt
     duf # df alt
