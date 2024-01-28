@@ -3,7 +3,7 @@
 # Get the current battery level
 battery_level=$(acpi -b | grep -P -o '[0-9]+(?=%)')
 
-if [ "$battery_level" -le 5 ]; then
+if [ "$battery_level" -le 15 ]; then
     # Send a notification
     paplay ~/.modern_alert.wav; notify-send -u critical -t 30000 "Low Battery" "Your battery is critically low at ${battery_level}%!"
 fi
