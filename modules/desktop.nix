@@ -83,6 +83,8 @@ in
         ../dotfiles/.launch_ai.sh;
       ".battery_check.sh".source =
         ../dotfiles/scripts/battery_check.sh;
+      ".modern_alert.wav".source =
+        ../dotfiles/scripts/modern_alert.wav;
       ".config/nvim/coc-settings.json".source =
         ../dotfiles/vim/coc-settings.json;
     };
