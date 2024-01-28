@@ -1,11 +1,18 @@
 #!/usr/bin/env bash
 
-# Get the current battery level
-battery_level=$(acpi -b | grep -P -o '[0-9]+(?=%)')
+# Check if AC power is connected
+ac_power=$(acpi -a | grep -P -o 'on-line')
 
-if [ "$battery_level" -le 15 ]; then
-    # Send a notification
-    paplay ~/.modern_alert.wav; notify-send -u critical -t 30000 "Low Battery" "Your battery is critically low at ${battery_level}%!"
+# Only proceed if AC power is not connected
+if [ -z "$ac_power" ]; then
+    # Get the current battery level
+    battery_level=$(acpi -b | grep -P -o '[0-9]+(?=%)')
+
+    # Notify only if the battery level is less than 15%
+    if [ "$battery_level" -lt 15 ]; then
+        # Send a notification
+        paplay ~/.modern_alert.wav; notify-send -u critical -t 30000 "Low Battery" "Your battery is critically low at ${battery_level}%!"
+    fi
 fi
 
 # Sound effect generated with the following script
