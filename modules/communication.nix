@@ -15,7 +15,7 @@ in
     keybase-gui
 
     # email client
-    unstable.pop # email cli
+    unstable.pop protonmail-bridge # email cli
 
     # visual comm
     #unstable.realvnc-vnc-viewer
