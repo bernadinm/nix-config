@@ -91,7 +91,7 @@ in
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-  services.printing.drivers = [ pkgs.hplip pkgs.canon-cups-ufr2 ];
+  services.printing.drivers = [ pkgs.hplip pkgs.canon-cups-ufr2 pkgs.epsonscan2 ];
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.touchpad.naturalScrolling = true;
