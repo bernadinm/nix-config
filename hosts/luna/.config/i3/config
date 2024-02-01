@@ -34,7 +34,7 @@ for_window [class=".*"] border pixel 1
 exec_always "xrandr --output eDP1 --dpi 120"
 
 # Screen (enable second monitor)
-exec_always "if [[ $(xrandr --current | grep ' connected' | wc -l) > 1 ]]; then xrandr --output DP2 --auto --right-of eDP1; else xrandr --output DP1 --output DP2 --off; fi"
+exec_always "if [[ $(xrandr --current | grep ' connected' | wc -l) > 1 ]]; then xrandr --output DP2 --auto --right-of eDP1; setxkbmap -option altwin:swap_lalt_lwin; else xrandr --output DP1 --output DP2 --off; setxkbmap -option; fi"
 
 # Trackpad
 exec_always "xinput set-float-prop 12 'libinput Accel Speed' .65"
