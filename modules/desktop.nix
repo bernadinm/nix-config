@@ -415,8 +415,14 @@ in
   };
 
   # Allows services and hosts exposed on the local network via mDNS/DNS-SD
-  services.avahi.enable = true;
-  services.avahi.nssmdns = true;
+  services.avahi = {
+    enable = true;
+    nssmdns = true;
+    publish = {
+      enable = true;
+      userServices = true;
+    };
+  };
 
   services.atd.enable = true;
   services.locate.enable = true;
