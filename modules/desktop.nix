@@ -16,14 +16,67 @@ in
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.miguel = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "input" "video" "i2c" "vboxusers" "libvirtd" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "docker" "input" "video" "i2c" "vboxusers" "libvirtd" "fuse"]; # Enable ‘sudo’ for the user.
     description = "Miguel Bernadin";
   };
-
   users.users.rachelle = {
     isNormalUser = true;
     extraGroups = [ ]; # Enable ‘sudo’ for the user.
     description = "Rachelle Bernadin";
+  };
+
+# TODO(bernadinm): remove uid 1000 to dynamic id via NIX Repl
+# Systemd user service for rclone mount
+systemd.user.services = {
+  rcloneMount = {
+    description = "Rclone Mount for Proton Drive";
+    wantedBy = [ "default.target" ];
+    partOf = [ "graphical-session.target" ];
+    serviceConfig = {
+      # Use %U to dynamically insert the user ID
+      ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p /run/user/1000/protondrive";
+      ExecStart = "${pkgs.rclone}/bin/rclone mount 'Proton Drive':/ /run/user/1000/protondrive --vfs-cache-mode full --daemon --allow-other";
+      ExecStop = "${pkgs.coreutils}/bin/fusermount -u /run/user/1000/protondrive";
+      Restart = "on-failure";
+    };
+  };
+
+  rcloneMountLink = {
+    description = "Symlink for rclone mount to user's home directory";
+    wantedBy = [ "default.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      # Use /home/miguel for the user's home directory
+      ExecStart = "${pkgs.coreutils}/bin/ln -sfn /run/user/1000/protondrive /home/miguel/ProtonDrive";
+      ExecStop = "${pkgs.coreutils}/bin/rm -f /home/miguel/ProtonDrive";
+    };
+  };
+};
+
+  # Enable the services
+  systemd.user.services.rcloneMount.enable = true;
+  systemd.user.services.rcloneMountLink.enable = true;
+
+  systemd.services.timemachineRsync = {
+    description = "Sync Time Machine to ProtonDrive";
+    serviceConfig = {
+      Type = "oneshot";
+      User = "miguel"; # Run the service as user miguel
+      Group = "users"; # Ensure the group is also set if necessary
+    };
+    script = ''
+      /run/current-system/sw/bin/rsync -av --delete /timemachine/ /home/miguel/ProtonDrive/timemachine/
+    '';
+  };
+
+  systemd.timers.timemachineRsyncTimer = {
+    description = "Daily sync of Time Machine to ProtonDrive";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "daily";
+      Persistent = true; # Ensures the timer catches up if missed
+    };
   };
 
   home-manager.users.miguel.home.file.".local/share/nvim/site/autoload/plug.vim".source = pkgs.fetchurl {
