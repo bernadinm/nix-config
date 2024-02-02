@@ -22,6 +22,7 @@ in
       ../../modules/desktop.nix
       ../../modules/utilities.nix
       ../../modules/coding.nix
+      ../../modules/timemachinebackup.nix
       <nixos-unstable/nixos/modules/services/networking/nebula.nix>
     ];
   # Use the systemd-boot EFI boot loader.

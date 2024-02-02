@@ -192,7 +192,7 @@ in
 
   # Open ports in the firewall.
   networking.enableIPv6 = false;
-  networking.firewall.allowedTCPPorts = [ 80 443 4242 ]; # http https nebula
+  networking.firewall.allowedTCPPorts = [ 80 443 4242 548 ]; # http https nebula AFP
   networking.firewall.trustedInterfaces = [ "nebula.mesh" ];
   networking.firewall.extraCommands = ''
   iptables -A nixos-fw -p tcp --source 192.168.1.0/24 --dport 22 -j nixos-fw-accept
