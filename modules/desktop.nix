@@ -35,7 +35,7 @@ systemd.user.services = {
     serviceConfig = {
       # Use %U to dynamically insert the user ID
       ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p /run/user/1000/protondrive";
-      ExecStart = "${pkgs.rclone}/bin/rclone mount 'Proton Drive':/ /run/user/1000/protondrive --vfs-cache-mode full --daemon --allow-other";
+      ExecStart = "${pkgs.rclone}/bin/rclone mount 'Proton Drive':/ /run/user/1000/protondrive --vfs-cache-mode full --daemon --allow-other -v";
       ExecStop = "${pkgs.coreutils}/bin/fusermount -u /run/user/1000/protondrive";
       Restart = "on-failure";
     };
@@ -531,16 +531,6 @@ systemd.user.services = {
     automatic = true;
     dates = "weekly";
     options = "--delete-older-than 60d";
-  };
-
-  # Enable folder syncing service
-  services = {
-    syncthing = {
-      enable = true;
-      user = "miguel";
-      dataDir = "/home/miguel";
-      openDefaultPorts = true;
-    };
   };
 
   # See: https://github.com/NixOS/nixpkgs/commit/224a6562a4880195afa5c184e755b8ecaba41536
