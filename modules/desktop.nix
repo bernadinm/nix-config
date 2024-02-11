@@ -16,7 +16,7 @@ in
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.miguel = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "input" "video" "i2c" "vboxusers" "libvirtd" "fuse"]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "docker" "input" "video" "i2c" "vboxusers" "libvirtd" "fuse" ]; # Enable ‘sudo’ for the user.
     description = "Miguel Bernadin";
   };
   users.users.rachelle = {
@@ -25,34 +25,34 @@ in
     description = "Rachelle Bernadin";
   };
 
-# TODO(bernadinm): remove uid 1000 to dynamic id via NIX Repl
-# Systemd user service for rclone mount
-systemd.user.services = {
-  rcloneMount = {
-    description = "Rclone Mount for Proton Drive";
-    wantedBy = [ "default.target" ];
-    partOf = [ "graphical-session.target" ];
-    serviceConfig = {
-      # Use %U to dynamically insert the user ID
-      ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p /run/user/1000/protondrive";
-      ExecStart = "${pkgs.rclone}/bin/rclone mount 'Proton Drive':/ /run/user/1000/protondrive --vfs-cache-mode full --daemon --allow-other -v";
-      ExecStop = "${pkgs.coreutils}/bin/fusermount -u /run/user/1000/protondrive";
-      Restart = "on-failure";
+  # TODO(bernadinm): remove uid 1000 to dynamic id via NIX Repl
+  # Systemd user service for rclone mount
+  systemd.user.services = {
+    rcloneMount = {
+      description = "Rclone Mount for Proton Drive";
+      wantedBy = [ "default.target" ];
+      partOf = [ "graphical-session.target" ];
+      serviceConfig = {
+        # Use %U to dynamically insert the user ID
+        ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p /run/user/1000/protondrive";
+        ExecStart = "${pkgs.rclone}/bin/rclone mount 'Proton Drive':/ /run/user/1000/protondrive --vfs-cache-mode full --daemon --allow-other -v";
+        ExecStop = "${pkgs.coreutils}/bin/fusermount -u /run/user/1000/protondrive";
+        Restart = "on-failure";
+      };
     };
-  };
 
-  rcloneMountLink = {
-    description = "Symlink for rclone mount to user's home directory";
-    wantedBy = [ "default.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      # Use /home/miguel for the user's home directory
-      ExecStart = "${pkgs.coreutils}/bin/ln -sfn /run/user/1000/protondrive /home/miguel/ProtonDrive";
-      ExecStop = "${pkgs.coreutils}/bin/rm -f /home/miguel/ProtonDrive";
+    rcloneMountLink = {
+      description = "Symlink for rclone mount to user's home directory";
+      wantedBy = [ "default.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        # Use /home/miguel for the user's home directory
+        ExecStart = "${pkgs.coreutils}/bin/ln -sfn /run/user/1000/protondrive /home/miguel/ProtonDrive";
+        ExecStop = "${pkgs.coreutils}/bin/rm -f /home/miguel/ProtonDrive";
+      };
     };
   };
-};
 
   # Enable the services
   systemd.user.services.rcloneMount.enable = true;
@@ -395,6 +395,19 @@ systemd.user.services = {
       telescope-fzf-native-nvim
     ];
   };
+
+  fonts.packages = with pkgs; [
+    montserrat
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
+    liberation_ttf
+    fira-code
+    fira-code-symbols
+    mplus-outline-fonts.githubRelease
+    dina-font
+    proggyfonts
+  ];
 
   environment.systemPackages = with pkgs; [
     # base
