@@ -234,6 +234,10 @@ exec xfce4-power-manager
 
 # Lock
 exec xautolock -detectsleep -time 30 -locker "i3lock-fancy-rapid 15 30" -notify 30 -notifier "notify-send -u critical -t 10000 -- 'LOCKING screen in 30 seconds'"
+
+# Launch Polybar
+exec_always --no-startup-id $HOME/.config/polybar/blocks/launch.sh
+
 bindsym $mod+Shift+q exec xautolock -locknow # lock screen
 
 # On desktop start-up. Synaptics device id is (12).

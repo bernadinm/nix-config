@@ -493,6 +493,17 @@ in
   services.atd.enable = true;
   services.locate.enable = true;
 
+  # TODO(bernadinm): add polybar dotfile config
+  nixpkgs.config.packageOverrides = pkgs: {
+    polybar = pkgs.polybar.override {
+      alsaSupport = true;
+      iwSupport = true;
+      nlSupport = true;
+      pulseSupport = true;
+      mpdSupport = true;
+    };
+  };
+
   services.xserver = {
     enable = true;
     libinput.enable = true;
@@ -512,6 +523,8 @@ in
         dmenu #application launcher most people use
         rofi
         polybar
+        libmpdclient # media player daemon client
+        psensor # hardware temp sensor
         clipit
         xorg.xprop
         xautolock # timer to lock screen
