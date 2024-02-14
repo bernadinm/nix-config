@@ -76,6 +76,8 @@ in
     # davinci-resolve # video editing
   ];
 
+  # music player daemon
+  services.mpd.enable = true;
   programs.steam.enable = true;
   hardware.steam-hardware.enable = true;
   hardware.opengl.extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
