@@ -37,6 +37,8 @@ alias k='kubectl'
 alias lsaltr='exa -al --sort=oldest --reverse'
 alias pop='pop -H 127.0.0.1 -p $(pass protonmail.com/bridge/$(hostname)/smtp/password) -U $(gum filter <<< $(pass protonmail.com/emails)) -P $(pass protonmail.com/bridge/$(hostname)/smtp/port) -i'
 alias mods='OPENAI_API_KEY=$(pass openai.com/$(hostname)/api-key) mods'
+alias mp='OPENAI_API_KEY=$(pass openai.com/$(hostname)/api-key) mods -P'
+alias mcp='OPENAI_API_KEY=$(pass openai.com/$(hostname)/api-key) mods -C -P'
 freshfetch # bash init
 
 # Environment Variables

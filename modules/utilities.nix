@@ -12,6 +12,7 @@ in
     helix # editor
     vim # system
     neovim
+    evince # pdf viewer
     #(neovim.override {
     #  vimAlias = true;
     #  configure = {
