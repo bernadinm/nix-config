@@ -94,6 +94,8 @@ in
         ../dotfiles/.config/termite/config;
       ".config/tiny/config.yml".source =
         ../dotfiles/.config/tiny/config.yml;
+      ".config/rofi/config.rasi".source =
+        ../dotfiles/.config/rofi/config.rasi;
       ".ssh/authorized_keys".source =
         ../dotfiles/.ssh/authorized_keys;
       ".gnupg/sshcontrol".source =
@@ -424,7 +426,7 @@ in
     google-chrome # browser
     brave # browser
     firefox # browser
-    (firefox.override { extraNativeMessagingHosts = [ passff-host ]; })
+    (firefox.override { nativeMessagingHosts = [ passff-host ]; })
 
     playerctl # music control
 
