@@ -94,8 +94,6 @@ in
         ../dotfiles/.config/termite/config;
       ".config/tiny/config.yml".source =
         ../dotfiles/.config/tiny/config.yml;
-      ".config/rofi/config.rasi".source =
-        ../dotfiles/.config/rofi/config.rasi;
       ".ssh/authorized_keys".source =
         ../dotfiles/.ssh/authorized_keys;
       ".gnupg/sshcontrol".source =
