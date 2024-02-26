@@ -27,5 +27,6 @@ color13 = #6c71c4
 color14 = #93a1a1
 color15 = #fdf6e3
 
-# [options]
+[options]
+scrollback_lines = 9999999
 # font = InconsolataGo Nerd Font 11
