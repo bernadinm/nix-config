@@ -54,7 +54,7 @@ in
     yubikey-personalization # yubikey
 
     nftables # iptable alternative
-    tor # security network
+    tor torsocks # security network
     tor-browser-bundle-bin # security network browser
   ];
 
