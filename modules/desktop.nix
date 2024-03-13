@@ -463,7 +463,7 @@ in
     kdeplasma-addons
     kdeconnect
     kdenlive
-    okular
+    okular # ebook epub pdf reader
     konversation
     fusuma
     kile # latex authoring tool for kde
