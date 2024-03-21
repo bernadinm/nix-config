@@ -49,7 +49,7 @@ in
     hugo # website engine
     texlive.combined.scheme-full # latex
     texstudio # latex
-    logseq # journal
+    unstable.logseq # journal
     obsidian # journal
 
     # cuelang

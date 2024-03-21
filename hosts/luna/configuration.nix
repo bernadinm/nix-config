@@ -113,8 +113,8 @@ in
   # hybrid sleep when press power button
   services.logind.extraConfig = ''
     HandlePowerKeyLongPress=poweroff
-    HandlePowerKey=hibernate
-    HandleLidSwitch=suspend-then-hibernate
+    HandlePowerKey=suspend-then-hibernate
+    HandleLidSwitch=suspend
     HandleLidSwitchExternalPower=ignore
     HandleLidSwitchDocked=ignore
     IdleAction=hibernate

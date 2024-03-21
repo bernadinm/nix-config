@@ -38,5 +38,5 @@
   ];
 
   # High-speed web-based traffic analysis and flow collection tool
-  services.ntopng.enable = true;
+  # services.ntopng.enable = true;
 }
