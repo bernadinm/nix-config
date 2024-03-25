@@ -1,2 +1,2 @@
 #!/bin/sh
-firefox -new-window https://messages.android.com -kiosk --app=https://messages.android.com
+firefox -new-window https://messages.android.com --app=https://messages.android.com

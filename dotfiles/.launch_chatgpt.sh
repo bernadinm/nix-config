@@ -1,2 +1,2 @@
 #!/bin/sh
-firefox -new-window https://chat.openai.com/ -kiosk --app=https://chat.openai.com/
+firefox -new-window https://chat.openai.com/ --app=https://chat.openai.com/
