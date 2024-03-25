@@ -2,6 +2,7 @@
 let
   baseconfig = { allowUnfree = true; };
   porcupine = import <nixos-porcupine> { config = baseconfig; };
+  unstable = import <nixos-unstable> { config = baseconfig; };
   hostname = config.networking.hostName;
 in
 {
@@ -19,8 +20,8 @@ in
     monero-gui
 
     # VPN
-    porcupine.protonvpn-cli
-    porcupine.protonvpn-gui
+    unstable.protonvpn-cli_2
+    protonvpn-gui
     openvpn
 
     # password management
