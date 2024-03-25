@@ -1,2 +1,2 @@
 #!/bin/sh
-firefox -new-window https://gmail.com -kiosk --app=https://gmail.com
+firefox -new-window https://gmail.com --app=https://gmail.com
