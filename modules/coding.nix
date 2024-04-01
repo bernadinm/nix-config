@@ -13,6 +13,8 @@ in
     python311Packages.pillow # coding
     python311Packages.setuptools # coding
     python311Packages.numpy
+    python311Packages.ipython # interactive python
+    poetry # pip alternative
     libffi # coding used with pip
     gcc # coding used with pip
 
@@ -70,6 +72,7 @@ in
     nil # nix
     marksman # markdown
     python310Packages.python-lsp-server # python
+    python311Packages.python-lsp-server # python
     ccls # c/c++
     gopls # golang
     nodePackages.bash-language-server # bash
