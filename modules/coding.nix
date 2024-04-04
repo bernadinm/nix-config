@@ -14,6 +14,8 @@ in
     python311Packages.setuptools # coding
     python311Packages.numpy
     python311Packages.ipython # interactive python
+    python311Packages.jupyter-core # ipython notebook
+    python311Packages.notebook # ipython notebook
     poetry # pip alternative
     libffi # coding used with pip
     gcc # coding used with pip
@@ -46,6 +48,7 @@ in
     glow # markdown reader
     pdftk # pdf combine tool
     pandoc # convert markdown to any file
+    img2pdf # convert jpg to pdfs
     ocrmypdf # convert pdt fo ocr pdf
     mupdf # pdf viewer
     hugo # website engine
