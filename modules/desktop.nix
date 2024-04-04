@@ -25,60 +25,7 @@ in
     description = "Rachelle Bernadin";
   };
 
-  # TODO(bernadinm): remove uid 1000 to dynamic id via NIX Repl
-  # Systemd user service for rclone mount
-  systemd.user.services = {
-    rcloneMount = {
-      description = "Rclone Mount for Proton Drive";
-      wantedBy = [ "default.target" ];
-      partOf = [ "graphical-session.target" ];
-      serviceConfig = {
-        # Use %U to dynamically insert the user ID
-        ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p /run/user/1000/protondrive";
-        ExecStart = "${pkgs.rclone}/bin/rclone mount 'Proton Drive':/ /run/user/1000/protondrive --vfs-cache-mode full --daemon --allow-other -v";
-        ExecStop = "${pkgs.coreutils}/bin/fusermount -u /run/user/1000/protondrive";
-        Restart = "on-failure";
-      };
-    };
-
-    rcloneMountLink = {
-      description = "Symlink for rclone mount to user's home directory";
-      wantedBy = [ "default.target" ];
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = true;
-        # Use /home/miguel for the user's home directory
-        ExecStart = "${pkgs.coreutils}/bin/ln -sfn /run/user/1000/protondrive /home/miguel/ProtonDrive";
-        ExecStop = "${pkgs.coreutils}/bin/rm -f /home/miguel/ProtonDrive";
-      };
-    };
-  };
-
   # Enable the services
-  systemd.user.services.rcloneMount.enable = true;
-  systemd.user.services.rcloneMountLink.enable = true;
-
-  systemd.services.timemachineRsync = {
-    description = "Sync Time Machine to ProtonDrive";
-    serviceConfig = {
-      Type = "oneshot";
-      User = "miguel"; # Run the service as user miguel
-      Group = "users"; # Ensure the group is also set if necessary
-    };
-    script = ''
-      /run/current-system/sw/bin/rsync -av --delete /timemachine/ /home/miguel/ProtonDrive/timemachine/
-    '';
-  };
-
-  systemd.timers.timemachineRsyncTimer = {
-    description = "Daily sync of Time Machine to ProtonDrive";
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnCalendar = "daily";
-      Persistent = true; # Ensures the timer catches up if missed
-    };
-  };
-
   home-manager.users.miguel.home.file.".local/share/nvim/site/autoload/plug.vim".source = pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim";
     sha256 = "sha256-4tvXyNcyrnl+UFnA3B6WS5RSmjLQfQUdXQWHJ0YqQ/0=";
