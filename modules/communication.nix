@@ -32,6 +32,10 @@ in
     tiny # rust irc client
     fractal # matrix irc client
     calcurse # cal cli integration
+
+    # record
+    simplescreenrecorder
+    caffeine-ng
   ];
 
   disabledModules = [
