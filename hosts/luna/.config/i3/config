@@ -226,6 +226,7 @@ exec_always --no-startup-id $HOME/.config/polybar/forest/launch.sh
 # }
 
 bindsym --release Print exec scrot '%Y-%m-%d-%H-%M-%S_$wx$h.png' -e 'mv $f ~/Pictures/Screenshots'
+bindsym --release Shift+Print exec bash $HOME/.screen_record.sh
 
 new_window pixel 0
 
