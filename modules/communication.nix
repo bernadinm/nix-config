@@ -10,6 +10,7 @@ in
     mumble
     profanity
     discord
+    telegram-desktop
     slack
     signal-desktop
     keybase-gui
