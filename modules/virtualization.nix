@@ -24,6 +24,8 @@ in
     kubernetes
     minikube
 
+    flyctl # cloud cli
+
     anbox # android
 
     virt-manager
