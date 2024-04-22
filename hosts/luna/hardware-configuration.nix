@@ -12,6 +12,8 @@
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ "kvm-intel" "hid-apple" "ashmem_linux" "binder_linux" ];
+  #  See: https://community.frame.work/t/resolved-fn-lock-makes-both-fn-f-and-f-trigger-the-media-control-keys/26282/16
+  boot.blacklistedKernelModules = [ "cros_ec_lpcs" ]; # fn + ctrl fw linux bug
   boot.extraModulePackages = [ ];
   boot.extraModprobeConfig = ''
       options hid_apple fnmode=2
