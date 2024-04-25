@@ -86,6 +86,7 @@ in
     hck # cut alt
     xh # curl alt
     httpie # curl alt
+    nb # cli notebook
 
     pcmanfm # desktop cli
     neofetch # sysinfo
