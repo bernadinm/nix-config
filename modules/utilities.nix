@@ -34,6 +34,7 @@ in
     gum # cli glue tool
     tmux # system
     unzip # system
+    libarchive # bsdtar
     rar # archives
     zip # archives
     p7zip # archives
@@ -99,6 +100,7 @@ in
     lynx # text browser
     aria # torrent
     gcalcli # google cal cli
+    unstable.android-tools android-udev-rules # android utils
 
     pup # html cli parser
     ddgr # search engine cli
