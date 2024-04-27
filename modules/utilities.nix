@@ -47,6 +47,7 @@ in
     mimic # tts
     gspeech # tts
     picotts # tts
+    openai-whisper # speech to text
     killall # system kill
     termite # terminal
     nap # code snippet save tool
