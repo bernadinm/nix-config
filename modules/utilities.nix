@@ -105,5 +105,7 @@ in
     pup # html cli parser
     ddgr # search engine cli
     twilio-cli # cloud platform
+
+    glibc # needed for logseq https://github.com/logseq/logseq/issues/10851
   ];
 }
