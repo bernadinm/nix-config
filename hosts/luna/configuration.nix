@@ -23,7 +23,8 @@ in
       ../../modules/utilities.nix
       ../../modules/coding.nix
       ../../modules/timemachinebackup.nix
-      <nixos-unstable/nixos/modules/services/networking/nebula.nix>
+      # TODO(bernadinm): Replace Mesh Network for Zero Trust
+      # <nixos-unstable/nixos/modules/services/networking/nebula.nix>
     ];
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -138,9 +139,10 @@ in
   hardware.i2c.enable = true;
 
   # Enable Nebula Mesh Network
-  services.nebula.networks.mesh = {
-    staticHostMap = { "192.168.100.2" = [ "lumina.miguel.engineer:4242" ]; };
-  };
+  # TODO(bernadinm): Replace Mesh Network for Zero Trust
+  # services.nebula.networks.mesh = {
+  #   staticHostMap = { "192.168.100.2" = [ "lumina.miguel.engineer:4242" ]; };
+  # };
 
   services.fwupd.enable = true; # firmware update tool
   services.fprintd.enable = true;
