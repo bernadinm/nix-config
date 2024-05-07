@@ -13,7 +13,8 @@ in
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      <nixos-unstable/nixos/modules/services/networking/nebula.nix>
+      # TODO(bernadinm): Replace Mesh Network for Zero Trust
+      # <nixos-unstable/nixos/modules/services/networking/nebula.nix>
       # <nixos-unstable/nixos/modules/services/web-apps/keycloak.nix>
       ../../modules/gdrivesync.nix
       ../../modules/entertainment.nix
@@ -128,9 +129,10 @@ in
   };
 
   # Enable Nebula Mesh Network and set as lighthouse
-  services.nebula.networks.mesh = {
-    isLighthouse = true;
-  };
+  # TODO(bernadinm): Replace Mesh Network for Zero Trust
+  # services.nebula.networks.mesh = {
+  #   isLighthouse = true;
+  # };
 
   #pciPassthrough = {
   #  enable = true;

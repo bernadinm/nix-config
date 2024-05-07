@@ -204,14 +204,15 @@ in
   # networking.firewall.allowedUDPPortRanges = [{ from = 1714; to = 1764; }]; # kde
 
   # Internal Private Mesh Network
-  services.nebula.networks.mesh = {
-    enable = true;
-    ca = "/home/miguel/git/slackhq/nebula/ca.crt";
-    cert = "/home/miguel/git/slackhq/nebula/server.crt";
-    key = "/home/miguel/git/slackhq/nebula/server.key";
-    firewall.inbound = [{ port = "any"; proto = "any"; host = "any"; }];
-    firewall.outbound = [{ port = "any"; proto = "any"; host = "any"; }];
-  };
+  # TODO(bernadinm): Replace Mesh Network for Zero Trust
+  # services.nebula.networks.mesh = {
+  #   enable = true;
+  #   ca = "/home/miguel/git/slackhq/nebula/ca.crt";
+  #   cert = "/home/miguel/git/slackhq/nebula/server.crt";
+  #   key = "/home/miguel/git/slackhq/nebula/server.key";
+  #   firewall.inbound = [{ port = "any"; proto = "any"; host = "any"; }];
+  #   firewall.outbound = [{ port = "any"; proto = "any"; host = "any"; }];
+  # };
 
   services.teamviewer.enable = true;
 
