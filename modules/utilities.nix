@@ -107,5 +107,7 @@ in
     twilio-cli # cloud platform
 
     glibc # needed for logseq https://github.com/logseq/logseq/issues/10851
+
+    parted # disk util
   ];
 }
