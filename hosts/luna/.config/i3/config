@@ -265,6 +265,9 @@ exec_always --no-startup-id libinput-gestures
 # Adding SMTP support
 exec protonmail-bridge -g
 
+# Avoid sleeping during active stream
+exec --no-startup-id bash ~/.avoid_sleeping_while_streaming.sh
+
 ## App Launch Keybindings
 # always start in scratchpad
 ## for_window [class="^notion$"] floating enable, move scratchpad, scratchpad show
