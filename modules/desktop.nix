@@ -85,6 +85,8 @@ in
         ../dotfiles/.launch_ai.sh;
       ".battery_check.sh".source =
         ../dotfiles/scripts/battery_check.sh;
+      ".avoid_sleeping_while_streaming.sh".source =
+        ../dotfiles/scripts/avoid_sleeping_while_streaming.sh;
       ".modern_alert.wav".source =
         ../dotfiles/scripts/modern_alert.wav;
       ".config/nvim/coc-settings.json".source =
