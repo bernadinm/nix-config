@@ -115,7 +115,7 @@ in
   services.logind.extraConfig = ''
     HandlePowerKeyLongPress=poweroff
     HandlePowerKey=suspend-then-hibernate
-    HandleLidSwitch=suspend
+    HandleLidSwitch=hibernate
     HandleLidSwitchExternalPower=ignore
     HandleLidSwitchDocked=ignore
     IdleAction=hibernate
