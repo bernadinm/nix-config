@@ -119,7 +119,7 @@ in
     HandleLidSwitchExternalPower=ignore
     HandleLidSwitchDocked=ignore
     IdleAction=hibernate
-    IdleActionSec=15min
+    IdleActionSec=60min
   '';
   # screen locker
   programs.xss-lock.enable = true;
