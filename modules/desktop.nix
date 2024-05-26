@@ -519,6 +519,8 @@ in
   programs.dconf.enable = true;
 
   hardware.bluetooth.enable = true; # enable bluethooth
+  hardware.bluetooth.powerOnBoot = true; # enable auto pairing
+  hardware.bluetooth.hsphfpd.enable = true; # enable auto pairing
   services.touchegg.enable = true; # enable multi touch gesture
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }
