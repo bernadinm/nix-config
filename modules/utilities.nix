@@ -69,6 +69,9 @@ in
     eza # replacement for ls
     zoxide # alternative to cd
     restic # backup util
+    sane-airscan # AirScan driver printer
+    sane-backends # Printer/Scaner tools
+    sane-frontends # Printer/Scaner tools
 
     navi # cheat files
     fzf # fuzzy find
