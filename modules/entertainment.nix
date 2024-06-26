@@ -22,7 +22,7 @@ in
     # })
     unstable.wineWowPackages.full
     winetricks
-    bottles
+    unstable.bottles
     sc-controller
     steam-run
     vulkan-tools
@@ -72,8 +72,7 @@ in
 
     # videography
     libsForQt5.kdenlive # video editing
-    # TODO(bernadinm): removing this below due to nixos 23.05 errors
-    # davinci-resolve # video editing
+    davinci-resolve # video editing
   ];
 
   # music player daemon
