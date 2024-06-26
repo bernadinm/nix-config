@@ -25,6 +25,8 @@
     lsof
     glances
     bandwhich
+    gotop
+    s-tui
 
     # crypto mon
     cointop
