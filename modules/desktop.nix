@@ -4,7 +4,7 @@ let
   baseconfig = { allowUnfree = true; };
   unstable = import <nixos-unstable> { config = baseconfig; };
   home-manager = builtins.fetchTarball
-    "https://github.com/nix-community/home-manager/archive/release-23.11.tar.gz";
+    "https://github.com/nix-community/home-manager/archive/release-24.05.tar.gz";
 in
 {
   imports =
@@ -434,7 +434,7 @@ in
   # Allows services and hosts exposed on the local network via mDNS/DNS-SD
   services.avahi = {
     enable = true;
-    nssmdns = true;
+    nssmdns4 = true;
     publish = {
       enable = true;
       userServices = true;
@@ -455,11 +455,10 @@ in
     };
   };
 
-  services.xserver = {
-    enable = true;
+  services = {
     libinput.enable = true;
 
-    desktopManager = {
+    xserver.desktopManager = {
       xterm.enable = false;
     };
 
@@ -467,7 +466,7 @@ in
       defaultSession = "none+i3";
     };
 
-    windowManager.i3 = {
+    xserver.windowManager.i3 = {
       enable = true;
       package = pkgs.i3-gaps;
       extraPackages = with pkgs; [
