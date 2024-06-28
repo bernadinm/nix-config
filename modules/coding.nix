@@ -55,7 +55,7 @@ in
     hugo # website engine
     texlive.combined.scheme-full # latex
     texstudio # latex
-    unstable.logseq # journal
+    logseq # journal
     obsidian # journal
 
     # cuelang

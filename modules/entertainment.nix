@@ -26,7 +26,6 @@ in
     sc-controller
     steam-run
     vulkan-tools
-    minecraft
     unstable.prismlauncher
     unstable.lutris
     eidolon
