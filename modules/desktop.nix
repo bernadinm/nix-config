@@ -456,6 +456,7 @@ in
   };
 
   services = {
+    xserver.enable = true;
     libinput.enable = true;
 
     xserver.desktopManager = {
@@ -512,7 +513,7 @@ in
   # See: https://github.com/NixOS/nixpkgs/commit/224a6562a4880195afa5c184e755b8ecaba41536
   boot.loader.systemd-boot.configurationLimit = 50;
 
-  # Enabling dconf for bottles util 
+  # Enabling dconf for bottles util
   # TODO)bernadinm): required by bottles
   # https://github.com/NixOS/nixpkgs/issues/270565#issuecomment-1833563323
   programs.dconf.enable = true;
