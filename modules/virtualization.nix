@@ -17,6 +17,7 @@ in
     # docker-compose alternative
     #(import (builtins.fetchTarball https://github.com/hercules-ci/arion/tarball/master) {}).arion
 
+    samba
 
     # Kubernetes
     kompose
@@ -30,10 +31,10 @@ in
 
     virt-manager
 
-    ignite # microvm
+    flintlock # microvm
     vagrant # vm cli
 
-    unstable.vmware-workstation # vmware virt
+    # unstable.vmware-workstation # vmware virt
   ];
 
   nixpkgs.config = baseconfig // {
