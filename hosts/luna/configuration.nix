@@ -6,7 +6,7 @@
 
 let
   home-manager = builtins.fetchTarball
-    "https://github.com/nix-community/home-manager/archive/release-23.11.tar.gz";
+    "https://github.com/nix-community/home-manager/archive/release-24.05.tar.gz";
 in
 {
   imports =
@@ -96,10 +96,10 @@ in
   services.printing.drivers = [ pkgs.hplip pkgs.canon-cups-ufr2 pkgs.epsonscan2 ];
 
   # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.touchpad.naturalScrolling = true;
-  services.xserver.libinput.touchpad.disableWhileTyping = true;
-  services.xserver.libinput.mouse.disableWhileTyping = true;
-  services.xserver.xkbOptions = "ctrl:swap_lfctl_lfwin"; # swap ctrl + fn keys
+  services.libinput.touchpad.naturalScrolling = true;
+  services.libinput.touchpad.disableWhileTyping = true;
+  services.libinput.mouse.disableWhileTyping = true;
+  services.xserver.xkb.options = "ctrl:swap_lfctl_lfwin"; # swap ctrl + fn keys
 
   #hardware.trackpoint.programs.light.enable = true;
 
@@ -150,9 +150,9 @@ in
   security.pam.services.xautolock.fprintAuth = true;
 
   # TODO(bernadinm): required for home manager 23.05
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-25.9.0" # used for logseq and obsidian
-  ];     
+  # nixpkgs.config.permittedInsecurePackages = [
+  #   "electron-28.3.3" # used for logseq and obsidian
+  # ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -160,6 +160,6 @@ in
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.11"; # Did you read the comment?
+  system.stateVersion = "24.05"; # Did you read the comment?
 
 }
