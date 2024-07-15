@@ -112,5 +112,8 @@ in
     glibc # needed for logseq https://github.com/logseq/logseq/issues/10851
 
     parted # disk util
+
+    # database
+    snowsql # snowflake db
   ];
 }
