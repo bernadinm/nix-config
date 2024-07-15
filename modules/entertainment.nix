@@ -49,6 +49,7 @@ in
 
     # multimedia
     vlc
+    mpv
     libreoffice # alt word
     gimp # alt photoshop
     scribus # alt indesign
@@ -72,6 +73,7 @@ in
     # videography
     libsForQt5.kdenlive # video editing
     davinci-resolve # video editing
+    shotcut # cross-platform video editor
   ];
 
   # music player daemon
