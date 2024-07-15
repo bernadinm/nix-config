@@ -410,6 +410,7 @@ in
 
     # Plasma desktop
     kdeplasma-addons
+    qalculate-qt # calulator
     kdeconnect
     kdenlive
     okular # ebook epub pdf reader
