@@ -112,6 +112,7 @@ in
     glibc # needed for logseq https://github.com/logseq/logseq/issues/10851
 
     parted # disk util
+    ventoy-full # iso writer
 
     # database
     snowsql # snowflake db
