@@ -113,6 +113,8 @@ in
 
     parted # disk util
     ventoy-full # iso writer
+    ntfs3g # windows fs fix
+    exfat # disk file system
 
     # database
     snowsql # snowflake db
