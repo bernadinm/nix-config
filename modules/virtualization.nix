@@ -27,6 +27,9 @@ in
     minikube
 
     flyctl # cloud cli
+    doctl # digital ocean cli
+    awscli2 # aws cli
+    railway # railway cloud cli
 
     anbox # android
 
