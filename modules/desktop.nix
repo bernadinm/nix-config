@@ -81,8 +81,8 @@ in
         ../dotfiles/.launch_drive.sh;
       ".launch_chatgpt.sh".source =
         ../dotfiles/.launch_chatgpt.sh;
-      ".launch_ai.sh".source =
-        ../dotfiles/.launch_ai.sh;
+      ".launch_audacity.sh".source =
+        ../dotfiles/.launch_audacity.sh;
       ".battery_check.sh".source =
         ../dotfiles/scripts/battery_check.sh;
       ".avoid_sleeping_while_streaming.sh".source =
@@ -370,7 +370,7 @@ in
 
     tor-browser-bundle-bin # browser
     chromium # browser
-    google-chrome # browser
+    unstable.google-chrome # browser
     brave # browser
     firefox # browser
     (firefox.override { nativeMessagingHosts = [ passff-host ]; })
