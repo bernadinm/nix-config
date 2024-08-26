@@ -12,11 +12,13 @@ in
     discord
     telegram-desktop
     slack
-    signal-desktop
+    unstable.signal-desktop
     keybase-gui
 
     # email client
     unstable.pop protonmail-bridge # email cli
+    aerc # email client
+    khard # caldav contacts client
 
     # visual comm
     #unstable.realvnc-vnc-viewer
