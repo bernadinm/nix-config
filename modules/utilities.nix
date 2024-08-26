@@ -56,7 +56,7 @@ in
     jq # jsonquery
     yq # yamlquery
     yt-dlp # youtube dl
-    youtube-dl # youtube dl
+    # youtube-dl # youtube dl
     streamlink # stream dl
     ts # task spooler batch queue
     bind # dns utils dig nslookup
