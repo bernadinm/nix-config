@@ -195,7 +195,7 @@ in
   networking.enableIPv6 = false;
   networking.firewall.allowedTCPPorts = [ 80 443 4242 548 1714 1715 1716 ]; # http https nebula AFP KDE-Connect
   networking.firewall.allowedUDPPorts = [ 1714 1716 ]; # KDE Connect peer-to-peer communication
-  networking.firewall.trustedInterfaces = [ "nebula.mesh" ];
+  networking.firewall.trustedInterfaces = [ "nebula.mesh" "wlp170s0"];
   networking.firewall.extraCommands = ''
   iptables -A nixos-fw -p tcp --source 192.168.1.0/24 --dport 22 -j nixos-fw-accept
   iptables -A nixos-fw -p tcp --source 192.168.1.0/24 --dport 80 -j nixos-fw-accept
