@@ -42,6 +42,7 @@ in
 
     deno # javascript runtime
     nodejs # javascript runtime
+    vite # javascript library
     yarn2nix # helper nodejs yarn nix pkgs tool
     nodePackages.typescript # installing typescript
     # nodePackages.winglang # installing winglang
