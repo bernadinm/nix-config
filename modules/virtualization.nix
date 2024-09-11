@@ -29,6 +29,7 @@ in
     flyctl # cloud cli
     doctl # digital ocean cli
     awscli2 # aws cli
+    ssm-session-manager-plugin # aws cli plugin
     railway # railway cloud cli
 
     anbox # android

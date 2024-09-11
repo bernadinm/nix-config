@@ -45,4 +45,6 @@ in
     "services/networking/nebula.nix"
     # "services/web-apps/keycloak.nix"
   ];
+
+  services.offlineimap.enable = true;
 }
