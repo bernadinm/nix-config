@@ -26,6 +26,9 @@ in
     kubernetes
     minikube
 
+    # AI
+    ollama # llm local models
+
     flyctl # cloud cli
     doctl # digital ocean cli
     awscli2 # aws cli
@@ -58,6 +61,7 @@ in
   virtualisation.virtualbox.host.enableExtensionPack = true;
   users.extraGroups.vboxusers.members = [ "miguel" ];
   virtualisation.libvirtd.enable = true; # qemu/kvm
+  services.nfs.server.enable = true; # vagrant
 
   # resolve master hostname
   # networking.extraHosts = "${kubeMasterIP} ${kubeMasterHostname}";
