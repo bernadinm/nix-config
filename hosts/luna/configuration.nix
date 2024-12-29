@@ -150,9 +150,9 @@ in
   security.pam.services.xautolock.fprintAuth = true;
 
   # TODO(bernadinm): required for home manager 23.05
-  # nixpkgs.config.permittedInsecurePackages = [
-  #   "electron-28.3.3" # used for logseq and obsidian
-  # ];
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-27.3.11" # used for logseq and obsidian
+  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
