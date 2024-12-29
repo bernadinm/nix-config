@@ -23,6 +23,8 @@ in
     unstable.protonvpn-cli_2
     protonvpn-gui
     openvpn
+    tailscale
+    wireguard-tools
 
     # password management
     (pass.withExtensions (ext: with ext; [
@@ -50,6 +52,7 @@ in
     # network probe
     # tshark # terminal wshark
     wireshark # gui wshark
+    cloudflared # cloudflare tunnels
 
     yubikey-manager # yubikey
     yubikey-personalization # yubikey
@@ -193,7 +196,7 @@ in
 
   # Open ports in the firewall.
   networking.enableIPv6 = false;
-  networking.firewall.allowedTCPPorts = [ 80 443 4242 548 1714 1715 1716 ]; # http https nebula AFP KDE-Connect
+  networking.firewall.allowedTCPPorts = [ 80 443 4242 548 1714 1715 1716 2049 ]; # http https nebula AFP KDE-Connect nfs
   networking.firewall.allowedUDPPorts = [ 1714 1716 ]; # KDE Connect peer-to-peer communication
   networking.firewall.trustedInterfaces = [ "nebula.mesh" "wlp170s0"];
   networking.firewall.extraCommands = ''
