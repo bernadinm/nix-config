@@ -37,7 +37,7 @@ in
     weechatScripts.weechat-notify-send
 
     rustdesk # teamviewer oss
-    anydesk # remote desktop sharing
+    unstable.anydesk # remote desktop sharing
 
     #irc clients
     tiny # rust irc client
