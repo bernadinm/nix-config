@@ -7,6 +7,7 @@ in
 {
   environment.systemPackages = with pkgs; [
     # python
+    pipx # python universal pkg
     python311Full # python3.9 full
     python311Packages.virtualenv # coding
     python311Packages.pip # coding
@@ -40,8 +41,10 @@ in
     rustc # rust compiler
     pkg-config # packging with rust
 
+    # node
     deno # javascript runtime
     nodejs # javascript runtime
+    pnpm # javascript runtime
     vite # javascript library
     yarn2nix # helper nodejs yarn nix pkgs tool
     nodePackages.typescript # installing typescript
