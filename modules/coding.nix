@@ -91,5 +91,8 @@ in
     cuelsp # cuelang
 
     ngrok # development reverse proxy
+
+    # AI dev tools
+    aider-chat
   ];
 }
