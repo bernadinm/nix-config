@@ -22,7 +22,7 @@ in
     # })
     unstable.wineWowPackages.full
     winetricks
-    unstable.bottles
+    bottles
     sc-controller
     steam-run
     vulkan-tools
