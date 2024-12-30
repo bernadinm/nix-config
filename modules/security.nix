@@ -62,6 +62,10 @@ in
     tor-browser-bundle-bin # security network browser
   ];
 
+  # Enable tailscale vpn
+  services.tailscale.enable = true;
+  services.tailscale.authKeyFile = "/run/secrets/tailscale_key";
+
   #services.keycloak = {
   #  enable = true;
   #  #frontendUrl = "key.lumina.miguel.engineer/auth";
