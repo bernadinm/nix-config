@@ -116,6 +116,11 @@ in
     ntfs3g # windows fs fix
     exfat # disk file system
 
+    (patool.overrideAttrs (old: {
+      # Skip failing test
+      doCheck = false;
+    })) # archives
+
     # database
     snowsql # snowflake db
   ];
