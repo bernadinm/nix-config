@@ -38,89 +38,9 @@
   swapDevices =
     [{ device = "/dev/disk/by-uuid/9601ad7a-71f7-48e6-98af-ce5aa44a773e"; }];
 
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  environment.systemPackages = with pkgs; [
+    auto-cpufreq
+  ];
 
-  services.tlp = {
-    enable = true;
-    settings = {
-      # CPU Settings
-      CPU_SCALING_GOVERNOR_ON_AC = "performance";
-      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-
-      CPU_HWP_ON_AC = "performance";
-      CPU_HWP_ON_BAT = "balance_power";
-
-      CPU_BOOST_ON_AC = "1";
-      CPU_BOOST_ON_BAT = "0";
-
-      # Energy Performance Bias (Intel-only)
-      ENERGY_PERF_POLICY_ON_AC = "performance";
-      ENERGY_PERF_POLICY_ON_BAT = "powersave";
-
-      # Disk Settings
-      DISK_APM_LEVEL_ON_AC = "254 254";
-      DISK_APM_LEVEL_ON_BAT = "128 128";
-
-      DISK_SPINDOWN_TIMEOUT_ON_AC = "0 0";
-      DISK_SPINDOWN_TIMEOUT_ON_BAT = "0 0";
-
-      # SATA Aggressive Link Power Management
-      SATA_LINKPWR_ON_AC = "max_performance";
-      SATA_LINKPWR_ON_BAT = "min_power";
-
-      # AHCI Runtime Power Management
-      AHCI_RUNTIME_PM_ON_AC = "on";
-      AHCI_RUNTIME_PM_ON_BAT = "auto";
-
-      AHCI_RUNTIME_PM_TIMEOUT = "15";
-
-      # PCI Express Active State Power Management
-      PCIE_ASPM_ON_AC = "performance";
-      PCIE_ASPM_ON_BAT = "powersave";
-
-      # Intel Graphics
-      INTEL_GPU_MIN_FREQ_ON_AC = "0";
-      INTEL_GPU_MIN_FREQ_ON_BAT = "0";
-
-      INTEL_GPU_MAX_FREQ_ON_AC = "0";
-      INTEL_GPU_MAX_FREQ_ON_BAT = "0";
-
-      INTEL_GPU_BOOST_FREQ_ON_AC = "0";
-      INTEL_GPU_BOOST_FREQ_ON_BAT = "0";
-
-      # Wi-Fi Power Saving
-      WIFI_PWR_ON_AC = "0";
-      WIFI_PWR_ON_BAT = "5";
-
-      # Bluetooth Power Saving
-      BT_PWR_ON_AC = "0";
-      BT_PWR_ON_BAT = "1";
-
-      # USB Autosuspend
-      USB_AUTOSUSPEND = "1";
-      USB_AUTOSUSPEND_DISABLE_ON_SHUTDOWN = "0";
-
-      # Runtime Power Management for PCI(e) bus devices
-      RUNTIME_PM_ON_AC = "on";
-      RUNTIME_PM_ON_BAT = "auto";
-
-      RUNTIME_PM_DRIVER_BLACKLIST = "mei_me";
-
-      # Audio Power Saving
-      SOUND_POWER_SAVE_ON_AC = "0";
-      SOUND_POWER_SAVE_ON_BAT = "1";
-
-      SOUND_POWER_SAVE_CONTROLLER = "Y";
-
-      # NMI Watchdog
-      NMI_WATCHDOG = "0";
-
-      # Power Off Optical Drive
-      BAY_POWEROFF_ON_AC = "0";
-      BAY_POWEROFF_ON_BAT = "0";
-
-      # Miscellaneous
-      RESTORE_DEVICE_STATE_ON_STARTUP = "1";
-    };
-  };
+  services.auto-cpufreq.enable = true;
 }
