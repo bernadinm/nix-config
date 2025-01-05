@@ -6,7 +6,7 @@
 
 let
   home-manager = builtins.fetchTarball
-    "https://github.com/nix-community/home-manager/archive/release-24.05.tar.gz";
+    "https://github.com/nix-community/home-manager/archive/release-24.11.tar.gz";
 in
 {
   imports =
@@ -58,7 +58,7 @@ in
 
   # Required for Framework Laptop to help avoid screen tearing:
   # https://discourse.nixos.org/t/eliminate-screen-tearing-with-intel-mesa/14724
-  services.xserver.videoDrivers = [ "intel" ];
+  services.xserver.videoDrivers = [ "modesetting" ];
   services.xserver.deviceSection = ''
     Option "DRI" "2"
     Option "TearFree" "true"
@@ -81,6 +81,7 @@ in
     };
 
   services.upower.enable = true;
+  services.auto-cpufreq.enable = true;
   services.xserver = {
     # small addition from desktop.nix import
     monitorSection = ''

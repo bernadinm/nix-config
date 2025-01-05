@@ -4,7 +4,7 @@ let
   baseconfig = { allowUnfree = true; };
   unstable = import <nixos-unstable> { config = baseconfig; };
   home-manager = builtins.fetchTarball
-    "https://github.com/nix-community/home-manager/archive/release-24.05.tar.gz";
+    "https://github.com/nix-community/home-manager/archive/release-24.11.tar.gz";
 in
 {
   imports =
@@ -102,8 +102,8 @@ in
       sha256 = "sha256-OMhC6paqEOQUnxyb33u0kfKpy8plLSRgp8X8T8w0Q/o=";
     };
   };
-  home-manager.users.miguel.home.stateVersion = "22.11";
-  home-manager.users.rachelle.home.stateVersion = "22.11";
+  home-manager.users.miguel.home.stateVersion = "24.11";
+  home-manager.users.rachelle.home.stateVersion = "24.11";
   home-manager.users.miguel.programs.neovim = {
     enable = true;
     viAlias = true;
@@ -350,7 +350,7 @@ in
   fonts.packages = with pkgs; [
     montserrat
     noto-fonts
-    noto-fonts-cjk
+    noto-fonts-cjk-sans
     noto-fonts-emoji
     liberation_ttf
     fira-code
@@ -411,7 +411,7 @@ in
     # Plasma desktop
     kdeplasma-addons
     qalculate-qt # calulator
-    kdeconnect
+    # kdeconnect # NixOS 24.11 upgrade
     kdenlive
     okular # ebook epub pdf reader
     konversation
@@ -476,7 +476,9 @@ in
         rofi
         polybar
         libmpdclient # media player daemon client
-        psensor # hardware temp sensor
+        # Removed for Nixos 24.11 upgrade
+        # psensor # hardware temp sensor
+        mission-center # hardware temp sensor
         clipit
         xorg.xprop
         xautolock # timer to lock screen
@@ -499,11 +501,12 @@ in
   };
 
   # Enable sound.
-  sound.enable = true;
-  hardware.pulseaudio = {
-    enable = true;
-    package = pkgs.pulseaudioFull;
-  };
+  # Disabled to upgrade to NixOS 24.11
+  # sound.enable = true;
+  # hardware.pulseaudio = {
+  #   enable = true;
+  #   package = pkgs.pulseaudioFull;
+  # };
 
   nix.gc = {
     automatic = true;
@@ -521,7 +524,8 @@ in
 
   hardware.bluetooth.enable = true; # enable bluethooth
   hardware.bluetooth.powerOnBoot = true; # enable auto pairing
-  hardware.bluetooth.hsphfpd.enable = true; # enable auto pairing
+  # Disabled to upgrade to NixOS 24.11
+  # hardware.bluetooth.hsphfpd.enable = true; # enable auto pairing
   services.touchegg.enable = true; # enable multi touch gesture
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }

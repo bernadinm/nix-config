@@ -40,7 +40,7 @@ in
     virt-manager
 
     flintlock # microvm
-    vagrant # vm cli
+    # vagrant # vm cli
 
     # unstable.vmware-workstation # vmware virt
   ];
