@@ -93,6 +93,6 @@ in
     ngrok # development reverse proxy
 
     # AI dev tools
-    # aider-chat
+    aider-chat
   ];
 }
