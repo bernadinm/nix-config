@@ -15,7 +15,7 @@ in
 
     # crypto 
     electrum
-    electron-cash
+    # electron-cash
     ledger-live-desktop
     monero-gui
 
