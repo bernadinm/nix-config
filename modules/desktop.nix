@@ -376,6 +376,7 @@ in
     (firefox.override { nativeMessagingHosts = [ passff-host ]; })
 
     playerctl # music control
+    pulseaudio # audio control
 
     font-awesome # font
     picom # window property changer
@@ -503,10 +504,14 @@ in
   # Enable sound.
   # Disabled to upgrade to NixOS 24.11
   # sound.enable = true;
-  # hardware.pulseaudio = {
-  #   enable = true;
-  #   package = pkgs.pulseaudioFull;
-  # };
+  # Add PipeWire configuration
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;  # This provides PulseAudio compatibility
+    jack.enable = true;
+  };
 
   nix.gc = {
     automatic = true;
