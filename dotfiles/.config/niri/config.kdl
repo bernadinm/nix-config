@@ -502,10 +502,20 @@ binds {
     Super+Alt+H     { spawn "refresh.sh" "144"; }
     Super+Alt+Comma { spawn "refresh.sh" "120"; }
 
-    XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
-    XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
-    XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+    // Volume controls
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "pactl" "set-sink-volume" "@DEFAULT_SINK@" "+10%"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "pactl" "set-sink-volume" "@DEFAULT_SINK@" "-10%"; }
+    XF86AudioMute        allow-when-locked=true { spawn "pactl" "set-sink-mute" "@DEFAULT_SINK@" "toggle"; }
+    XF86AudioMicMute     allow-when-locked=true { spawn "pactl" "set-source-mute" "@DEFAULT_SOURCE@" "toggle"; }
+
+    // Brightness controls
+    XF86MonBrightnessDown { spawn "brightnessctl" "set" "1%-"; }
+    XF86MonBrightnessUp   { spawn "brightnessctl" "set" "+1%"; }
+
+    // Media controls
+    XF86AudioPlay  { spawn "playerctl" "play-pause"; }
+    XF86AudioNext  { spawn "playerctl" "next"; }
+    XF86AudioPrev  { spawn "playerctl" "previous"; }
 
     Mod+Q { close-window; }
     Mod+BackSpace { close-window; }
@@ -654,6 +664,24 @@ binds {
 
     Mod+Shift+Y { quit; }
     Mod+Shift+P { power-off-monitors; }
+
+    // Application launchers
+    Super+N { spawn "sh" "-c" "$HOME/.launch_notion.sh"; }
+    Super+L { spawn "sh" "-c" "$HOME/.launch_logseq.sh"; }
+    Super+Y { spawn "sh" "-c" "$HOME/.launch_youtube.sh"; }
+    Super+I { spawn "sh" "-c" "$HOME/.launch_instagram.sh"; }
+    Super+M { spawn "sh" "-c" "$HOME/.launch_music.sh"; }
+    Super+F { spawn "sh" "-c" "$HOME/.launch_googlefi.sh"; }
+    Super+W { spawn "sh" "-c" "$HOME/.launch_whatsapp.sh"; }
+    Super+B { spawn "sh" "-c" "$HOME/.launch_bible.sh"; }
+    Super+C { spawn "sh" "-c" "$HOME/.launch_chatgpt.sh"; }
+    Super+A { spawn "sh" "-c" "$HOME/.launch_audacity.sh"; }
+    Super+E { spawn "sh" "-c" "$HOME/.launch_businessmail.sh"; }
+    Super+G { spawn "sh" "-c" "$HOME/.launch_gmail.sh"; }
+    Super+O { spawn "sh" "-c" "$HOME/.launch_github.sh"; }
+    Super+K { spawn "sh" "-c" "$HOME/.launch_googlekeep.sh"; }
+    Super+P { spawn "sh" "-c" "$HOME/.launch_protonmail.sh"; }
+    Super+D { spawn "sh" "-c" "$HOME/.launch_drive.sh"; }
 
     Mod+Shift+Ctrl+T { toggle-debug-tint; }
     Mod+Shift+Ctrl+O { debug-toggle-opaque-regions; }
