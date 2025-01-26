@@ -363,9 +363,9 @@ in
   environment.systemPackages = with pkgs; [
     # base
     yarn # used for home manager neovim
-    xclip # clipboard history
-    xsel # clipboard select
-    xorg.xev # discover keybindings
+    wl-clipboard # clipboard history
+    wl-clipboard-rs # clipboard select
+    wev # discover keybindings
     x2goclient # remote desktop client
 
     tor-browser-bundle-bin # browser
@@ -380,10 +380,13 @@ in
 
     font-awesome # font
     picom # window property changer
+    # compton removed as Sway has a built-in compositor
+    # lxqt.compton-conf removed as it is not needed with Sway
 
-    feh # wallpaper manager
+    feh # wallpaper manager (can be replaced with Sway output configuration)
 
-    scrot # screen capture
+    grim # screen capture
+    slurp # screen capture
     screenfetch # used with scrot
     kazam # popup screen capture
 
@@ -398,10 +401,9 @@ in
 
     pavucontrol # visual sound control
 
-    rofi # program launcher
-    dmenu # program launcher
-    dunst # system notification
-    acpi # battery status
+    wofi # program launcher (Wayland alternative to rofi)
+    bemenu # program launcher (Wayland alternative to dmenu)
+    dunst # system notification (supports Wayland)
     libnotify # system notification
 
     spectacle # screenshot capture util
@@ -426,12 +428,14 @@ in
   location.latitude = 37.773972;
   location.longitude = -122.431297;
   services.redshift = {
-    enable = true;
+    enable = false;
     temperature = {
       day = 5500;
       night = 3200;
     };
   };
+
+  # services.gammastep.enable = true; # Wayland alternative to Redshift
 
   # Allows services and hosts exposed on the local network via mDNS/DNS-SD
   services.avahi = {
@@ -447,60 +451,43 @@ in
   services.locate.enable = true;
   # services.wakapi.enable = true;
 
-  # TODO(bernadinm): add polybar dotfile config
-  nixpkgs.config.packageOverrides = pkgs: {
-    polybar = pkgs.polybar.override {
-      alsaSupport = true;
-      iwSupport = true;
-      nlSupport = true;
-      pulseSupport = true;
-      mpdSupport = true;
-    };
-  };
+  # Replace services.xserver with services.wayland
+  # services.wayland = {
+  #   enable = true;
+  #   libinput.enable = true;
 
-  services = {
-    xserver.enable = true;
-    libinput.enable = true;
+  #   xserver.desktopManager = {
+  #     xterm.enable = false;
+  #   };
 
-    xserver.desktopManager = {
-      xterm.enable = false;
-    };
+  #   displayManager = {
+  #     defaultSession = "none+sway";
+  #   };
 
-    displayManager = {
-      defaultSession = "none+i3";
-    };
+  #   windowManager.sway = {
+  #     enable = true;
+  #     extraPackages = with pkgs; [
+  #       bemenu #application launcher most people use
+  #       wofi
+  #       polybar
+  #       clipman
+  #       xorg.xprop
+  #       xautolock # timer to lock screen
+  #       i3status # gives you the default i3 status bar
+  #       swaylock #default Sway screen locker
+  #       raiseorlaunch # i3 app launcher
+  #       ydotool # commandline automation for Wayland
+  #       xorg.xwininfo # fetch window infomation
 
-    xserver.windowManager.i3 = {
-      enable = true;
-      package = pkgs.i3-gaps;
-      extraPackages = with pkgs; [
-        dmenu #application launcher most people use
-        rofi
-        polybar
-        libmpdclient # media player daemon client
-        # Removed for Nixos 24.11 upgrade
-        # psensor # hardware temp sensor
-        mission-center # hardware temp sensor
-        clipit
-        xorg.xprop
-        xautolock # timer to lock screen
-        i3-layout-manager
-        i3status # gives you the default i3 status bar
-        i3lock-fancy-rapid #default i3 screen locker
-        i3blocks #if you are planning on using i3blocks over i3status
-        raiseorlaunch # i3 app launcher
-        xdotool # commandline automation for x11
-        xorg.xwininfo # fetch window infomation
+  #       picom # window property changer
 
-        picom # window property changer
+  #       feh # wallpaper manager (can be replaced with Sway output configuration)
+  #       vifm # graphic file manager
 
-        feh # wallpaper manager
-        vifm # graphic file manager
-
-        brightnessctl # brightness ctrl
-      ];
-    };
-  };
+  #       brightnessctl # brightness ctrl
+  #     ];
+  #   };
+  # };
 
   # Enable sound.
   # Disabled to upgrade to NixOS 24.11
