@@ -445,6 +445,7 @@ in
 
   services.atd.enable = true;
   services.locate.enable = true;
+  # services.wakapi.enable = true;
 
   # TODO(bernadinm): add polybar dotfile config
   nixpkgs.config.packageOverrides = pkgs: {
