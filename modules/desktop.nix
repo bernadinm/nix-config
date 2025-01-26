@@ -538,13 +538,12 @@ in
 
   # enable niri window manager
   programs.niri.enable = true;
-  # services.displayManager.ly.enable = true;
+  services.displayManager.gdm.enable = true;
 
   # Make sway the default manager
-  # services.xserver.enable = true;
-  # services.xserver.displayManager.defaultSession = "niri";
-  # services.xserver.displayManager.lightdm.enable = true;
-  # services.xserver.libinput.enable = true;
+  services.xserver.enable = true;
+  services.xserver.displayManager.defaultSession = "niri";
+  services.xserver.libinput.enable = true;
 
   programs.waybar.enable = true;
 
