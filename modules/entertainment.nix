@@ -72,7 +72,7 @@ in
 
     # videography
     libsForQt5.kdenlive # video editing
-    davinci-resolve # video editing
+    # davinci-resolve # video editing
     shotcut # cross-platform video editor
   ];
 

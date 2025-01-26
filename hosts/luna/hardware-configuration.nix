@@ -15,7 +15,7 @@
     # "intel_pstate=disable"  # Be cautious; test for stability
     "pcie_aspm=force"
   ];
-  boot.kernelModules = [ "kvm-intel" "hid-apple" "ashmem_linux" "binder_linux" ];
+  boot.kernelModules = [ "amdgpu" "hid-apple" "k10temp" "amd_iommu" "iwlwifi"];
   #  See: https://community.frame.work/t/resolved-fn-lock-makes-both-fn-f-and-f-trigger-the-media-control-keys/26282/16
   boot.blacklistedKernelModules = [ "cros_ec_lpcs" ]; # fn + ctrl fw linux bug
   boot.extraModulePackages = [ ];

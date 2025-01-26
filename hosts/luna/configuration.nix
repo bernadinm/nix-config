@@ -41,7 +41,7 @@ in
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
   networking.useDHCP = false;
-  networking.interfaces.wlp170s0.useDHCP = true;
+  networking.interfaces.wlp1s0.useDHCP = true;
 
   # bernadinm(todo): remove me
   # networking.extraHosts =
