@@ -684,22 +684,22 @@ binds {
     // Removed duplicate power-off-monitors binding since it conflicts with screenshot
 
     // Application launchers
-    $sup+N { spawn "sh" "-c" "$HOME/.launch_notion.sh"; }
-    $sup+L { spawn "sh" "-c" "$HOME/.launch_logseq.sh"; }
-    $sup+Y { spawn "sh" "-c" "$HOME/.launch_youtube.sh"; }
-    $sup+I { spawn "sh" "-c" "$HOME/.launch_instagram.sh"; }
-    $sup+M { spawn "sh" "-c" "$HOME/.launch_music.sh"; }
-    $sup+F { spawn "sh" "-c" "$HOME/.launch_googlefi.sh"; }
-    $sup+W { spawn "sh" "-c" "$HOME/.launch_whatsapp.sh"; }
-    $sup+B { spawn "sh" "-c" "$HOME/.launch_bible.sh"; }
-    $sup+C { spawn "sh" "-c" "$HOME/.launch_chatgpt.sh"; }
-    $sup+A { spawn "sh" "-c" "$HOME/.launch_audacity.sh"; }
-    $sup+E { spawn "sh" "-c" "$HOME/.launch_businessmail.sh"; }
-    $sup+G { spawn "sh" "-c" "$HOME/.launch_gmail.sh"; }
-    $sup+O { spawn "sh" "-c" "$HOME/.launch_github.sh"; }
-    $sup+K { spawn "sh" "-c" "$HOME/.launch_googlekeep.sh"; }
-    $sup+P { spawn "sh" "-c" "$HOME/.launch_protonmail.sh"; }
-    $sup+D { spawn "sh" "-c" "$HOME/.launch_drive.sh"; }
+    Super+N { spawn "sh" "-c" "$HOME/.launch_notion.sh"; }
+    Super+L { spawn "sh" "-c" "$HOME/.launch_logseq.sh"; }
+    Super+Y { spawn "sh" "-c" "$HOME/.launch_youtube.sh"; }
+    Super+I { spawn "sh" "-c" "$HOME/.launch_instagram.sh"; }
+    Super+M { spawn "sh" "-c" "$HOME/.launch_music.sh"; }
+    Super+F { spawn "sh" "-c" "$HOME/.launch_googlefi.sh"; }
+    Super+W { spawn "sh" "-c" "$HOME/.launch_whatsapp.sh"; }
+    Super+B { spawn "sh" "-c" "$HOME/.launch_bible.sh"; }
+    Super+C { spawn "sh" "-c" "$HOME/.launch_chatgpt.sh"; }
+    Super+A { spawn "sh" "-c" "$HOME/.launch_audacity.sh"; }
+    Super+E { spawn "sh" "-c" "$HOME/.launch_businessmail.sh"; }
+    Super+G { spawn "sh" "-c" "$HOME/.launch_gmail.sh"; }
+    Super+O { spawn "sh" "-c" "$HOME/.launch_github.sh"; }
+    Super+K { spawn "sh" "-c" "$HOME/.launch_googlekeep.sh"; }
+    Super+P { spawn "sh" "-c" "$HOME/.launch_protonmail.sh"; }
+    Super+D { spawn "sh" "-c" "$HOME/.launch_drive.sh"; }
 
     // Exit/quit niri
     Mod+Shift+E { quit; }
