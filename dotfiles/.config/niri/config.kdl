@@ -709,5 +709,5 @@ binds {
     Mod+Shift+Ctrl+D { debug-toggle-damage; }
     
     // Reload niri
-    Mod+Shift+R { reload-config; }
+    Mod+Shift+R { reload; }
 }
