@@ -111,8 +111,6 @@ in
         ../dotfiles/scripts/modern_alert.wav;
       ".config/nvim/coc-settings.json".source =
         ../dotfiles/vim/coc-settings.json;
-      ".config/niri/niri.conf".source =
-        ../dotfiles/.config/niri/niri.conf;
     };
 
   home-manager.users.miguel.home.file.".config/base16-shell" = {
