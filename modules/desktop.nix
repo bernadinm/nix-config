@@ -539,6 +539,9 @@ in
   # enable niri window manager
   programs.niri.enable = true;
   services.displayManager.gdm.enable = true;
+  imports = [
+    ./niri.nix
+  ];
 
   # Make sway the default manager
   services.xserver.enable = true;
