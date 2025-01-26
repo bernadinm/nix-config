@@ -389,10 +389,10 @@ in
     nautilus # niri file browser
     wl-clipboard # clipboard history
     wayland
-    swaylock
-    swayidle
-    swaybg
-    i3status
+    swaylock # screen locking
+    swayidle # idle management
+    grim # screenshot utility
+    slurp # screen area selection
     wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
     libnotify # notification
     pulseaudio # sound
