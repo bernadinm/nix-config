@@ -153,8 +153,8 @@ in
 
   services.fwupd.enable = true; # firmware update tool
   services.fprintd.enable = true;
-  security.pam.services.login.fprintAuth = true;
-  security.pam.services.xautolock.fprintAuth = true;
+  # security.pam.services.login.fprintAuth = true;
+  # security.pam.services.xautolock.fprintAuth = true;
 
   # TODO(bernadinm): required for home manager 23.05
   nixpkgs.config.permittedInsecurePackages = [

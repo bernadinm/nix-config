@@ -492,6 +492,8 @@ in
   services.locate.enable = true;
   # services.wakapi.enable = true;
 
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.displayManager.gdm.wayland = true;
   # Replace services.xserver with services.wayland
   # services.wayland = {
   #   enable = true;
@@ -538,12 +540,13 @@ in
 
   # enable niri window manager
   programs.niri.enable = true;
+  # services.displayManager.ly.enable = true;
 
   # Make sway the default manager
-  services.xserver.enable = true;
-  services.xserver.displayManager.defaultSession = "niri";
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.libinput.enable = true;
+  # services.xserver.enable = true;
+  # services.xserver.displayManager.defaultSession = "niri";
+  # services.xserver.displayManager.lightdm.enable = true;
+  # services.xserver.libinput.enable = true;
 
   programs.waybar.enable = true;
 
