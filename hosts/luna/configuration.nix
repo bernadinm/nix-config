@@ -50,7 +50,6 @@ in
   nixpkgs.config.allowUnfree = true;
 
   environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
-  programs.niri.enable = true;
   # Enable the Wayland windowing system and the Sway desktop environment.
   # services.wayland = {
   #   enable = true;
@@ -93,12 +92,6 @@ in
 
   services.upower.enable = true;
   services.auto-cpufreq.enable = true;
-  services.xserver = {
-    # small addition from desktop.nix import
-    monitorSection = ''
-      DisplaySize 408 306
-    '';
-  };
 
   boot.initrd.luks.devices.root.device = "/dev/disk/by-uuid/508642b3-eced-4e85-9c67-e6e85d946d96";
   boot.initrd.luks.devices.root.preLVM = true;
@@ -106,12 +99,6 @@ in
   # Enable CUPS to print documents.
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.hplip pkgs.canon-cups-ufr2 pkgs.epsonscan2 ];
-
-    # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.touchpad.naturalScrolling = true;
-  services.xserver.libinput.touchpad.disableWhileTyping = true;
-  services.xserver.libinput.mouse.disableWhileTyping = true;
-  services.xserver.xkbOptions = "ctrl:swap_lfctl_lfwin"; # swap ctrl + fn keys
 
   security.sudo = {
     enable = true;
