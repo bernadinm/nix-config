@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  programs.niri.config = {
+  services.xserver.windowManager.niri.config = {
     keybindings = [
       {
         key = "d";
