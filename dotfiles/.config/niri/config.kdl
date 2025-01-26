@@ -502,9 +502,9 @@ binds {
     Super+Alt+H     { spawn "refresh.sh" "144"; }
     Super+Alt+Comma { spawn "refresh.sh" "120"; }
 
-    // Volume controls
-    XF86AudioRaiseVolume allow-when-locked=true { spawn "pactl" "set-sink-volume" "@DEFAULT_SINK@" "+10%"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn "pactl" "set-sink-volume" "@DEFAULT_SINK@" "-10%"; }
+    // Volume controls with PulseAudio
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "pactl" "set-sink-volume" "@DEFAULT_SINK@" "+5%"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "pactl" "set-sink-volume" "@DEFAULT_SINK@" "-5%"; }
     XF86AudioMute        allow-when-locked=true { spawn "pactl" "set-sink-mute" "@DEFAULT_SINK@" "toggle"; }
     XF86AudioMicMute     allow-when-locked=true { spawn "pactl" "set-source-mute" "@DEFAULT_SOURCE@" "toggle"; }
 
@@ -607,8 +607,8 @@ binds {
     Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
     Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
 
-    Mod+TouchpadScrollUp   allow-when-locked=true { spawn "pactl" "set-sink-volume" "@DEFAULT_SINK@" "-2%"; }
-    Mod+TouchpadScrollDown allow-when-locked=true { spawn "pactl" "set-sink-volume" "@DEFAULT_SINK@" "+2%"; }
+    Mod+TouchpadScrollUp   allow-when-locked=true { spawn "pactl" "set-sink-volume" "@DEFAULT_SINK@" "-5%"; }
+    Mod+TouchpadScrollDown allow-when-locked=true { spawn "pactl" "set-sink-volume" "@DEFAULT_SINK@" "+5%"; }
     // Mod+TouchpadScrollLeft  { focus-column-left; }
     // Mod+TouchpadScrollRight { focus-column-right; }
 
