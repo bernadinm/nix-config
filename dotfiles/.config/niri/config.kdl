@@ -682,6 +682,9 @@ binds {
     Super+P { spawn "sh" "-c" "$HOME/.launch_protonmail.sh"; }
     Super+D { spawn "sh" "-c" "$HOME/.launch_drive.sh"; }
 
+    // Exit/quit niri
+    Mod+Shift+E { quit; }
+
     Mod+Shift+Ctrl+T { toggle-debug-tint; }
     Mod+Shift+Ctrl+O { debug-toggle-opaque-regions; }
     Mod+Shift+Ctrl+D { debug-toggle-damage; }
