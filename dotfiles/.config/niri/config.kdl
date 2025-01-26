@@ -510,10 +510,10 @@ binds {
 
     // Brightness controls
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "set" "5%-"; }
-    XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl" "set" "+5%"; }
+    XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl" "set" "5%+"; }
     // Alternative brightness controls
     Mod+F2 allow-when-locked=true { spawn "brightnessctl" "set" "5%-"; }
-    Mod+F3 allow-when-locked=true { spawn "brightnessctl" "set" "+5%"; }
+    Mod+F3 allow-when-locked=true { spawn "brightnessctl" "set" "5%+"; }
 
     // Media controls
     XF86AudioPlay  allow-when-locked=true { spawn "playerctl" "play-pause"; }

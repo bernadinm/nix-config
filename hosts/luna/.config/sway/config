@@ -69,9 +69,9 @@ bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -10%
 bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
-# Set brightness for Framework keyboard
-bindsym XF86MonBrightnessDown exec brightnessctl set 1%-
-bindsym XF86MonBrightnessUp exec brightnessctl set +1%
+# Set brightness controls
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym XF86MonBrightnessUp exec brightnessctl set 5%+
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play-pause
