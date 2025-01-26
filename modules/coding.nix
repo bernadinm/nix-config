@@ -6,6 +6,9 @@ let
 in
 {
   environment.systemPackages = with pkgs; [
+    # nix community tools
+    nixpacks # app + docker build tool
+    
     # python
     pipx # python universal pkg
     python311Full # python3.9 full
@@ -44,6 +47,7 @@ in
     # node
     deno # javascript runtime
     nodejs # javascript runtime
+    prisma-engines # javascript tools
     pnpm # javascript runtime
     vite # javascript library
     yarn2nix # helper nodejs yarn nix pkgs tool
