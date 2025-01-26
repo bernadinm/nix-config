@@ -540,10 +540,10 @@ in
 
   # enable niri window manager
   programs.niri.enable = true;
-  services.displayManager.gdm.enable = true;
 
-  # Make sway the default manager
+  # Make niri the default manager
   services.xserver.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
   services.xserver.displayManager.defaultSession = "niri";
   services.xserver.libinput.enable = true;
 
