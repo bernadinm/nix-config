@@ -686,4 +686,7 @@ binds {
     Mod+Shift+Ctrl+T { toggle-debug-tint; }
     Mod+Shift+Ctrl+O { debug-toggle-opaque-regions; }
     Mod+Shift+Ctrl+D { debug-toggle-damage; }
+    
+    // Reload config
+    Mod+Shift+R { reload-config; }
 }
