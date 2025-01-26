@@ -509,11 +509,11 @@ binds {
     XF86AudioMicMute     allow-when-locked=true { spawn "pactl" "set-source-mute" "@DEFAULT_SOURCE@" "toggle"; }
 
     // Brightness controls
-    XF86MonBrightnessDown { spawn "brightnessctl" "set" "5%-"; }
-    XF86MonBrightnessUp   { spawn "brightnessctl" "set" "+5%"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "set" "5%-"; }
+    XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl" "set" "+5%"; }
     // Alternative brightness controls
-    Mod+F2 { spawn "brightnessctl" "set" "5%-"; }
-    Mod+F3 { spawn "brightnessctl" "set" "+5%"; }
+    Mod+F2 allow-when-locked=true { spawn "brightnessctl" "set" "5%-"; }
+    Mod+F3 allow-when-locked=true { spawn "brightnessctl" "set" "+5%"; }
 
     // Media controls
     XF86AudioPlay  allow-when-locked=true { spawn "playerctl" "play-pause"; }
