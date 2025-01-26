@@ -41,7 +41,7 @@ in
 
     flintlock # microvm
     # vagrant # vm cli
-    ignite # microvm
+    # ignite # microvm
     vagrant # vm cli
     glib # waydroid requirement
     gtk3 # waydroid requirement

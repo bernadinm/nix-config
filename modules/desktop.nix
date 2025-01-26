@@ -381,9 +381,27 @@ in
   ];
 
   environment.systemPackages = with pkgs; [
-    # base
+    # niri
     yarn # used for home manager neovim
     wl-clipboard # clipboard history
+    wayland
+    swaylock
+    swayidle
+    swaybg
+    i3status
+    wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
+    libnotify # notification
+    pulseaudio # sound
+    mako # notification system developed by swaywm maintainer
+    wdisplays # tool to configure displays
+
+    feh # wallpaper manager (can be replaced with Sway output configuration)
+
+    wofi # program launcher (Wayland alternative to rofi)
+    bemenu # program launcher (Wayland alternative to dmenu)
+    dunst # system notification (supports Wayland)
+    
+    # base
     wev # discover keybindings
     x2goclient # remote desktop client
 
@@ -407,13 +425,9 @@ in
     xdg-utils # for opening default programs when clicking links
     glib # gsettings
     dracula-theme # gtk theme
-    gnome3.adwaita-icon-theme  # default gnome cursors
+    gnome.adwaita-icon-theme  # default gnome cursors
     grim # screenshot functionality
     slurp # screenshot functionality
-    wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
-    bemenu # wayland clone of dmenu
-    mako # notification system developed by swaywm maintainer
-    wdisplays # tool to configure displays
 
     feh # wallpaper manager (can be replaced with Sway output configuration)
 
@@ -488,7 +502,7 @@ in
   #   };
 
   #   displayManager = {
-  #     defaultSession = "none+sway";
+  #     defaultSession = "none+niri";
   #   };
 
   #   windowManager.sway = {
@@ -521,44 +535,13 @@ in
   # sound.enable = true;
   # Add PipeWire configuration
   # Allows services and hosts exposed on the local network via mDNS/DNS-SD
-  services.avahi.enable = true;
-  services.avahi.nssmdns = true;
-
-  services.atd.enable = true;
-  services.locate.enable = true;
-
 
   # enable niri window manager
-  programs.niri = {
-    enable = true;
-    wrapperFeatures.gtk = true;
-    extraPackages = with pkgs; [
-      # base
-      yarn # used for home manager neovim
-      wl-clipboard # clipboard history
-      wayland
-      swaylock
-      swayidle
-      swaybg
-      i3status
-      wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
-      libnotify # notification
-      pulseaudio # sound
-      mako # notification system developed by swaywm maintainer
-      wdisplays # tool to configure displays
-
-      feh # wallpaper manager (can be replaced with Sway output configuration)
-
-      wofi # program launcher (Wayland alternative to rofi)
-      bemenu # program launcher (Wayland alternative to dmenu)
-      dunst # system notification (supports Wayland)
-
-    ];
-  };
+  programs.niri.enable = true;
 
   # Make sway the default manager
   services.xserver.enable = true;
-  services.xserver.displayManager.defaultSession = "sway";
+  services.xserver.displayManager.defaultSession = "niri";
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.libinput.enable = true;
 
@@ -566,7 +549,6 @@ in
 
   xdg.portal = {
     enable = true;
-    wlr.enable = true;
   };
 
   services.pipewire = {
