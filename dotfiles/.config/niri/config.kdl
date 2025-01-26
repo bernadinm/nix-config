@@ -579,6 +579,12 @@ binds {
     Mod+Shift+Alt+Up    { move-workspace-to-monitor-up; }
     Mod+Shift+Alt+Right { move-workspace-to-monitor-right; }
 
+    // Additional window management
+    Mod+Tab { focus-workspace-previous; }
+    Mod+grave { focus-window-previous; }
+    Mod+a { focus-monitor-previous; }
+    Mod+Shift+a { move-workspace-to-monitor-previous; }
+
     Mod+Page_Down      { focus-workspace-down; }
     Mod+Page_Up        { focus-workspace-up; }
     Mod+Ctrl+L         { move-column-to-workspace-down; }
