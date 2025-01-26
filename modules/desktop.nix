@@ -63,6 +63,8 @@ in
         ../dotfiles/.config/tiny/config.yml;
       ".ssh/authorized_keys".source =
         ../dotfiles/.ssh/authorized_keys;
+      ".config/niri/config.kdl".source =
+        ../dotfiles/.config/niri/config.kdl;
       ".gnupg/sshcontrol".source =
         ../dotfiles/.gnupg/sshcontrol;
       ".tmux.conf".source =
