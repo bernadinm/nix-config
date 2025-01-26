@@ -111,6 +111,8 @@ in
         ../dotfiles/scripts/modern_alert.wav;
       ".config/nvim/coc-settings.json".source =
         ../dotfiles/vim/coc-settings.json;
+      ".config/niri/niri.conf".source =
+        ../dotfiles/.config/niri/niri.conf;
     };
 
   home-manager.users.miguel.home.file.".config/base16-shell" = {
@@ -539,9 +541,6 @@ in
   # enable niri window manager
   programs.niri.enable = true;
   services.displayManager.gdm.enable = true;
-  imports = [
-    ./niri.nix
-  ];
 
   # Make sway the default manager
   services.xserver.enable = true;
