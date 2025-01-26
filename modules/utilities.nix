@@ -61,6 +61,7 @@ in
     ts # task spooler batch queue
     bind # dns utils dig nslookup
     ffmpeg  # multimedia tool
+    sqlite # sqlite db tools
     visidata # csv parsing tool
     usbutils # lsusb
     # TODO(bernadinm): remove parquet sa it cannot build in 23.05
