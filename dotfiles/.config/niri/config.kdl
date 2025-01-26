@@ -663,7 +663,7 @@ binds {
     Mod+P { screenshot; }
 
     // Exit/quit niri
-    Mod+Shift+Y { quit; }
+    Mod+Shift+Q { quit; }
     Mod+Shift+P { power-off-monitors; }
 
     // Application launchers
