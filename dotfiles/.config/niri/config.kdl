@@ -681,7 +681,7 @@ binds {
     Mod+Print { spawn "grimshot" "save" "active"; }
     Mod+Shift+Print { spawn "grimshot" "copy" "active"; }
 
-    Mod+Shift+P { power-off-monitors; }
+    // Removed duplicate power-off-monitors binding since it conflicts with screenshot
 
     // Application launchers
     Super+N { spawn "sh" "-c" "$HOME/.launch_notion.sh"; }
