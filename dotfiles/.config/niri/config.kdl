@@ -509,13 +509,22 @@ binds {
     XF86AudioMicMute     allow-when-locked=true { spawn "pactl" "set-source-mute" "@DEFAULT_SOURCE@" "toggle"; }
 
     // Brightness controls
-    XF86MonBrightnessDown { spawn "brightnessctl" "set" "1%-"; }
-    XF86MonBrightnessUp   { spawn "brightnessctl" "set" "+1%"; }
+    XF86MonBrightnessDown { spawn "brightnessctl" "set" "5%-"; }
+    XF86MonBrightnessUp   { spawn "brightnessctl" "set" "+5%"; }
+    // Alternative brightness controls
+    Mod+F2 { spawn "brightnessctl" "set" "5%-"; }
+    Mod+F3 { spawn "brightnessctl" "set" "+5%"; }
 
     // Media controls
     XF86AudioPlay  { spawn "playerctl" "play-pause"; }
     XF86AudioNext  { spawn "playerctl" "next"; }
     XF86AudioPrev  { spawn "playerctl" "previous"; }
+    XF86AudioStop  { spawn "playerctl" "stop"; }
+    // Alternative media controls
+    Mod+F5 { spawn "playerctl" "play-pause"; }
+    Mod+F6 { spawn "playerctl" "stop"; }
+    Mod+F7 { spawn "playerctl" "previous"; }
+    Mod+F8 { spawn "playerctl" "next"; }
 
     Mod+Q { close-window; }
     Mod+BackSpace { close-window; }
@@ -570,8 +579,6 @@ binds {
     Mod+Shift+Alt+Up    { move-workspace-to-monitor-up; }
     Mod+Shift+Alt+Right { move-workspace-to-monitor-right; }
 
-    Mod+L              { focus-workspace-down; }
-    Mod+U              { focus-workspace-up; }
     Mod+Page_Down      { focus-workspace-down; }
     Mod+Page_Up        { focus-workspace-up; }
     Mod+Ctrl+L         { move-column-to-workspace-down; }
@@ -656,11 +663,15 @@ binds {
     // Mod+Space       { switch-layout "next"; }
     // Mod+Shift+Space { switch-layout "prev"; }
 
+    // Screenshots
     Print { screenshot; }
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }
-
     Mod+P { screenshot; }
+    // Additional screenshot utilities
+    Mod+Shift+S { spawn "grimshot" "copy" "area"; }
+    Mod+Print { spawn "grimshot" "save" "active"; }
+    Mod+Shift+Print { spawn "grimshot" "copy" "active"; }
 
     Mod+Shift+P { power-off-monitors; }
 
