@@ -516,15 +516,15 @@ binds {
     Mod+F3 { spawn "brightnessctl" "set" "+5%"; }
 
     // Media controls
-    XF86AudioPlay  { spawn "playerctl" "play-pause"; }
-    XF86AudioNext  { spawn "playerctl" "next"; }
-    XF86AudioPrev  { spawn "playerctl" "previous"; }
-    XF86AudioStop  { spawn "playerctl" "stop"; }
+    XF86AudioPlay  allow-when-locked=true { spawn "playerctl" "play-pause"; }
+    XF86AudioNext  allow-when-locked=true { spawn "playerctl" "next"; }
+    XF86AudioPrev  allow-when-locked=true { spawn "playerctl" "previous"; }
+    XF86AudioStop  allow-when-locked=true { spawn "playerctl" "stop"; }
     // Alternative media controls
-    Mod+F5 { spawn "playerctl" "play-pause"; }
-    Mod+F6 { spawn "playerctl" "stop"; }
-    Mod+F7 { spawn "playerctl" "previous"; }
-    Mod+F8 { spawn "playerctl" "next"; }
+    Mod+F5 allow-when-locked=true { spawn "playerctl" "play-pause"; }
+    Mod+F6 allow-when-locked=true { spawn "playerctl" "stop"; }
+    Mod+F7 allow-when-locked=true { spawn "playerctl" "previous"; }
+    Mod+F8 allow-when-locked=true { spawn "playerctl" "next"; }
 
     Mod+Q { close-window; }
     Mod+BackSpace { close-window; }
