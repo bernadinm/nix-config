@@ -59,7 +59,7 @@ output "winit" {
 output "eDP-1" {
     // off
 
-    scale 1
+    scale 1.5
     // transform "90"
     position x=0 y=0
     // mode "1920x1200"
