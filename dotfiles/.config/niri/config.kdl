@@ -529,7 +529,7 @@ binds {
     Mod+Q { close-window; }
     Mod+BackSpace { close-window; }
 
-    Mod+H     { focus-column-left; }
+    // Removed duplicate Mod+H binding since it's already defined above
     Mod+J     { focus-window-down; }
     Mod+K     { focus-window-up; }
     Mod+L     { focus-column-right; }
@@ -587,8 +587,9 @@ binds {
 
     Mod+Page_Down      { focus-workspace-down; }
     Mod+Page_Up        { focus-workspace-up; }
-    Mod+Ctrl+L         { move-column-to-workspace-down; }
-    Mod+Ctrl+U         { move-column-to-workspace-up; }
+    // Using different key for workspace movement
+    Mod+Ctrl+N         { move-column-to-workspace-down; }
+    Mod+Ctrl+P         { move-column-to-workspace-up; }
     Mod+Ctrl+Page_Down { move-column-to-workspace-down; }
     Mod+Ctrl+Page_Up   { move-column-to-workspace-up; }
 
@@ -612,8 +613,9 @@ binds {
     // Mod+TouchpadScrollLeft  { focus-column-left; }
     // Mod+TouchpadScrollRight { focus-column-right; }
 
-    Mod+Shift+L         { move-workspace-down; }
-    Mod+Shift+U         { move-workspace-up; }
+    // Using different keys for workspace movement
+    Mod+Shift+N         { move-workspace-down; }
+    Mod+Shift+P         { move-workspace-up; }
     Mod+Shift+Page_Down { move-workspace-down; }
     Mod+Shift+Page_Up   { move-workspace-up; }
 
@@ -706,6 +708,6 @@ binds {
     Mod+Shift+Ctrl+O { debug-toggle-opaque-regions; }
     Mod+Shift+Ctrl+D { debug-toggle-damage; }
     
-    // Reload config
-    Mod+Shift+R { reload-config; }
+    // Reload niri
+    Mod+Shift+R { quit; }
 }
