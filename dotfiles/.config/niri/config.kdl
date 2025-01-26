@@ -685,7 +685,7 @@ binds {
 
     // Application launchers
     Super+N { spawn "sh" "-c" "$HOME/.launch_notion.sh"; }
-    Super+L { spawn "sh" "-c" "$HOME/.launch_logseq.sh"; }
+    $sup+L { spawn "sh" "-c" "$HOME/.launch_logseq.sh"; }
     Super+Y { spawn "sh" "-c" "$HOME/.launch_youtube.sh"; }
     Super+I { spawn "sh" "-c" "$HOME/.launch_instagram.sh"; }
     Super+M { spawn "sh" "-c" "$HOME/.launch_music.sh"; }
