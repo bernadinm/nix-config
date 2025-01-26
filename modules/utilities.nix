@@ -1,5 +1,6 @@
 { config, pkgs, ... }:
 
+
 let
   baseconfig = { allowUnfree = true; };
   porcupine = import <nixos-porcupine> { config = baseconfig; };
@@ -51,6 +52,7 @@ in
     openai-whisper # speech to text
     killall # system kill
     termite # terminal
+    alacritty # terminal
     nap # code snippet save tool
     bc # calc
     jq # jsonquery
