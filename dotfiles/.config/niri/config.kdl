@@ -708,6 +708,6 @@ binds {
     Mod+Shift+Ctrl+O { debug-toggle-opaque-regions; }
     Mod+Shift+Ctrl+D { debug-toggle-damage; }
     
-    // Reload niri
-    Mod+Shift+R { reload; }
+    // Quit niri
+    Mod+Shift+R { quit; }
 }
