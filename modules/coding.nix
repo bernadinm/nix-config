@@ -97,6 +97,6 @@ in
     ngrok # development reverse proxy
 
     # AI dev tools
-    aider-chat
+    unstable.aider-chat
   ];
 }
