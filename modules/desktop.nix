@@ -397,6 +397,9 @@ in
     tree # directory list
 
     pavucontrol # visual sound control
+    helvum      # Pipewire patchbay
+    pipewire # Command-line recording tool for Pipewire
+    sox      # for audio processing
 
     rofi # program launcher
     dmenu # program launcher

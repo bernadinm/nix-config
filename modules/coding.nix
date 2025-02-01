@@ -31,6 +31,7 @@ in
 
     # golang
     go # coding
+    go-jira # jira cli
 
     # bash
     shellcheck # used with bash
