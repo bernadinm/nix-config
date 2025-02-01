@@ -117,7 +117,7 @@ in
     HandlePowerKeyLongPress=poweroff
     HandlePowerKey=suspend-then-hibernate
     HandleLidSwitch=hibernate
-    HandleLidSwitchExternalPower=ignore
+    HandleLidSwitchExternalPower=hibernate
     HandleLidSwitchDocked=ignore
     IdleAction=hibernate
     IdleActionSec=15min
