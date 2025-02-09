@@ -32,6 +32,8 @@ in
     #  };
     #})
     gum # cli glue tool
+    mosh # mobile ssh
+    ttyd # remote terminal
     tmux # system
     unzip # system
     libarchive # bsdtar
@@ -105,6 +107,7 @@ in
     aria # torrent
     gcalcli # google cal cli
     unstable.android-tools android-udev-rules # android utils
+    scrcpy # screen copy android
 
     pup # html cli parser
     ddgr # search engine cli
