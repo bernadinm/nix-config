@@ -112,7 +112,7 @@ in
   # Installing TLP for Battery Life Optimization
   # services.tlp.enable = true;
 
-  # hybrid sleep when press power button
+  # Power management settings
   services.logind.extraConfig = ''
     HandlePowerKey=ignore
     HandlePowerKeyLongPress=ignore
@@ -124,6 +124,18 @@ in
     HandleSuspendKey=ignore
     HandleHibernateKey=ignore
   '';
+  
+  # Prevent sleep when plugged in
+  services.auto-cpufreq.settings = {
+    battery = {
+      governor = "powersave";
+      turbo = "never";
+    };
+    charger = {
+      governor = "performance";
+      turbo = "auto";
+    };
+  };
   # screen locker
   programs.xss-lock.enable = true;
   programs.xss-lock.lockerCommand = "${pkgs.i3lock-fancy-rapid}/bin/i3lock-fancy-rapid 15 30";
