@@ -114,12 +114,15 @@ in
 
   # hybrid sleep when press power button
   services.logind.extraConfig = ''
-    HandlePowerKeyLongPress=poweroff
-    HandlePowerKey=suspend-then-hibernate
+    HandlePowerKey=ignore
+    HandlePowerKeyLongPress=ignore
     HandleLidSwitch=ignore
     HandleLidSwitchExternalPower=ignore
     HandleLidSwitchDocked=ignore
     IdleAction=ignore
+    IdleActionSec=0
+    HandleSuspendKey=ignore
+    HandleHibernateKey=ignore
   '';
   # screen locker
   programs.xss-lock.enable = true;
