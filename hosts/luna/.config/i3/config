@@ -225,8 +225,8 @@ exec_always --no-startup-id $HOME/.config/polybar/forest/launch.sh
 #         status_command i3status
 # }
 
-bindsym --release Print exec scrot '%Y-%m-%d-%H-%M-%S_$wx$h.png' -e 'mv $f ~/Pictures/Screenshots/'
-bindsym --release Shift+Print exec bash $HOME/.screen_record.sh
+bindsym --release Print exec scrot -s '%Y-%m-%d-%H-%M-%S_$wx$h.png' -e 'mv $f ~/Pictures/Screenshots/'
+bindsym --release Shift+Print exec scrot '%Y-%m-%d-%H-%M-%S_$wx$h.png' -e 'mv $f ~/Pictures/Screenshots/'
 
 new_window pixel 0
 
