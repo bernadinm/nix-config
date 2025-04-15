@@ -59,6 +59,7 @@ in
     pdftk # pdf combine tool
     pandoc # convert markdown to any file
     img2pdf # convert jpg to pdfs
+    poppler_utils # render pdfs pdf2text
     ocrmypdf # convert pdt fo ocr pdf
     mupdf # pdf viewer
     hugo # website engine
