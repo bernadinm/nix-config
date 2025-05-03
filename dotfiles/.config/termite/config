@@ -1,32 +1,44 @@
 # ~/.config/termite/config
 
-# Solarized dark color scheme
 [colors]
-foreground = #839496
-foreground_bold = #eee8d5
-foreground_dim = #888888
-background = #002b36
-background = rgba(0, 43, 54, 0.95)
-cursor = #93a1a1
+# GitHub Dark Theme for Termite
+foreground = #c9d1d9
+foreground_bold = #f0f6fc
+background = #0d1117
+cursor = #c9d1d9
 
-# colors from color0 to color254 can be set
-color0 = #073642
-color1 = #dc322f
-color2 = #859900
-color3 = #b58900
-color4 = #268bd2
-color5 = #d33682
-color6 = #2aa198
-color7 = #eee8d5
-color8 = #002b36
-color9 = #cb4b16
-color10 = #586e75
-color11 = #657b83
-color12 = #839496
-color13 = #6c71c4
-color14 = #93a1a1
-color15 = #fdf6e3
+# Black
+color0 = #21262d
+color8 = #30363d
+
+# Red
+color1 = #f85149
+color9 = #ff7b72
+
+# Green
+color2 = #56d364
+color10 = #3fb950
+
+# Yellow
+color3 = #e3b341
+color11 = #d29922
+
+# Blue
+color4 = #58a6ff
+color12 = #79c0ff
+
+# Magenta
+color5 = #bc8cff
+color13 = #d2a8ff
+
+# Cyan
+color6 = #39c5cf
+color14 = #56d4dd
+
+# White
+color7 = #b1bac4
+color15 = #f0f6fc
 
 [options]
 scrollback_lines = 9999999
-# font = InconsolataGo Nerd Font 11
+# font = RobotoMono Nerd Font Mono 10
