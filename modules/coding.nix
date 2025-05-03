@@ -40,10 +40,10 @@ in
     gnumake # coding make files
     glib # c wrappers
 
-    # rust
-    cargo # coding for rust
-    rustc # rust compiler
-    pkg-config # packging with rust
+    # # rust
+    # cargo # coding for rust
+    # rustc # rust compiler
+    # pkg-config # packging with rust
 
     # node
     deno # javascript runtime
