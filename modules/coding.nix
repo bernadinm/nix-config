@@ -100,5 +100,6 @@ in
 
     # AI dev tools
     unstable.aider-chat
+    unstable.claude-code
   ];
 }
