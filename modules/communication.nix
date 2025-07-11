@@ -37,6 +37,7 @@ in
     weechatScripts.weechat-notify-send
 
     rustdesk # teamviewer oss
+    tigervnc # vnc
     anydesk # remote desktop sharing
 
     #irc clients
