@@ -414,7 +414,6 @@ in
     })
 
     # Plasma desktop
-    kdePackages.kdeplasma-addons
     qalculate-qt # calulator  
     # kdeconnect # NixOS 24.11 upgrade
     kdenlive
