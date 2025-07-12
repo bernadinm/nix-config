@@ -414,8 +414,8 @@ in
     })
 
     # Plasma desktop
-    kdeplasma-addons
-    qalculate-qt # calulator
+    kdePackages.kdeplasma-addons
+    qalculate-qt # calulator  
     # kdeconnect # NixOS 24.11 upgrade
     kdenlive
     okular # ebook epub pdf reader
