@@ -416,7 +416,7 @@ in
     # Plasma desktop
     qalculate-qt # calulator  
     # kdeconnect # NixOS 24.11 upgrade
-    konversation
+    kdePackages.konversation
     fusuma
     kile # latex authoring tool for kde
     gwenview # gui file manager
