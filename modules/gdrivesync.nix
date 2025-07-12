@@ -9,7 +9,6 @@
     git-annex # sync remote files
     rclone # sync remote files
     git-annex-remote-rclone # sync remote files
-    git-annex-utils # sync remote files
   ];
 
   environment.etc."profile.local".text =
