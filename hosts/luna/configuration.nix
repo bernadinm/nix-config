@@ -249,6 +249,7 @@ in
   # TODO(bernadinm): required for home manager 23.05
   nixpkgs.config.permittedInsecurePackages = [
     "electron-27.3.11" # used for logseq and obsidian
+    "ventoy-1.1.05"
   ];
 
   # This value determines the NixOS release from which the default
