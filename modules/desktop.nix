@@ -393,7 +393,7 @@ in
     vifm # text file manager
     ranger # text file manager
     nnn # text file manager
-    dolphin # gui file manager
+    kdePackages.dolphin # gui file manager
     nautilus # gui file manager
     tree # directory list
 
