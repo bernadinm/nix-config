@@ -4,7 +4,7 @@ let
   baseconfig = { allowUnfree = true; };
   unstable = import <nixos-unstable> { config = baseconfig; };
   home-manager = builtins.fetchTarball
-    "https://github.com/nix-community/home-manager/archive/release-24.11.tar.gz";
+    "https://github.com/nix-community/home-manager/archive/release-25.05.tar.gz";
 in
 {
   imports =
@@ -102,8 +102,8 @@ in
       sha256 = "sha256-OMhC6paqEOQUnxyb33u0kfKpy8plLSRgp8X8T8w0Q/o=";
     };
   };
-  home-manager.users.miguel.home.stateVersion = "24.11";
-  home-manager.users.rachelle.home.stateVersion = "24.11";
+  home-manager.users.miguel.home.stateVersion = "25.05";
+  home-manager.users.rachelle.home.stateVersion = "25.05";
   home-manager.users.miguel.programs.neovim = {
     enable = true;
     viAlias = true;
