@@ -9,7 +9,7 @@
     bmon
     iotop
     bottom
-    dstat
+    dool
     sysstat
     procps
     coreutils
