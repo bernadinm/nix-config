@@ -103,7 +103,7 @@ in
     };
   };
   home-manager.users.miguel.home.stateVersion = "25.05";
-  home-manager.users.rachelle.home.stateVersion = "25.05";
+  home-manager.users.rachelle.home.stateVersion = "25.05"; 
   home-manager.users.miguel.programs.neovim = {
     enable = true;
     viAlias = true;
@@ -506,16 +506,16 @@ in
     };
   };
 
-  # Enable sound.
-  # Disabled to upgrade to NixOS 24.11
-  # sound.enable = true;
-  # Add PipeWire configuration
+  # Audio configuration
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;  # This provides PulseAudio compatibility
     jack.enable = true;
+    # New recommended settings for 25.05
+    systemWide = false;
+    wireplumber.enable = true;
   };
 
   nix.gc = {
