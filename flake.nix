@@ -1,5 +1,6 @@
 {
   inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     dream2nix.url = "github:nix-community/dream2nix";
     src.url = "https://registry.npmjs.org/eslint/-/eslint-8.4.1.tgz";
     src.flake = false;
