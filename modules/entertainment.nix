@@ -80,6 +80,6 @@ in
   services.mpd.enable = true;
   programs.steam.enable = true;
   hardware.steam-hardware.enable = true;
-  hardware.opengl.extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
-  hardware.opengl.driSupport32Bit = true;
+  hardware.graphics.extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
+  hardware.graphics.enable32Bit = true;
 }
