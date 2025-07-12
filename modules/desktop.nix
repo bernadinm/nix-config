@@ -408,7 +408,7 @@ in
     acpi # battery status
     libnotify # system notification
 
-    spectacle # screenshot capture util
+    kdePackages.spectacle # screenshot capture util
     (texlive.combine {
       inherit (texlive) scheme-small titling collection-langfrench cm-super;
     })
