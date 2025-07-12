@@ -417,7 +417,7 @@ in
     qalculate-qt # calulator  
     # kdeconnect # NixOS 24.11 upgrade
     fusuma
-    kdePackages.konversation # IRC client
+    libsForQt5.konversation # IRC client
     kile # latex authoring tool for kde
     gwenview # gui file manager
   ];
