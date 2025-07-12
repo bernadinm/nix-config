@@ -33,7 +33,8 @@
 
     # visualizer
     cava # music visualizer
-    projectm # music visualizer
+    libprojectm # music visualizer library
+    projectm-sdl-cpp # music visualizer SDL2 frontend
 
     lshw # hw probe
     dmidecode # hw probe
