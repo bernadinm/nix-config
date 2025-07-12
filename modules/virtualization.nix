@@ -35,8 +35,6 @@ in
     ssm-session-manager-plugin # aws cli plugin
     railway # railway cloud cli
 
-    anbox # android
-
     virt-manager
 
     flintlock # microvm
