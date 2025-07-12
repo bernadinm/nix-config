@@ -416,7 +416,6 @@ in
     # Plasma desktop
     qalculate-qt # calulator  
     # kdeconnect # NixOS 24.11 upgrade
-    kdenlive
     okular # ebook epub pdf reader
     konversation
     fusuma
