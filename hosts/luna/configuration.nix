@@ -50,6 +50,14 @@ in
   #   '';
 
   boot.kernelPackages = pkgs.linuxPackages_latest; #- for WiFi support
+  
+  # Power management kernel parameters
+  boot.kernelParams = [
+    "pcie_aspm=force"
+    "iwlwifi.power_save=1"
+    "ahci.mobile_lpm_policy=3"
+    "mem_sleep_default=deep"
+  ];
 
   nixpkgs.config.allowUnfree = true;
 
@@ -133,6 +141,28 @@ in
     i2c-tools
     libinput-gestures
     pulseeffects-legacy
+    
+    # Power management tools
+    powertop          # Power usage analyzer and tuner
+    acpi              # ACPI utilities
+    lm_sensors        # Hardware monitoring
+    turbostat         # CPU power analysis
+    
+    # Bluetooth toggle script (Shift+F10)
+    (pkgs.writeScriptBin "bt-toggle" ''
+      #!/bin/bash
+      if lsmod | grep -q btusb; then
+        echo "Disabling Bluetooth to save power..."
+        sudo modprobe -r btusb
+        notify-send "Bluetooth Disabled" "Hardware powered off for battery savings"
+      else
+        echo "Enabling Bluetooth..."
+        sudo modprobe btusb
+        sleep 2
+        sudo systemctl restart bluetooth
+        notify-send "Bluetooth Enabled" "Hardware powered on and ready"
+      fi
+    '')
   ];
 
   # Monitor Control via CLI
@@ -149,6 +179,72 @@ in
   services.fprintd.enable = true;
   security.pam.services.login.fprintAuth = true;
   security.pam.services.xautolock.fprintAuth = true;
+  
+  # Power optimization settings
+  # Disable touchegg service that was consuming 397mW + causing AMD interrupts
+  services.touchegg.enable = false;
+  
+  # PowerTOP automatic tuning service
+  systemd.services.powertop-autotune = {
+    enable = true;
+    description = "PowerTOP Auto Tune on Boot";
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.powertop}/bin/powertop --auto-tune";
+    };
+    wantedBy = [ "multi-user.target" ];
+    after = [ "multi-user.target" ];
+  };
+  
+  # Sudoers rules for Bluetooth toggle (no password required)
+  security.sudo.extraRules = [
+    {
+      users = [ "miguel" ];
+      commands = [
+        {
+          command = "${pkgs.kmod}/bin/modprobe btusb";
+          options = [ "NOPASSWD" ];
+        }
+        {
+          command = "${pkgs.kmod}/bin/modprobe -r btusb";
+          options = [ "NOPASSWD" ];
+        }
+        {
+          command = "${pkgs.systemd}/bin/systemctl restart bluetooth";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
+  ];
+  
+  # Bluetooth optimization - power efficient
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = false;  # Don't power on at boot - use Shift+F10 toggle
+    settings = {
+      General = {
+        Enable = "Source,Sink,Media,Socket";
+        Experimental = false;
+        FastConnectable = false;  # Disable for power savings
+        AutoConnect = false;      # Manual connection only
+      };
+      Policy = {
+        AutoEnable = false;
+        IdleTimeout = 30;
+      };
+    };
+  };
+  
+  # Power management via udev rules
+  services.udev.extraRules = ''
+    # Enable power management for all PCI devices
+    ACTION=="add", SUBSYSTEM=="pci", ATTR{power/control}="auto"
+    # USB autosuspend
+    ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"
+    # Network interface power management
+    ACTION=="add", SUBSYSTEM=="net", KERNEL=="wl*", RUN+="${pkgs.iw}/bin/iw dev %k set power_save on"
+  '';
 
   # TODO(bernadinm): required for home manager 23.05
   nixpkgs.config.permittedInsecurePackages = [
