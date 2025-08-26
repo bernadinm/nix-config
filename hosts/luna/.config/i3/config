@@ -287,6 +287,9 @@ bindsym $sup+f exec sh $HOME/.launch_googlefi.sh
 bindsym $sup+w exec sh $HOME/.launch_whatsapp.sh
 bindsym $sup+b exec sh $HOME/.launch_bible.sh
 bindsym $sup+c exec sh $HOME/.launch_chatgpt.sh
+
+# Bluetooth power management toggle (Shift+F10)
+bindsym Shift+F10 exec --no-startup-id bash -c 'if lsmod | grep -q btusb; then sudo modprobe -r btusb && notify-send "Bluetooth Disabled" "Hardware powered off"; else sudo modprobe btusb && sudo systemctl restart bluetooth && notify-send "Bluetooth Enabled" "Hardware ready"; fi'
 bindsym $sup+a exec sh $HOME/.launch_audacity.sh
 bindsym $sup+e exec sh $HOME/.launch_businessmail.sh
 bindsym $sup+g exec sh $HOME/.launch_gmail.sh
