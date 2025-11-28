@@ -19,7 +19,7 @@
     pcstat
     ethtool
     tiptop
-    geekbench
+    # geekbench
     pciutils
     ncdu
     lsof

@@ -42,7 +42,7 @@ in
     p7zip # archives
     cksfv # sfv checksum
     bash # system interface
-    terraform # automation
+    # terraform # automation
     whois # domain info
     file # linux description of file
     inetutils # telnet

@@ -11,15 +11,15 @@ in
     
     # python
     pipx # python universal pkg
-    python311Full # python3.9 full
-    python311Packages.virtualenv # coding
-    python311Packages.pip # coding
-    python311Packages.pillow # coding
-    python311Packages.setuptools # coding
-    python311Packages.numpy
-    python311Packages.ipython # interactive python
-    python311Packages.jupyter-core # ipython notebook
-    python311Packages.notebook # ipython notebook
+    python313Full # python3.9 full
+    python313Packages.virtualenv # coding
+    python313Packages.pip # coding
+    python313Packages.pillow # coding
+    python313Packages.setuptools # coding
+    python313Packages.numpy
+    # python311Packages.ipython # interactive python
+    python313Packages.jupyter-core # ipython notebook
+    python313Packages.notebook # ipython notebook
     poetry # pip alternative
     libffi # coding used with pip
     gcc # coding used with pip
@@ -85,8 +85,8 @@ in
     # language servers
     nil # nix
     marksman # markdown
-    python311Packages.python-lsp-server # python
-    python311Packages.python-lsp-server # python
+    # python311Packages.python-lsp-server # python
+    # python311Packages.python-lsp-server # python
     ccls # c/c++
     gopls # golang
     nodePackages.bash-language-server # bash
@@ -101,5 +101,6 @@ in
     # AI dev tools
     unstable.aider-chat
     unstable.claude-code
+    unstable.opencode
   ];
 }
