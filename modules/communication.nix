@@ -7,6 +7,7 @@ in
   environment.systemPackages = with pkgs; [
     # base
     zoom-us
+    beeper
     mumble
     profanity
     discord

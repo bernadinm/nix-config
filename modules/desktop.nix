@@ -419,7 +419,7 @@ in
     fusuma
     libsForQt5.konversation # IRC client
     kile # latex authoring tool for kde
-    gwenview # gui file manager
+    # gwenview # gui file manager
   ];
 
   # San Francisco, California for Redshift for screen color changing
@@ -530,9 +530,9 @@ in
   programs.dconf.enable = true;
 
   hardware.bluetooth.enable = true; # enable bluethooth
-  hardware.bluetooth.powerOnBoot = true; # enable auto pairing
+  hardware.bluetooth.powerOnBoot = false; # enable auto pairing
   # Disabled to upgrade to NixOS 24.11
   # hardware.bluetooth.hsphfpd.enable = true; # enable auto pairing
-  services.touchegg.enable = true; # enable multi touch gesture
+  services.touchegg.enable = false; # enable multi touch gesture
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }

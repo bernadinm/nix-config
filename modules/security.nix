@@ -20,7 +20,7 @@ in
     monero-gui
 
     # VPN
-    unstable.protonvpn-cli_2
+    # unstable.protonvpn-cli_2
     protonvpn-gui
     openvpn
     tailscale
@@ -222,7 +222,7 @@ in
   #   firewall.outbound = [{ port = "any"; proto = "any"; host = "any"; }];
   # };
 
-  services.teamviewer.enable = true;
+  # services.teamviewer.enable = true;
 
   # Browser passwordstore native client
   programs.browserpass.enable = true;
