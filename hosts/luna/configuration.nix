@@ -34,7 +34,7 @@ in
   networking.networkmanager.enable = true; # Use networkmanager for wifi
 
   # Set your time zone.
-  time.timeZone = "America/New_York";
+  time.timeZone = "Africa/Nairobi";
   #time.timeZone = "America/Los_Angeles";
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
@@ -146,7 +146,7 @@ in
     powertop          # Power usage analyzer and tuner
     acpi              # ACPI utilities
     lm_sensors        # Hardware monitoring
-    turbostat         # CPU power analysis
+    # turbostat         # CPU power analysis
     
     # Bluetooth toggle script (Shift+F10)
     (pkgs.writeScriptBin "bt-toggle" ''
@@ -250,6 +250,7 @@ in
   nixpkgs.config.permittedInsecurePackages = [
     "electron-27.3.11" # used for logseq and obsidian
     "ventoy-1.1.05"
+    "python3.12-ecdsa-0.19.1"
   ];
 
   # This value determines the NixOS release from which the default
