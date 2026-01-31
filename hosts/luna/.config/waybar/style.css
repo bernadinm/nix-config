@@ -1,0 +1,83 @@
+* {
+    border: none;
+    border-radius: 0;
+    font-family: monospace;
+    font-size: 14px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: rgba(30, 30, 46, 0.8);
+    color: #cdd6f4;
+    transition-property: background-color, border-color;
+    transition-duration: 0.5s;
+}
+
+#workspaces button {
+    padding: 0 10px;
+    background: transparent;
+    color: #cdd6f4;
+}
+
+#workspaces button.focused {
+    background: #717CB4;
+    border-bottom: 3px solid #cdd6f4;
+    font-weight: bold;
+}
+
+#workspaces button.urgent {
+    background: #FF3333;
+    color: #000000;
+}
+
+#workspaces button.visible {
+    background: #504945;
+}
+
+#mode {
+    padding: 0 10px;
+    background: #BD2C40;
+}
+
+#clock, #battery, #pulseaudio, #tray, #custom-updates, #idle_inhibitor {
+    padding: 0 10px;
+    background: transparent;
+}
+
+#battery.charging {
+    color: #43d293;
+}
+
+#battery.warning:not(.charging) {
+    color: #fab387;
+}
+
+#battery.critical:not(.charging) {
+    background: #f38ba8;
+    color: #000000;
+}
+
+#pulseaudio.muted {
+    color: #fab387;
+}
+
+#pulseaudio.sink {
+    background: #504945;
+}
+
+#pulseaudio.source.muted {
+    background: #f38ba8;
+}
+
+#tray {
+    background: transparent;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background: #f38ba8;
+}
