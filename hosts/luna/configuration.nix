@@ -78,6 +78,10 @@ in
         .config/hypr/hyprland.conf;
       ".config/libinput-gestures.conf".source =
         .config/libinput-gestures.conf;
+      ".config/waybar/config".source =
+        ./luna/.config/waybar/config;
+      ".config/waybar/style.css".source =
+        ./luna/.config/waybar/style.css;
     };
 
   home-manager.users.rachelle.home.file =
