@@ -74,16 +74,16 @@ in
 
   home-manager.users.miguel.home.file =
     {
-      ".config/i3/config".source =
-        .config/i3/config;
+      ".config/hypr/hyprland.conf".source =
+        .config/hypr/hyprland.conf;
       ".config/libinput-gestures.conf".source =
         .config/libinput-gestures.conf;
     };
 
   home-manager.users.rachelle.home.file =
     {
-      ".config/i3/config".source =
-        .config/i3/config;
+      ".config/hypr/hyprland.conf".source =
+        .config/hypr/hyprland.conf;
       ".config/libinput-gestures.conf".source =
         .config/libinput-gestures.conf;
     };
@@ -134,6 +134,9 @@ in
   programs.xss-lock.enable = true;
   programs.xss-lock.lockerCommand = "${pkgs.i3lock-fancy-rapid}/bin/i3lock-fancy-rapid 15 30";
 
+  # Enable display manager to use Hyprland session
+  services.displayManager.sessionPackages = with pkgs; [ hyprland ];
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -163,6 +166,14 @@ in
         notify-send "Bluetooth Enabled" "Hardware powered on and ready"
       fi
     '')
+    
+    # Hyprland and related packages
+    hyprland
+    waybar
+    wofi
+    swaybg
+    swayidle
+    swaylock-effects
   ];
 
   # Monitor Control via CLI

@@ -468,39 +468,11 @@ in
     };
 
     displayManager = {
-      defaultSession = "none+i3";
+        defaultSession = "hyprland";
     };
 
-    xserver.windowManager.i3 = {
-      enable = true;
-      package = pkgs.i3-gaps;
-      extraPackages = with pkgs; [
-        dmenu #application launcher most people use
-        rofi
-        polybar
-        libmpdclient # media player daemon client
-        # Removed for Nixos 24.11 upgrade
-        # psensor # hardware temp sensor
-        mission-center # hardware temp sensor
-        clipit
-        xorg.xprop
-        xautolock # timer to lock screen
-        i3-layout-manager
-        i3status # gives you the default i3 status bar
-        i3lock-fancy-rapid #default i3 screen locker
-        i3blocks #if you are planning on using i3blocks over i3status
-        raiseorlaunch # i3 app launcher
-        xdotool # commandline automation for x11
-        xorg.xwininfo # fetch window infomation
-
-        picom # window property changer
-
-        feh # wallpaper manager
-        vifm # graphic file manager
-
-        brightnessctl # brightness ctrl
-      ];
-    };
+    # Disable i3 window manager
+    xserver.windowManager.i3.enable = false;
   };
 
   # Audio configuration
