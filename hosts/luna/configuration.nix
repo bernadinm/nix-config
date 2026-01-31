@@ -72,17 +72,15 @@ in
     Option "TearFree" "true"
   '';
 
-  home-manager.users.miguel.home.file =
-    {
-      ".config/hypr/hyprland.conf".source =
-        .config/hypr/hyprland.conf;
-      ".config/libinput-gestures.conf".source =
-        .config/libinput-gestures.conf;
-      ".config/waybar/config".source =
-        ./.config/waybar/config;
-      ".config/waybar/style.css".source =
-        ./.config/waybar/style.css;
+  home-manager.users.miguel = {
+    home.file = {
+      ".config/hypr/hyprland.conf".source = .config/hypr/hyprland.conf;
+      ".config/libinput-gestures.conf".source = .config/libinput-gestures.conf;
+      ".config/waybar/config".source = ./.config/waybar/config;
+      ".config/waybar/style.css".source = ./.config/waybar/style.css;
     };
+     programs.waybar.enable = true;
+  };
 
   home-manager.users.rachelle.home.file =
     {
