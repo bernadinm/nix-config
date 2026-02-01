@@ -1,15 +1,15 @@
 * {
     border: none;
     border-radius: 0;
-    font-family: monospace;
-    font-size: 14px;
+    font-family: "Fira Code", "Font Awesome 6 Free", monospace;
+    font-size: 13px;
     min-height: 0;
 }
 
 window#waybar {
-    background: rgba(30, 30, 46, 0.8);
+    background: rgba(30, 30, 46, 0.9);
     color: #cdd6f4;
-    transition-property: background-color, border-color;
+    transition-property: background-color;
     transition-duration: 0.5s;
 }
 
@@ -17,35 +17,67 @@ window#waybar {
     padding: 0 10px;
     background: transparent;
     color: #cdd6f4;
+    border-bottom: 3px solid transparent;
 }
 
-#workspaces button.focused {
+#workspaces button.active {
     background: #717CB4;
-    border-bottom: 3px solid #cdd6f4;
+    border-bottom: 3px solid #89dceb;
     font-weight: bold;
 }
 
 #workspaces button.urgent {
-    background: #FF3333;
-    color: #000000;
+    background: #f38ba8;
+    color: #1e1e2e;
 }
 
-#workspaces button.visible {
-    background: #504945;
+#workspaces button:hover {
+    background: rgba(113, 124, 180, 0.5);
 }
 
-#mode {
+#window {
     padding: 0 10px;
-    background: #BD2C40;
+    color: #89dceb;
+    font-weight: bold;
 }
 
-#clock, #battery, #pulseaudio, #tray, #custom-updates, #idle_inhibitor {
+#clock {
     padding: 0 10px;
     background: transparent;
+    color: #f9e2af;
+    font-weight: bold;
+}
+
+#cpu {
+    padding: 0 10px;
+    background: transparent;
+    color: #89b4fa;
+}
+
+#memory {
+    padding: 0 10px;
+    background: transparent;
+    color: #f5c2e7;
+}
+
+#network {
+    padding: 0 10px;
+    background: transparent;
+    color: #94e2d5;
+}
+
+#network.disconnected {
+    color: #f38ba8;
+}
+
+#battery {
+    padding: 0 10px;
+    background: transparent;
+    color: #a6e3a1;
 }
 
 #battery.charging {
-    color: #43d293;
+    color: #a6e3a1;
 }
 
 #battery.warning:not(.charging) {
@@ -54,22 +86,33 @@ window#waybar {
 
 #battery.critical:not(.charging) {
     background: #f38ba8;
-    color: #000000;
+    color: #1e1e2e;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes blink {
+    to {
+        background-color: #1e1e2e;
+        color: #f38ba8;
+    }
+}
+
+#pulseaudio {
+    padding: 0 10px;
+    background: transparent;
+    color: #cba6f7;
 }
 
 #pulseaudio.muted {
-    color: #fab387;
-}
-
-#pulseaudio.sink {
-    background: #504945;
-}
-
-#pulseaudio.source.muted {
-    background: #f38ba8;
+    color: #6c7086;
 }
 
 #tray {
+    padding: 0 10px;
     background: transparent;
 }
 
