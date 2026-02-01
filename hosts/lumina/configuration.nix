@@ -4,10 +4,6 @@
 
 { config, pkgs, ... }:
 
-let
-  home-manager = builtins.fetchTarball
-    "https://github.com/nix-community/home-manager/archive/release-22.11.tar.gz";
-in
 {
   imports =
     [
@@ -101,9 +97,9 @@ in
   };
 
   # hybrid sleep when press power button
-  services.logind.extraConfig = ''
-    IdleActionSec=60min
-  '';
+  services.logind.settings.Login = {
+    IdleActionSec = "60min";
+  };
 
   hardware.acpilight.enable = true;
 

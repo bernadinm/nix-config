@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
 let
-  baseconfig = { allowUnfree = true; };
-  unstable = import <nixos-unstable> { config = baseconfig; };
+  # Note: unstable packages now available via pkgs.unstable overlay from flake.nix
   kubeMasterIP = "192.168.1.24";
   #kubeMasterHostname = "api.k8s.lumina.miguel.engineer";
   kubeMasterHostname = "localhost";
@@ -43,10 +42,11 @@ in
     # unstable.vmware-workstation # vmware virt
   ];
 
-  nixpkgs.config = baseconfig // {
+  nixpkgs.config = {
+    allowUnfree = true;
     packageOverrides = pkgs: {
-      #nebula = unstable.nebula;
-      #  keycloak = unstable.keycloak;
+      #nebula = pkgs.unstable.nebula;
+      #keycloak = pkgs.unstable.keycloak;
     };
   };
 

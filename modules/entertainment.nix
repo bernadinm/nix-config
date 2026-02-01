@@ -1,18 +1,14 @@
 { config, pkgs, ... }:
 
-let
-  baseconfig = { allowUnfree = true; };
-  porcupine = import <nixos-porcupine> { config = baseconfig; };
-  unstable = import <nixos-unstable> { config = baseconfig; };
-in
 {
+  # Note: unstable packages now available via pkgs.unstable overlay from flake.nix
   environment.systemPackages = with pkgs; [
     # music producing software
     ardour # daw
     lmms # daw
     mixxx # audio mixer for dj
     calf # audio plugins for daw
-    unstable.vcv-rack # modular synth
+    # pkgs.unstable.vcv-rack # modular synth (temporarily disabled - build failing on 25.11)
 
     # gaming
 
@@ -20,14 +16,14 @@ in
     # (winetricks.override {
     #   wine = wineWowPackages.staging;
     # })
-    unstable.wineWowPackages.full
+    pkgs.unstable.wineWowPackages.full
     winetricks
     bottles
     sc-controller
     steam-run
     vulkan-tools
-    unstable.prismlauncher
-    unstable.lutris
+    pkgs.unstable.prismlauncher
+    pkgs.unstable.lutris
     eidolon
     krb5
     cmatrix

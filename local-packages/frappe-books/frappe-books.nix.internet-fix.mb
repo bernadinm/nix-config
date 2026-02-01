@@ -1,0 +1,34 @@
+{ stdenv, lib, fetchFromGitHub, yarn, nodejs }:
+
+stdenv.mkDerivation rec {
+  pname = "frappe-books";
+  version = "v0.17.0";
+
+  src = fetchFromGitHub {
+    owner = "frappe";
+    repo = "books";
+    rev = "6cb2fed6d736c191cddeff0c38a3b3ecd08a4cc2"; # replace with the actual Git revision you want to build
+    sha256 = "0llw8w9q9k9sdx4mmrsgdy8i7pv0kw12dg5nas9jsfz7gdzx2b1p"; # replace with the actual SHA-256 hash of the downloaded source code
+  };
+
+  nativeBuildInputs = [ yarn nodejs ];
+
+  buildPhase = ''
+    yarn install
+    yarn build --linux
+  '';
+
+  installPhase = ''
+    mkdir -p $out/bin
+    cp -r . $out/
+    ln -s $out/books $out/bin/books
+  '';
+
+  meta = with lib; {
+    description = "Simple free accounting software for small businesses";
+    homepage = "https://frappebooks.com/";
+    license = licenses.mit;
+    maintainers = with maintainers; [ bernadim ]; # replace with your name
+  };
+}
+

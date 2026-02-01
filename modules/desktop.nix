@@ -1,16 +1,12 @@
 { config, pkgs, ... }:
 
-let
-  baseconfig = { allowUnfree = true; };
-  unstable = import <nixos-unstable> { config = baseconfig; };
-  home-manager = builtins.fetchTarball 
-    "https://github.com/nix-community/home-manager/archive/release-25.05.tar.gz";
-in
 {
+  # Note: unstable packages now available via pkgs.unstable overlay from flake.nix
+  # Note: home-manager is now provided by flake.nix
+
   imports =
     [
       ../modules/adblock.nix
-      (import "${home-manager}/nixos")
     ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -378,7 +374,7 @@ in
 
     tor-browser-bundle-bin # browser
     chromium # browser
-    unstable.google-chrome # browser
+    pkgs.unstable.google-chrome # browser
     brave # browser
     firefox # browser
     (firefox.override { nativeMessagingHosts = [ passff-host ]; })
