@@ -24,7 +24,7 @@
     vulkan-tools
     pkgs.unstable.prismlauncher
     pkgs.unstable.lutris
-    eidolon
+    # eidolon # removed in 25.11 - unmaintained upstream
     krb5
     cmatrix
     _2048-in-terminal
@@ -67,7 +67,7 @@
     obs-studio # video recording/streaming
 
     # videography
-    libsForQt5.kdenlive # video editing
+    kdePackages.kdenlive # video editing
     # davinci-resolve # video editing
     shotcut # cross-platform video editor
   ];

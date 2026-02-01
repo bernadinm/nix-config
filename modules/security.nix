@@ -8,7 +8,7 @@ in
     # base
     gnupg
     paperkey
-    pinentry
+    # pinentry # removed in 25.11 - use specific variant
     pinentry-rofi
 
     # crypto 
@@ -57,7 +57,7 @@ in
 
     nftables # iptable alternative
     tor torsocks # security network
-    tor-browser-bundle-bin # security network browser
+    tor-browser # security network browser
   ];
 
   # Enable tailscale vpn

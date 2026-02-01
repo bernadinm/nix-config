@@ -102,7 +102,7 @@
     lynx # text browser
     aria2 # torrent
     gcalcli # google cal cli
-    pkgs.unstable.android-tools android-udev-rules # android utils
+    pkgs.unstable.android-tools # android utils (android-udev-rules removed - superseded by systemd)
     scrcpy # screen copy android
 
     pup # html cli parser
