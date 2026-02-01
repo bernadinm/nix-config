@@ -53,6 +53,8 @@
         ../dotfiles/.launch_logseq.sh;
       ".restore_workspaces.sh".source =
         ../dotfiles/.restore_workspaces.sh;
+      ".catppuccin-tint-wallpaper.sh".source =
+        ../dotfiles/.catppuccin-tint-wallpaper.sh;
       ".config/alacritty/alacritty.toml".source =
         ../dotfiles/.config/alacritty/alacritty.toml;
       ".config/mako/config".source =
@@ -355,7 +357,7 @@
     montserrat
     noto-fonts
     noto-fonts-cjk-sans
-    noto-fonts-emoji
+    noto-fonts-color-emoji
     liberation_ttf
     fira-code
     fira-code-symbols
