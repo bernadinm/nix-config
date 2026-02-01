@@ -1,0 +1,84 @@
+# Catppuccin Mocha theme for Alacritty
+
+[window]
+opacity = 0.95
+padding = { x = 10, y = 10 }
+
+[font]
+size = 11.0
+
+[font.normal]
+family = "Fira Code"
+style = "Regular"
+
+[font.bold]
+family = "Fira Code"
+style = "Bold"
+
+[font.italic]
+family = "Fira Code"
+style = "Italic"
+
+[colors.primary]
+background = "#1e1e2e"  # Base
+foreground = "#cdd6f4"  # Text
+dim_foreground = "#bac2de"  # Subtext1
+bright_foreground = "#cdd6f4"  # Text
+
+[colors.cursor]
+text = "#1e1e2e"  # Base
+cursor = "#f5e0dc"  # Rosewater
+
+[colors.vi_mode_cursor]
+text = "#1e1e2e"  # Base
+cursor = "#b4befe"  # Lavender
+
+[colors.search.matches]
+foreground = "#1e1e2e"  # Base
+background = "#a6adc8"  # Subtext0
+
+[colors.search.focused_match]
+foreground = "#1e1e2e"  # Base
+background = "#a6e3a1"  # Green
+
+[colors.hints.start]
+foreground = "#1e1e2e"  # Base
+background = "#f9e2af"  # Yellow
+
+[colors.hints.end]
+foreground = "#1e1e2e"  # Base
+background = "#a6adc8"  # Subtext0
+
+[colors.selection]
+text = "#1e1e2e"  # Base
+background = "#f5e0dc"  # Rosewater
+
+[colors.normal]
+black = "#45475a"  # Surface1
+red = "#f38ba8"  # Red
+green = "#a6e3a1"  # Green
+yellow = "#f9e2af"  # Yellow
+blue = "#89b4fa"  # Blue
+magenta = "#f5c2e7"  # Pink
+cyan = "#94e2d5"  # Teal
+white = "#bac2de"  # Subtext1
+
+[colors.bright]
+black = "#585b70"  # Surface2
+red = "#f38ba8"  # Red
+green = "#a6e3a1"  # Green
+yellow = "#f9e2af"  # Yellow
+blue = "#89b4fa"  # Blue
+magenta = "#f5c2e7"  # Pink
+cyan = "#94e2d5"  # Teal
+white = "#a6adc8"  # Subtext0
+
+[colors.dim]
+black = "#45475a"  # Surface1
+red = "#f38ba8"  # Red
+green = "#a6e3a1"  # Green
+yellow = "#f9e2af"  # Yellow
+blue = "#89b4fa"  # Blue
+magenta = "#f5c2e7"  # Pink
+cyan = "#94e2d5"  # Teal
+white = "#bac2de"  # Subtext1

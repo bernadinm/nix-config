@@ -7,8 +7,8 @@
 }
 
 window#waybar {
-    background: rgba(30, 30, 46, 0.9);
-    color: #cdd6f4;
+    background: rgba(30, 30, 46, 0.95);  /* Catppuccin Mocha - Base */
+    color: #cdd6f4;  /* Catppuccin Mocha - Text */
     transition-property: background-color;
     transition-duration: 0.5s;
 }
@@ -111,6 +111,13 @@ window#waybar {
     color: #6c7086;
 }
 
+#custom-tailscale {
+    padding: 0 10px;
+    background: transparent;
+    color: #b4befe;  /* Catppuccin Mocha - Lavender */
+    font-weight: bold;
+}
+
 #tray {
     padding: 0 10px;
     background: transparent;
@@ -122,5 +129,5 @@ window#waybar {
 
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
-    background: #f38ba8;
+    background: #f38ba8;  /* Catppuccin Mocha - Red */
 }
