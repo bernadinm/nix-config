@@ -1,0 +1,67 @@
+/* Wofi - Catppuccin Mocha Dark Theme */
+
+* {
+    font-family: "Fira Code", monospace;
+    font-size: 14px;
+}
+
+window {
+    background-color: #1e1e2e;  /* Base */
+    border: 2px solid #89b4fa;  /* Blue */
+    border-radius: 0;
+    opacity: 0.95;
+}
+
+#input {
+    margin: 10px;
+    padding: 8px 12px;
+    background-color: #313244;  /* Surface0 */
+    color: #cdd6f4;  /* Text */
+    border: 2px solid #45475a;  /* Surface1 */
+    border-radius: 0;
+}
+
+#input:focus {
+    border-color: #89b4fa;  /* Blue */
+}
+
+#inner-box {
+    margin: 5px;
+    background-color: #1e1e2e;  /* Base */
+}
+
+#outer-box {
+    margin: 5px;
+    background-color: #1e1e2e;  /* Base */
+}
+
+#scroll {
+    margin: 0px;
+}
+
+#text {
+    margin: 5px;
+    color: #cdd6f4;  /* Text */
+}
+
+#entry {
+    padding: 8px;
+    margin: 2px;
+    border-radius: 0;
+    background-color: transparent;
+}
+
+#entry:selected {
+    background-color: #585b70;  /* Surface2 */
+    color: #cdd6f4;  /* Text */
+    border-left: 3px solid #89b4fa;  /* Blue */
+}
+
+#entry:hover {
+    background-color: #45475a;  /* Surface1 */
+}
+
+#entry:selected #text {
+    font-weight: bold;
+    color: #89b4fa;  /* Blue */
+}

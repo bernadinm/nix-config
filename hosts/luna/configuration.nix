@@ -68,6 +68,9 @@ in
     Option "TearFree" "true"
   '';
 
+  # Home Manager - backup existing files
+  home-manager.backupFileExtension = "backup";
+
   home-manager.users.miguel = {
     home.file = {
       ".config/hypr/hyprland.conf".source = .config/hypr/hyprland.conf;
@@ -84,6 +87,44 @@ in
       size = 24;
       gtk.enable = true;
       x11.enable = true;
+    };
+
+    # GTK theme - Catppuccin Mocha (Dark)
+    gtk = {
+      enable = true;
+      theme = {
+        name = "Catppuccin-Mocha-Standard-Mauve-Dark";
+        package = pkgs.catppuccin-gtk.override {
+          accents = [ "mauve" ];
+          size = "standard";
+          variant = "mocha";
+        };
+      };
+      iconTheme = {
+        name = "Papirus-Dark";
+        package = pkgs.papirus-icon-theme;
+      };
+      gtk3.extraConfig = {
+        gtk-application-prefer-dark-theme = 1;
+      };
+      gtk4.extraConfig = {
+        gtk-application-prefer-dark-theme = 1;
+      };
+    };
+
+    # Qt theme - force dark
+    qt = {
+      enable = true;
+      platformTheme.name = "gtk3";
+      style.name = "adwaita-dark";
+    };
+
+    # Dark mode for all applications
+    dconf.settings = {
+      "org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
+        gtk-theme = "Catppuccin-Mocha-Standard-Mauve-Dark";
+      };
     };
 
     # Gammastep for screen color temperature (Wayland alternative to Redshift)

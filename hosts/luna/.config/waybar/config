@@ -58,7 +58,7 @@
     },
 
     "custom/tailscale": {
-        "exec": "if systemctl is-active --quiet tailscaled && tailscale status --json 2>/dev/null | grep -q '\"Online\":true'; then echo 'TS: ON'; else echo 'TS: OFF'; fi",
+        "exec": "if systemctl is-active --quiet tailscaled && [ \"$(tailscale status --json 2>/dev/null | jq -r '.Self.Online' 2>/dev/null)\" = \"true\" ]; then echo 'TS: ON'; else echo 'TS: OFF'; fi",
         "interval": 10,
         "format": "{}",
         "tooltip": true,
