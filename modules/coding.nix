@@ -1,17 +1,14 @@
 { config, pkgs, ... }:
-let
-  baseconfig = { allowUnfree = true; };
-  porcupine = import <nixos-porcupine> { config = baseconfig; };
-  unstable = import <nixos-unstable> { config = baseconfig; };
-in
+
 {
+  # Note: unstable packages now available via pkgs.unstable overlay from flake.nix
   environment.systemPackages = with pkgs; [
     # nix community tools
     nixpacks # app + docker build tool
     
     # python
     pipx # python universal pkg
-    python313Full # python3.9 full
+    python313 # python 3.13 (Full variant removed - Bluetooth/tkinter now included by default)
     python313Packages.virtualenv # coding
     python313Packages.pip # coding
     python313Packages.pillow # coding
@@ -26,7 +23,7 @@ in
 
     git gti git-lfs# svm
     gh # github util
-    unstable.gh-dash # github dashboard
+    pkgs.unstable.gh-dash # github dashboard
     delta # git diff tool
 
     # golang
@@ -59,7 +56,7 @@ in
     pdftk # pdf combine tool
     pandoc # convert markdown to any file
     img2pdf # convert jpg to pdfs
-    poppler_utils # render pdfs pdf2text
+    poppler-utils # render pdfs pdf2text
     ocrmypdf # convert pdt fo ocr pdf
     mupdf # pdf viewer
     hugo # website engine
@@ -75,7 +72,7 @@ in
     act
 
     # build tool
-    unstable.bazel
+    pkgs.unstable.bazel
 
     lice # license generator
 
@@ -90,7 +87,7 @@ in
     ccls # c/c++
     gopls # golang
     nodePackages.bash-language-server # bash
-    nodePackages.dockerfile-language-server-nodejs # docker
+    nodePackages.dockerfile-language-server # docker
     vscode-extensions.rust-lang.rust-analyzer # rust
     taplo # tolm
     nodePackages.yaml-language-server # yaml
@@ -99,8 +96,8 @@ in
     ngrok # development reverse proxy
 
     # AI dev tools
-    unstable.aider-chat
-    unstable.claude-code
-    unstable.opencode
+    pkgs.unstable.aider-chat
+    pkgs.unstable.claude-code
+    pkgs.unstable.opencode
   ];
 }

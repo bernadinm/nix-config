@@ -4,10 +4,6 @@
 
 { config, pkgs, ... }:
 
-let
-  home-manager = builtins.fetchTarball
-    "https://github.com/nix-community/home-manager/archive/release-25.05.tar.gz";
-in
 {
   imports =
     [
@@ -113,17 +109,17 @@ in
   # services.tlp.enable = true;
 
   # Power management settings
-  services.logind.extraConfig = ''
-    HandlePowerKey=ignore
-    HandlePowerKeyLongPress=ignore
-    HandleLidSwitch=ignore
-    HandleLidSwitchExternalPower=ignore
-    HandleLidSwitchDocked=ignore
-    IdleAction=ignore
-    IdleActionSec=0
-    HandleSuspendKey=ignore
-    HandleHibernateKey=ignore
-  '';
+  services.logind.settings.Login = {
+    HandlePowerKey = "ignore";
+    HandlePowerKeyLongPress = "ignore";
+    HandleLidSwitch = "ignore";
+    HandleLidSwitchExternalPower = "ignore";
+    HandleLidSwitchDocked = "ignore";
+    IdleAction = "ignore";
+    IdleActionSec = "0";
+    HandleSuspendKey = "ignore";
+    HandleHibernateKey = "ignore";
+  };
   
   # Prevent sleep when plugged in
   services.auto-cpufreq.settings = {
