@@ -112,7 +112,7 @@
     glibc # needed for logseq https://github.com/logseq/logseq/issues/10851
 
     parted # disk util
-    ventoy-full # iso writer
+    # ventoy-full # iso writer (marked insecure in 25.11 - binary blobs)
     ntfs3g # windows fs fix
     exfat # disk file system
 
