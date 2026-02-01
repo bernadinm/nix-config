@@ -55,6 +55,8 @@ in
         ../dotfiles/.launch_notion.sh;
       ".launch_logseq.sh".source =
         ../dotfiles/.launch_logseq.sh;
+      ".restore_workspaces.sh".source =
+        ../dotfiles/.restore_workspaces.sh;
       ".launch_instagram.sh".source =
         ../dotfiles/.launch_instagram.sh;
       ".launch_youtube.sh".source =
@@ -364,6 +366,7 @@ in
     # base
     yarn # used for home manager neovim
     wl-clipboard # clipboard history (Wayland)
+    cliphist # clipboard manager with history (Wayland)
     wev # discover keybindings (Wayland)
     x2goclient # remote desktop client
 
