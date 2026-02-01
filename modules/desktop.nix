@@ -479,7 +479,12 @@ in
       xterm.enable = false;
     };
 
+    # SDDM - Modern display manager with Wayland support
     displayManager = {
+        sddm = {
+          enable = true;
+          wayland.enable = true;
+        };
         defaultSession = "hyprland";
     };
 

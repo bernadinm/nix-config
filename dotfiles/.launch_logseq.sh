@@ -1,2 +1,2 @@
 #!/bin/sh
-logseq
+ELECTRON_OZONE_PLATFORM_HINT=wayland logseq
