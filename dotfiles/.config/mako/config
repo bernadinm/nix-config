@@ -1,0 +1,44 @@
+# Mako Notification Daemon - Catppuccin Mocha Dark Theme
+
+# Position
+anchor=top-right
+margin=10
+
+# Size
+width=400
+height=150
+padding=15
+
+# Timeout
+default-timeout=5000
+
+# Colors - Catppuccin Mocha
+background-color=#1e1e2e
+text-color=#cdd6f4
+border-color=#89b4fa
+border-size=2
+border-radius=8
+
+# Progress bar
+progress-color=over #313244
+
+# Icons
+icon-path=/run/current-system/sw/share/icons/Papirus-Dark
+max-icon-size=64
+
+# Urgency
+[urgency=low]
+border-color=#94e2d5
+
+[urgency=normal]
+border-color=#89b4fa
+
+[urgency=critical]
+border-color=#f38ba8
+default-timeout=0
+
+# Font
+font=Fira Code 11
+
+# Grouping
+group-by=app-name

@@ -57,6 +57,12 @@ in
         ../dotfiles/.launch_logseq.sh;
       ".restore_workspaces.sh".source =
         ../dotfiles/.restore_workspaces.sh;
+      ".config/alacritty/alacritty.toml".source =
+        ../dotfiles/.config/alacritty/alacritty.toml;
+      ".config/mako/config".source =
+        ../dotfiles/.config/mako/config;
+      ".config/wofi/style.css".source =
+        ../dotfiles/.config/wofi/style.css;
       ".launch_instagram.sh".source =
         ../dotfiles/.launch_instagram.sh;
       ".launch_youtube.sh".source =
