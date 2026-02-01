@@ -87,7 +87,7 @@
     ccls # c/c++
     gopls # golang
     nodePackages.bash-language-server # bash
-    nodePackages.dockerfile-language-server # docker
+    dockerfile-language-server # docker
     vscode-extensions.rust-lang.rust-analyzer # rust
     taplo # tolm
     nodePackages.yaml-language-server # yaml
