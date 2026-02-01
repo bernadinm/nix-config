@@ -363,9 +363,8 @@ in
   environment.systemPackages = with pkgs; [
     # base
     yarn # used for home manager neovim
-    xclip # clipboard history
-    xsel # clipboard select
-    xorg.xev # discover keybindings
+    wl-clipboard # clipboard history (Wayland)
+    wev # discover keybindings (Wayland)
     x2goclient # remote desktop client
 
     tor-browser-bundle-bin # browser
@@ -377,17 +376,24 @@ in
 
     playerctl # music control
     pulseaudio # audio control
+    brightnessctl # brightness control (Wayland)
 
     font-awesome # font
     picom # window property changer
 
-    feh # wallpaper manager
+    # Wayland wallpaper and display tools
+    swaybg # wallpaper manager (Wayland)
+    wdisplays # tool to configure displays (Wayland)
 
-    scrot # screen capture
-    screenfetch # used with scrot
-    kazam # popup screen capture
+    # Screenshot tools (Wayland)
+    grim # screenshot functionality (Wayland)
+    slurp # screen region selector (Wayland)
+    screenfetch # system info
 
     unclutter # hides mouse during inactivity
+
+    # Terminal emulator
+    alacritty # GPU-accelerated terminal (Wayland-native)
 
     # text file managers
     vifm # text file manager
@@ -397,14 +403,19 @@ in
     nautilus # gui file manager
     tree # directory list
 
+    # Wayland utilities
+    xdg-utils # for opening default programs when clicking links
+    wayland # Wayland libraries
+
     pavucontrol # visual sound control
     helvum      # Pipewire patchbay
     pipewire # Command-line recording tool for Pipewire
     sox      # for audio processing
 
-    rofi # program launcher
-    dmenu # program launcher
-    dunst # system notification
+    # Wayland program launchers and notifications
+    wofi # program launcher (Wayland alternative to rofi)
+    bemenu # program launcher (Wayland alternative to dmenu)
+    mako # notification system (Wayland-native)
     acpi # battery status
     libnotify # system notification
 
@@ -422,12 +433,13 @@ in
     # gwenview # gui file manager
   ];
 
-  # San Francisco, California for Redshift for screen color changing
+  # San Francisco, California for screen color changing
+  # Redshift disabled - use Gammastep for Wayland (configure in home-manager)
   location.provider = "manual";
   location.latitude = 37.773972;
   location.longitude = -122.431297;
   services.redshift = {
-    enable = true;
+    enable = false; # X11-only, use gammastep for Wayland
     temperature = {
       day = 5500;
       night = 3200;
