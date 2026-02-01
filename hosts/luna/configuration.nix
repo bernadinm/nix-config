@@ -77,6 +77,15 @@ in
     };
     programs.waybar.enable = true;
 
+    # Cursor theme
+    home.pointerCursor = {
+      name = "Bibata-Modern-Classic";
+      package = pkgs.bibata-cursors;
+      size = 24;
+      gtk.enable = true;
+      x11.enable = true;
+    };
+
     # Gammastep for screen color temperature (Wayland alternative to Redshift)
     services.gammastep = {
       enable = true;
