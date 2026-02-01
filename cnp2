@@ -1,0 +1,19 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: fluent-bit-access
+  namespace: fluent-bit-namespace
+spec:
+  endpointSelector:
+    matchLabels:
+      name: fluent-bit
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        namespace: datadog
+        name: datadog
+    toPorts:
+    - ports:
+      - port: "2020"
+        protocol: TCP
+

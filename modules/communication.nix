@@ -1,9 +1,7 @@
 { config, pkgs, ... }:
-let
-  baseconfig = { allowUnfree = true; };
-  unstable = import <nixos-unstable> { config = baseconfig; };
-in
+
 {
+  # Note: unstable packages now available via pkgs.unstable overlay from flake.nix
   environment.systemPackages = with pkgs; [
     # base
     zoom-us
@@ -13,11 +11,11 @@ in
     discord
     telegram-desktop
     slack
-    unstable.signal-desktop
+    pkgs.unstable.signal-desktop
     keybase-gui
 
     # email client
-    unstable.pop protonmail-bridge # email cli
+    pkgs.unstable.pop protonmail-bridge # email cli
     aerc # email client
     himalaya # email client
     khard # caldav contacts client
@@ -30,7 +28,7 @@ in
     zathura # Document viewer (primarily for PDFs)
     
     # visual comm
-    #unstable.realvnc-vnc-viewer
+    #pkgs.unstable.realvnc-vnc-viewer
 
     # weechat irc
     weechat

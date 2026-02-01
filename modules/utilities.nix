@@ -1,11 +1,7 @@
 { config, pkgs, ... }:
 
-let
-  baseconfig = { allowUnfree = true; };
-  porcupine = import <nixos-porcupine> { config = baseconfig; };
-  unstable = import <nixos-unstable> { config = baseconfig; };
-in
 {
+  # Note: unstable packages now available via pkgs.unstable overlay from flake.nix
   environment.systemPackages = with pkgs; [
     # base
     wget # system
@@ -57,7 +53,7 @@ in
     bc # calc
     jq # jsonquery
     yq # yamlquery
-    unstable.yt-dlp # youtube dl
+    pkgs.unstable.yt-dlp # youtube dl
     # youtube-dl # youtube dl
     streamlink # stream dl
     ts # task spooler batch queue
@@ -83,7 +79,7 @@ in
 
     # ML
     # gpt2tc # machine learning
-    unstable.mods # gpt cli generative
+    pkgs.unstable.mods # gpt cli generative
 
     bat # cut alt
     duf # df alt
@@ -104,9 +100,9 @@ in
     speedtest-cli # internet speed chk
     fast-cli # internet speed chk
     lynx # text browser
-    aria # torrent
+    aria2 # torrent
     gcalcli # google cal cli
-    unstable.android-tools android-udev-rules # android utils
+    pkgs.unstable.android-tools android-udev-rules # android utils
     scrcpy # screen copy android
 
     pup # html cli parser

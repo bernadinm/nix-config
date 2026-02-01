@@ -1,0 +1,10 @@
+InsuranceCompanies:
+  Time: "Feb 2019"
+  "Top Insurance Companies":
+    - No: 1
+      Name: "Berkshire Hathaway ( BRK.A)"
+      "Market Capitalization": "$308 billion"
+  source: "investopedia.com"
+  url: "https://www.investopedia.com/articles/active-trading/111314/top-10-insurance-companies-metrics.asp"
+Factor:
+  tesAt: "typescript"

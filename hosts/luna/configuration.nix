@@ -1,9 +1,5 @@
 { config, pkgs, ... }:
 
-let
-  home-manager = builtins.fetchTarball
-    "https://github.com/nix-community/home-manager/archive/release-25.05.tar.gz";
-in
 {
   imports =
     [
@@ -18,7 +14,7 @@ in
       ../../modules/desktop.nix
       ../../modules/utilities.nix
       ../../modules/coding.nix
-      (import "${home-manager}/nixos")
+      # home-manager is now provided by flake.nix
     ];
 
   # Use the systemd-boot EFI boot loader
@@ -181,15 +177,15 @@ in
   # services.tlp.enable = true;
 
   # hybrid sleep when press power button
-  services.logind.extraConfig = ''
-    HandlePowerKeyLongPress=poweroff
-    HandlePowerKey=suspend-then-hibernate
-    HandleLidSwitch=hibernate
-    HandleLidSwitchExternalPower=hibernate
-    HandleLidSwitchDocked=ignore
-    IdleAction=hibernate
-    IdleActionSec=15min
-  '';
+  services.logind.settings.Login = {
+    HandlePowerKeyLongPress = "poweroff";
+    HandlePowerKey = "suspend-then-hibernate";
+    HandleLidSwitch = "hibernate";
+    HandleLidSwitchExternalPower = "hibernate";
+    HandleLidSwitchDocked = "ignore";
+    IdleAction = "hibernate";
+    IdleActionSec = "15min";
+  };
   # screen locker (Wayland)
   # Note: xss-lock is X11-only. For Wayland, use swayidle with swaylock
   # programs.xss-lock.enable = false;

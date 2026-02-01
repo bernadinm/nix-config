@@ -1,8 +1,6 @@
 { config, pkgs, ... }:
 let
-  baseconfig = { allowUnfree = true; };
-  porcupine = import <nixos-porcupine> { config = baseconfig; };
-  unstable = import <nixos-unstable> { config = baseconfig; };
+  # Note: unstable packages now available via pkgs.unstable overlay from flake.nix
   hostname = config.networking.hostName;
 in
 {
@@ -20,7 +18,7 @@ in
     monero-gui
 
     # VPN
-    # unstable.protonvpn-cli_2
+    # pkgs.unstable.protonvpn-cli_2
     protonvpn-gui
     openvpn
     tailscale
