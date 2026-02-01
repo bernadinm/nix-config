@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
 let
@@ -22,15 +18,15 @@ in
       ../../modules/desktop.nix
       ../../modules/utilities.nix
       ../../modules/coding.nix
-      ../../modules/timemachinebackup.nix
-      # TODO(bernadinm): Replace Mesh Network for Zero Trust
-      # <nixos-unstable/nixos/modules/services/networking/nebula.nix>
+      (import "${home-manager}/nixos")
     ];
-  # Use the systemd-boot EFI boot loader.
+
+  # Use the systemd-boot EFI boot loader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "Luna"; # Define your hostname.
+
   networking.networkmanager.enable = true; # Use networkmanager for wifi
 
   # Set your time zone.
@@ -79,7 +75,19 @@ in
       ".config/waybar/config".source = ./.config/waybar/config;
       ".config/waybar/style.css".source = ./.config/waybar/style.css;
     };
-     programs.waybar.enable = true;
+    programs.waybar.enable = true;
+
+    # Gammastep for screen color temperature (Wayland alternative to Redshift)
+    services.gammastep = {
+      enable = true;
+      provider = "manual";
+      latitude = 37.773972;  # San Francisco
+      longitude = -122.431297;
+      temperature = {
+        day = 5500;
+        night = 3200;
+      };
+    };
   };
 
   home-manager.users.rachelle.home.file =
@@ -132,12 +140,13 @@ in
     IdleAction=hibernate
     IdleActionSec=15min
   '';
-  # screen locker
-  programs.xss-lock.enable = true;
-  programs.xss-lock.lockerCommand = "${pkgs.i3lock-fancy-rapid}/bin/i3lock-fancy-rapid 15 30";
+  # screen locker (Wayland)
+  # Note: xss-lock is X11-only. For Wayland, use swayidle with swaylock
+  # programs.xss-lock.enable = false;
+  # Configure swaylock via swayidle in your Hyprland config
 
-  # Enable display manager to use Hyprland session
-  services.displayManager.sessionPackages = with pkgs; [ hyprland ];
+  # Enable Hyprland as a Wayland compositor
+  programs.hyprland.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -153,21 +162,8 @@ in
     lm_sensors        # Hardware monitoring
     # turbostat         # CPU power analysis
     
-    # Bluetooth toggle script (Shift+F10)
-    (pkgs.writeScriptBin "bt-toggle" ''
-      #!/bin/bash
-      if lsmod | grep -q btusb; then
-        echo "Disabling Bluetooth to save power..."
-        sudo modprobe -r btusb
-        notify-send "Bluetooth Disabled" "Hardware powered off for battery savings"
-      else
-        echo "Enabling Bluetooth..."
-        sudo modprobe btusb
-        sleep 2
-        sudo systemctl restart bluetooth
-        notify-send "Bluetooth Enabled" "Hardware powered on and ready"
-      fi
-    '')
+     # Bluetooth toggle script (Shift+F10)
+     (pkgs.writeScriptBin "bt-toggle" (builtins.readFile ./bt-toggle.sh))
     
     # Hyprland and related packages
     hyprland
@@ -198,13 +194,13 @@ in
   services.touchegg.enable = false;
   
   # PowerTOP automatic tuning service
-  systemd.services.powertop-autotune = {
+    systemd.services.powertop-autotune = {
     enable = true;
     description = "PowerTOP Auto Tune on Boot";
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
-      ExecStart = "${pkgs.powertop}/bin/powertop --auto-tune";
+      ExecStart = "/run/current-system/sw/bin/powertop --auto-tune";
     };
     wantedBy = [ "multi-user.target" ];
     after = [ "multi-user.target" ];
@@ -216,15 +212,15 @@ in
       users = [ "miguel" ];
       commands = [
         {
-          command = "${pkgs.kmod}/bin/modprobe btusb";
+          command = "/run/current-system/sw/bin/modprobe btusb";
           options = [ "NOPASSWD" ];
         }
         {
-          command = "${pkgs.kmod}/bin/modprobe -r btusb";
+          command = "/run/current-system/sw/bin/modprobe -r btusb";
           options = [ "NOPASSWD" ];
         }
         {
-          command = "${pkgs.systemd}/bin/systemctl restart bluetooth";
+          command = "/run/current-system/sw/bin/systemctl restart bluetooth";
           options = [ "NOPASSWD" ];
         }
       ];
@@ -232,12 +228,12 @@ in
   ];
   
   # Bluetooth optimization - power efficient
-  hardware.bluetooth = {
+    hardware.bluetooth = {
     enable = true;
     powerOnBoot = false;  # Don't power on at boot - use Shift+F10 toggle
     settings = {
       General = {
-        Enable = "Source,Sink,Media,Socket";
+        Enable = "Source Sink Media Socket";
         Experimental = false;
         FastConnectable = false;  # Disable for power savings
         AutoConnect = false;      # Manual connection only
@@ -250,13 +246,12 @@ in
   };
   
   # Power management via udev rules
+  # Power management via udev rules (simplified)
   services.udev.extraRules = ''
-    # Enable power management for all PCI devices
+    # Enable runtime power management for PCI devices
     ACTION=="add", SUBSYSTEM=="pci", ATTR{power/control}="auto"
-    # USB autosuspend
+    # Enable USB autosuspend
     ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"
-    # Network interface power management
-    ACTION=="add", SUBSYSTEM=="net", KERNEL=="wl*", RUN+="${pkgs.iw}/bin/iw dev %k set power_save on"
   '';
 
   # TODO(bernadinm): required for home manager 23.05
@@ -273,5 +268,6 @@ in
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
+
 
 }
