@@ -372,7 +372,7 @@
     wev # discover keybindings (Wayland)
     x2goclient # remote desktop client
 
-    tor-browser-bundle-bin # browser
+    tor-browser # browser
     chromium # browser
     pkgs.unstable.google-chrome # browser
     brave # browser
@@ -433,7 +433,7 @@
     qalculate-qt # calulator  
     # kdeconnect # NixOS 24.11 upgrade
     fusuma
-    libsForQt5.konversation # IRC client
+    # libsForQt5.konversation # IRC client (removed in 25.11)
     kile # latex authoring tool for kde
     # gwenview # gui file manager
   ];
