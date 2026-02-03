@@ -56,4 +56,15 @@
 
   services.offlineimap.enable = true;
   services.offlineimap.install = true;
+
+  # RustDesk service for remote desktop (required for input control)
+  systemd.user.services.rustdesk = {
+    description = "RustDesk remote desktop service";
+    wantedBy = [ "graphical-session.target" ];
+    serviceConfig = {
+      ExecStart = "${pkgs.rustdesk}/bin/rustdesk --service";
+      Restart = "on-failure";
+      RestartSec = 5;
+    };
+  };
 }
