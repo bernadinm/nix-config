@@ -63,6 +63,7 @@ in
   # Enable tailscale vpn
   services.tailscale.enable = true;
   services.tailscale.authKeyFile = "/run/secrets/tailscale_key";
+  services.tailscale.extraUpFlags = [ "--accept-dns=false" ];
 
   #services.keycloak = {
   #  enable = true;
