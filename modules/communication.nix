@@ -36,7 +36,9 @@
     weechatScripts.weechat-notify-send
 
     rustdesk # teamviewer oss
-    tigervnc # vnc
+    tigervnc # vnc (X11)
+    wayvnc # wayland native vnc server
+    wlvncc # wayland vnc client
     anydesk # remote desktop sharing
 
     #irc clients
