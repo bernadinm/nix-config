@@ -9,10 +9,13 @@
       ../modules/adblock.nix
     ];
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Enable uinput for input simulation (required for RustDesk keyboard on Wayland)
+  hardware.uinput.enable = true;
+
+  # Define a user account. Don't forget to set a password with 'passwd'.
   users.users.miguel = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "input" "video" "i2c" "vboxusers" "libvirtd" "fuse" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "docker" "input" "uinput" "video" "i2c" "vboxusers" "libvirtd" "fuse" ]; # Enable 'sudo' for the user.
     description = "Miguel Bernadin";
   };
   users.users.rachelle = {
