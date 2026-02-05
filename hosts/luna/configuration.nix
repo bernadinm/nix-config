@@ -194,6 +194,13 @@
   # Enable Hyprland as a Wayland compositor
   programs.hyprland.enable = true;
 
+  # Configure XDG Desktop Portal for Hyprland (required for screen sharing and input injection)
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
+    config.common.default = "*";
+  };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
