@@ -32,6 +32,19 @@
 
   home-manager.users.miguel.home.file =
     {
+      # Force RustDesk to use X11 backend for keyboard input on Wayland
+      ".local/share/applications/rustdesk.desktop".text = ''
+        [Desktop Entry]
+        Version=1.0
+        Type=Application
+        Name=RustDesk
+        Comment=Remote Desktop Client (X11 mode for Wayland compatibility)
+        Exec=env GDK_BACKEND=x11 rustdesk
+        Icon=rustdesk
+        Terminal=false
+        Categories=Network;RemoteAccess;
+        Keywords=remote;desktop;
+      '';
       ".config/navi/.navi.plugin.bash".source =
         ../dotfiles/navi/.navi.plugin.bash;
       ".config/helix/config.toml".source =
