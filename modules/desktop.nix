@@ -504,11 +504,11 @@
       xterm.enable = false;
     };
 
-    # SDDM - Modern display manager with Wayland support
+    # GDM - GNOME Display Manager with Wayland support
     displayManager = {
-        sddm = {
+        gdm = {
           enable = true;
-          wayland.enable = true;
+          wayland = true;
         };
         defaultSession = "hyprland";
     };
