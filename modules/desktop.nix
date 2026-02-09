@@ -61,12 +61,8 @@
         ../dotfiles/.tmux.conf;
       ".bashrc".source =
         ../dotfiles/.bashrc;
-      # Source .bashrc for tmux login shells
-      ".bash_profile".text = ''
-        if [ -f ~/.bashrc ]; then
-          source ~/.bashrc
-        fi
-      '';
+      ".bash_profile".source =
+        ../dotfiles/.bash_profile;
       ".vimrc".source =
         ../dotfiles/.vimrc;
       ".launch_notion.sh".source =
