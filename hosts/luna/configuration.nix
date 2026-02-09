@@ -25,6 +25,10 @@
 
   networking.networkmanager.enable = true; # Use networkmanager for wifi
 
+  # Fix Tailscale MagicDNS on NixOS with NetworkManager
+  # Without this, Tailscale DNS (100.100.100.100) has no upstream resolvers
+  networking.resolvconf.useLocalResolver = false;
+
   # Set your time zone.
   time.timeZone = "Africa/Nairobi";
   #time.timeZone = "America/Los_Angeles";
