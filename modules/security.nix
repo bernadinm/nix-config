@@ -60,10 +60,9 @@ in
     tor-browser # security network browser
   ];
 
-  # Enable tailscale vpn
+  # Enable tailscale vpn with MagicDNS
   services.tailscale.enable = true;
   services.tailscale.authKeyFile = "/run/secrets/tailscale_key";
-  services.tailscale.extraUpFlags = [ "--accept-dns=false" ];
 
   #services.keycloak = {
   #  enable = true;
