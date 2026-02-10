@@ -12,6 +12,9 @@
   # Enable uinput for input simulation (required for RustDesk keyboard on Wayland)
   hardware.uinput.enable = true;
 
+  # Enable Flatpak for additional app support (Speech Note, etc.)
+  services.flatpak.enable = true;
+
   # Define a user account. Don't forget to set a password with 'passwd'.
   users.users.miguel = {
     isNormalUser = true;
