@@ -8,7 +8,7 @@
     helix # editor
     vim # system
     neovim
-    evince # pdf viewer
+    zathura # pdf viewer (Wayland-native, keyboard-driven)
     #(neovim.override {
     #  vimAlias = true;
     #  configure = {
@@ -48,7 +48,6 @@
     picotts # tts
     openai-whisper # speech to text
     killall # system kill
-    termite # terminal
     nap # code snippet save tool
     bc # calc
     jq # jsonquery

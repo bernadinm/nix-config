@@ -393,7 +393,6 @@
     wl-clipboard # clipboard history (Wayland)
     cliphist # clipboard manager with history (Wayland)
     wev # discover keybindings (Wayland)
-    x2goclient # remote desktop client
 
     tor-browser # browser
     chromium # browser
@@ -407,7 +406,6 @@
     brightnessctl # brightness control (Wayland)
 
     font-awesome # font
-    picom # window property changer
 
     # Wayland wallpaper and display tools
     swaybg # wallpaper manager (Wayland)
@@ -417,8 +415,6 @@
     grim # screenshot functionality (Wayland)
     slurp # screen region selector (Wayland)
     screenfetch # system info
-
-    unclutter # hides mouse during inactivity
 
     # Terminal emulator
     alacritty # GPU-accelerated terminal (Wayland-native)
@@ -487,17 +483,6 @@
   services.atd.enable = true;
   services.locate.enable = true;
   # services.wakapi.enable = true;
-
-  # TODO(bernadinm): add polybar dotfile config
-  nixpkgs.config.packageOverrides = pkgs: {
-    polybar = pkgs.polybar.override {
-      alsaSupport = true;
-      iwSupport = true;
-      nlSupport = true;
-      pulseSupport = true;
-      mpdSupport = true;
-    };
-  };
 
   services = {
     xserver.enable = true;
