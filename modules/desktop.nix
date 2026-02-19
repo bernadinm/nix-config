@@ -393,6 +393,7 @@
     wl-clipboard # clipboard history (Wayland)
     cliphist # clipboard manager with history (Wayland)
     wev # discover keybindings (Wayland)
+    sound-theme-freedesktop # system sounds including screen-capture.oga
 
     tor-browser # browser
     chromium # browser
