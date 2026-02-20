@@ -191,7 +191,14 @@
         .config/libinput-gestures.conf;
     };
 
-  services.upower.enable = true;
+  # Power management - UPower for battery monitoring and low battery actions
+  services.upower = {
+    enable = true;
+    percentageLow = 15;
+    percentageCritical = 10;
+    percentageAction = 5;
+    criticalPowerAction = "Hibernate";
+  };
   services.auto-cpufreq.enable = true;
   services.xserver = {
     # small addition from desktop.nix import
