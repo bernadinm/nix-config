@@ -136,14 +136,14 @@
     wantedBy = [ "timers.target" ];
 
     timerConfig = {
-      # Run daily at 2 AM
-      OnCalendar = "02:00";
+      # Run hourly
+      OnCalendar = "hourly";
 
       # If laptop was off, run 15 minutes after boot
       Persistent = true;
 
-      # Randomize start time by up to 30 minutes to avoid server load spikes
-      RandomizedDelaySec = "30m";
+      # Randomize start time by up to 5 minutes to avoid server load spikes
+      RandomizedDelaySec = "5m";
     };
   };
 
