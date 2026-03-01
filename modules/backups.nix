@@ -147,47 +147,47 @@
     };
   };
 
-  # Create exclusion patterns file
+  # Create exclusion patterns file (rustic uses ! prefix for exclusions)
   environment.etc."rustic/excludes.txt".text = ''
     # Cache directories
-    **/.cache
-    **/cache
-    **/.cargo/registry
-    **/.npm
-    **/.yarn
-    **/node_modules
+    !**/.cache
+    !**/cache
+    !**/.cargo/registry
+    !**/.npm
+    !**/.yarn
+    !**/node_modules
 
     # Build artifacts
-    **/target
-    **/dist
-    **/build
-    **/.next
+    !**/target
+    !**/dist
+    !**/build
+    !**/.next
 
     # Temporary files
-    **/.tmp
-    **/tmp
-    **/*.tmp
+    !**/.tmp
+    !**/tmp
+    !**/*.tmp
 
     # Virtual environments
-    **/venv
-    **/.venv
-    **/virtualenv
+    !**/venv
+    !**/.venv
+    !**/virtualenv
 
     # Large media that's backed up elsewhere
-    **/Downloads
-    **/Videos
-    **/Music
+    !**/Downloads
+    !**/Videos
+    !**/Music
 
     # System files
-    **/.Trash
-    **/.local/share/Trash
+    !**/.Trash
+    !**/.local/share/Trash
 
     # Git repositories (exclude .git directories but keep working files)
-    **/.git/objects
-    **/.git/index
+    !**/.git/objects
+    !**/.git/index
 
     # Nix store (managed by NixOS)
-    /nix/store
+    !/nix/store
   '';
 
   # Helper aliases for rustic commands
