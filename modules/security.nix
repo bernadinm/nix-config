@@ -47,6 +47,9 @@ in
     rustscan
     nmap
 
+    # backups
+    rustic  # Fast, encrypted, deduplicated backups (Rust alternative to restic)
+
     # network probe
     # tshark # terminal wshark
     wireshark # gui wshark
@@ -61,8 +64,11 @@ in
   ];
 
   # Enable tailscale vpn with MagicDNS
-  services.tailscale.enable = true;
-  services.tailscale.authKeyFile = "/run/secrets/tailscale_key";
+  services.tailscale = {
+    enable = true;
+    authKeyFile = "/run/secrets/tailscale_key";
+    package = pkgs.unstable.tailscale;  # Use latest version to fix DNS race condition
+  };
 
   #services.keycloak = {
   #  enable = true;
