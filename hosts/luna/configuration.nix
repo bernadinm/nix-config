@@ -14,6 +14,7 @@
       ../../modules/desktop.nix
       ../../modules/utilities.nix
       ../../modules/coding.nix
+      ../../modules/backups.nix
       # home-manager is now provided by flake.nix
     ];
 
@@ -28,6 +29,10 @@
   # Fix Tailscale MagicDNS on NixOS with NetworkManager
   # Without this, Tailscale DNS (100.100.100.100) has no upstream resolvers
   networking.resolvconf.useLocalResolver = false;
+
+  # Enable systemd-resolved to fix DNS race condition at boot and after sleep
+  # This resolves conflicts between Tailscale DNS, NetworkManager, and system DNS
+  services.resolved.enable = true;
 
   # Set your time zone.
   time.timeZone = "Africa/Nairobi";
