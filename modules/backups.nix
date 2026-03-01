@@ -24,6 +24,7 @@
         # OpenDAL B2 configuration (will be set via OPENDAL_ env vars from b2-env file)
         "OPENDAL_BUCKET=milky-way-backup"
         "OPENDAL_ROOT=luna/"
+        "OPENDAL_BUCKET_ID=c369a3ee90f0ab6897cb0d1f"
       ];
 
       # Backup command with common exclusions
@@ -80,7 +81,7 @@
         # Perform backup
         echo -e "''${BLUE}[Rustic Backup]''${NC} Creating snapshot..."
         ${pkgs.rustic}/bin/rustic backup \
-          --exclude-file=/etc/rustic/excludes.txt \
+          --glob-file=/etc/rustic/excludes.txt \
           --tag systemd \
           --tag luna \
           /home/miguel \
