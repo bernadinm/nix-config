@@ -1,6 +1,6 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+# Astra - Standalone Server Configuration
+# Purpose: GitHub Actions runner + k3s Kubernetes cluster
+# This is a headless server (no desktop environment)
 
 { config, pkgs, ... }:
 
@@ -9,33 +9,33 @@
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ../../modules/gdrivesync.nix
-      ../../modules/entertainment.nix
+      # Server-specific modules
+      ../../modules/server.nix
+      ../../modules/backups.nix
       ../../modules/security.nix
-      ../../modules/virtualization.nix
-      ../../modules/communication.nix
       ../../modules/monitoring.nix
-      ../../modules/desktop.nix
       ../../modules/utilities.nix
       ../../modules/coding.nix
-      ../../modules/timemachinebackup.nix
-      # TODO(bernadinm): Replace Mesh Network for Zero Trust
-      # <nixos-unstable/nixos/modules/services/networking/nebula.nix>
     ];
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "Astra"; # Define your hostname.
+  networking.hostName = "astra"; # Define your hostname (lowercase for server)
   networking.networkmanager.enable = true; # Use networkmanager for wifi
+
+  # Static IP configuration (optional - remove if using DHCP)
+  # networking.interfaces.wlp170s0.ipv4.addresses = [{
+  #   address = "192.168.100.50";
+  #   prefixLength = 24;
+  # }];
+  # networking.defaultGateway = "192.168.100.1";
+  # networking.nameservers = [ "8.8.8.8" "1.1.1.1" ];
 
   # Set your time zone.
   time.timeZone = "America/New_York";
-  #time.timeZone = "America/Los_Angeles";
 
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
+  # Use DHCP
   networking.useDHCP = false;
   networking.interfaces.wlp170s0.useDHCP = true;
 
@@ -50,120 +50,41 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
-  # Enable the X11 windowing system.
 
-  # Required for Framework Laptop to help avoid screen tearing:
-  # https://discourse.nixos.org/t/eliminate-screen-tearing-with-intel-mesa/14724
-  services.xserver.videoDrivers = [ "modesetting" ];
-  services.xserver.deviceSection = ''
-    Option "DRI" "2"
-    Option "TearFree" "true"
-  '';
-
-  home-manager.users.miguel.home.file =
-    {
-      ".config/i3/config".source =
-        .config/i3/config;
-      ".config/libinput-gestures.conf".source =
-        .config/libinput-gestures.conf;
-    };
-
-  home-manager.users.rachelle.home.file =
-    {
-      ".config/i3/config".source =
-        .config/i3/config;
-      ".config/libinput-gestures.conf".source =
-        .config/libinput-gestures.conf;
-    };
-
-  services.upower.enable = true;
-  services.auto-cpufreq.enable = true;
-  services.xserver = {
-    # small addition from desktop.nix import
-    monitorSection = ''
-      DisplaySize 408 306
-    '';
-  };
+  # Server mode - no desktop environment, no X server
+  # All GUI settings removed for headless operation
 
   boot.initrd.luks.devices.root.device = "/dev/disk/by-uuid/508642b3-eced-4e85-9c67-e6e85d946d96";
   boot.initrd.luks.devices.root.preLVM = true;
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-  services.printing.drivers = [ pkgs.hplip pkgs.canon-cups-ufr2 pkgs.epsonscan2 ];
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.libinput.touchpad.naturalScrolling = true;
-  services.libinput.touchpad.disableWhileTyping = true;
-  services.libinput.mouse.disableWhileTyping = true;
-  services.xserver.xkb.options = "ctrl:swap_lfctl_lfwin"; # swap ctrl + fn keys
-
-  #hardware.trackpoint.programs.light.enable = true;
+  # Server doesn't need printing or touchpad support
 
   security.sudo = {
     enable = true;
     wheelNeedsPassword = false;
   };
 
-  # Installing TLP for Battery Life Optimization
-  # services.tlp.enable = true;
+  # Server power management - never sleep, always on
+  # Power management is handled by server.nix module
 
-  # Power management settings
-  services.logind.settings.Login = {
-    HandlePowerKey = "ignore";
-    HandlePowerKeyLongPress = "ignore";
-    HandleLidSwitch = "ignore";
-    HandleLidSwitchExternalPower = "ignore";
-    HandleLidSwitchDocked = "ignore";
-    IdleAction = "ignore";
-    IdleActionSec = "0";
-    HandleSuspendKey = "ignore";
-    HandleHibernateKey = "ignore";
-  };
-  
-  # Prevent sleep when plugged in
-  services.auto-cpufreq.settings = {
-    battery = {
-      governor = "powersave";
-      turbo = "never";
-    };
-    charger = {
-      governor = "performance";
-      turbo = "auto";
-    };
-  };
-  # screen locker
-  programs.xss-lock.enable = true;
-  programs.xss-lock.lockerCommand = "${pkgs.i3lock-fancy-rapid}/bin/i3lock-fancy-rapid 15 30";
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  # Server-specific packages (k8s tools are in server.nix)
   environment.systemPackages = with pkgs; [
-    ddcutil
-    i2c-tools
-    libinput-gestures
-    pulseeffects-legacy
+    htop
+    btop
+    ncdu
+    tmux
+    screen
+    vim
+    neovim
+    git
+    curl
+    wget
+    rsync
+    tree
   ];
 
-  # Monitor Control via CLI
-  services.ddccontrol.enable = true;
-  hardware.i2c.enable = true;
-
-  # Enable Nebula Mesh Network
-  # TODO(bernadinm): Replace Mesh Network for Zero Trust
-  # services.nebula.networks.mesh = {
-  #   staticHostMap = { "192.168.100.2" = [ "lumina.miguel.engineer:4242" ]; };
-  # };
-
-  services.fwupd.enable = true; # firmware update tool
-  services.fprintd.enable = true;
-  security.pam.services.login.fprintAuth = true;
-  security.pam.services.xautolock.fprintAuth = true;
-
-  # TODO(bernadinm): required for home manager 23.05
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-27.3.11" # used for logseq and obsidian
-  ];
+  # Firmware updates
+  services.fwupd.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

@@ -1,0 +1,127 @@
+---
+# Namespace for GitHub Runners
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: github-runners
+
+---
+# Runner Deployment for bernadinm account
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: RunnerDeployment
+metadata:
+  name: bernadinm-runner
+  namespace: github-runners
+spec:
+  replicas: 2  # Start with 2 runners
+  template:
+    spec:
+      repository: bernadinm/nix-config  # Or use "bernadinm" for org-level
+      labels:
+        - k3s
+        - astra
+        - nixos
+        - self-hosted
+
+      # Use GitHub PAT for authentication
+      githubAPICredentialsFrom:
+        secretRef:
+          name: github-pat
+
+      # Use latest runner image with Docker-in-Docker support
+      image: summerwind/actions-runner-dind:latest
+
+      # Docker-in-Docker configuration
+      dockerdWithinRunnerContainer: true
+
+      # Resource limits
+      resources:
+        limits:
+          cpu: "2"
+          memory: "4Gi"
+        requests:
+          cpu: "1"
+          memory: "2Gi"
+
+      # Environment variables
+      env:
+        - name: DOCKER_HOST
+          value: unix:///var/run/docker.sock
+
+      # Volume for Docker socket (if not using DinD)
+      # volumes:
+      #   - name: docker-sock
+      #     hostPath:
+      #       path: /var/run/docker.sock
+      #
+      # volumeMounts:
+      #   - name: docker-sock
+      #     mountPath: /var/run/docker.sock
+
+---
+# Horizontal Pod Autoscaler for Runners
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: HorizontalRunnerAutoscaler
+metadata:
+  name: bernadinm-runner-autoscaler
+  namespace: github-runners
+spec:
+  scaleTargetRef:
+    name: bernadinm-runner
+
+  # Minimum and maximum number of runners
+  minReplicas: 1
+  maxReplicas: 5
+
+  # Scale based on GitHub webhook events
+  scaleUpTriggers:
+    - githubEvent:
+        workflowJob: {}
+      duration: "5m"  # Keep scaled up for 5 minutes after job
+
+  # Metrics for scaling decisions
+  metrics:
+    - type: PercentageRunnersBusy
+      scaleUpThreshold: 0.75    # Scale up when 75% of runners are busy
+      scaleDownThreshold: 0.25  # Scale down when only 25% are busy
+      scaleUpAdjustment: 2      # Add 2 runners when scaling up
+      scaleDownAdjustment: 1    # Remove 1 runner when scaling down
+
+---
+# ServiceAccount for runner pods (optional, for k8s API access)
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: github-runner
+  namespace: github-runners
+
+---
+# Role for runners to access k8s resources (if needed)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: github-runner-role
+  namespace: github-runners
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "pods/log", "services", "configmaps", "secrets"]
+    verbs: ["get", "list", "watch", "create", "update", "delete"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "statefulsets"]
+    verbs: ["get", "list", "watch", "create", "update", "delete"]
+
+---
+# RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: github-runner-rolebinding
+  namespace: github-runners
+subjects:
+  - kind: ServiceAccount
+    name: github-runner
+    namespace: github-runners
+roleRef:
+  kind: Role
+  name: github-runner-role
+  apiGroup: rbac.authorization.k8s.io
