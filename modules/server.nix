@@ -9,6 +9,13 @@
 { config, lib, pkgs, ... }:
 
 {
+  # Server user account
+  users.users.miguel = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" "docker" "libvirtd" ];
+    description = "Miguel Bernadin";
+  };
+
   # Headless server - no X11/Wayland
   services.xserver.enable = false;
 
