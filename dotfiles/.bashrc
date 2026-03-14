@@ -56,5 +56,5 @@ fi
 export PATH="$PATH:/home/miguel/.local/bin"
 
 # Source system wide bash settings
-. /etc/profile.local
+[ -f /etc/profile.local ] && . /etc/profile.local
 
