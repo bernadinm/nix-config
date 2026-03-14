@@ -16,7 +16,7 @@
   services.openssh = {
     enable = true;
     settings = {
-      PasswordAuthentication = false;
+      PasswordAuthentication = true;  # Allow password auth for remote management
       PermitRootLogin = "no";
     };
     openFirewall = true;
