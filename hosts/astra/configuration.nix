@@ -64,6 +64,13 @@
     wheelNeedsPassword = false;
   };
 
+  # Define the miguel user (required - was previously only in desktop.nix)
+  users.users.miguel = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" "docker" "libvirtd" ];
+    description = "Miguel Bernadin";
+  };
+
   # Server power management - never sleep, always on
   # Power management is handled by server.nix module
 
