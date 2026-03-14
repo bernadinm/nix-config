@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 let
   # Note: unstable packages now available via pkgs.unstable overlay from flake.nix
   hostname = config.networking.hostName;
@@ -240,7 +240,7 @@ in
   # Enable OpenSSH Server
   services.openssh = {
     enable = true;
-    openFirewall = false; # keep this disabled but open through nebula.mesh
+    openFirewall = lib.mkDefault false; # keep this disabled but open through nebula.mesh (servers override this)
   };
 
   # Enable the Gnugp daemon instead of SSH.
