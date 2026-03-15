@@ -48,13 +48,8 @@
       if ! [[ ( -f ~/.msmtprc ) ]]; then ln -s ~/git/bernadinm/g/.msmtprc ~/.msmtprc; fi
       if ! [[ ( -f ~/.offlineimaprc ) ]]; then ln -s ~/git/bernadinm/g/.offlineimaprc ~/.offlineimaprc; fi
       if ! [[ ( -f ~/.gitconfig ) ]]; then ln -s ~/git/bernadinm/g/.gitconfig ~/.gitconfig; fi
-      if ! [[ ( -f ~/.pureline.conf ) ]]; then ln -s ~/git/bernadinm/g/.pureline.conf ~/.pureline.conf; fi
 
       export GPG_TTY="$(tty)" #TODO(bernadinm): https://github.com/keybase/keybase-issues/issues/2798
-
-      if [ "$TERM" != "linux" ]; then
-        source ~/git/bernadinm/g/pureline/pureline ~/.pureline.conf
-      fi
 
       # lynx config
       export WWW_HOME=https://duckduckgo.com/lite/

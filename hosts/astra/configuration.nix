@@ -11,6 +11,7 @@
       ./hardware-configuration.nix
       # Server-specific modules
       ../../modules/server.nix
+      ../../modules/dotfiles.nix
       ../../modules/backups.nix
       ../../modules/security.nix
       ../../modules/monitoring.nix
