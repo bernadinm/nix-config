@@ -16,13 +16,6 @@
     description = "Miguel Bernadin";
   };
 
-  # Home-manager for miguel's dotfiles
-  home-manager.backupFileExtension = "backup";
-  home-manager.users.miguel = {
-    home.stateVersion = "25.05";
-    home.file.".bashrc".source = ../dotfiles/.bashrc;
-  };
-
   # Headless server - no X11/Wayland
   services.xserver.enable = false;
 

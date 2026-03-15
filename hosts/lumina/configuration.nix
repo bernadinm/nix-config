@@ -12,6 +12,7 @@
       # TODO(bernadinm): Replace Mesh Network for Zero Trust
       # <nixos-unstable/nixos/modules/services/networking/nebula.nix>
       # <nixos-unstable/nixos/modules/services/web-apps/keycloak.nix>
+      ../../modules/dotfiles.nix
       ../../modules/gdrivesync.nix
       ../../modules/entertainment.nix
       ../../modules/security.nix
