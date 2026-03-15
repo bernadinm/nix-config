@@ -27,6 +27,39 @@
   home-manager.users.miguel = { pkgs, lib, ... }: {
     home.stateVersion = "25.05";
 
+    # k9s configuration with Dracula theme
+    xdg.configFile."k9s/skins/dracula.yaml".source = ../dotfiles/.config/k9s/skins/dracula.yaml;
+    xdg.configFile."k9s/config.yaml".text = ''
+      k9s:
+        liveViewAutoRefresh: false
+        screenDumpDir: /home/miguel/.local/state/k9s/screen-dumps
+        refreshRate: 2
+        maxConnRetry: 5
+        readOnly: false
+        noExitOnCtrlC: false
+        ui:
+          skin: dracula
+          enableMouse: false
+          headless: false
+          logoless: false
+          crumbsless: false
+          reactive: false
+          noIcons: false
+        logger:
+          tail: 100
+          buffer: 5000
+          sinceSeconds: -1
+          textWrap: false
+          showTime: false
+        thresholds:
+          cpu:
+            critical: 90
+            warn: 70
+          memory:
+            critical: 90
+            warn: 70
+    '';
+
     # Shell aliases and environment
     programs.bash = {
       enable = true;
