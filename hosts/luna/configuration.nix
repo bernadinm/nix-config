@@ -5,6 +5,7 @@
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../../modules/dotfiles.nix
       ../../modules/gdrivesync.nix
       ../../modules/entertainment.nix
       ../../modules/security.nix
@@ -76,7 +77,8 @@
   # Home Manager - backup existing files
   home-manager.backupFileExtension = "backup";
 
-  home-manager.users.miguel = {
+  # Desktop-specific home-manager settings (base config in dotfiles.nix)
+  home-manager.users.miguel = { pkgs, ... }: {
     home.file = {
       ".config/hypr/hyprland.conf".source = .config/hypr/hyprland.conf;
       ".config/libinput-gestures.conf".source = .config/libinput-gestures.conf;
@@ -85,48 +87,22 @@
     };
     programs.waybar.enable = true;
 
-    # GPG agent configuration
-    services.gpg-agent = {
-      enable = true;
-      enableSshSupport = true;
-      pinentry.package = pkgs.pinentry-rofi;
-    };
+    # Override pinentry for desktop (rofi instead of curses)
+    services.gpg-agent.pinentry.package = pkgs.pinentry-rofi;
 
-    # Tmux configuration
-    programs.tmux = {
-      enable = true;
-      clock24 = true;
-      baseIndex = 1;
-      escapeTime = 0;
-      historyLimit = 999999999; # Unlimited scrolling
-      mouse = true;
-      terminal = "tmux-256color";
-      plugins = with pkgs.tmuxPlugins; [
-        sensible
-        resurrect
-        {
-          plugin = continuum;
-          extraConfig = ''
-            set -g @continuum-restore 'on'
-            set -g @continuum-save-interval '15'
-            set -g @resurrect-restore-script-path '${pkgs.tmuxPlugins.resurrect}/share/tmux-plugins/resurrect/scripts/restore.sh'
-          '';
-        }
-        yank           # vim-mode copy to wl-clipboard
-        fzf-tmux-url   # Prefix+u to open URLs with fzf
-        prefix-highlight  # Shows [PREFIX]/[COPY] in status bar
-        extrakto       # Prefix+Tab to fzf-pick text from scrollback
-        sessionist     # Better session switching (Prefix+g)
-        {
-          plugin = battery;
-          extraConfig = ''
-            # Set status-right BEFORE battery.tmux runs so it can interpolate #{battery_*}
-            set -g status-right '#[fg=#50fa7b]#{battery_percentage} #{battery_icon}  #[fg=white]%a %l:%M %p #[fg=#6272a4]%Y-%m-%d'
-          '';
-        }
-      ];
-      extraConfig = builtins.readFile ../../dotfiles/tmux.conf;
-    };
+    # Desktop-specific tmux plugins (base tmux config in dotfiles.nix)
+    programs.tmux.plugins = with pkgs.tmuxPlugins; [
+      fzf-tmux-url      # Prefix+u to open URLs with fzf
+      prefix-highlight  # Shows [PREFIX]/[COPY] in status bar
+      extrakto          # Prefix+Tab to fzf-pick text from scrollback
+      sessionist        # Better session switching (Prefix+g)
+      {
+        plugin = battery;
+        extraConfig = ''
+          set -g status-right '#[fg=#50fa7b]#{battery_percentage} #{battery_icon}  #[fg=white]%a %l:%M %p #[fg=#6272a4]%Y-%m-%d'
+        '';
+      }
+    ];
 
     # Cursor theme
     home.pointerCursor = {
