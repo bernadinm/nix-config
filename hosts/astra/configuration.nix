@@ -48,6 +48,21 @@
 
   boot.kernelPackages = pkgs.linuxPackages_latest; #- for WiFi support
 
+  # Longhorn storage requirements
+  services.openiscsi = {
+    enable = true;
+    name = "iqn.2026-03.nixos:astra";
+  };
+  boot.kernelModules = [ "iscsi_tcp" ];
+
+  # Longhorn expects binaries in /usr/bin (NixOS uses /run/current-system/sw/bin)
+  systemd.tmpfiles.rules = [
+    "L+ /usr/bin/iscsiadm - - - - /run/current-system/sw/bin/iscsiadm"
+    "L+ /usr/bin/mount - - - - /run/current-system/sw/bin/mount"
+    "L+ /usr/bin/umount - - - - /run/current-system/sw/bin/umount"
+    "L+ /usr/bin/nsenter - - - - /run/current-system/sw/bin/nsenter"
+  ];
+
   nixpkgs.config.allowUnfree = true;
 
   environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
