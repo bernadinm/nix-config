@@ -109,8 +109,8 @@
       PrivateTmp = true;
       NoNewPrivileges = true;
 
-      # Timeout and restart settings
-      TimeoutStartSec = "6h";
+      # Timeout and restart settings (allow 24h for large backups)
+      TimeoutStartSec = "24h";
 
       # On failure, send notification
       ExecStartPost = pkgs.writeShellScript "backup-notify" ''
@@ -136,8 +136,8 @@
     wantedBy = [ "timers.target" ];
 
     timerConfig = {
-      # Run hourly
-      OnCalendar = "hourly";
+      # Run daily at 3am
+      OnCalendar = "*-*-* 03:00:00";
 
       # If laptop was off, run 15 minutes after boot
       Persistent = true;
@@ -188,6 +188,9 @@
 
     # Nix store (managed by NixOS)
     !/nix/store
+
+    # Large VM images (back up separately if needed)
+    !/var/lib/libvirt/images
   '';
 
   # Helper aliases for rustic commands
