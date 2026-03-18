@@ -7,6 +7,7 @@
     "modules-center": ["clock"],
     "modules-right": [
         "custom/tailscale",
+        "custom/bluetooth",
         "network",
         "cpu",
         "memory",
@@ -64,6 +65,15 @@
         "tooltip": true,
         "exec-tooltip": "tailscale status 2>/dev/null | head -5 || echo 'Tailscale not running'",
         "on-click": "alacritty -e tailscale status"
+    },
+
+    "custom/bluetooth": {
+        "exec": "if lsmod | grep -q btusb; then echo '  ON'; else echo '  OFF'; fi",
+        "interval": 2,
+        "format": "{}",
+        "tooltip": true,
+        "exec-tooltip": "if lsmod | grep -q btusb; then echo 'Bluetooth: Enabled (F12 to toggle)'; else echo 'Bluetooth: Disabled (F12 to toggle)'; fi",
+        "on-click": "bash -c 'if lsmod | grep -q btusb; then sudo modprobe -r btusb && notify-send \"Bluetooth Disabled\" \"Hardware powered off\"; else sudo modprobe btusb && sudo systemctl restart bluetooth && notify-send \"Bluetooth Enabled\" \"Hardware ready\"; fi && sleep 0.5 && pkill -RTMIN+8 waybar'"
     },
 
     "battery": {
