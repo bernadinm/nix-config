@@ -132,6 +132,10 @@
     # Start after network is online
     after = [ "network-online.target" ];
     wants = [ "network-online.target" ];
+
+    # Stop backup before system suspends to avoid broken network connections
+    before = [ "sleep.target" ];
+    conflicts = [ "sleep.target" ];
   };
 
   # Timer for automatic backups
