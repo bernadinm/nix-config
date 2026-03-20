@@ -60,8 +60,6 @@
         ../dotfiles/.gnupg/sshcontrol;
       ".tmux.conf".source =
         ../dotfiles/.tmux.conf;
-      ".bashrc".source =
-        ../dotfiles/.bashrc;
       ".vimrc".source =
         ../dotfiles/.vimrc;
       ".launch_notion.sh".source =
