@@ -42,13 +42,13 @@
         RED='\033[0;31m'
         NC='\033[0m' # No Color
 
-        # Check battery level - only run if on AC or battery > 50%
+        # Check battery level - only run if on AC or battery > 35%
         if [ -f /sys/class/power_supply/BAT1/status ]; then
           STATUS=$(cat /sys/class/power_supply/BAT1/status)
           CAPACITY=$(cat /sys/class/power_supply/BAT1/capacity)
 
-          if [ "$STATUS" = "Discharging" ] && [ "$CAPACITY" -lt 50 ]; then
-            echo -e "''${RED}[Rustic Backup]''${NC} Skipping backup: Battery at $CAPACITY% (need >50% or AC power)"
+          if [ "$STATUS" = "Discharging" ] && [ "$CAPACITY" -lt 35 ]; then
+            echo -e "''${RED}[Rustic Backup]''${NC} Skipping backup: Battery at $CAPACITY% (need >35% or AC power)"
             exit 0
           fi
 
