@@ -8,6 +8,8 @@
     "modules-right": [
         "custom/tailscale",
         "custom/bluetooth",
+        "custom/wifi",
+        "custom/power",
         "network",
         "cpu",
         "memory",
@@ -76,17 +78,34 @@
         "on-click": "bash -c 'if lsmod | grep -q btusb; then sudo modprobe -r btusb && notify-send \"Bluetooth Disabled\" \"Hardware powered off\"; else sudo modprobe btusb && sudo systemctl restart bluetooth && notify-send \"Bluetooth Enabled\" \"Hardware ready\"; fi && sleep 0.5 && pkill -RTMIN+8 waybar'"
     },
 
+    "custom/wifi": {
+        "exec": "if nmcli radio wifi | grep -q enabled; then echo 'WiFi: ON'; else echo 'WiFi: OFF'; fi",
+        "interval": 2,
+        "format": "{}",
+        "tooltip": true,
+        "exec-tooltip": "if nmcli radio wifi | grep -q enabled; then nmcli -t -f active,ssid dev wifi | grep '^yes' | cut -d: -f2 || echo 'WiFi enabled, not connected'; else echo 'WiFi: Disabled (F10 airplane mode)'; fi"
+    },
+
+    "custom/power": {
+        "exec": "if [ -f /sys/class/power_supply/BAT1/current_now ] && [ -f /sys/class/power_supply/BAT1/voltage_now ]; then CURRENT=$(cat /sys/class/power_supply/BAT1/current_now); VOLTAGE=$(cat /sys/class/power_supply/BAT1/voltage_now); if [ \"$CURRENT\" -gt 0 ] && [ \"$VOLTAGE\" -gt 0 ]; then echo \"PWR: $(echo \"scale=1; ($CURRENT * $VOLTAGE) / 1000000000000\" | bc)W\"; else echo 'PWR: 0.0W'; fi; else echo 'PWR: N/A'; fi",
+        "interval": 2,
+        "format": "{}",
+        "tooltip": true,
+        "exec-tooltip": "echo 'Click to open Power Monitor Dashboard'",
+        "on-click": "alacritty -e bash ~/.power_monitor.sh"
+    },
+
     "battery": {
-        "interval": 60,
+        "interval": 10,
         "states": {
             "warning": 30,
             "critical": 15
         },
-        "format": "BAT: {capacity}%",
-        "format-charging": "CHG: {capacity}%",
+        "format": "{capacity}% {time}",
+        "format-charging": "⚡{capacity}% {time}",
         "format-plugged": "AC: {capacity}%",
-        "format-alt": "BAT: {time}",
-        "tooltip-format": "{timeTo}, {capacity}% - {power}W"
+        "format-alt": "{capacity}%",
+        "tooltip-format": "{timeTo} ({capacity}%)"
     },
 
     "pulseaudio": {
