@@ -62,8 +62,6 @@
         ../dotfiles/.tmux.conf;
       ".bashrc".source =
         ../dotfiles/.bashrc;
-      ".bash_profile".source =
-        ../dotfiles/.bash_profile;
       ".vimrc".source =
         ../dotfiles/.vimrc;
       ".launch_notion.sh".source =
