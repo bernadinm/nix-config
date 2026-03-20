@@ -7,6 +7,10 @@
   systemd.services.rustic-backup = {
     description = "Rustic backup to Backblaze B2";
 
+    # Don't stop/restart this service during nixos-rebuild if it's running
+    restartIfChanged = false;
+    stopIfChanged = false;
+
     serviceConfig = {
       Type = "oneshot";
       User = "root";
@@ -100,7 +104,7 @@
 
         # Check repository integrity
         echo -e "''${BLUE}[Rustic Backup]''${NC} Checking repository integrity..."
-        ${pkgs.rustic}/bin/rustic check --read-data-subset=5%
+        ${pkgs.rustic}/bin/rustic check --read-data --read-data-subset=5%
 
         echo -e "''${GREEN}[Rustic Backup]''${NC} Backup completed successfully at $(date)"
       '';
