@@ -18,12 +18,13 @@
 
       # Repository configuration
       # Note: rustic uses opendal:b2 syntax, not b2: like restic
+      # Uses hostname for OPENDAL_ROOT so each machine has its own backup folder
       Environment = [
         "RUSTIC_REPOSITORY=opendal:b2"
         "RUSTIC_PASSWORD_FILE=/etc/restic/password"
         # OpenDAL B2 configuration (will be set via OPENDAL_ env vars from b2-env file)
         "OPENDAL_BUCKET=milky-way-backup"
-        "OPENDAL_ROOT=luna/"
+        "OPENDAL_ROOT=${config.networking.hostName}/"
         "OPENDAL_BUCKET_ID=c369a3ee90f0ab6897cb0d1f"
       ];
 
@@ -83,11 +84,10 @@
         ${pkgs.rustic}/bin/rustic backup \
           --glob-file=/etc/rustic/excludes.txt \
           --tag systemd \
-          --tag luna \
+          --tag $(hostname) \
           /home/miguel \
           /etc/nixos \
-          /root \
-          /var/lib/libvirt/images
+          /root
 
         # Cleanup old snapshots
         echo -e "''${BLUE}[Rustic Backup]''${NC} Pruning old snapshots..."
@@ -199,7 +199,7 @@
     rustic-backup = "sudo systemctl start rustic-backup.service";
     rustic-status = "systemctl status rustic-backup.service";
     rustic-logs = "journalctl -u rustic-backup.service -f";
-    rustic-list = "sudo bash -c 'source /etc/restic/b2-env && export RUSTIC_REPOSITORY=opendal:b2 RUSTIC_PASSWORD_FILE=/etc/restic/password OPENDAL_BUCKET=milky-way-backup OPENDAL_ROOT=luna/ && rustic snapshots'";
-    rustic-restore = "sudo bash -c 'source /etc/restic/b2-env && export RUSTIC_REPOSITORY=opendal:b2 RUSTIC_PASSWORD_FILE=/etc/restic/password OPENDAL_BUCKET=milky-way-backup OPENDAL_ROOT=luna/ && rustic restore latest --target /tmp/restore'";
+    rustic-list = "sudo bash -c 'source /etc/restic/b2-env && export RUSTIC_REPOSITORY=opendal:b2 RUSTIC_PASSWORD_FILE=/etc/restic/password OPENDAL_BUCKET=milky-way-backup OPENDAL_ROOT=$(hostname)/ && rustic snapshots'";
+    rustic-restore = "sudo bash -c 'source /etc/restic/b2-env && export RUSTIC_REPOSITORY=opendal:b2 RUSTIC_PASSWORD_FILE=/etc/restic/password OPENDAL_BUCKET=milky-way-backup OPENDAL_ROOT=$(hostname)/ && rustic restore latest --target /tmp/restore'";
   };
 }
