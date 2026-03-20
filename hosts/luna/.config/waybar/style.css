@@ -73,19 +73,23 @@ window#waybar {
 #battery {
     padding: 0 10px;
     background: transparent;
-    color: #a6e3a1;
+    color: #89b4fa;  /* Blue for discharging */
 }
 
 #battery.charging {
-    color: #a6e3a1;
+    color: #a6e3a1;  /* Green for charging */
+}
+
+#battery.plugged {
+    color: #89b4fa;  /* Blue for plugged in */
 }
 
 #battery.warning:not(.charging) {
-    color: #fab387;
+    color: #f5c2e7;  /* Pink for low battery (30%) */
 }
 
 #battery.critical:not(.charging) {
-    background: #f38ba8;
+    background: #f38ba8;  /* Red background for critical (<15%) */
     color: #1e1e2e;
     animation-name: blink;
     animation-duration: 0.5s;
