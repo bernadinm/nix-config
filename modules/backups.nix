@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   # Rustic backup configuration for Luna
@@ -28,7 +28,7 @@
         "RUSTIC_PASSWORD_FILE=/etc/restic/password"
         # OpenDAL B2 configuration (will be set via OPENDAL_ env vars from b2-env file)
         "OPENDAL_BUCKET=milky-way-backup"
-        "OPENDAL_ROOT=${config.networking.hostName}/"
+        "OPENDAL_ROOT=${lib.toLower config.networking.hostName}/"
         "OPENDAL_BUCKET_ID=c369a3ee90f0ab6897cb0d1f"
       ];
 
@@ -101,7 +101,7 @@
         ${pkgs.rustic}/bin/rustic backup \
           --glob-file=/etc/rustic/excludes.txt \
           --tag systemd \
-          --tag $(hostname) \
+          --tag ${config.networking.hostName} \
           /home/miguel \
           /etc/nixos \
           /root
