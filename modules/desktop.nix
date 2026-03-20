@@ -50,8 +50,6 @@
       '';
       ".config/navi/.navi.plugin.bash".source =
         ../dotfiles/navi/.navi.plugin.bash;
-      ".config/helix/config.toml".source =
-        ../dotfiles/.config/helix/config.toml;
       ".config/termite/config".source =
         ../dotfiles/.config/termite/config;
       ".config/tiny/config.yml".source =
