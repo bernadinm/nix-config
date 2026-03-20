@@ -394,6 +394,7 @@
     cliphist # clipboard manager with history (Wayland)
     wev # discover keybindings (Wayland)
     sound-theme-freedesktop # system sounds including screen-capture.oga
+    (python3.withPackages (ps: with ps; [ lz4 ])) # for Firefox tab monitoring
 
     tor-browser # browser
     chromium # browser
