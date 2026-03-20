@@ -481,6 +481,9 @@
     };
   };
 
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.login.enableGnomeKeyring = true;
+
   services.atd.enable = true;
   services.locate.enable = true;
   # services.wakapi.enable = true;
@@ -538,4 +541,32 @@
   # hardware.bluetooth.hsphfpd.enable = true; # enable auto pairing
   services.touchegg.enable = false; # enable multi touch gesture
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  # Power management
+  powerManagement.enable = true;
+  powerManagement.cpuFreqGovernor = "ondemand";  # Default governor, script will change based on AC/battery
+
+  # Advanced power management
+  services.power-profiles-daemon.enable = false;  # Disable to use manual CPU governor control
+  services.tlp.enable = false;  # Disable TLP to avoid conflicts with custom power management
+
+  # Enable CPU frequency scaling
+  boot.kernelModules = [ "acpi_call" ];  # For advanced power management
+
+  # Allow brightness and CPU frequency control without password
+  security.sudo.extraRules = [
+    {
+      users = [ "miguel" ];
+      commands = [
+        {
+          command = "${pkgs.coreutils}/bin/tee /sys/class/backlight/amdgpu_bl1/brightness";
+          options = [ "NOPASSWD" ];
+        }
+        {
+          command = "${pkgs.coreutils}/bin/tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
+  ];
 }
