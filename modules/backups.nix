@@ -191,10 +191,7 @@
     !**/.venv
     !**/virtualenv
 
-    # Large media that's backed up elsewhere
-    !**/Downloads
-    !**/Videos
-    !**/Music
+    # Large media - now included in backup
 
     # System files
     !**/.Trash
@@ -219,5 +216,7 @@
     rustic-logs = "journalctl -u rustic-backup.service -f";
     rustic-list = "sudo bash -c 'source /etc/restic/b2-env && export RUSTIC_REPOSITORY=opendal:b2 RUSTIC_PASSWORD_FILE=/etc/restic/password OPENDAL_BUCKET=milky-way-backup OPENDAL_ROOT=$(hostname)/ && rustic snapshots'";
     rustic-restore = "sudo bash -c 'source /etc/restic/b2-env && export RUSTIC_REPOSITORY=opendal:b2 RUSTIC_PASSWORD_FILE=/etc/restic/password OPENDAL_BUCKET=milky-way-backup OPENDAL_ROOT=$(hostname)/ && rustic restore latest --target /tmp/restore'";
+    rustic-verify = "sudo ${../scripts/backup-verify.sh}";
+    rustic-verify-deep = "sudo ${../scripts/backup-verify.sh} --deep";
   };
 }
