@@ -127,8 +127,8 @@
       PrivateTmp = true;
       NoNewPrivileges = true;
 
-      # Timeout and restart settings (allow 24h for large backups)
-      TimeoutStartSec = "24h";
+      # No timeout - let backups run as long as needed
+      TimeoutStartSec = "infinity";
 
       # On failure, send notification
       ExecStartPost = pkgs.writeShellScript "backup-notify" ''
