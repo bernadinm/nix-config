@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports =
@@ -16,8 +16,13 @@
       ../../modules/utilities.nix
       ../../modules/coding.nix
       ../../modules/backups.nix
+      ../../modules/server.nix  # Add server capabilities (k3s + GitHub Actions runner)
       # home-manager is now provided by flake.nix
     ];
+
+  # Override server.nix settings - Luna is a desktop+server hybrid
+  services.xserver.enable = lib.mkForce true;
+  nix.gc.options = lib.mkForce "--delete-older-than 60d";  # Use desktop's longer retention
 
   # Use the systemd-boot EFI boot loader
   boot.loader.systemd-boot.enable = true;
