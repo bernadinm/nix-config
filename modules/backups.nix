@@ -104,7 +104,8 @@
           --tag ${config.networking.hostName} \
           /home/miguel \
           /etc/nixos \
-          /root
+          /root \
+          /var/lib/docker/volumes
 
         # Cleanup old snapshots
         echo -e "''${BLUE}[Rustic Backup]''${NC} Pruning old snapshots..."
