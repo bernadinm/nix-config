@@ -22,7 +22,7 @@
     gcc # coding used with pip
 
     git gti git-lfs# svm
-    gh # github util
+    gh tea # github/gitea util
     pkgs.unstable.gh-dash # github dashboard
     delta # git diff tool
 
