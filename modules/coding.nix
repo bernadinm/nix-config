@@ -37,12 +37,13 @@
     gnumake # coding make files
     glib # c wrappers
 
-    # # rust
-    # cargo # coding for rust
-    # rustc # rust compiler
-    # pkg-config # packging with rust
+    # rust
+    pkgs.unstable.cargo # coding for rust
+    pkgs.unstable.rustc # rust compiler
+    pkg-config # packaging with rust
 
     # node
+    bun # javascript runtime + bundler
     deno # javascript runtime
     nodejs # javascript runtime
     prisma-engines # javascript tools
@@ -94,6 +95,12 @@
     cuelsp # cuelang
 
     ngrok # development reverse proxy
+
+    # cloud CLIs
+    awscli2          # AWS CLI v2
+    google-cloud-sdk # gcloud, gsutil, bq
+    eksctl           # EKS cluster management
+    ssm-session-manager-plugin # AWS SSM for secure access
 
     # AI dev tools
     pkgs.unstable.aider-chat
