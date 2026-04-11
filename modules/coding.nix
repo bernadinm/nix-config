@@ -98,7 +98,7 @@
 
     # cloud CLIs
     awscli2          # AWS CLI v2
-    google-cloud-sdk # gcloud, gsutil, bq
+    (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin]) # gcloud + GKE auth
     eksctl           # EKS cluster management
     ssm-session-manager-plugin # AWS SSM for secure access
 
