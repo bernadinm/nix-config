@@ -24,6 +24,10 @@
   services.xserver.enable = lib.mkForce true;
   nix.gc.options = lib.mkForce "--delete-older-than 60d";  # Use desktop's longer retention
 
+  # Re-enable suspend for laptop (server.nix disables all sleep)
+  systemd.targets.sleep.enable = lib.mkForce true;
+  systemd.targets.suspend.enable = lib.mkForce true;
+
   # Use the systemd-boot EFI boot loader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -45,10 +49,8 @@
   #time.timeZone = "America/Los_Angeles";
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
+  # Using NetworkManager for WiFi, so disable per-interface dhcpcd to avoid conflicts
   networking.useDHCP = false;
-  networking.interfaces.wlp1s0.useDHCP = true;
 
   # bernadinm(todo): remove me
   # networking.extraHosts =
@@ -183,7 +185,7 @@
     percentageLow = 15;
     percentageCritical = 10;
     percentageAction = 5;
-    criticalPowerAction = "Hibernate";
+    criticalPowerAction = "PowerOff";
   };
   services.auto-cpufreq.enable = true;
   services.xserver = {
@@ -195,6 +197,8 @@
 
   boot.initrd.luks.devices.root.device = "/dev/disk/by-uuid/508642b3-eced-4e85-9c67-e6e85d946d96";
   boot.initrd.luks.devices.root.preLVM = true;
+
+  # Suspend support (hibernate disabled by server.nix)
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -219,12 +223,12 @@
   # hybrid sleep when press power button
   services.logind.settings.Login = {
     HandlePowerKeyLongPress = "poweroff";
-    HandlePowerKey = "suspend-then-hibernate";
-    HandleLidSwitch = "hibernate";
-    HandleLidSwitchExternalPower = "hibernate";
+    HandlePowerKey = "suspend";
+    HandleLidSwitch = "suspend";
+    HandleLidSwitchExternalPower = "suspend";
     HandleLidSwitchDocked = "ignore";
-    IdleAction = "hibernate";
-    IdleActionSec = "15min";
+    IdleAction = "suspend";
+    IdleActionSec = "30min";
   };
   # screen locker (Wayland)
   # Note: xss-lock is X11-only. For Wayland, use swayidle with swaylock
@@ -263,7 +267,7 @@
     waybar
     wofi
     swaybg
-    swayidle
+    hypridle
     swaylock-effects
   ];
 
