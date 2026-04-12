@@ -157,49 +157,24 @@
       terminal = "tmux-256color";
       plugins = with pkgs.tmuxPlugins; [
         sensible
-        resurrect
+        {
+          plugin = resurrect;
+          extraConfig = ''
+            set -g @resurrect-capture-pane-contents 'on'
+            set -g @resurrect-strategy-vim 'session'
+          '';
+        }
         {
           plugin = continuum;
           extraConfig = ''
             set -g @continuum-restore 'on'
             set -g @continuum-save-interval '15'
+            set -g @continuum-boot 'on'
           '';
         }
         yank
       ];
-      extraConfig = ''
-        # Clipboard
-        set -g set-clipboard on
-
-        # Terminal settings
-        set -ag terminal-overrides ",xterm-256color:RGB"
-
-        # Key bindings
-        bind r source-file ~/.config/tmux/tmux.conf \; display "Reloaded!"
-        bind | split-window -h -c "#{pane_current_path}"
-        bind - split-window -v -c "#{pane_current_path}"
-        bind c new-window -c "#{pane_current_path}"
-
-        # Vim-style pane navigation
-        bind h select-pane -L
-        bind j select-pane -D
-        bind k select-pane -U
-        bind l select-pane -R
-
-        # Status bar
-        set -g status-position bottom
-        set -g status-justify centre
-        set -g status-left-length 40
-        set -g status-right-length 40
-        set -g status-left '#[fg=green]#H #[fg=black]• #[fg=green,bright]#(uname -r | cut -c 1-6)#[default]'
-        set -g status-right '#[fg=white,bg=default]%a%l:%M:%S %p#[default] #[fg=blue]%Y-%m-%d'
-
-        # Dracula theme
-        set -g status-style bg='#282a36',fg='#f8f8f2'
-        set -g window-status-current-style bg='#ff79c6',fg='#282a36'
-        set -g pane-border-style "fg=#444444"
-        set -g pane-active-border-style "fg=#00ff00"
-      '';
+      extraConfig = builtins.readFile ../dotfiles/.tmux.conf;
     };
 
     # Starship disabled - using pureline instead
