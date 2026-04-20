@@ -28,6 +28,15 @@
   systemd.targets.sleep.enable = lib.mkForce true;
   systemd.targets.suspend.enable = lib.mkForce true;
 
+  # AMD-specific sleep configuration for modern standby (s2idle)
+  systemd.sleep.extraConfig = ''
+    AllowSuspend=yes
+    AllowHibernation=no
+    AllowHybridSleep=no
+    AllowSuspendThenHibernate=no
+    SuspendState=freeze
+  '';
+
   # Use the systemd-boot EFI boot loader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -65,8 +74,14 @@
     "pcie_aspm=force"
     "iwlwifi.power_save=1"
     "ahci.mobile_lpm_policy=3"
-    "mem_sleep_default=deep"
+    "mem_sleep_default=s2idle"  # Use s2idle (modern standby) instead of deep - hardware doesn't support S3
+    "usbcore.autosuspend=-1"    # Disable USB autosuspend to prevent wake issues
+    "ucsi_acpi.dyndbg=+p"       # Enable debug logging for UCSI ACPI
   ];
+
+  # Workaround for Framework AMD USB-C ACPI wake issues
+  # The ucsi_acpi module has firmware bugs causing spurious wake events
+  boot.blacklistedKernelModules = [ "ucsi_acpi" ];
 
   nixpkgs.config.allowUnfree = true;
 
@@ -88,6 +103,7 @@
   home-manager.users.miguel = { pkgs, ... }: {
     home.file = {
       ".config/hypr/hyprland.conf".source = .config/hypr/hyprland.conf;
+      ".config/hypr/hypridle.conf".source = .config/hypr/hypridle.conf;
       ".config/libinput-gestures.conf".source = .config/libinput-gestures.conf;
       ".config/waybar/config".source = ./.config/waybar/config;
       ".config/waybar/style.css".source = ./.config/waybar/style.css;
@@ -96,20 +112,6 @@
 
     # Override pinentry for desktop (rofi instead of curses)
     services.gpg-agent.pinentry.package = pkgs.pinentry-rofi;
-
-    # Desktop-specific tmux plugins (base tmux config in dotfiles.nix)
-    programs.tmux.plugins = with pkgs.tmuxPlugins; [
-      fzf-tmux-url      # Prefix+u to open URLs with fzf
-      prefix-highlight  # Shows [PREFIX]/[COPY] in status bar
-      extrakto          # Prefix+Tab to fzf-pick text from scrollback
-      sessionist        # Better session switching (Prefix+g)
-      {
-        plugin = battery;
-        extraConfig = ''
-          set -g status-right '#[fg=#50fa7b]#{battery_percentage} #{battery_icon}  #[fg=white]%a %l:%M %p #[fg=#6272a4]%Y-%m-%d'
-        '';
-      }
-    ];
 
     # Cursor theme
     home.pointerCursor = {
@@ -227,7 +229,7 @@
     HandleLidSwitch = "suspend";
     HandleLidSwitchExternalPower = "suspend";
     HandleLidSwitchDocked = "ignore";
-    IdleAction = "suspend";
+    IdleAction = "ignore";  # Hypridle handles auto-suspend, not logind
     IdleActionSec = "30min";
   };
   # screen locker (Wayland)
@@ -291,17 +293,18 @@
   services.touchegg.enable = false;
   
   # PowerTOP automatic tuning service
-    systemd.services.powertop-autotune = {
-    enable = true;
-    description = "PowerTOP Auto Tune on Boot";
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStart = "/run/current-system/sw/bin/powertop --auto-tune";
-    };
-    wantedBy = [ "multi-user.target" ];
-    after = [ "multi-user.target" ];
-  };
+  # Disabled - conflicts with manual USB power management for sleep stability
+  # systemd.services.powertop-autotune = {
+  #   enable = true;
+  #   description = "PowerTOP Auto Tune on Boot";
+  #   serviceConfig = {
+  #     Type = "oneshot";
+  #     RemainAfterExit = true;
+  #     ExecStart = "/run/current-system/sw/bin/powertop --auto-tune";
+  #   };
+  #   wantedBy = [ "multi-user.target" ];
+  #   after = [ "multi-user.target" ];
+  # };
   
   # Sudoers rules for Bluetooth toggle (no password required)
   security.sudo.extraRules = [
@@ -343,12 +346,15 @@
   };
   
   # Power management via udev rules
-  # Power management via udev rules (simplified)
   services.udev.extraRules = ''
-    # Enable runtime power management for PCI devices
-    ACTION=="add", SUBSYSTEM=="pci", ATTR{power/control}="auto"
-    # Enable USB autosuspend
-    ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"
+    # Enable runtime power management for PCI devices (except USB controllers)
+    ACTION=="add", SUBSYSTEM=="pci", ATTR{class}!="0x0c03*", ATTR{power/control}="auto"
+
+    # Disable wakeup for USB-C ports to prevent spurious wake events
+    ACTION=="add", SUBSYSTEM=="pci", DRIVER=="xhci_hcd", ATTR{power/wakeup}="disabled"
+
+    # Disable USB-C ACPI wakeup (fixes ucsi_acpi errors waking system)
+    ACTION=="add", KERNEL=="USBC000:00", ATTR{power/wakeup}="disabled"
   '';
 
   # TODO(bernadinm): required for home manager 23.05
