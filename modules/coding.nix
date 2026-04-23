@@ -79,6 +79,8 @@
 
     # nix
     nix-prefetch-git # git package util
+    node2nix # generate nix from node packages
+    ghostscript # PDF/PostScript processing
 
     # language servers
     nil # nix

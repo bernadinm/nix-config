@@ -25,20 +25,24 @@
   networking.hostName = "astra"; # Define your hostname (lowercase for server)
   networking.networkmanager.enable = true; # Use networkmanager for wifi
 
-  # Static IP configuration (optional - remove if using DHCP)
-  # networking.interfaces.wlp170s0.ipv4.addresses = [{
-  #   address = "192.168.100.50";
-  #   prefixLength = 24;
-  # }];
-  # networking.defaultGateway = "192.168.100.1";
-  # networking.nameservers = [ "8.8.8.8" "1.1.1.1" ];
+  # Static IP — eliminates DHCP DAD conflicts permanently.
+  # Chose .148 because astra was historically on this address.
+  networking.interfaces.wlp170s0.ipv4.addresses = [{
+    address = "192.168.100.148";
+    prefixLength = 24;
+  }];
+  networking.defaultGateway = {
+    address = "192.168.100.1";
+    interface = "wlp170s0";
+  };
+  networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
 
   # Set your time zone.
   time.timeZone = "America/New_York";
 
-  # Use DHCP
+  # DHCP disabled — using static IP above
   networking.useDHCP = false;
-  networking.interfaces.wlp170s0.useDHCP = true;
+  networking.interfaces.wlp170s0.useDHCP = false;
 
   # bernadinm(todo): remove me
   # networking.extraHosts =

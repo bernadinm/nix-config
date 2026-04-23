@@ -54,6 +54,8 @@
       22    # SSH
       6443  # k3s API server
       10250 # kubelet
+      30900 # MinIO S3 API (NodePort)
+      30901 # MinIO Console (NodePort)
     ];
     allowedUDPPorts = [
       8472  # k3s flannel VXLAN
@@ -70,6 +72,7 @@
     kustomize
     argocd
     flux
+    redis # redis-cli for debugging k3s/k8s services
   ];
 
   # Create k3s manifests directory for GitOps
