@@ -27,11 +27,12 @@
   # Re-enable suspend for laptop (server.nix disables all sleep)
   systemd.targets.sleep.enable = lib.mkForce true;
   systemd.targets.suspend.enable = lib.mkForce true;
+  systemd.targets.hibernate.enable = lib.mkForce true;
 
   # AMD-specific sleep configuration for modern standby (s2idle)
   systemd.sleep.extraConfig = ''
     AllowSuspend=yes
-    AllowHibernation=no
+    AllowHibernation=yes
     AllowHybridSleep=no
     AllowSuspendThenHibernate=no
     SuspendState=freeze
@@ -77,6 +78,7 @@
     "mem_sleep_default=s2idle"  # Use s2idle (modern standby) instead of deep - hardware doesn't support S3
     "usbcore.autosuspend=-1"    # Disable USB autosuspend to prevent wake issues
     "ucsi_acpi.dyndbg=+p"       # Enable debug logging for UCSI ACPI
+    "resume=/dev/disk/by-uuid/9601ad7a-71f7-48e6-98af-ce5aa44a773e"  # Enable hibernation to swap
   ];
 
   # Workaround for Framework AMD USB-C ACPI wake issues
