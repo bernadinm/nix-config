@@ -357,6 +357,12 @@
 
     # Disable USB-C ACPI wakeup (fixes ucsi_acpi errors waking system)
     ACTION=="add", KERNEL=="USBC000:00", ATTR{power/wakeup}="disabled"
+
+    # Enable USB autosuspend
+    ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"
+
+    # Prevent kernel from handling rfkill key directly (handled by Hyprland double-tap script)
+    SUBSYSTEM=="input", ATTRS{name}=="*rfkill*", ENV{LIBINPUT_IGNORE_DEVICE}="1"
   '';
 
   # TODO(bernadinm): required for home manager 23.05

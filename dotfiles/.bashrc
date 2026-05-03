@@ -44,7 +44,8 @@ alias pop='pop -H 127.0.0.1 -p $(pass protonmail.com/bridge/$(hostname)/smtp/pas
 alias mods='OPENAI_API_KEY=$(pass openai.com/$(hostname)/api-key) mods'
 alias mp='OPENAI_API_KEY=$(pass openai.com/$(hostname)/api-key) mods -P'
 alias mcp='OPENAI_API_KEY=$(pass openai.com/$(hostname)/api-key) mods -C -P'
-freshfetch # bash init
+# Only run freshfetch in interactive, non-tmux shells
+[[ $- == *i* ]] && [[ -z "$TMUX" ]] && command -v freshfetch &>/dev/null && freshfetch
 
 # Environment Variables
 EDITOR='hx' # default editor
