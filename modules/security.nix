@@ -243,6 +243,15 @@ in
     openFirewall = lib.mkDefault false; # keep this disabled but open through nebula.mesh (servers override this)
   };
 
+  # Trusted SSH keys — single source of truth for all hosts
+  users.users.miguel.openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFXxj4JwQc0d3iCy/bOapT2IGBHFJ6ECmwfSksFqSQ9t miguel.bernadin@gmail.com"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHOHAFQahzZhqMfw60UP1It2X2cENObVncjMdEGJqRbC u0_a307@localhost"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPaH2o59MrcOTgMWuksEgnToot1KLKmFsvDzKgTXocI0 miguel@Luna"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOsbVIBiPz259vIVwD3USlGeNKUb7CgjWDPCcooz5ivQ miguel@astra"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINqgRfblq8qT8u60vcfUEWo5aAy0GsnM4onnzDYRejNj openpgp:0xC106861E"
+  ];
+
   # Enable the Gnugp daemon instead of SSH.
   programs = {
     ssh.startAgent = false;
