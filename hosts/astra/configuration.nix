@@ -25,7 +25,7 @@
   networking.hostName = "astra"; # Define your hostname (lowercase for server)
   networking.networkmanager.enable = true; # Use networkmanager for wifi
 
-  # Static IP — eliminates DHCP DAD conflicts permanently.
+  # Static IP - eliminates DHCP DAD conflicts permanently.
   # Chose .148 because astra was historically on this address.
   networking.interfaces.wlp170s0.ipv4.addresses = [{
     address = "192.168.100.148";
@@ -40,7 +40,7 @@
   # Set your time zone.
   time.timeZone = "America/New_York";
 
-  # DHCP disabled — using static IP above
+  # Enable DHCP for ethernet only, WiFi stays static
   networking.useDHCP = false;
   networking.interfaces.wlp170s0.useDHCP = false;
 
@@ -49,6 +49,9 @@
   #   ''
   #     192.168.100.2 lumina
   #   '';
+
+  # Disable WiFi power management - prevents DORMANT mode that causes packet drops
+  networking.networkmanager.wifi.powersave = false;
 
   boot.kernelPackages = pkgs.linuxPackages_latest; #- for WiFi support
 
