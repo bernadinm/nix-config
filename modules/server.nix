@@ -26,7 +26,6 @@
       PasswordAuthentication = true;  # Allow password auth for remote management
       PermitRootLogin = "no";
     };
-    openFirewall = true;
   };
 
   # Tailscale for secure remote access
