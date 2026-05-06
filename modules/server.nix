@@ -79,17 +79,20 @@
     mkdir -p /var/lib/rancher/k3s/server/manifests
   '';
 
-  # Auto-update and gc
+  # Auto-update via flake (not channel - this system uses flakes)
   system.autoUpgrade = {
     enable = true;
     allowReboot = false;
-    channel = "https://nixos.org/channels/nixos-unstable";
+    flake = "/home/miguel/git/bernadinm/nix-config#astra";
   };
 
+  # Nix garbage collection
+  # Using --delete-old instead of --delete-older-than to avoid
+  # nix assertion bug with corrupted generation timestamps
   nix.gc = {
     automatic = true;
     dates = "weekly";
-    options = "--delete-older-than 30d";
+    options = "--delete-old";
   };
 
   # Performance tuning for server workloads
