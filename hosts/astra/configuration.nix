@@ -53,6 +53,17 @@
   # Disable WiFi power management - prevents DORMANT mode that causes packet drops
   networking.networkmanager.wifi.powersave = false;
 
+  # Intel AX210 WiFi stability fixes:
+  # - iwlwifi power_save=false: prevent radio from sleeping
+  # - iwlmvm power_scheme=1: active mode (no balanced/low-power)
+  # - bt_coex_active=false: disable bluetooth coexistence (no BT on this server)
+  # Without these, the driver periodically deauths and re-associates,
+  # causing all TCP connections to reset (cascading k3s/Tailscale failures).
+  boot.extraModprobeConfig = ''
+    options iwlwifi power_save=0 bt_coex_active=0
+    options iwlmvm power_scheme=1
+  '';
+
   boot.kernelPackages = pkgs.linuxPackages_latest; #- for WiFi support
 
   # Longhorn storage requirements
