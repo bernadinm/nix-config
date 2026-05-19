@@ -115,6 +115,7 @@
     wget
     rsync
     tree
+    alsa-utils
   ];
 
   # Firmware updates
