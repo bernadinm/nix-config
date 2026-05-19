@@ -12,7 +12,7 @@
   # Server user account
   users.users.miguel = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "libvirtd" ];
+    extraGroups = [ "wheel" "docker" "libvirtd" "audio" ];
     description = "Miguel Bernadin";
   };
 
