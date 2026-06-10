@@ -1,0 +1,350 @@
+# Sway configuration file
+# This configuration replicates i3 tiling workflow (migrated from Hyprland)
+
+# Variables
+set $mod Mod1
+set $sup Mod4
+set $term alacritty
+
+# ============================================
+# INPUT CONFIGURATION
+# ============================================
+
+input type:keyboard {
+    xkb_layout us
+    xkb_options ctrl:swap_lalt_lwin
+    repeat_rate 25
+    repeat_delay 500
+}
+
+input type:touchpad {
+    tap enabled
+    natural_scroll enabled
+    dwt enabled
+    click_method clickfinger
+    drag disabled
+}
+
+# ============================================
+# OUTPUT CONFIGURATION
+# ============================================
+
+# Framework 13 display - native 2256x1504, no scaling for max screen space
+output eDP-1 {
+    mode 2256x1504@60Hz
+    scale 1
+    bg ~/Pictures/wallpapers/giraffe-manor-catppuccin.jpg fill
+}
+
+# External monitors - default settings
+output * bg ~/Pictures/wallpapers/giraffe-manor-catppuccin.jpg fill
+
+# ============================================
+# APPEARANCE - Catppuccin Mocha colors
+# ============================================
+
+# Gaps
+gaps inner 12
+gaps outer 0
+
+# Window borders - Catppuccin Mocha
+default_border pixel 2
+default_floating_border pixel 2
+hide_edge_borders none
+
+# Colors                 border    bg        text      indicator child_border
+client.focused          #cba6f7   #1e1e2e   #cdd6f4   #89b4fa   #cba6f7
+client.unfocused        #313244   #1e1e2e   #cdd6f4   #313244   #313244
+client.focused_inactive #313244   #1e1e2e   #cdd6f4   #313244   #313244
+client.urgent           #f38ba8   #1e1e2e   #cdd6f4   #f38ba8   #f38ba8
+
+# Font
+font pango:monospace 8
+
+# ============================================
+# WINDOW RULES
+# ============================================
+
+# No borders on all windows
+for_window [title=".*"] border pixel 2
+
+# Floating windows
+for_window [app_id="float"] floating enable
+for_window [title="scratchpad"] floating enable
+for_window [app_id="float"] move to scratchpad
+
+# Firefox - keep focus when switching workspaces
+for_window [app_id="firefox"] inhibit_idle fullscreen
+for_window [app_id="Firefox"] inhibit_idle fullscreen
+
+# ============================================
+# KEYBINDINGS - Matching i3 workflow
+# ============================================
+
+# Terminal
+bindsym $mod+Return exec $term
+
+# Close window
+bindsym $mod+Shift+w kill
+
+# Program launcher
+bindsym $mod+space exec wofi --show drun
+
+# Clipboard history
+bindsym $sup+v exec cliphist list | wofi --dmenu | cliphist decode | wl-copy
+
+# Focus movement (vim keys)
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# Focus movement (arrow keys)
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move windows (vim keys)
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# Move windows (arrow keys)
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Workspaces
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+
+# Move to workspace
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
+
+# Workspace navigation
+bindsym $sup+Right workspace next
+bindsym $sup+Left workspace prev
+
+# Move workspace between monitors
+bindsym Ctrl+Shift+Right move workspace to output right
+bindsym Ctrl+Shift+Left move workspace to output left
+
+# Layout management
+# Toggle between split directions (horizontal/vertical)
+bindsym $mod+e layout toggle split
+bindsym $mod+v splith
+bindsym $mod+s splitv
+
+# Stacking/tabbed layouts
+bindsym $mod+w layout tabbed
+
+# Override Super+W to prevent accidental actions
+bindsym $sup+w exec true
+
+# Fullscreen
+bindsym $mod+f fullscreen toggle
+
+# Toggle floating
+bindsym $mod+Shift+space floating toggle
+
+# Scratchpad
+bindsym $mod+Shift+v scratchpad show
+bindsym $mod+Shift+s move container to scratchpad
+
+# Scratchpad terminal
+bindsym $sup+grave exec $term --class float --title scratchpad -e tmux
+
+# Cycle through windows
+bindsym $mod+a focus next
+bindsym $sup+a focus next
+
+# ============================================
+# RESIZE MODE
+# ============================================
+
+bindsym $mod+r mode "resize"
+
+mode "resize" {
+    # Resize bindings (vim keys)
+    bindsym h resize shrink width 10 px
+    bindsym j resize grow height 10 px
+    bindsym k resize shrink height 10 px
+    bindsym l resize grow width 10 px
+
+    # Resize bindings (arrow keys)
+    bindsym Left resize shrink width 10 px
+    bindsym Down resize grow height 10 px
+    bindsym Up resize shrink height 10 px
+    bindsym Right resize grow width 10 px
+
+    # Exit resize mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# ============================================
+# RELOAD / RESTART / EXIT
+# ============================================
+
+# Reload config
+bindsym $mod+Shift+c reload
+
+# Restart sway inplace
+bindsym $mod+Shift+r reload
+
+# Exit sway with confirmation
+bindsym $mod+Shift+e exec bash -c 'if echo -e "No\nYes, exit Sway" | wofi --dmenu --prompt "Exit Sway?" | grep -q "Yes"; then swaymsg exit; fi'
+
+# Lock screen
+bindsym $mod+Shift+q exec swaylock -f -c 000000
+
+# Power menu (Super+Shift+e)
+bindsym $sup+Shift+e exec bash -c 'action=$(echo -e "Lock\nLogout\nSuspend\nHibernate\nReboot\nShutdown" | wofi --dmenu --prompt "Power Menu"); case "$action" in Lock) swaylock -f -c 000000;; Logout) swaymsg exit;; Suspend) systemctl suspend;; Hibernate) systemctl hibernate;; Reboot) systemctl reboot;; Shutdown) systemctl poweroff;; esac'
+
+# ============================================
+# MEDIA / HARDWARE KEYS
+# ============================================
+
+# Audio controls
+bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +10%
+bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -10%
+bindsym --locked XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym --locked XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+# Airplane mode (double-tap script)
+bindsym XF86RFKill exec bash ~/.config/sway/airplane-doubletap.sh
+
+# Brightness controls
+bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym --locked XF86MonBrightnessUp exec brightnessctl set +5%
+
+# Media controls
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+# Screenshot (saves to ~/Pictures/Screenshots/ AND copies to clipboard)
+bindsym Print exec mkdir -p ~/Pictures/Screenshots && FILE=~/Pictures/Screenshots/$(date +'%Y-%m-%d-%H-%M-%S_screenshot.png') && grim -g "$(slurp)" - | tee "$FILE" | wl-copy && paplay /run/current-system/sw/share/sounds/freedesktop/stereo/screen-capture.oga && notify-send "Screenshot saved" "$FILE"
+bindsym Shift+Print exec mkdir -p ~/Pictures/Screenshots && FILE=~/Pictures/Screenshots/$(date +'%Y-%m-%d-%H-%M-%S_screenshot.png') && grim - | tee "$FILE" | wl-copy && paplay /run/current-system/sw/share/sounds/freedesktop/stereo/screen-capture.oga && notify-send "Screenshot saved" "$FILE"
+
+# ============================================
+# APPLICATION LAUNCHERS (Super key combos)
+# ============================================
+
+bindsym $sup+n exec sh $HOME/.launch_notion.sh
+bindsym $sup+l exec sh $HOME/.launch_logseq.sh
+bindsym $sup+y exec sh $HOME/.launch_youtube.sh
+bindsym $sup+i exec sh $HOME/.launch_instagram.sh
+bindsym $sup+m exec sh $HOME/.launch_music.sh
+bindsym $sup+f exec sh $HOME/.launch_googlefi.sh
+bindsym $sup+Shift+w exec sh $HOME/.launch_whatsapp.sh
+bindsym $sup+b exec sh $HOME/.launch_bible.sh
+bindsym $sup+c exec sh $HOME/.launch_chatgpt.sh
+bindsym $sup+e exec sh $HOME/.launch_businessmail.sh
+bindsym $sup+g exec sh $HOME/.launch_gmail.sh
+bindsym $sup+o exec sh $HOME/.launch_github.sh
+bindsym $sup+k exec sh $HOME/.launch_googlekeep.sh
+bindsym $sup+p exec sh $HOME/.launch_protonmail.sh
+bindsym $sup+d exec sh $HOME/.launch_drive.sh
+
+# Bluetooth toggle
+bindsym $sup+Shift+b exec bash -c "if lsmod | grep -q btusb; then sudo modprobe -r btusb && notify-send 'Bluetooth Disabled' 'Hardware powered off'; else sudo modprobe btusb && sudo systemctl restart bluetooth && notify-send 'Bluetooth Enabled' 'Hardware ready'; fi && pkill -RTMIN+8 waybar"
+
+# Power monitor dashboard
+bindsym $sup+Shift+p exec $term -e bash ~/.power_monitor.sh
+
+# ============================================
+# AUTOSTART APPLICATIONS
+# ============================================
+
+# Import environment to systemd (needed for portals, screen sharing)
+exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+
+# Environment variables
+exec_always {
+    gsettings set org.gnome.desktop.interface monospace-font-name 'monospace 8'
+    gsettings set org.gnome.desktop.interface font-name 'monospace 8'
+}
+
+# Network manager
+exec nm-applet
+
+# Notification daemon (Wayland)
+exec mako
+
+# Autotiling - automatically alternate between h/v splits
+exec autotiling-rs
+
+# Clipboard history daemon
+exec wl-paste --type text --watch cliphist store
+exec wl-paste --type image --watch cliphist store
+
+# Status bar - waybar (modern bar like polybar)
+exec_always pkill waybar; waybar
+
+# Idle management (swayidle) - only locks/sleeps on battery
+exec swayidle -w \
+    timeout 900 'bash -c '\''[[ $(cat /sys/class/power_supply/ACAD/online) == "0" ]] && loginctl lock-session'\''' \
+    timeout 930 'bash -c '\''[[ $(cat /sys/class/power_supply/ACAD/online) == "0" ]] && swaymsg "output * dpms off"'\''' \
+    resume 'swaymsg "output * dpms on"' \
+    timeout 1800 'bash -c '\''[[ $(cat /sys/class/power_supply/ACAD/online) == "0" ]] && systemctl hibernate'\''' \
+    before-sleep 'loginctl lock-session' \
+    lock 'swaylock -f -c 000000'
+
+# Input gestures
+exec libinput-gestures
+
+# Applications
+exec protonmail-bridge -g
+exec xdg-settings set default-web-browser firefox.desktop
+
+# Scripts
+exec bash ~/.avoid_sleeping_while_streaming.sh
+exec bash -c 'while true; do bash ~/.battery_check.sh; sleep 90; done'
+
+# Auto power management
+exec bash ~/.auto_power_management.sh
+
+# Psmouse fix
+exec sudo modprobe -r psmouse && sudo modprobe psmouse
+
+# ============================================
+# REMOTE DESKTOP MODE (for RustDesk)
+# ============================================
+# Disables ALL local keybindings so they pass through to RustDesk
+#
+# Usage:
+#   Press SUPER+SHIFT+R to enter Remote Desktop Mode
+#   All keyboard shortcuts now go to RustDesk (no local keybinds active)
+#   Press SUPER+SHIFT+R again to exit and restore local keybinds
+
+bindsym $sup+Shift+r mode "remote_desktop"
+
+mode "remote_desktop" {
+    # Exit remote desktop mode and restore all keybinds
+    bindsym $sup+Shift+r mode "default"
+}
+
+# Include additional config files if they exist
+include ~/.config/sway/config.d/*
