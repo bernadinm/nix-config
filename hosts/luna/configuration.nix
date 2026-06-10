@@ -104,8 +104,8 @@
   # Desktop-specific home-manager settings (base config in dotfiles.nix)
   home-manager.users.miguel = { pkgs, ... }: {
     home.file = {
-      ".config/hypr/hyprland.conf".source = .config/hypr/hyprland.conf;
-      ".config/hypr/hypridle.conf".source = .config/hypr/hypridle.conf;
+      ".config/sway/config".source = .config/sway/config;
+      ".config/sway/airplane-doubletap.sh".source = .config/sway/airplane-doubletap.sh;
       ".config/libinput-gestures.conf".source = .config/libinput-gestures.conf;
       ".config/waybar/config".source = ./.config/waybar/config;
       ".config/waybar/style.css".source = ./.config/waybar/style.css;
@@ -177,8 +177,8 @@
 
   home-manager.users.rachelle.home.file =
     {
-      ".config/hypr/hyprland.conf".source =
-        .config/hypr/hyprland.conf;
+      ".config/sway/config".source =
+        .config/sway/config;
       ".config/libinput-gestures.conf".source =
         .config/libinput-gestures.conf;
     };
@@ -231,21 +231,24 @@
     HandleLidSwitch = "suspend";
     HandleLidSwitchExternalPower = "suspend";
     HandleLidSwitchDocked = "ignore";
-    IdleAction = "ignore";  # Hypridle handles auto-suspend, not logind
+    IdleAction = "ignore";  # Swayidle handles auto-suspend, not logind
     IdleActionSec = "30min";
   };
   # screen locker (Wayland)
   # Note: xss-lock is X11-only. For Wayland, use swayidle with swaylock
   # programs.xss-lock.enable = false;
-  # Configure swaylock via swayidle in your Hyprland config
+  # Configure swaylock via swayidle in your Sway config
 
-  # Enable Hyprland as a Wayland compositor
-  programs.hyprland.enable = true;
+  # Enable Sway as a Wayland compositor
+  programs.sway = {
+    enable = true;
+    wrapperFeatures.gtk = true;
+  };
 
-  # Configure XDG Desktop Portal for Hyprland (required for screen sharing and input injection)
+  # Configure XDG Desktop Portal for Sway (required for screen sharing)
   xdg.portal = {
     enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
+    wlr.enable = true;
     config.common.default = "*";
   };
 
@@ -266,13 +269,15 @@
      # Bluetooth toggle script (Shift+F10)
      (pkgs.writeScriptBin "bt-toggle" (builtins.readFile ./bt-toggle.sh))
     
-    # Hyprland and related packages
-    hyprland
+    # Sway and related packages
+    sway
     waybar
     wofi
     swaybg
-    hypridle
+    swayidle
     swaylock-effects
+    i3status
+    autotiling-rs  # Auto alternate h/v splits
   ];
 
   # Monitor Control via CLI
@@ -361,7 +366,7 @@
     # Enable USB autosuspend
     ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"
 
-    # Prevent kernel from handling rfkill key directly (handled by Hyprland double-tap script)
+    # Prevent kernel from handling rfkill key directly (handled by Sway double-tap script)
     SUBSYSTEM=="input", ATTRS{name}=="*rfkill*", ENV{LIBINPUT_IGNORE_DEVICE}="1"
   '';
 
