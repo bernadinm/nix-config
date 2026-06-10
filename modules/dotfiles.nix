@@ -129,8 +129,8 @@
           source ~/git/bernadinm/g/pureline/pureline ~/.pureline.conf
         fi
 
-        # Navi cheatsheet
-        if test -f "$HOME/.config/navi/.navi.plugin.bash"; then
+        # Navi cheatsheet (only in interactive shells - has bind commands)
+        if [[ $- == *i* ]] && test -f "$HOME/.config/navi/.navi.plugin.bash"; then
           eval "$(cat $HOME/.config/navi/.navi.plugin.bash)"
         fi
 

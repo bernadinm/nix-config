@@ -105,7 +105,8 @@
         "format-charging": "⚡{capacity}% {time}",
         "format-plugged": "AC: {capacity}%",
         "format-alt": "{capacity}%",
-        "tooltip-format": "{timeTo} ({capacity}%)"
+        "tooltip-format": "{timeTo} ({capacity}%)",
+        "on-click": "alacritty -e sh -c 'sudo powertop; exec bash'"
     },
 
     "pulseaudio": {

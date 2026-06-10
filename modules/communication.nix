@@ -13,6 +13,7 @@
     slack
     pkgs.unstable.signal-desktop
     keybase-gui
+    clickup
 
     # email client
     pkgs.unstable.pop protonmail-bridge # email cli
