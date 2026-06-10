@@ -497,7 +497,7 @@
           enable = true;
           wayland = true;
         };
-        defaultSession = "hyprland";
+        defaultSession = "sway";
     };
 
     # Disable i3 window manager

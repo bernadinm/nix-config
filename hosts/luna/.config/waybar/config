@@ -3,7 +3,7 @@
     "position": "top",
     "height": 30,
     "spacing": 4,
-    "modules-left": ["hyprland/workspaces", "hyprland/window"],
+    "modules-left": ["sway/workspaces", "sway/window"],
     "modules-center": ["clock"],
     "modules-right": [
         "custom/tailscale",
@@ -18,17 +18,15 @@
         "tray"
     ],
 
-    "hyprland/workspaces": {
+    "sway/workspaces": {
         "format": "{name}",
-        "on-click": "activate",
-        "all-outputs": false,
-        "active-only": false
+        "disable-scroll": false,
+        "all-outputs": false
     },
 
-    "hyprland/window": {
+    "sway/window": {
         "format": "{}",
-        "max-length": 50,
-        "separate-outputs": true
+        "max-length": 50
     },
 
     "clock": {
