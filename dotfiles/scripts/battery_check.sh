@@ -10,9 +10,12 @@ if [ -z "$ac_power" ]; then
 
     # Notify only if the battery level is less than 15%
     if [ "$battery_level" -lt 15 ]; then
-        # Send a notification
-        paplay ~/.modern_alert.wav; notify-send -u critical -t 30000 "Low Battery" "Your battery is critically low at ${battery_level}%!"
+        # Send a notification with normal urgency so it auto-dismisses after 30 seconds
+        paplay ~/.modern_alert.wav; notify-send -u normal -t 30000 "Low Battery" "Your battery is critically low at ${battery_level}%!"
     fi
+else
+    # If AC is connected, dismiss any lingering low battery notifications
+    makoctl dismiss --all
 fi
 
 # Sound effect generated with the following script
