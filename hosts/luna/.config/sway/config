@@ -73,6 +73,8 @@ for_window [app_id="float"] floating enable
 for_window [title="scratchpad"] floating enable
 for_window [app_id="float"] move to scratchpad
 
+# RustDesk - use Super+Shift+r to enter remote desktop mode for keyboard passthrough
+
 # Firefox - keep focus when switching workspaces
 for_window [app_id="firefox"] inhibit_idle fullscreen
 for_window [app_id="Firefox"] inhibit_idle fullscreen
@@ -151,12 +153,13 @@ bindsym Ctrl+Shift+Left move workspace to output left
 
 # Layout management
 # Toggle between split directions (horizontal/vertical)
-bindsym $mod+e layout toggle split
+# Layout controls
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle splith splitv
+
+# Split direction for next window
 bindsym $mod+v splith
 bindsym $mod+s splitv
-
-# Stacking/tabbed layouts
-bindsym $mod+w layout tabbed
 
 # Override Super+W to prevent accidental actions
 bindsym $sup+w exec true
@@ -339,11 +342,11 @@ exec sudo modprobe -r psmouse && sudo modprobe psmouse
 #   All keyboard shortcuts now go to RustDesk (no local keybinds active)
 #   Press SUPER+SHIFT+R again to exit and restore local keybinds
 
-bindsym $sup+Shift+r mode "remote_desktop"
+bindsym $sup+Shift+r mode "remote_desktop"; exec notify-send "Remote Desktop Mode" "All keybinds disabled. Press Super+Shift+R to exit."
 
 mode "remote_desktop" {
     # Exit remote desktop mode and restore all keybinds
-    bindsym $sup+Shift+r mode "default"
+    bindsym $sup+Shift+r mode "default"; exec notify-send "Normal Mode" "Keybinds restored."
 }
 
 # Include additional config files if they exist
