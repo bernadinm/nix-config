@@ -47,19 +47,26 @@ output * bg ~/Pictures/wallpapers/giraffe-manor-catppuccin.jpg fill
 gaps inner 12
 gaps outer 0
 
+# Focus wrapping - cycle through windows like a rolling buffer
+focus_wrapping yes
+
 # Window borders - Catppuccin Mocha
 default_border pixel 2
 default_floating_border pixel 2
 hide_edge_borders none
 
-# Colors                 border    bg        text      indicator child_border
-client.focused          #cba6f7   #1e1e2e   #cdd6f4   #89b4fa   #cba6f7
-client.unfocused        #313244   #1e1e2e   #cdd6f4   #313244   #313244
-client.focused_inactive #313244   #1e1e2e   #cdd6f4   #313244   #313244
-client.urgent           #f38ba8   #1e1e2e   #cdd6f4   #f38ba8   #f38ba8
+# Tab styling - Chrome-like highlighted tabs
+# Format: border, background, text, indicator, child_border
+client.focused          #cba6f7   #cba6f7   #1e1e2e   #89b4fa   #cba6f7
+client.unfocused        #313244   #313244   #888888   #313244   #313244
+client.focused_inactive #45475a   #45475a   #bac2de   #45475a   #45475a
+client.urgent           #f38ba8   #f38ba8   #1e1e2e   #f38ba8   #f38ba8
 
-# Font
-font pango:monospace 8
+# Font for tabs - slightly larger and readable
+font pango:monospace 10
+
+# Title bar padding for better tab appearance
+titlebar_padding 8 4
 
 # ============================================
 # WINDOW RULES
