@@ -164,9 +164,8 @@ bindsym Ctrl+Shift+Left move workspace to output left
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle splith splitv
 
-# Split direction for next window
-bindsym $mod+v splith
-bindsym $mod+s splitv
+# Split direction toggle
+bindsym $mod+v split toggle
 
 # Override Super+W to prevent accidental actions
 bindsym $sup+w exec true
@@ -187,6 +186,10 @@ bindsym $sup+grave exec $term --class float --title scratchpad -e tmux
 # Cycle through windows
 bindsym $mod+a focus next
 bindsym $sup+a focus next
+
+# Navigate container hierarchy (for nested containers)
+bindsym $mod+p focus parent
+bindsym $mod+c focus child
 
 # ============================================
 # RESIZE MODE
@@ -302,9 +305,6 @@ exec nm-applet
 
 # Notification daemon (Wayland)
 exec mako
-
-# Autotiling - automatically alternate between h/v splits
-exec autotiling-rs
 
 # Clipboard history daemon
 exec wl-paste --type text --watch cliphist store

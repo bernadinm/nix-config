@@ -58,8 +58,7 @@
         ../dotfiles/.ssh/authorized_keys;
       ".gnupg/sshcontrol".source =
         ../dotfiles/.gnupg/sshcontrol;
-      ".tmux.conf".source =
-        ../dotfiles/.tmux.conf;
+      # Note: .tmux.conf is managed by programs.tmux in dotfiles.nix
       ".vimrc".source =
         ../dotfiles/.vimrc;
       ".launch_notion.sh".source =
