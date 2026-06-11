@@ -1,8 +1,8 @@
 # Astra - Standalone Server Configuration
 # Purpose: GitHub Actions runner + k3s Kubernetes cluster
-# This is a headless server (no desktop environment)
+# Server with minimal display support for XREAL glasses / emergency console
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports =
@@ -85,8 +85,39 @@
 
   environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
 
-  # Server mode - no desktop environment, no X server
-  # All GUI settings removed for headless operation
+  # ============================================
+  # DISPLAY SUPPORT FOR XREAL GLASSES
+  # ============================================
+  # Override server.nix headless settings to enable console/TTY on USB-C display
+  # XREAL glasses appear as DisplayPort over USB-C
+
+  # Enable basic graphics (override server.nix)
+  services.xserver.enable = lib.mkForce true;
+  services.xserver.videoDrivers = [ "modesetting" ];
+
+  # Don't start a display manager - just TTY/console
+  services.xserver.displayManager.startx.enable = true;
+
+  # Intel graphics for Framework laptop
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      intel-vaapi-driver
+    ];
+  };
+
+  # Ensure DRM kernel modules load for USB-C DisplayPort
+  boot.initrd.kernelModules = [ "i915" ];
+
+  # Console font - larger for XREAL glasses readability
+  console = {
+    font = "ter-v24n";
+    packages = [ pkgs.terminus_font ];
+  };
+
+  # Auto-login on tty1 for quick access when glasses connected
+  services.getty.autologinUser = "miguel";
 
   boot.initrd.luks.devices.root.device = "/dev/disk/by-uuid/508642b3-eced-4e85-9c67-e6e85d946d96";
   boot.initrd.luks.devices.root.preLVM = true;
