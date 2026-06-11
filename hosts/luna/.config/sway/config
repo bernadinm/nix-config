@@ -187,6 +187,7 @@ bindsym $sup+grave exec $term --class float --title scratchpad -e tmux
 bindsym $mod+a focus next
 bindsym $mod+Shift+a focus prev
 bindsym $sup+a focus next
+bindsym $sup+Shift+a focus prev
 
 # Navigate container hierarchy (for nested containers)
 bindsym $mod+p focus parent
