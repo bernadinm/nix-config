@@ -176,6 +176,8 @@
             set -g @continuum-restore 'on'
             set -g @continuum-save-interval '15'
             set -g @continuum-boot 'on'
+            # Set status-right here so continuum can hook into it (must be before run-shell)
+            set -g status-right '#{continuum_status} #[fg=white,bg=default]%a%l:%M:%S %p#[default] #[fg=blue]%Y-%m-%d'
           '';
         }
         yank
