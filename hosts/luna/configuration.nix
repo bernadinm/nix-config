@@ -277,7 +277,6 @@
     swayidle
     swaylock-effects
     i3status
-    autotiling-rs  # Auto alternate h/v splits
   ];
 
   # Monitor Control via CLI
