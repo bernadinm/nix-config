@@ -156,7 +156,13 @@
       mouse = true;
       terminal = "tmux-256color";
       plugins = with pkgs.tmuxPlugins; [
-        sensible
+        {
+          plugin = sensible;
+          # Set PATH before any plugins run - NixOS needs this for run-shell commands
+          extraConfig = ''
+            set-environment -g PATH "/run/wrappers/bin:/home/miguel/.nix-profile/bin:/nix/profile/bin:/home/miguel/.local/state/nix/profile/bin:/etc/profiles/per-user/miguel/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:/home/miguel/.local/bin"
+          '';
+        }
         {
           plugin = resurrect;
           extraConfig = ''
