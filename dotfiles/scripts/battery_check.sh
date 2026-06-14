@@ -8,9 +8,34 @@ if [ -z "$ac_power" ]; then
     # Get the current battery level
     battery_level=$(acpi -b | grep -P -o '[0-9]+(?=%)')
 
-    # Notify only if the battery level is less than 15%
-    if [ "$battery_level" -lt 15 ]; then
-        # Send a notification with replace ID so it updates instead of stacking
+    # CRITICAL: < 8% - hibernate countdown
+    if [ "$battery_level" -lt 8 ]; then
+        # 30 second countdown before hibernate
+        for i in $(seq 30 -1 1); do
+            # Check if charger was plugged in
+            ac_power=$(acpi -a | grep -P -o 'on-line')
+            if [ -n "$ac_power" ]; then
+                notify-send -u normal -t 3000 -h string:x-canonical-private-synchronous:battery "Charger Connected" "Hibernate cancelled."
+                exit 0
+            fi
+
+            # Update countdown notification
+            notify-send -u critical -t 1100 -h string:x-canonical-private-synchronous:battery \
+                "⚠️ HIBERNATING IN ${i}s ⚠️" \
+                "Battery at ${battery_level}%!\nPlug in charger to cancel."
+
+            sleep 1
+        done
+
+        # Final check before hibernate
+        ac_power=$(acpi -a | grep -P -o 'on-line')
+        if [ -z "$ac_power" ]; then
+            notify-send -u critical -t 2000 "Hibernating now..." "Battery critically low"
+            sleep 1
+            systemctl hibernate
+        fi
+    # Warning: < 15% - just notify
+    elif [ "$battery_level" -lt 15 ]; then
         paplay ~/.modern_alert.wav
         notify-send -u normal -t 30000 -h string:x-canonical-private-synchronous:battery "Low Battery" "Your battery is critically low at ${battery_level}%!"
     fi
