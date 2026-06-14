@@ -351,11 +351,11 @@ exec sudo modprobe -r psmouse && sudo modprobe psmouse
 #   All keyboard shortcuts now go to RustDesk (no local keybinds active)
 #   Press SUPER+SHIFT+R again to exit and restore local keybinds
 
-bindsym $sup+Shift+r mode "remote_desktop"; exec notify-send "Remote Desktop Mode" "All keybinds disabled. Press Super+Shift+R to exit."
+bindsym $sup+Shift+r mode "remote_desktop"; exec notify-send -u critical -t 0 "⚠️ REMOTE DESKTOP MODE ⚠️" "ALL KEYBINDS DISABLED!\n\nPress Super+Shift+R to exit."
 
 mode "remote_desktop" {
     # Exit remote desktop mode and restore all keybinds
-    bindsym $sup+Shift+r mode "default"; exec notify-send "Normal Mode" "Keybinds restored."
+    bindsym $sup+Shift+r mode "default"; exec notify-send -u normal -t 3000 "Normal Mode" "Keybinds restored."
 }
 
 # Include additional config files if they exist
