@@ -168,9 +168,6 @@ bindsym $mod+e layout toggle splith splitv
 # Split direction toggle
 bindsym $mod+v split toggle
 
-# Override Super+W to prevent accidental actions
-bindsym $sup+w exec true
-
 # Fullscreen
 bindsym $mod+f fullscreen toggle
 
