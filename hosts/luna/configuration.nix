@@ -29,13 +29,14 @@
   systemd.targets.suspend.enable = lib.mkForce true;
   systemd.targets.hibernate.enable = lib.mkForce true;
 
-  # AMD-specific sleep configuration for modern standby (s2idle)
+  # Sleep configuration - suspend-then-hibernate after 15min
   systemd.sleep.extraConfig = ''
     AllowSuspend=yes
     AllowHibernation=yes
     AllowHybridSleep=no
-    AllowSuspendThenHibernate=no
+    AllowSuspendThenHibernate=yes
     SuspendState=freeze
+    HibernateDelaySec=15min
   '';
 
   # Use the systemd-boot EFI boot loader
@@ -228,12 +229,13 @@
   services.logind.settings.Login = {
     HandlePowerKeyLongPress = "poweroff";
     HandlePowerKey = "suspend";
-    HandleLidSwitch = "suspend";
-    HandleLidSwitchExternalPower = "suspend";
+    HandleLidSwitch = "suspend-then-hibernate";
+    HandleLidSwitchExternalPower = "suspend";  # Stay suspended when plugged in
     HandleLidSwitchDocked = "ignore";
     IdleAction = "ignore";  # Swayidle handles auto-suspend, not logind
     IdleActionSec = "30min";
   };
+
   # screen locker (Wayland)
   # Note: xss-lock is X11-only. For Wayland, use swayidle with swaylock
   # programs.xss-lock.enable = false;
