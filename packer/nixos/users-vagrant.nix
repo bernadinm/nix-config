@@ -63,12 +63,14 @@
    ''
    # /etc/profile.local: DO NOT EDIT - this file has been generated automatically.
 
-   wget -q https://raw.githubusercontent.com/bernadinm/nix-config/master/packer/nixos/users-vagrant.nix -O $PWD/users-vagrant.nix
-   colordiff -u -d /etc/nixos/users.nix users-vagrant.nix; if [ $? -eq 1 ]; then
-     sudo cp users-vagrant.nix /etc/nixos/users.nix;
-     sudo nixos-rebuild switch;
-   fi
-   rm users-vagrant.nix &> /dev/null;
+   # DEPRECATED: Legacy vagrant auto-sync. Use flakes instead:
+   #   sudo nixos-rebuild switch --flake /home/miguel/git/bernadinm/nix-config#<hostname>
+   # wget -q https://raw.githubusercontent.com/bernadinm/nix-config/master/packer/nixos/users-vagrant.nix -O $PWD/users-vagrant.nix
+   # colordiff -u -d /etc/nixos/users.nix users-vagrant.nix; if [ $? -eq 1 ]; then
+   #   sudo cp users-vagrant.nix /etc/nixos/users.nix;
+   #   sudo nixos-rebuild switch --flake /home/miguel/git/bernadinm/nix-config#<hostname>;
+   # fi
+   # rm users-vagrant.nix &> /dev/null;
    
    # Login to GCP if application default credentials doesn't exist
    if ! [[ ( -f ~/.config/gcloud/application_default_credentials.json ) ]]
