@@ -116,6 +116,16 @@
         export PATH="$PATH:$HOME/.local/bin"
         export GPG_TTY="$(tty)"
 
+        # Auto-detect WAYLAND_DISPLAY if not set (for tmux/SSH sessions)
+        if [[ -z "$WAYLAND_DISPLAY" ]] && [[ -d /run/user/$UID ]]; then
+          for sock in /run/user/$UID/wayland-*; do
+            if [[ -S "$sock" ]]; then
+              export WAYLAND_DISPLAY=$(basename "$sock")
+              break
+            fi
+          done
+        fi
+
         # Symlink dotfiles from g repo if available
         if [[ -d ~/git/bernadinm/g ]]; then
           [[ ! -e ~/.ssh ]] && [[ -d ~/git/bernadinm/g/.ssh ]] && ln -s ~/git/bernadinm/g/.ssh ~/.ssh
