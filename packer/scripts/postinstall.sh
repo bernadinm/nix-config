@@ -6,12 +6,9 @@ set -e
 # For actual system rebuilds, always use flakes:
 #   sudo nixos-rebuild switch --flake /home/miguel/git/bernadinm/nix-config#<hostname>
 
-# Switch to non ssl channel as there are issues with certs
-# TODO: fix this propperly by including the root certs.
-nix-channel --remove nixos
-nix-channel --add http://nixos.org/channels/nixos-unstable nixos
-# LEGACY: nixos-rebuild switch --upgrade
-echo "WARNING: Use flake-based rebuild instead"
+# This script is no longer used - flakes handle all rebuilds now.
+echo "WARNING: Use flake-based rebuild instead:
+  sudo nixos-rebuild switch --flake /home/miguel/git/bernadinm/nix-config#<hostname>"
 
 # Cleanup any previous generations and delete old packa
 nix-collect-garbage -d
