@@ -13,7 +13,7 @@
     ../../modules/coding.nix
   ];
 
-  # Use GRUB for legacy BIOS boot (Hetzner Cloud VMs)
+  # Use GRUB for legacy BIOS boot (cloud VMs)
   # Device is set by disko based on disk configuration
   boot.loader.grub.enable = true;
 
