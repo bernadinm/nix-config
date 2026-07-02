@@ -26,6 +26,19 @@
     pkgs.unstable.lutris
     # eidolon # removed in 25.11 - unmaintained upstream
     krb5
+
+    # Retro Gaming - RetroArch + Cores (Tiny Best Set GO)
+    retroarch
+    libretro.mgba              # GBA
+    libretro.snes9x            # SNES
+    libretro.genesis-plus-gx   # Genesis, Master System, Game Gear, Sega CD
+    libretro.nestopia          # NES
+    libretro.beetle-psx-hw     # PlayStation
+    libretro.fbneo             # Arcade, Neo Geo
+    libretro.mame2003-plus     # Arcade (MAME 2003+)
+    libretro.beetle-pce        # TurboGrafx-16
+    libretro.stella            # Atari 2600
+    libretro.gambatte          # Game Boy, Game Boy Color
     cmatrix
     _2048-in-terminal
     vitetris

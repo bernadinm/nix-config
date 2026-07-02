@@ -13,9 +13,9 @@
     ../../modules/coding.nix
   ];
 
-  # Use systemd-boot (UEFI)
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # Use GRUB for legacy BIOS boot (Hetzner Cloud VMs)
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/sda";
 
   networking.hostName = "orion";
 
