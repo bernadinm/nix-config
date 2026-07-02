@@ -96,7 +96,6 @@
     serverAddr = lib.mkForce "https://100.95.164.99:6443";  # astra via Tailscale
     tokenFile = lib.mkForce "/var/lib/rancher/k3s/server/agent-token";
     extraFlags = lib.mkForce (toString [
-      "--node-label=node-role.kubernetes.io/worker=true"
       "--node-label=topology.kubernetes.io/zone=us-east"
     ]);
   };
