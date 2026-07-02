@@ -15,7 +15,7 @@
 
   # Use GRUB for legacy BIOS boot (Hetzner Cloud VMs)
   boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub.devices = [ "/dev/sda" ];
 
   networking.hostName = "orion";
 
