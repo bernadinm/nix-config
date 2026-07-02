@@ -1,5 +1,5 @@
 # Orion Disk Configuration (for nixos-anywhere)
-# Uses GRUB with legacy BIOS boot (Hetzner Cloud VMs don't support UEFI)
+# Uses GRUB with legacy BIOS boot (cloud VMs use legacy BIOS)
 { lib, ... }:
 
 {
