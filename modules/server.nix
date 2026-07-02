@@ -83,7 +83,7 @@
   system.autoUpgrade = {
     enable = true;
     allowReboot = false;
-    flake = "/home/miguel/git/bernadinm/nix-config#astra";
+    flake = "/home/miguel/git/bernadinm/nix-config#${config.networking.hostName}";
   };
 
   # Nix garbage collection
