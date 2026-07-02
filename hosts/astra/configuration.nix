@@ -122,6 +122,10 @@
   boot.initrd.luks.devices.root.device = "/dev/disk/by-uuid/508642b3-eced-4e85-9c67-e6e85d946d96";
   boot.initrd.luks.devices.root.preLVM = true;
 
+  # Mount /tmp as tmpfs (RAM-backed) - eliminates disk IO for builds
+  boot.tmp.useTmpfs = true;
+  boot.tmp.tmpfsSize = "8G";
+
   # Server doesn't need printing or touchpad support
 
   security.sudo = {
