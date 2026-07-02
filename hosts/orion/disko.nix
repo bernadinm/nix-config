@@ -1,4 +1,5 @@
 # Orion Disk Configuration (for nixos-anywhere)
+# Uses GRUB with legacy BIOS boot (Hetzner Cloud VMs don't support UEFI)
 { lib, ... }:
 
 {
@@ -10,14 +11,9 @@
         content = {
           type = "gpt";
           partitions = {
-            ESP = {
-              size = "512M";
-              type = "EF00";
-              content = {
-                type = "filesystem";
-                format = "vfat";
-                mountpoint = "/boot";
-              };
+            boot = {
+              size = "1M";
+              type = "EF02";  # BIOS boot partition for GRUB on GPT
             };
             root = {
               size = "100%";
