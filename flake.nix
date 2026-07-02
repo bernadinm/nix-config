@@ -16,9 +16,13 @@
     dream2nix.url = "github:nix-community/dream2nix";
     src.url = "https://registry.npmjs.org/eslint/-/eslint-8.4.1.tgz";
     src.flake = false;
+
+    # Disko for declarative disk partitioning
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, ... }@attrs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, disko, ... }@attrs:
     let
       # Shared module for all hosts to provide unstable overlay
       unstableOverlay = {
@@ -62,6 +66,19 @@
           system = "x86_64-linux";
           modules = [
             ./hosts/lumina/configuration.nix
+            unstableOverlay
+            home-manager.nixosModules.home-manager
+          ];
+        };
+
+        # Orion - Remote k3s node
+        orion = nixpkgs.lib.nixosSystem {
+          specialArgs = attrs;
+          system = "x86_64-linux";
+          modules = [
+            ./hosts/orion/configuration.nix
+            ./hosts/orion/disko.nix
+            disko.nixosModules.disko
             unstableOverlay
             home-manager.nixosModules.home-manager
           ];
