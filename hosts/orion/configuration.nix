@@ -87,6 +87,9 @@
     wheelNeedsPassword = false;
   };
 
+  # Allow miguel to copy nix store paths for remote deployment
+  nix.settings.trusted-users = [ "root" "miguel" ];
+
   # Override k3s to be an agent joining astra's cluster
   services.k3s = {
     role = lib.mkForce "agent";
