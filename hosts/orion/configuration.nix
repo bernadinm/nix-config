@@ -97,6 +97,7 @@
     tokenFile = lib.mkForce "/var/lib/rancher/k3s/server/agent-token";
     extraFlags = lib.mkForce (toString [
       "--node-ip=100.127.233.30"  # Use Tailscale IP for kubelet
+      "--flannel-iface=tailscale0"  # Use Tailscale for flannel VXLAN
       "--node-label=topology.kubernetes.io/zone=us-east"
     ]);
   };
