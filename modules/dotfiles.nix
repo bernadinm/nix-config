@@ -194,119 +194,76 @@
       extraConfig = builtins.readFile ../dotfiles/.tmux.conf;
     };
 
-    # Starship prompt - colorful cross-shell prompt
+    # Starship prompt - Tokyo Night theme
+    # https://starship.rs/presets/tokyo-night
     programs.starship = {
       enable = true;
       enableBashIntegration = true;
       settings = {
-        add_newline = true;
         format = lib.concatStrings [
-          "$time"
-          "$battery"
-          "$username"
-          "@"
-          "$hostname"
-          " ▶ "
+          "[░▒▓](#a3aed2)"
+          "[  ](bg:#a3aed2 fg:#090c0c)"
+          "[](bg:#769ff0 fg:#a3aed2)"
           "$directory"
+          "[](fg:#769ff0 bg:#394260)"
           "$git_branch"
           "$git_status"
-          "$kubernetes"
-          "$nix_shell"
-          "$python"
+          "[](fg:#394260 bg:#212736)"
           "$nodejs"
-          "$aws"
-          "$gcloud"
-          "$cmd_duration"
-          "$status"
-          "$line_break"
-          "$character"
+          "$rust"
+          "$golang"
+          "$python"
+          "[](fg:#212736 bg:#1d2230)"
+          "$time"
+          "[ ](fg:#1d2230)"
+          "\n$character"
         ];
-        character = {
-          success_symbol = "[\\$](bold green)";
-          error_symbol = "[\\$](bold red)";
+        directory = {
+          style = "fg:#e3e5e5 bg:#769ff0";
+          format = "[ $path ]($style)";
+          truncation_length = 3;
+          truncation_symbol = "…/";
+        };
+        "directory.substitutions" = {
+          "Documents" = "󰈙 ";
+          "Downloads" = " ";
+          "Music" = " ";
+          "Pictures" = " ";
+        };
+        git_branch = {
+          symbol = "";
+          style = "bg:#394260";
+          format = "[[ $symbol $branch ](fg:#769ff0 bg:#394260)]($style)";
+        };
+        git_status = {
+          style = "bg:#394260";
+          format = "[[($all_status$ahead_behind )](fg:#769ff0 bg:#394260)]($style)";
+        };
+        nodejs = {
+          symbol = "";
+          style = "bg:#212736";
+          format = "[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)";
+        };
+        rust = {
+          symbol = "";
+          style = "bg:#212736";
+          format = "[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)";
+        };
+        golang = {
+          symbol = "";
+          style = "bg:#212736";
+          format = "[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)";
+        };
+        python = {
+          symbol = "";
+          style = "bg:#212736";
+          format = "[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)";
         };
         time = {
           disabled = false;
-          format = "[$time]($style) ▶ ";
-          style = "bold cyan";
-          time_format = "%H:%M:%S";
-        };
-        battery = {
-          full_symbol = "🔋";
-          charging_symbol = "⚡";
-          discharging_symbol = "▬ ";
-          format = "[$symbol$percentage]($style) ▶ ";
-          display = [
-            { threshold = 100; style = "bold green"; }
-          ];
-        };
-        username = {
-          style_user = "bold green";
-          style_root = "bold red";
-          format = "[$user]($style)";
-          show_always = true;
-        };
-        hostname = {
-          ssh_only = false;
-          format = "[$hostname]($style)";
-          style = "bold yellow";
-        };
-        directory = {
-          truncation_length = 4;
-          truncate_to_repo = false;
-          format = "[$path]($style)[$read_only]($read_only_style)";
-          style = "bold blue";
-        };
-        git_branch = {
-          symbol = " ╬ ";
-          format = "[$symbol$branch]($style)";
-          style = "bold purple";
-        };
-        git_status = {
-          format = "[$all_status$ahead_behind]($style) ";
-          style = "bold purple";
-          ahead = "↑\${count}";
-          behind = "↓\${count}";
-          diverged = "↑\${ahead_count}↓\${behind_count}";
-          staged = "+\${count}";
-          untracked = "?\${count}";
-          modified = "!\${count}";
-        };
-        kubernetes = {
-          disabled = false;
-          symbol = "⎈ ";
-          format = "▶ [$symbol$context]($style) ";
-          style = "bold cyan";
-        };
-        nix_shell = {
-          symbol = " ";
-          format = "▶ [$symbol$state]($style) ";
-        };
-        status = {
-          disabled = false;
-          format = "▶ [x $status]($style) ";
-          style = "bold red";
-        };
-        cmd_duration = {
-          min_time = 2000;
-          format = "▶ [took $duration]($style) ";
-          style = "bold yellow";
-        };
-        aws = {
-          format = "▶ [$symbol($profile)(\\($region\\))]($style) ";
-          symbol = "☁️ ";
-        };
-        gcloud = {
-          format = "▶ [$symbol$account]($style) ";
-          symbol = "☁️ ";
-        };
-        python = {
-          format = "▶ [\${symbol}\${pyenv_prefix}(\${version})]($style) ";
-          symbol = "🐍 ";
-        };
-        nodejs = {
-          format = "▶ [$symbol($version)]($style) ";
-          symbol = " ";
+          time_format = "%R";
+          style = "bg:#1d2230";
+          format = "[[  $time ](fg:#a0a9cb bg:#1d2230)]($style)";
         };
       };
     };
