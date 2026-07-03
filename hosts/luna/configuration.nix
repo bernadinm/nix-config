@@ -261,6 +261,7 @@
     i2c-tools
     libinput-gestures
     pulseeffects-legacy
+    cheese            # Webcam photo booth app
     
     # Power management tools
     powertop          # Power usage analyzer and tuner
