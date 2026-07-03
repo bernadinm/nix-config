@@ -105,6 +105,8 @@
         ls = "eza";
         rg = "rg -. -M 500";
         k = "kubectl";
+        ktx = "kubectx";
+        kns = "kubens";
         lsaltr = "eza -alg --sort=oldest --reverse";
       };
 
@@ -134,10 +136,7 @@
           [[ ! -e ~/.pureline.conf ]] && [[ -f ~/git/bernadinm/g/.pureline.conf ]] && ln -s ~/git/bernadinm/g/.pureline.conf ~/.pureline.conf
         fi
 
-        # Pureline prompt
-        if [[ $- == *i* ]] && [ "$TERM" != "linux" ] && [[ -f ~/git/bernadinm/g/pureline/pureline ]]; then
-          source ~/git/bernadinm/g/pureline/pureline ~/.pureline.conf
-        fi
+        # Starship prompt is enabled via home-manager programs.starship
 
         # Navi cheatsheet (only in interactive shells - has bind commands)
         if [[ $- == *i* ]] && test -f "$HOME/.config/navi/.navi.plugin.bash"; then
@@ -195,10 +194,10 @@
       extraConfig = builtins.readFile ../dotfiles/.tmux.conf;
     };
 
-    # Starship disabled - using pureline instead
+    # Starship prompt - colorful cross-shell prompt
     programs.starship = {
-      enable = false;
-      enableBashIntegration = false;
+      enable = true;
+      enableBashIntegration = true;
       settings = {
         add_newline = true;
         format = lib.concatStrings [
