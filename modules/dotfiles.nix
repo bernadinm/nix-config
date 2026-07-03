@@ -194,76 +194,180 @@
       extraConfig = builtins.readFile ../dotfiles/.tmux.conf;
     };
 
-    # Starship prompt - Tokyo Night theme
-    # https://starship.rs/presets/tokyo-night
+    # Starship prompt - Catppuccin Powerline theme
+    # https://starship.rs/presets/catppuccin-powerline
     programs.starship = {
       enable = true;
       enableBashIntegration = true;
       settings = {
         format = lib.concatStrings [
-          "[░▒▓](#a3aed2)"
-          "[  ](bg:#a3aed2 fg:#090c0c)"
-          "[](bg:#769ff0 fg:#a3aed2)"
+          "[](red)"
+          "$os"
+          "$username"
+          "[](bg:peach fg:red)"
           "$directory"
-          "[](fg:#769ff0 bg:#394260)"
+          "[](bg:yellow fg:peach)"
           "$git_branch"
           "$git_status"
-          "[](fg:#394260 bg:#212736)"
-          "$nodejs"
+          "[](fg:yellow bg:green)"
+          "$c"
           "$rust"
           "$golang"
+          "$nodejs"
+          "$php"
+          "$java"
+          "$kotlin"
+          "$haskell"
           "$python"
-          "[](fg:#212736 bg:#1d2230)"
+          "[](fg:green bg:sapphire)"
+          "$conda"
+          "[](fg:sapphire bg:lavender)"
           "$time"
-          "[ ](fg:#1d2230)"
-          "\n$character"
+          "[ ](fg:lavender)"
+          "$cmd_duration"
+          "$line_break"
+          "$character"
         ];
+        palette = "catppuccin_mocha";
+        os = {
+          disabled = false;
+          style = "bg:red fg:crust";
+        };
+        "os.symbols" = {
+          Windows = "";
+          Ubuntu = "󰕈";
+          Macos = "󰀵";
+          Linux = "󰌽";
+          Arch = "󰣇";
+          Debian = "󰣚";
+          Fedora = "󰣛";
+          NixOS = "";
+        };
+        username = {
+          show_always = true;
+          style_user = "bg:red fg:crust";
+          style_root = "bg:red fg:crust";
+          format = "[ $user]($style)";
+        };
         directory = {
-          style = "fg:#e3e5e5 bg:#769ff0";
+          style = "bg:peach fg:crust";
           format = "[ $path ]($style)";
           truncation_length = 3;
           truncation_symbol = "…/";
-        };
-        "directory.substitutions" = {
-          "Documents" = "󰈙 ";
-          "Downloads" = " ";
-          "Music" = " ";
-          "Pictures" = " ";
+          substitutions = {
+            Documents = "󰈙 ";
+            Downloads = " ";
+            Music = "󰝚 ";
+            Pictures = " ";
+          };
         };
         git_branch = {
           symbol = "";
-          style = "bg:#394260";
-          format = "[[ $symbol $branch ](fg:#769ff0 bg:#394260)]($style)";
+          style = "bg:yellow";
+          format = "[[ $symbol $branch ](fg:crust bg:yellow)]($style)";
         };
         git_status = {
-          style = "bg:#394260";
-          format = "[[($all_status$ahead_behind )](fg:#769ff0 bg:#394260)]($style)";
+          style = "bg:yellow";
+          format = "[[($all_status$ahead_behind )](fg:crust bg:yellow)]($style)";
         };
         nodejs = {
           symbol = "";
-          style = "bg:#212736";
-          format = "[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)";
+          style = "bg:green";
+          format = "[[ $symbol( $version) ](fg:crust bg:green)]($style)";
+        };
+        c = {
+          symbol = " ";
+          style = "bg:green";
+          format = "[[ $symbol( $version) ](fg:crust bg:green)]($style)";
         };
         rust = {
           symbol = "";
-          style = "bg:#212736";
-          format = "[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)";
+          style = "bg:green";
+          format = "[[ $symbol( $version) ](fg:crust bg:green)]($style)";
         };
         golang = {
           symbol = "";
-          style = "bg:#212736";
-          format = "[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)";
+          style = "bg:green";
+          format = "[[ $symbol( $version) ](fg:crust bg:green)]($style)";
+        };
+        php = {
+          symbol = "";
+          style = "bg:green";
+          format = "[[ $symbol( $version) ](fg:crust bg:green)]($style)";
+        };
+        java = {
+          symbol = " ";
+          style = "bg:green";
+          format = "[[ $symbol( $version) ](fg:crust bg:green)]($style)";
+        };
+        kotlin = {
+          symbol = "";
+          style = "bg:green";
+          format = "[[ $symbol( $version) ](fg:crust bg:green)]($style)";
+        };
+        haskell = {
+          symbol = "";
+          style = "bg:green";
+          format = "[[ $symbol( $version) ](fg:crust bg:green)]($style)";
         };
         python = {
           symbol = "";
-          style = "bg:#212736";
-          format = "[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)";
+          style = "bg:green";
+          format = "[[ $symbol( $version) ](fg:crust bg:green)]($style)";
+        };
+        conda = {
+          symbol = "  ";
+          style = "fg:crust bg:sapphire";
+          format = "[$symbol$environment ]($style)";
+          ignore_base = false;
         };
         time = {
           disabled = false;
           time_format = "%R";
-          style = "bg:#1d2230";
-          format = "[[  $time ](fg:#a0a9cb bg:#1d2230)]($style)";
+          style = "bg:lavender";
+          format = "[[  $time ](fg:crust bg:lavender)]($style)";
+        };
+        line_break = {
+          disabled = true;
+        };
+        character = {
+          disabled = false;
+          success_symbol = "[❯](bold fg:green)";
+          error_symbol = "[❯](bold fg:red)";
+          vimcmd_symbol = "[❮](bold fg:green)";
+        };
+        cmd_duration = {
+          format = " in $duration ";
+          style = "bg:lavender";
+          disabled = false;
+        };
+        "palettes.catppuccin_mocha" = {
+          rosewater = "#f5e0dc";
+          flamingo = "#f2cdcd";
+          pink = "#f5c2e7";
+          mauve = "#cba6f7";
+          red = "#f38ba8";
+          maroon = "#eba0ac";
+          peach = "#fab387";
+          yellow = "#f9e2af";
+          green = "#a6e3a1";
+          teal = "#94e2d5";
+          sky = "#89dceb";
+          sapphire = "#74c7ec";
+          blue = "#89b4fa";
+          lavender = "#b4befe";
+          text = "#cdd6f4";
+          subtext1 = "#bac2de";
+          subtext0 = "#a6adc8";
+          overlay2 = "#9399b2";
+          overlay1 = "#7f849c";
+          overlay0 = "#6c7086";
+          surface2 = "#585b70";
+          surface1 = "#45475a";
+          surface0 = "#313244";
+          base = "#1e1e2e";
+          mantle = "#181825";
+          crust = "#11111b";
         };
       };
     };
