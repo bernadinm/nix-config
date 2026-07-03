@@ -90,12 +90,13 @@
   # Allow miguel to copy nix store paths for remote deployment
   nix.settings.trusted-users = [ "root" "miguel" ];
 
-  # Override k3s to be an agent joining astra's cluster
+  # Override k3s to be the control-plane server
   services.k3s = {
-    role = lib.mkForce "agent";
-    serverAddr = lib.mkForce "https://100.95.164.99:6443";  # astra via Tailscale
-    tokenFile = lib.mkForce "/var/lib/rancher/k3s/server/agent-token";
+    role = lib.mkForce "server";
     extraFlags = lib.mkForce (toString [
+      "--write-kubeconfig-mode=644"
+      "--disable=traefik"
+      "--disable=servicelb"
       "--node-ip=100.127.233.30"  # Use Tailscale IP for kubelet
       "--flannel-iface=tailscale0"  # Use Tailscale for flannel VXLAN
       "--node-label=topology.kubernetes.io/zone=us-east"
