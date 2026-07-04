@@ -243,7 +243,7 @@
             Arch = "󰣇";
             Debian = "󰣚";
             Fedora = "󰣛";
-            NixOS = "";
+            NixOS = "❄";
           };
         };
         username = {
