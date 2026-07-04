@@ -1,2 +1,8 @@
 *.swp
 .aider*
+
+# Secrets and test files
+*.key
+*.wav
+*.pem
+packer/keys/
