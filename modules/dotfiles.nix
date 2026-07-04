@@ -204,7 +204,8 @@
           "[](sky)"
           "$os"
           "$username"
-          "[@NixOS ](bg:sky fg:crust)"
+          "[@](bg:sky fg:crust)"
+          "$hostname"
           "[](bg:peach fg:sky)"
           "$directory"
           "[](bg:yellow fg:peach)"
@@ -252,6 +253,11 @@
           style_user = "bg:sky fg:crust";
           style_root = "bg:sky fg:crust";
           format = "[$user]($style)";
+        };
+        hostname = {
+          ssh_only = false;
+          style = "bg:sky fg:crust";
+          format = "[$hostname ]($style)";
         };
         directory = {
           style = "bg:peach fg:crust";
