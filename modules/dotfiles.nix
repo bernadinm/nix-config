@@ -236,7 +236,7 @@
           style = "bg:sky fg:crust";
           format = "[ $symbol ]($style)";
           symbols = {
-            Windows = "";
+            Windows = "";
             Ubuntu = "󰕈";
             Macos = "󰀵";
             Linux = "󰌽";
