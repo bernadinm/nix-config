@@ -204,6 +204,7 @@
           "[](sky)"
           "$os"
           "$username"
+          "[@NixOS ](bg:sky fg:crust)"
           "[](bg:peach fg:sky)"
           "$directory"
           "[](bg:yellow fg:peach)"
@@ -234,7 +235,7 @@
         os = {
           disabled = false;
           style = "bg:sky fg:crust";
-          format = "[ $symbol ]($style)";
+          format = "[ $symbol]($style)";
           symbols = {
             Windows = "";
             Ubuntu = "󰕈";
@@ -250,7 +251,7 @@
           show_always = true;
           style_user = "bg:sky fg:crust";
           style_root = "bg:sky fg:crust";
-          format = "[ $user]($style)";
+          format = "[$user]($style)";
         };
         directory = {
           style = "bg:peach fg:crust";
