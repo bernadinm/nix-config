@@ -201,10 +201,10 @@
       enableBashIntegration = true;
       settings = {
         format = lib.concatStrings [
-          "[](red)"
+          "[](sky)"
           "$os"
           "$username"
-          "[](bg:peach fg:red)"
+          "[](bg:peach fg:sky)"
           "$directory"
           "[](bg:yellow fg:peach)"
           "$git_branch"
@@ -233,7 +233,7 @@
         palette = "catppuccin_mocha";
         os = {
           disabled = false;
-          style = "bg:red fg:crust";
+          style = "bg:sky fg:crust";
           symbols = {
             Windows = "";
             Ubuntu = "󰕈";
@@ -247,8 +247,8 @@
         };
         username = {
           show_always = true;
-          style_user = "bg:red fg:crust";
-          style_root = "bg:red fg:crust";
+          style_user = "bg:sky fg:crust";
+          style_root = "bg:sky fg:crust";
           format = "[ $user]($style)";
         };
         directory = {
