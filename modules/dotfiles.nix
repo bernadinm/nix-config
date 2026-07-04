@@ -224,6 +224,7 @@
           "[](fg:sapphire bg:lavender)"
           "$time"
           "[ ](fg:lavender)"
+          "$battery"
           "$cmd_duration"
           "$line_break"
           "$character"
@@ -340,6 +341,26 @@
           format = " in $duration ";
           style = "bg:lavender";
           disabled = false;
+        };
+        battery = {
+          full_symbol = "󰚥";
+          charging_symbol = "󰚥";
+          discharging_symbol = "󰁹";
+          format = "[$symbol$percentage]($style) ";
+          display = [
+            {
+              threshold = 100;
+              style = "fg:green";
+            }
+            {
+              threshold = 30;
+              style = "fg:yellow";
+            }
+            {
+              threshold = 15;
+              style = "bold fg:red";
+            }
+          ];
         };
         palettes = {
           catppuccin_mocha = {
