@@ -223,8 +223,9 @@
           "$conda"
           "[](fg:sapphire bg:lavender)"
           "$time"
-          "[ ](fg:lavender)"
+          "[](fg:lavender bg:blue)"
           "$battery"
+          "[ ](fg:blue)"
           "$cmd_duration"
           "$line_break"
           "$character"
@@ -346,19 +347,19 @@
           full_symbol = "󰚥";
           charging_symbol = "󰚥";
           discharging_symbol = "󰁹";
-          format = "[$symbol$percentage]($style) ";
+          format = "[[ $symbol$percentage ](fg:crust bg:blue)]($style)";
           display = [
             {
               threshold = 100;
-              style = "fg:green";
+              style = "bg:blue";
             }
             {
               threshold = 30;
-              style = "fg:yellow";
+              style = "bg:blue fg:yellow";
             }
             {
               threshold = 15;
-              style = "bold fg:red";
+              style = "bg:blue bold fg:red";
             }
           ];
         };
