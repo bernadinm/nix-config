@@ -38,7 +38,7 @@
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
 
   # Set your time zone.
-  time.timeZone = "America/New_York";
+  time.timeZone = "Africa/Nairobi";
 
   # Enable DHCP for ethernet only, WiFi stays static
   networking.useDHCP = false;
