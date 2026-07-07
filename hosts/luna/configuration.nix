@@ -24,6 +24,14 @@
   services.xserver.enable = lib.mkForce true;
   nix.gc.options = lib.mkForce "--delete-older-than 60d";  # Use desktop's longer retention
 
+  # Override k3s to join orion's cluster as an agent (not run as server)
+  services.k3s = {
+    role = lib.mkForce "agent";
+    serverAddr = lib.mkForce "https://100.127.233.30:6443";  # orion's Tailscale IP
+    tokenFile = lib.mkForce "/etc/k3s/token";  # Token stored securely
+    extraFlags = lib.mkForce "";
+  };
+
   # Re-enable suspend for laptop (server.nix disables all sleep)
   systemd.targets.sleep.enable = lib.mkForce true;
   systemd.targets.suspend.enable = lib.mkForce true;
@@ -85,6 +93,9 @@
   # Workaround for Framework AMD USB-C ACPI wake issues
   # The ucsi_acpi module has firmware bugs causing spurious wake events
   boot.blacklistedKernelModules = [ "ucsi_acpi" ];
+
+  # Enable iptables kernel modules (required for Waydroid networking)
+  boot.kernelModules = [ "ip_tables" "iptable_nat" "iptable_filter" "iptable_mangle" ];
 
   nixpkgs.config.allowUnfree = true;
 
