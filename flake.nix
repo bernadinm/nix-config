@@ -24,7 +24,7 @@
 
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, disko, ... }@attrs:
     let
-      # Shared module for all hosts to provide unstable overlay
+      # Shared module for all hosts to provide unstable overlay and custom packages
       unstableOverlay = {
         nixpkgs.overlays = [
           (final: prev: {
@@ -33,6 +33,8 @@
               config.allowUnfree = true;
             };
           })
+          # Custom overlay for package patches
+          (import ./overlays/overlay.nix)
         ];
       };
     in
