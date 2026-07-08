@@ -1,0 +1,90 @@
+apiVersion: zero.upjet-cloudflare.upbound.io/v1alpha1
+kind: TrustTunnelCloudflaredConfig
+metadata:
+  finalizers:
+  - finalizer.managedresource.crossplane.io
+  name: homelab-tunnel-config
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    accountId: 4992fd600f9894326a82a0f8573a7c38
+    config:
+      ingress:
+      - hostname: grafana.bernad.in
+        service: http://grafana.monitoring.svc.cluster.local:80
+      - hostname: alerts.bernad.in
+        service: http://gotify.atlas-system.svc.cluster.local:80
+      - hostname: status.bernad.in
+        service: http://uptime-kuma.uptime-kuma.svc.cluster.local:3001
+      - hostname: git.bernad.in
+        service: http://gitea-http.gitea.svc.cluster.local:3000
+      - hostname: langfuse.bernad.in
+        service: http://langfuse-web.langfuse.svc.cluster.local:3000
+      - hostname: n8n.bernad.in
+        service: http://n8n.n8n.svc.cluster.local:5678
+      - hostname: temporal.bernad.in
+        service: http://temporal-web.temporal.svc.cluster.local:8080
+      - hostname: fleet.bernad.in
+        service: http://fleet.fleet.svc.cluster.local:8080
+      - hostname: vault.bernad.in
+        service: http://vaultwarden.vaultwarden.svc.cluster.local:80
+      - hostname: photos.bernad.in
+        service: http://immich-server.immich.svc.cluster.local:2283
+      - hostname: mail.bernad.in
+        service: http://bichon.bichon.svc.cluster.local:15630
+      - hostname: notes.bernad.in
+        service: http://joplin-server.joplin.svc.cluster.local:22300
+      - hostname: tasks.bernad.in
+        service: http://vikunja.vikunja.svc.cluster.local:3456
+      - hostname: dav.bernad.in
+        service: http://radicale.radicale.svc.cluster.local:5232
+      - hostname: sync.bernad.in
+        service: http://syncthing.syncthing.svc.cluster.local:8384
+      - hostname: files.bernad.in
+        service: http://minio-console.minio.svc.cluster.local:9001
+      - hostname: dns.bernad.in
+        service: http://adguard-home.adguard.svc.cluster.local:3000
+      - hostname: auth.bernad.in
+        service: http://authentik-server.authentik.svc.cluster.local:80
+      - hostname: ai.bernad.in
+        service: http://ollama-host.ollama.svc.cluster.local:11434
+      - hostname: chat.bernad.in
+        service: http://open-webui.ollama.svc.cluster.local:80
+      - hostname: savants.cloud
+        service: http://savants-cloud-api.savants-cloud.svc.cluster.local:80
+      - hostname: api.savants.cloud
+        service: http://savants-cloud-api.savants-cloud.svc.cluster.local:80
+      - hostname: fly.bernad.in
+        service: http://fly-stream.savants.svc.cluster.local:80
+      - hostname: atlas.bernad.in
+        service: http://atlas-dashboard.atlas-system.svc.cluster.local:3013
+      - hostname: openclaw.bernad.in
+        service: http://openclaw.openclaw.svc.cluster.local:18789
+      - hostname: engineer.ventures
+        service: http://engineer-ventures.engineer-ventures.svc.cluster.local:3002
+      - hostname: www.engineer.ventures
+        service: http://engineer-ventures.engineer-ventures.svc.cluster.local:3002
+      - hostname: safi.africa
+        service: http://safi-web.safi.svc.cluster.local:80
+      - hostname: www.safi.africa
+        service: http://safi-web.safi.svc.cluster.local:80
+      - hostname: app.safi.africa
+        service: http://safi-web.safi.svc.cluster.local:80
+      - hostname: api.safi.africa
+        service: http://safi-web.safi.svc.cluster.local:80
+      - hostname: unify.africa
+        service: http://safi-web.safi.svc.cluster.local:80
+      - hostname: www.unify.africa
+        service: http://safi-web.safi.svc.cluster.local:80
+      - hostname: pay.unify.africa
+        service: http://safi-web.safi.svc.cluster.local:80
+      - hostname: api.unify.africa
+        service: http://safi-web.safi.svc.cluster.local:80
+      - service: http_status:404
+    source: cloudflare
+    tunnelId: 477768ad-ce55-4bc9-b448-b1e97929484d
+  initProvider: {}
+  managementPolicies:
+  - '*'
+  providerConfigRef:
+    name: default
