@@ -182,7 +182,10 @@ bindsym $mod+Shift+s move container to scratchpad
 bindsym $sup+grave exec $term --class float --title scratchpad -e tmux
 
 # Cycle through windows
-bindsym $mod+a focus next
+# Alt+A = Waydroid (Android)
+bindsym $mod+a exec waydroid show-full-ui
+# Focus next moved to Alt+n (use Alt+j/k for directional focus)
+bindsym $mod+n focus next
 bindsym $mod+Shift+a focus prev
 bindsym $sup+a focus next
 bindsym $sup+Shift+a focus prev
@@ -195,7 +198,10 @@ bindsym $mod+c focus child
 # RESIZE MODE
 # ============================================
 
-bindsym $mod+r mode "resize"
+# Alt+R = Audacity
+bindsym $mod+r exec audacity
+# Resize mode moved to Alt+Shift+r
+bindsym $mod+Shift+r mode "resize"
 
 mode "resize" {
     # Resize bindings (vim keys)
@@ -311,7 +317,7 @@ exec wl-paste --type text --watch cliphist store
 exec wl-paste --type image --watch cliphist store
 
 # Status bar - waybar (modern bar like polybar)
-exec_always pkill waybar; waybar
+exec_always pkill waybar; sleep 2 && waybar
 
 # Idle management (swayidle) - only locks/sleeps on battery
 exec swayidle -w \
