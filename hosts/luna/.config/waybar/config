@@ -6,6 +6,7 @@
     "modules-left": ["sway/workspaces", "sway/window"],
     "modules-center": ["clock"],
     "modules-right": [
+        "custom/voice-note",
         "custom/tailscale",
         "custom/bluetooth",
         "custom/wifi",
@@ -119,5 +120,15 @@
     "tray": {
         "icon-size": 18,
         "spacing": 10
+    },
+
+    "custom/voice-note": {
+        "exec": "if [ -f /tmp/voice_note_pid ]; then echo '🎙️ REC'; else echo ''; fi",
+        "interval": 1,
+        "signal": 9,
+        "format": "{}",
+        "tooltip": true,
+        "exec-tooltip": "if [ -f /tmp/voice_note_pid ]; then echo 'Recording voice note... Press Super+V to stop'; else echo 'Press Super+V to start recording'; fi",
+        "on-click": "bash ~/.voice_note.sh"
     }
 }
