@@ -122,6 +122,22 @@ window#waybar {
     font-weight: bold;
 }
 
+#custom-voice-note {
+    padding: 0 10px;
+    background: #f38ba8;  /* Catppuccin Mocha - Red for recording */
+    color: #1e1e2e;
+    font-weight: bold;
+    animation-name: recording-pulse;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+
+@keyframes recording-pulse {
+    0%, 100% { background: #f38ba8; }
+    50% { background: #eba0ac; }
+}
+
 #tray {
     padding: 0 10px;
     background: transparent;
