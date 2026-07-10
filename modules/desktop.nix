@@ -103,6 +103,8 @@
         ../dotfiles/.launch_chatgpt.sh;
       ".launch_audacity.sh".source =
         ../dotfiles/.launch_audacity.sh;
+      ".voice_note.sh".source =
+        ../dotfiles/.voice_note.sh;
       ".battery_check.sh".source =
         ../dotfiles/scripts/battery_check.sh;
       ".avoid_sleeping_while_streaming.sh".source =
