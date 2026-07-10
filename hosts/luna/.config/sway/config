@@ -182,10 +182,8 @@ bindsym $mod+Shift+s move container to scratchpad
 bindsym $sup+grave exec $term --class float --title scratchpad -e tmux
 
 # Cycle through windows
-# Alt+A = Waydroid (Android)
-bindsym $mod+a exec waydroid show-full-ui
-# Focus next moved to Alt+n (use Alt+j/k for directional focus)
-bindsym $mod+n focus next
+# Focus next (Alt+A)
+bindsym $mod+a focus next
 bindsym $mod+Shift+a focus prev
 bindsym $sup+a focus next
 bindsym $sup+Shift+a focus prev
@@ -285,6 +283,8 @@ bindsym $sup+o exec sh $HOME/.launch_github.sh
 bindsym $sup+k exec sh $HOME/.launch_googlekeep.sh
 bindsym $sup+p exec sh $HOME/.launch_protonmail.sh
 bindsym $sup+d exec sh $HOME/.launch_drive.sh
+bindsym $sup+a exec waydroid show-full-ui
+bindsym $sup+v exec bash $HOME/.voice_note.sh
 
 # Bluetooth toggle
 bindsym $sup+Shift+b exec bash -c "if lsmod | grep -q btusb; then sudo modprobe -r btusb && notify-send 'Bluetooth Disabled' 'Hardware powered off'; else sudo modprobe btusb && sudo systemctl restart bluetooth && notify-send 'Bluetooth Enabled' 'Hardware ready'; fi && pkill -RTMIN+8 waybar"
