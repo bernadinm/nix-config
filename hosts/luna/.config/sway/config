@@ -100,8 +100,8 @@ bindsym $sup+Shift+w kill
 # Program launcher
 bindsym $mod+space exec wofi --show drun
 
-# Clipboard history
-bindsym $sup+v exec cliphist list | wofi --dmenu | cliphist decode | wl-copy
+# Clipboard history (Super+Shift+V)
+bindsym $sup+Shift+v exec cliphist list | wofi --dmenu | cliphist decode | wl-copy
 
 # Focus movement (vim keys)
 bindsym $mod+h focus left
@@ -185,7 +185,6 @@ bindsym $sup+grave exec $term --class float --title scratchpad -e tmux
 # Focus next (Alt+A)
 bindsym $mod+a focus next
 bindsym $mod+Shift+a focus prev
-bindsym $sup+a focus next
 bindsym $sup+Shift+a focus prev
 
 # Navigate container hierarchy (for nested containers)
@@ -225,9 +224,6 @@ mode "resize" {
 
 # Reload config
 bindsym $mod+Shift+c reload
-
-# Restart sway inplace
-bindsym $mod+Shift+r reload
 
 # Exit sway with confirmation
 bindsym $mod+Shift+e exec bash -c 'if echo -e "No\nYes, exit Sway" | wofi --dmenu --prompt "Exit Sway?" | grep -q "Yes"; then swaymsg exit; fi'
