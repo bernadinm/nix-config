@@ -64,7 +64,7 @@ else
     notify-send "Voice Note" "🎙️ Recording... Press Super+V to stop"
 
     # Record audio using ffmpeg (works with PipeWire/PulseAudio)
-    ffmpeg -f pulse -i default -ar 16000 -ac 1 "$RECORDING_FILE" -y 2>/dev/null &
+    nohup ffmpeg -f pulse -i default -ar 16000 -ac 1 "$RECORDING_FILE" -y </dev/null >/dev/null 2>&1 &
     echo $! > "$PID_FILE"
     update_waybar
 fi
