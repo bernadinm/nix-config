@@ -33,22 +33,27 @@ if [ -f "$PID_FILE" ]; then
     TIMESTAMP=$(date +'%Y-%m-%d_%H-%M-%S')
     TRANSCRIPT_FILE="$TRANSCRIPT_DIR/transcript_$TIMESTAMP.txt"
 
-    # Use Groq Whisper for transcription (fast cloud API)
+    # Use Groq Whisper via make (API key from pass)
     cd "$GROQ_TOOL"
-    source venv/bin/activate
 
-    RESULT=$(python main.py "$RECORDING_FILE" -o "$TRANSCRIPT_FILE" -q 2>&1)
+    RESULT=$(make all INPUT="$RECORDING_FILE" 2>&1)
     EXIT_CODE=$?
 
-    deactivate
+    # The output file is created next to the input file with .txt extension
+    OUTPUT_FILE="/tmp/voice_note_recording.txt"
 
-    if [ $EXIT_CODE -eq 0 ] && [ -f "$TRANSCRIPT_FILE" ]; then
+    if [ $EXIT_CODE -eq 0 ] && [ -f "$OUTPUT_FILE" ]; then
+        # Copy to transcript directory
+        cp "$OUTPUT_FILE" "$TRANSCRIPT_FILE"
+
         # Copy transcript to clipboard
         cat "$TRANSCRIPT_FILE" | wl-copy
 
         # Show preview in notification
         PREVIEW=$(head -c 100 "$TRANSCRIPT_FILE")
         notify-send "Voice Note ✓" "Copied to clipboard:\n$PREVIEW..."
+
+        rm -f "$OUTPUT_FILE"
     else
         notify-send -u critical "Voice Note" "Transcription failed:\n$RESULT"
     fi
