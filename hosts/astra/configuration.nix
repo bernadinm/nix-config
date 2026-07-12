@@ -124,7 +124,7 @@
 
   # Mount /tmp as tmpfs (RAM-backed) - eliminates disk IO for builds
   boot.tmp.useTmpfs = true;
-  boot.tmp.tmpfsSize = "8G";
+  boot.tmp.tmpfsSize = "16G";
 
   # Server doesn't need printing or touchpad support
 
