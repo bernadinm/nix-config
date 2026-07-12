@@ -85,6 +85,18 @@
             home-manager.nixosModules.home-manager
           ];
         };
+
+        # Hetzner Worker - Dynamic k3s agent (auto-scaling template)
+        hetzner-worker = nixpkgs.lib.nixosSystem {
+          specialArgs = attrs;
+          system = "x86_64-linux";
+          modules = [
+            ./hosts/hetzner-worker/configuration.nix
+            ./hosts/hetzner-worker/disko.nix
+            disko.nixosModules.disko
+            unstableOverlay
+          ];
+        };
       };
     };
 }
