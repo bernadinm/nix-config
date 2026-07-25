@@ -97,6 +97,19 @@
             unstableOverlay
           ];
         };
+
+        # Helsinki - Dedicated database & analytics node (Hetzner AX41, Finland)
+        polaris = nixpkgs.lib.nixosSystem {
+          specialArgs = attrs;
+          system = "x86_64-linux";
+          modules = [
+            ./hosts/polaris/configuration.nix
+            ./hosts/polaris/disko.nix
+            disko.nixosModules.disko
+            unstableOverlay
+            home-manager.nixosModules.home-manager
+          ];
+        };
       };
     };
 }
