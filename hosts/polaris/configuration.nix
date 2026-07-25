@@ -24,6 +24,9 @@
 
   time.timeZone = "Europe/Helsinki";
 
+  # Disable auto-upgrade for remote servers - can't physically rescue if it breaks
+  system.autoUpgrade.enable = lib.mkForce false;
+
   nixpkgs.config.allowUnfree = true;
 
   # Latest kernel for Ryzen optimizations
