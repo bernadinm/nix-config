@@ -27,6 +27,29 @@
   # Disable auto-upgrade for remote servers - can't physically rescue if it breaks
   system.autoUpgrade.enable = lib.mkForce false;
 
+  # Hardware watchdog - auto-reboot if system freezes (critical for remote servers)
+  # systemd pings the watchdog every 30s; if it misses 3 pings (90s), hardware reboots
+  systemd.watchdog = {
+    runtimeTime = "90s";
+    rebootTime = "120s";
+  };
+
+  # Keep SSH accessible even if Tailscale dies - bind to public IP too
+  services.openssh.listenAddresses = [
+    { addr = "0.0.0.0"; port = 22; }
+  ];
+
+  # Auto-restart Tailscale if it crashes
+  systemd.services.tailscaled.serviceConfig = {
+    Restart = lib.mkForce "always";
+    RestartSec = 5;
+  };
+
+  # Auto-restart k3s if it loses connection for too long
+  systemd.services.k3s.serviceConfig = {
+    WatchdogSec = lib.mkForce 300;  # k3s must ping systemd every 5 min or get restarted
+  };
+
   nixpkgs.config.allowUnfree = true;
 
   # Latest kernel for Ryzen optimizations
