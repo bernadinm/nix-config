@@ -79,11 +79,11 @@
     mkdir -p /var/lib/rancher/k3s/server/manifests
   '';
 
-  # Auto-update via flake (not channel - this system uses flakes)
+  # Auto-update via flake from git (works on all servers, not just where the repo is cloned)
   system.autoUpgrade = {
     enable = true;
     allowReboot = false;
-    flake = "/home/miguel/git/bernadinm/nix-config#${config.networking.hostName}";
+    flake = "github:bernadinm/nix-config#${config.networking.hostName}";
   };
 
   # Nix garbage collection
