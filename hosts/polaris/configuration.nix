@@ -39,6 +39,12 @@
     { addr = "0.0.0.0"; port = 22; }
   ];
 
+  # Disable reverse path filter - it drops Tailscale/WireGuard packets
+  # when k3s/flannel routing table changes make the rpfilter think
+  # legitimate packets are spoofed. This is the root cause of the
+  # recurring Tailscale disconnects that crash the server.
+  networking.firewall.checkReversePath = false;
+
   # Auto-restart Tailscale if it crashes
   systemd.services.tailscaled.serviceConfig = {
     Restart = lib.mkForce "always";
