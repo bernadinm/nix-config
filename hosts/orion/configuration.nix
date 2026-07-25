@@ -24,6 +24,14 @@
 
   time.timeZone = "America/New_York";
 
+  # Disable rpfilter - drops Tailscale WireGuard packets when k3s/flannel
+  # changes routing table. Orion is the control plane; if it goes down,
+  # the entire cluster dies. Same fix as polaris.
+  networking.firewall.checkReversePath = false;
+
+  # Disable auto-upgrade - remote server, can't physically rescue
+  system.autoUpgrade.enable = lib.mkForce false;
+
   nixpkgs.config.allowUnfree = true;
 
   # Latest kernel for AMD EPYC optimizations
