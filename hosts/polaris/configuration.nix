@@ -59,7 +59,9 @@
   nixpkgs.config.allowUnfree = true;
 
   # Latest kernel for Ryzen optimizations
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # Pinned to 6.12 LTS - kernel 6.19 causes instability on AX41 hardware.
+  # See: https://forum.proxmox.com/threads/pve9-hetzner-ax41-kernel-panic.171063/
+  boot.kernelPackages = pkgs.linuxPackages_6_12;
 
   # Longhorn storage support (for k8s persistent volumes)
   services.openiscsi = {
