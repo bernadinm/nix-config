@@ -59,6 +59,20 @@
   nixpkgs.config.allowUnfree = true;
 
   # Latest kernel for Ryzen optimizations
+  # Crash monitor - logs NIC state, temps, conntrack every 10s for RCA
+  systemd.services.crash-monitor = {
+    description = "Polaris NIC crash monitor";
+    after = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "simple";
+      User = "miguel";
+      ExecStart = "/home/miguel/crash-monitor.sh";
+      Restart = "always";
+      RestartSec = 5;
+    };
+  };
+
   # Pinned to 6.12 LTS - kernel 6.19 causes instability on AX41 hardware.
   # See: https://forum.proxmox.com/threads/pve9-hetzner-ax41-kernel-panic.171063/
   boot.kernelPackages = pkgs.linuxPackages_6_12;
