@@ -68,7 +68,7 @@
     serviceConfig = {
       Type = "simple";
       User = "miguel";
-      ExecStart = "/home/miguel/crash-monitor.sh";
+      ExecStart = "${pkgs.bash}/bin/bash /home/miguel/crash-monitor.sh";
       Restart = "always";
       RestartSec = 5;
     };
