@@ -109,7 +109,7 @@
   # so WatchdogSec causes false kills and server reboots
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.permittedInsecurePackages = [ "docker-28.5.2" ];
+  nixpkgs.config.permittedInsecurePackages = [ "docker-28.5.2" "electron-39.8.10" ];
 
   # Latest kernel for EPYC optimizations
   boot.kernelPackages = pkgs.linuxPackages_latest;
