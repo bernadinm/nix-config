@@ -250,6 +250,8 @@ in
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPaH2o59MrcOTgMWuksEgnToot1KLKmFsvDzKgTXocI0 miguel@Luna"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOsbVIBiPz259vIVwD3USlGeNKUb7CgjWDPCcooz5ivQ miguel@astra"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINqgRfblq8qT8u60vcfUEWo5aAy0GsnM4onnzDYRejNj openpgp:0xC106861E"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFTkXjNSRWLMQjwjr2XJRgbt6uZOsG5JvWuaig1ONLF2 miguel@orion"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN0CfdoI+UbPdWWHpeo3OPy3T1AtnOEs2k6wjH6o9OoV miguel@vega"
   ];
 
   # Enable the Gnugp daemon instead of SSH.
