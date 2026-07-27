@@ -110,6 +110,17 @@
             home-manager.nixosModules.home-manager
           ];
         };
+
+        # Vega - High-memory database & compute (Hetzner EPYC 7502P, 576GB, Germany)
+        vega = nixpkgs.lib.nixosSystem {
+          specialArgs = attrs;
+          system = "x86_64-linux";
+          modules = [
+            ./hosts/vega/configuration.nix
+            unstableOverlay
+            home-manager.nixosModules.home-manager
+          ];
+        };
       };
     };
 }
