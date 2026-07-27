@@ -1,0 +1,576 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"safi-postgresql","namespace":"safi"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"safi-postgresql"}},"template":{"metadata":{"labels":{"app":"safi-postgresql"}},"spec":{"containers":[{"env":[{"name":"POSTGRES_USER","value":"safi"},{"name":"POSTGRES_PASSWORD","valueFrom":{"secretKeyRef":{"key":"POSTGRES_PASSWORD","name":"safi-secrets"}}},{"name":"POSTGRES_DB","value":"safi"}],"image":"postgres:16-alpine","name":"postgres","ports":[{"containerPort":5432}],"resources":{"limits":{"cpu":"500m","memory":"512Mi"},"requests":{"cpu":"100m","memory":"256Mi"}},"volumeMounts":[{"mountPath":"/var/lib/postgresql/data","name":"data"}]}],"volumes":[{"name":"data","persistentVolumeClaim":{"claimName":"safi-postgresql-data"}}]}}}}
+    creationTimestamp: "2026-07-07T14:18:55Z"
+    generation: 1
+    name: safi-postgresql
+    namespace: safi
+    resourceVersion: "32641335"
+    uid: ba69cba2-78f9-4857-b4da-8908ed218f62
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: safi-postgresql
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: safi-postgresql
+      spec:
+        containers:
+        - env:
+          - name: POSTGRES_USER
+            value: safi
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: POSTGRES_PASSWORD
+                name: safi-secrets
+          - name: POSTGRES_DB
+            value: safi
+          image: postgres:16-alpine
+          imagePullPolicy: IfNotPresent
+          name: postgres
+          ports:
+          - containerPort: 5432
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: safi-postgresql-data
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-07-07T14:18:55Z"
+      lastUpdateTime: "2026-07-07T14:19:03Z"
+      message: ReplicaSet "safi-postgresql-66468b88cd" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T04:12:33Z"
+      lastUpdateTime: "2026-07-24T04:12:33Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "2"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"safi-web"},"name":"safi-web","namespace":"safi"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"safi-web"}},"template":{"metadata":{"labels":{"app":"safi-web"}},"spec":{"containers":[{"envFrom":[{"configMapRef":{"name":"safi-config"}},{"secretRef":{"name":"safi-secrets"}}],"image":"git.bernad.in/miguel/krauto-web:v0.1.0","livenessProbe":{"httpGet":{"path":"/api/health","port":3000},"initialDelaySeconds":15,"periodSeconds":30},"name":"web","ports":[{"containerPort":3000}],"readinessProbe":{"httpGet":{"path":"/api/health","port":3000},"periodSeconds":5},"resources":{"limits":{"cpu":"1","memory":"512Mi"},"requests":{"cpu":"250m","memory":"256Mi"}},"startupProbe":{"failureThreshold":30,"httpGet":{"path":"/api/health","port":3000},"periodSeconds":2}}]}}}}
+    creationTimestamp: "2026-07-07T14:18:59Z"
+    generation: 2
+    labels:
+      app: safi-web
+    name: safi-web
+    namespace: safi
+    resourceVersion: "32942216"
+    uid: a84d4aec-39e5-41c4-9588-b5dac9230055
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: safi-web
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: safi-web
+      spec:
+        containers:
+        - envFrom:
+          - configMapRef:
+              name: safi-config
+          - secretRef:
+              name: safi-secrets
+          image: git.bernad.in/miguel/krauto-web:v0.1.0
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/health
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: web
+          ports:
+          - containerPort: 3000
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/health
+              port: 3000
+              scheme: HTTP
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: "1"
+              memory: 512Mi
+            requests:
+              cpu: 250m
+              memory: 256Mi
+          startupProbe:
+            failureThreshold: 30
+            httpGet:
+              path: /api/health
+              port: 3000
+              scheme: HTTP
+            periodSeconds: 2
+            successThreshold: 1
+            timeoutSeconds: 1
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-07-07T14:18:59Z"
+      lastUpdateTime: "2026-07-07T18:15:26Z"
+      message: ReplicaSet "safi-web-867bc4dcb6" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T17:30:31Z"
+      lastUpdateTime: "2026-07-24T17:30:31Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: batch/v1
+  kind: CronJob
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"batch/v1","kind":"CronJob","metadata":{"annotations":{},"labels":{"app.kubernetes.io/name":"gavaconnect-signup","app.kubernetes.io/part-of":"safi"},"name":"gavaconnect-signup","namespace":"safi"},"spec":{"concurrencyPolicy":"Forbid","failedJobsHistoryLimit":5,"jobTemplate":{"spec":{"activeDeadlineSeconds":180,"backoffLimit":0,"template":{"spec":{"containers":[{"command":["/bin/bash","-c","cp /scripts/signup.mjs /tmp/signup.mjs \u0026\u0026 PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm init -y \u003e/dev/null 2\u003e\u00261 \u0026\u0026 PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm install --no-save playwright@1.52.0 \u003e/dev/null 2\u003e\u00261 \u0026\u0026 NODE_TLS_REJECT_UNAUTHORIZED=0 node /tmp/signup.mjs"],"env":[{"name":"GOTIFY_TOKEN","valueFrom":{"secretKeyRef":{"key":"GOTIFY_TOKEN","name":"gavaconnect-signup-secrets"}}},{"name":"GOTIFY_URL","value":"http://gotify.atlas-system.svc.cluster.local/message"}],"image":"mcr.microsoft.com/playwright:v1.52.0-noble","name":"signup","resources":{"limits":{"cpu":"1","memory":"1Gi"},"requests":{"cpu":"250m","memory":"512Mi"}},"volumeMounts":[{"mountPath":"/scripts","name":"script","readOnly":true}],"workingDir":"/tmp"}],"restartPolicy":"Never","serviceAccountName":"gavaconnect-signup","volumes":[{"configMap":{"name":"gavaconnect-signup-script"},"name":"script"}]}}}},"schedule":"*/5 * * * *","successfulJobsHistoryLimit":3}}
+    creationTimestamp: "2026-07-19T19:09:53Z"
+    generation: 6
+    labels:
+      app.kubernetes.io/name: gavaconnect-signup
+      app.kubernetes.io/part-of: safi
+    name: gavaconnect-signup
+    namespace: safi
+    resourceVersion: "31211766"
+    uid: 9a375492-53f3-4af5-8ff5-8b388f77ae4e
+  spec:
+    concurrencyPolicy: Forbid
+    failedJobsHistoryLimit: 5
+    jobTemplate:
+      metadata: {}
+      spec:
+        activeDeadlineSeconds: 180
+        backoffLimit: 0
+        template:
+          metadata: {}
+          spec:
+            containers:
+            - command:
+              - /bin/bash
+              - -c
+              - cp /scripts/signup.mjs /tmp/signup.mjs && PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+                npm init -y >/dev/null 2>&1 && PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+                npm install --no-save playwright@1.52.0 >/dev/null 2>&1 && NODE_TLS_REJECT_UNAUTHORIZED=0
+                node /tmp/signup.mjs
+              env:
+              - name: GOTIFY_TOKEN
+                valueFrom:
+                  secretKeyRef:
+                    key: GOTIFY_TOKEN
+                    name: gavaconnect-signup-secrets
+              - name: GOTIFY_URL
+                value: http://gotify.atlas-system.svc.cluster.local/message
+              image: mcr.microsoft.com/playwright:v1.52.0-noble
+              imagePullPolicy: IfNotPresent
+              name: signup
+              resources:
+                limits:
+                  cpu: "1"
+                  memory: 1Gi
+                requests:
+                  cpu: 250m
+                  memory: 512Mi
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              volumeMounts:
+              - mountPath: /scripts
+                name: script
+                readOnly: true
+              workingDir: /tmp
+            dnsPolicy: ClusterFirst
+            restartPolicy: Never
+            schedulerName: default-scheduler
+            securityContext: {}
+            serviceAccount: gavaconnect-signup
+            serviceAccountName: gavaconnect-signup
+            terminationGracePeriodSeconds: 30
+            volumes:
+            - configMap:
+                defaultMode: 420
+                name: gavaconnect-signup-script
+              name: script
+    schedule: '*/5 * * * *'
+    successfulJobsHistoryLimit: 3
+    suspend: true
+  status:
+    lastScheduleTime: "2026-07-20T07:40:00Z"
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"safi-postgresql","namespace":"safi"},"spec":{"ports":[{"port":5432,"targetPort":5432}],"selector":{"app":"safi-postgresql"}}}
+    creationTimestamp: "2026-07-07T14:18:57Z"
+    name: safi-postgresql
+    namespace: safi
+    resourceVersion: "26818797"
+    uid: cd590720-1150-4e94-a062-af4beaddc1a1
+  spec:
+    clusterIP: 10.43.153.4
+    clusterIPs:
+    - 10.43.153.4
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 5432
+      protocol: TCP
+      targetPort: 5432
+    selector:
+      app: safi-postgresql
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"safi-web","namespace":"safi"},"spec":{"ports":[{"port":80,"targetPort":3000}],"selector":{"app":"safi-web"}}}
+    creationTimestamp: "2026-07-07T14:19:00Z"
+    name: safi-web
+    namespace: safi
+    resourceVersion: "26818842"
+    uid: 084b73bb-5732-41ce-b091-3fb045ef2d7f
+  spec:
+    clusterIP: 10.43.255.20
+    clusterIPs:
+    - 10.43.255.20
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 3000
+    selector:
+      app: safi-web
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"safi-worker","namespace":"safi"},"spec":{"clusterIP":"None","ports":[{"port":7233,"targetPort":7233}],"selector":{"app":"safi-worker"}}}
+    creationTimestamp: "2026-07-07T14:19:01Z"
+    name: safi-worker
+    namespace: safi
+    resourceVersion: "26818868"
+    uid: 0cd95948-5581-42f6-9555-5006e6054402
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 7233
+      protocol: TCP
+      targetPort: 7233
+    selector:
+      app: safi-worker
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  data:
+    signup.mjs: "import { chromium } from 'playwright';\nimport { readFileSync } from
+      'fs';\n\nconst SIGNUP_DATA = {\n  firstName: 'Miguel',\n  lastName: 'Bernadin',\n
+      \ email: 'hello@safi.africa',\n  username: 'unifytechlabs',\n  phone: '0769479634',\n
+      \ company: 'Unify Tech Labs LTD',\n};\n\nconst GOTIFY_URL = process.env.GOTIFY_URL
+      || 'http://gotify.atlas-system.svc.cluster.local/message';\nconst GOTIFY_TOKEN
+      = process.env.GOTIFY_TOKEN || '';\n\nasync function sendGotify(title, message,
+      priority = 8) {\n  if (!GOTIFY_TOKEN) return;\n  try {\n    await fetch(GOTIFY_URL,
+      {\n      method: 'POST',\n      headers: { 'X-Gotify-Key': GOTIFY_TOKEN, 'Content-Type':
+      'application/json' },\n      body: JSON.stringify({ title, message, priority
+      }),\n    });\n    console.log(`[Gotify] Sent: ${title}`);\n  } catch (e) {\n
+      \   console.log(`[Gotify] Failed: ${e.message}`);\n  }\n}\n\nasync function
+      suspendCronJob() {\n  try {\n    const token = readFileSync('/var/run/secrets/kubernetes.io/serviceaccount/token',
+      'utf8');\n    const ca = readFileSync('/var/run/secrets/kubernetes.io/serviceaccount/ca.crt');\n
+      \   const ns = readFileSync('/var/run/secrets/kubernetes.io/serviceaccount/namespace',
+      'utf8');\n    const url = `https://kubernetes.default.svc/apis/batch/v1/namespaces/${ns}/cronjobs/gavaconnect-signup`;\n
+      \   const res = await fetch(url, {\n      method: 'PATCH',\n      headers: {\n
+      \       'Authorization': `Bearer ${token}`,\n        'Content-Type': 'application/merge-patch+json',\n
+      \     },\n      body: JSON.stringify({ spec: { suspend: true } }),\n      //
+      Node 22 doesn't verify K8s self-signed certs by default\n      dispatcher: undefined,\n
+      \   });\n    if (res.ok) {\n      console.log('[K8s] CronJob suspended — no
+      more retries.');\n    } else {\n      console.log(`[K8s] Failed to suspend:
+      ${res.status} ${await res.text()}`);\n    }\n  } catch (e) {\n    console.log(`[K8s]
+      Suspend error: ${e.message}`);\n  }\n}\n\nconsole.log(`=== GavaConnect Signup
+      at ${new Date().toISOString()} ===`);\n\nconst browser = await chromium.launch({
+      headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] });\nconst
+      page = await browser.newPage();\n\ntry {\n  await page.goto('https://developer.go.ke/session/user/signup',
+      { waitUntil: 'networkidle', timeout: 30000 });\n  await page.waitForSelector('input',
+      { timeout: 15000 });\n  await page.waitForTimeout(2000);\n\n  const fill = async
+      (labels, value) => {\n    for (const label of labels) {\n      try {\n        const
+      el = page.getByLabel(label);\n        if (await el.count() > 0) { await el.fill(value);
+      return true; }\n      } catch(e) {}\n      try {\n        const el = page.locator(`input[placeholder=\"${label}\"]`);\n
+      \       if (await el.count() > 0) { await el.fill(value); return true; }\n      }
+      catch(e) {}\n    }\n    return false;\n  };\n\n  await fill(['First Name'],
+      SIGNUP_DATA.firstName);\n  await fill(['Last Name'], SIGNUP_DATA.lastName);\n
+      \ await fill(['Email Address', 'Email'], SIGNUP_DATA.email);\n  await fill(['Username'],
+      SIGNUP_DATA.username);\n\n  const combobox = page.locator('[role=\"combobox\"]').first();\n
+      \ if (await combobox.count() > 0) {\n    await combobox.click();\n    await
+      page.waitForTimeout(800);\n    const kenyaOpt = page.locator('[role=\"listbox\"]
+      [role=\"option\"]', { hasText: 'Kenya' }).first();\n    if (await kenyaOpt.count()
+      > 0) {\n      await kenyaOpt.click();\n      console.log('✓ All fields filled
+      + Kenya selected');\n    }\n  }\n\n  await fill(['Phone Number', 'Phone'], SIGNUP_DATA.phone);\n
+      \ await fill(['Company Name', 'Company'], SIGNUP_DATA.company);\n\n  const checkbox
+      = page.locator('input[type=\"checkbox\"]');\n  if (await checkbox.count() >
+      0) await checkbox.check();\n\n  const submitBtn = page.getByRole('button', {
+      name: /Sign Up|Submit|Register/i });\n  if (await submitBtn.count() > 0) {\n
+      \   const disabled = await submitBtn.getAttribute('disabled');\n    await submitBtn.click(disabled
+      !== null ? { force: true } : undefined);\n    console.log('→ Submitted');\n\n
+      \   await page.waitForTimeout(10000);\n    const text = await page.textContent('body');\n\n
+      \   if (text.includes('success') || text.includes('verification') || text.includes('check
+      your email') || text.includes('activate')) {\n      console.log('\U0001F389
+      SUCCESS!');\n      await sendGotify('\U0001F389 GavaConnect Signup SUCCESS!',
+      `Account registered for ${SIGNUP_DATA.email}. Check email for verification.`,
+      10);\n      await suspendCronJob();\n      await browser.close();\n      process.exit(0);\n
+      \   } else if (text.includes('already exists') || text.includes('already registered'))
+      {\n      console.log('⚠ Account already exists');\n      await sendGotify('⚠
+      GavaConnect Account Exists', `${SIGNUP_DATA.username} already registered. Try
+      logging in.`, 8);\n      await suspendCronJob();\n      await browser.close();\n
+      \     process.exit(0);\n    } else if (text.includes('Something went wrong'))
+      {\n      console.log('✗ Backend error. Will retry.');\n      await browser.close();\n
+      \     process.exit(1);\n    } else {\n      console.log('? Result:', text.slice(0,
+      300));\n      await browser.close();\n      process.exit(1);\n    }\n  }\n}
+      catch(e) {\n  console.log(`Error: ${e.message.slice(0, 200)}`);\n  await browser.close();\n
+      \ process.exit(1);\n}\n"
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: "{\"apiVersion\":\"v1\",\"data\":{\"signup.mjs\":\"import
+        { chromium } from 'playwright';\\nimport { readFileSync } from 'fs';\\n\\nconst
+        SIGNUP_DATA = {\\n  firstName: 'Miguel',\\n  lastName: 'Bernadin',\\n  email:
+        'hello@safi.africa',\\n  username: 'unifytechlabs',\\n  phone: '0769479634',\\n
+        \ company: 'Unify Tech Labs LTD',\\n};\\n\\nconst GOTIFY_URL = process.env.GOTIFY_URL
+        || 'http://gotify.atlas-system.svc.cluster.local/message';\\nconst GOTIFY_TOKEN
+        = process.env.GOTIFY_TOKEN || '';\\n\\nasync function sendGotify(title, message,
+        priority = 8) {\\n  if (!GOTIFY_TOKEN) return;\\n  try {\\n    await fetch(GOTIFY_URL,
+        {\\n      method: 'POST',\\n      headers: { 'X-Gotify-Key': GOTIFY_TOKEN,
+        'Content-Type': 'application/json' },\\n      body: JSON.stringify({ title,
+        message, priority }),\\n    });\\n    console.log(`[Gotify] Sent: ${title}`);\\n
+        \ } catch (e) {\\n    console.log(`[Gotify] Failed: ${e.message}`);\\n  }\\n}\\n\\nasync
+        function suspendCronJob() {\\n  try {\\n    const token = readFileSync('/var/run/secrets/kubernetes.io/serviceaccount/token',
+        'utf8');\\n    const ca = readFileSync('/var/run/secrets/kubernetes.io/serviceaccount/ca.crt');\\n
+        \   const ns = readFileSync('/var/run/secrets/kubernetes.io/serviceaccount/namespace',
+        'utf8');\\n    const url = `https://kubernetes.default.svc/apis/batch/v1/namespaces/${ns}/cronjobs/gavaconnect-signup`;\\n
+        \   const res = await fetch(url, {\\n      method: 'PATCH',\\n      headers:
+        {\\n        'Authorization': `Bearer ${token}`,\\n        'Content-Type':
+        'application/merge-patch+json',\\n      },\\n      body: JSON.stringify({
+        spec: { suspend: true } }),\\n      // Node 22 doesn't verify K8s self-signed
+        certs by default\\n      dispatcher: undefined,\\n    });\\n    if (res.ok)
+        {\\n      console.log('[K8s] CronJob suspended — no more retries.');\\n    }
+        else {\\n      console.log(`[K8s] Failed to suspend: ${res.status} ${await
+        res.text()}`);\\n    }\\n  } catch (e) {\\n    console.log(`[K8s] Suspend
+        error: ${e.message}`);\\n  }\\n}\\n\\nconsole.log(`=== GavaConnect Signup
+        at ${new Date().toISOString()} ===`);\\n\\nconst browser = await chromium.launch({
+        headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] });\\nconst
+        page = await browser.newPage();\\n\\ntry {\\n  await page.goto('https://developer.go.ke/session/user/signup',
+        { waitUntil: 'networkidle', timeout: 30000 });\\n  await page.waitForSelector('input',
+        { timeout: 15000 });\\n  await page.waitForTimeout(2000);\\n\\n  const fill
+        = async (labels, value) =\\u003e {\\n    for (const label of labels) {\\n
+        \     try {\\n        const el = page.getByLabel(label);\\n        if (await
+        el.count() \\u003e 0) { await el.fill(value); return true; }\\n      } catch(e)
+        {}\\n      try {\\n        const el = page.locator(`input[placeholder=\\\"${label}\\\"]`);\\n
+        \       if (await el.count() \\u003e 0) { await el.fill(value); return true;
+        }\\n      } catch(e) {}\\n    }\\n    return false;\\n  };\\n\\n  await fill(['First
+        Name'], SIGNUP_DATA.firstName);\\n  await fill(['Last Name'], SIGNUP_DATA.lastName);\\n
+        \ await fill(['Email Address', 'Email'], SIGNUP_DATA.email);\\n  await fill(['Username'],
+        SIGNUP_DATA.username);\\n\\n  const combobox = page.locator('[role=\\\"combobox\\\"]').first();\\n
+        \ if (await combobox.count() \\u003e 0) {\\n    await combobox.click();\\n
+        \   await page.waitForTimeout(800);\\n    const kenyaOpt = page.locator('[role=\\\"listbox\\\"]
+        [role=\\\"option\\\"]', { hasText: 'Kenya' }).first();\\n    if (await kenyaOpt.count()
+        \\u003e 0) {\\n      await kenyaOpt.click();\\n      console.log('✓ All fields
+        filled + Kenya selected');\\n    }\\n  }\\n\\n  await fill(['Phone Number',
+        'Phone'], SIGNUP_DATA.phone);\\n  await fill(['Company Name', 'Company'],
+        SIGNUP_DATA.company);\\n\\n  const checkbox = page.locator('input[type=\\\"checkbox\\\"]');\\n
+        \ if (await checkbox.count() \\u003e 0) await checkbox.check();\\n\\n  const
+        submitBtn = page.getByRole('button', { name: /Sign Up|Submit|Register/i });\\n
+        \ if (await submitBtn.count() \\u003e 0) {\\n    const disabled = await submitBtn.getAttribute('disabled');\\n
+        \   await submitBtn.click(disabled !== null ? { force: true } : undefined);\\n
+        \   console.log('→ Submitted');\\n\\n    await page.waitForTimeout(10000);\\n
+        \   const text = await page.textContent('body');\\n\\n    if (text.includes('success')
+        || text.includes('verification') || text.includes('check your email') || text.includes('activate'))
+        {\\n      console.log('\U0001F389 SUCCESS!');\\n      await sendGotify('\U0001F389
+        GavaConnect Signup SUCCESS!', `Account registered for ${SIGNUP_DATA.email}.
+        Check email for verification.`, 10);\\n      await suspendCronJob();\\n      await
+        browser.close();\\n      process.exit(0);\\n    } else if (text.includes('already
+        exists') || text.includes('already registered')) {\\n      console.log('⚠
+        Account already exists');\\n      await sendGotify('⚠ GavaConnect Account
+        Exists', `${SIGNUP_DATA.username} already registered. Try logging in.`, 8);\\n
+        \     await suspendCronJob();\\n      await browser.close();\\n      process.exit(0);\\n
+        \   } else if (text.includes('Something went wrong')) {\\n      console.log('✗
+        Backend error. Will retry.');\\n      await browser.close();\\n      process.exit(1);\\n
+        \   } else {\\n      console.log('? Result:', text.slice(0, 300));\\n      await
+        browser.close();\\n      process.exit(1);\\n    }\\n  }\\n} catch(e) {\\n
+        \ console.log(`Error: ${e.message.slice(0, 200)}`);\\n  await browser.close();\\n
+        \ process.exit(1);\\n}\\n\"},\"kind\":\"ConfigMap\",\"metadata\":{\"annotations\":{},\"name\":\"gavaconnect-signup-script\",\"namespace\":\"safi\"}}\n"
+    creationTimestamp: "2026-07-19T19:09:53Z"
+    name: gavaconnect-signup-script
+    namespace: safi
+    resourceVersion: "31030258"
+    uid: 7c40c1ac-11d8-45c1-a07b-e6d856318e14
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIBdzCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy
+      dmVyLWNhQDE3NzM0OTIwNDMwHhcNMjYwMzE0MTI0MDQzWhcNMzYwMzExMTI0MDQz
+      WjAjMSEwHwYDVQQDDBhrM3Mtc2VydmVyLWNhQDE3NzM0OTIwNDMwWTATBgcqhkjO
+      PQIBBggqhkjOPQMBBwNCAARpgn+LEJSNlp2uAqphT94mk3q/VpLzxAn/KjD1mBH8
+      oQu45uwEkuvSQdTXfKQORPUuxCqO/aaIp9J79K22/cobo0IwQDAOBgNVHQ8BAf8E
+      BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUaFaNeoZQ5OsygNWLwWhw
+      qpQZLbMwCgYIKoZIzj0EAwIDSAAwRQIhAO249TlfJBFz/q6b8Qv9/09lifqmSddW
+      aVbPh0wrSpvCAiAJrxY16wd92CAuR5caK2/1xOqu05sdTiI7O1SXIsotcQ==
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2026-07-07T14:18:54Z"
+    name: kube-root-ca.crt
+    namespace: safi
+    resourceVersion: "26818767"
+    uid: bf08dbb3-fd4c-4f29-b032-c8740cf0b703
+- apiVersion: v1
+  data:
+    GAVACONNECT_BASE_URL: https://api.developer.go.ke
+    MPESA_ENVIRONMENT: sandbox
+    NEXTAUTH_URL: https://safi.africa
+    NODE_ENV: production
+    TEMPORAL_ADDRESS: temporal-frontend.temporal.svc.cluster.local:7233
+    TEMPORAL_NAMESPACE: safi
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"GAVACONNECT_BASE_URL":"https://api.developer.go.ke","MPESA_ENVIRONMENT":"sandbox","NEXTAUTH_URL":"https://safi.africa","NODE_ENV":"production","TEMPORAL_ADDRESS":"temporal-frontend.temporal.svc.cluster.local:7233","TEMPORAL_NAMESPACE":"safi"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"safi-config","namespace":"safi"}}
+    creationTimestamp: "2026-07-07T14:18:57Z"
+    name: safi-config
+    namespace: safi
+    resourceVersion: "26818804"
+    uid: 31700e39-d0d2-4575-a80e-67f17606db85
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"safi-postgresql-data","namespace":"safi"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"10Gi"}},"storageClassName":"openebs-hostpath"}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: astra
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-07-07T14:18:56Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: safi-postgresql-data
+    namespace: safi
+    resourceVersion: "26818837"
+    uid: 76b9d754-7a14-4dd0-bcfb-40ac110415e2
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-76b9d754-7a14-4dd0-bcfb-40ac110415e2
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 10Gi
+    phase: Bound
+kind: List
+metadata:
+  resourceVersion: ""

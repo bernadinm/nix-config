@@ -1,0 +1,507 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "5"
+      meta.helm.sh/release-name: n8n
+      meta.helm.sh/release-namespace: n8n
+    creationTimestamp: "2026-03-22T08:14:21Z"
+    generation: 9
+    labels:
+      app.kubernetes.io/component: main
+      app.kubernetes.io/instance: n8n
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: n8n
+      app.kubernetes.io/part-of: n8n
+      app.kubernetes.io/version: 2.11.4
+      helm.sh/chart: n8n-1.16.31
+    name: n8n
+    namespace: n8n
+    resourceVersion: "33063707"
+    uid: da2dbf7f-4326-4f69-9ab1-f4e3c249978f
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/instance: n8n
+        app.kubernetes.io/name: n8n
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          checksum/config: 928e98866599d7bb707ed7fa47f7396d6791cc28f067c5a80b01eb2ae6db9c72
+        labels:
+          app.kubernetes.io/component: main
+          app.kubernetes.io/instance: n8n
+          app.kubernetes.io/managed-by: Helm
+          app.kubernetes.io/name: n8n
+          app.kubernetes.io/part-of: n8n
+          app.kubernetes.io/version: 2.11.4
+          helm.sh/chart: n8n-1.16.31
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+        containers:
+        - env:
+          - name: N8N_HIRING_BANNER_ENABLED
+            value: "false"
+          - name: NODE_ENV
+            value: production
+          - name: N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS
+            value: "true"
+          - name: N8N_PORT
+            value: "5678"
+          - name: N8N_DEFAULT_LOCALE
+            value: en
+          - name: GENERIC_TIMEZONE
+            value: Europe/Berlin
+          - name: N8N_GRACEFUL_SHUTDOWN_TIMEOUT
+            value: "30"
+          envFrom:
+          - configMapRef:
+              name: n8n-database-configmap
+          - configMapRef:
+              name: n8n-logging-configmap
+          - configMapRef:
+              name: n8n-diagnostics-configmap
+          - configMapRef:
+              name: n8n-version-notifications-configmap
+          - configMapRef:
+              name: n8n-public-api-configmap
+          - configMapRef:
+              name: n8n-workflow-history-configmap
+          - configMapRef:
+              name: n8n-task-broker-configmap
+          - configMapRef:
+              name: n8n-metrics-configmap
+          - configMapRef:
+              name: n8n-binary-data-configmap
+          - secretRef:
+              name: n8n-encryption-key-secret-v2
+          image: n8nio/n8n:2.11.4
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: http
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: n8n-main
+          ports:
+          - containerPort: 5678
+            name: http
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz/readiness
+              port: http
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsGroup: 1000
+            runAsNonRoot: true
+            runAsUser: 1000
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /home/node/.n8n
+            name: node-modules
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1000
+          fsGroupChangePolicy: OnRootMismatch
+        serviceAccount: n8n
+        serviceAccountName: n8n
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: node-modules
+          persistentVolumeClaim:
+            claimName: n8n-data-orion
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-03-22T08:14:21Z"
+      lastUpdateTime: "2026-07-07T12:20:15Z"
+      message: ReplicaSet "n8n-5f5d7bd59f" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T20:29:49Z"
+      lastUpdateTime: "2026-07-24T20:29:49Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 9
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: n8n
+      meta.helm.sh/release-namespace: n8n
+    creationTimestamp: "2026-03-22T08:14:21Z"
+    labels:
+      app.kubernetes.io/component: main
+      app.kubernetes.io/instance: n8n
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: n8n
+      app.kubernetes.io/part-of: n8n
+      app.kubernetes.io/version: 2.11.4
+      helm.sh/chart: n8n-1.16.31
+    name: n8n
+    namespace: n8n
+    resourceVersion: "895585"
+    uid: 4b2526f7-def1-44a8-88ff-337f2f9a9005
+  spec:
+    clusterIP: 10.43.182.125
+    clusterIPs:
+    - 10.43.182.125
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 5678
+      protocol: TCP
+      targetPort: http
+    selector:
+      app.kubernetes.io/instance: n8n
+      app.kubernetes.io/name: n8n
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIBdzCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy
+      dmVyLWNhQDE3NzM0OTIwNDMwHhcNMjYwMzE0MTI0MDQzWhcNMzYwMzExMTI0MDQz
+      WjAjMSEwHwYDVQQDDBhrM3Mtc2VydmVyLWNhQDE3NzM0OTIwNDMwWTATBgcqhkjO
+      PQIBBggqhkjOPQMBBwNCAARpgn+LEJSNlp2uAqphT94mk3q/VpLzxAn/KjD1mBH8
+      oQu45uwEkuvSQdTXfKQORPUuxCqO/aaIp9J79K22/cobo0IwQDAOBgNVHQ8BAf8E
+      BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUaFaNeoZQ5OsygNWLwWhw
+      qpQZLbMwCgYIKoZIzj0EAwIDSAAwRQIhAO249TlfJBFz/q6b8Qv9/09lifqmSddW
+      aVbPh0wrSpvCAiAJrxY16wd92CAuR5caK2/1xOqu05sdTiI7O1SXIsotcQ==
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2026-03-22T08:14:21Z"
+    name: kube-root-ca.crt
+    namespace: n8n
+    resourceVersion: "895564"
+    uid: d7dec18a-a6c0-4913-914b-aecbce2c1c14
+- apiVersion: v1
+  data:
+    N8N_DEFAULT_BINARY_DATA_MODE: default
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: n8n
+      meta.helm.sh/release-namespace: n8n
+    creationTimestamp: "2026-03-22T08:14:21Z"
+    labels:
+      app: n8n
+      app.kubernetes.io/managed-by: Helm
+      chart: n8n-1.16.31
+      heritage: Helm
+      release: n8n
+    name: n8n-binary-data-configmap
+    namespace: n8n
+    resourceVersion: "895575"
+    uid: 86b4f7f5-3f4f-48bc-94a2-ecbf881ce94d
+- apiVersion: v1
+  data:
+    DB_SQLITE_VACUUM_ON_STARTUP: "false"
+    DB_TYPE: sqlite
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: n8n
+      meta.helm.sh/release-namespace: n8n
+    creationTimestamp: "2026-03-22T08:14:21Z"
+    labels:
+      app: n8n
+      app.kubernetes.io/managed-by: Helm
+      chart: n8n-1.16.31
+      heritage: Helm
+      release: n8n
+    name: n8n-database-configmap
+    namespace: n8n
+    resourceVersion: "895577"
+    uid: e02d9f16-eff1-493a-8a66-71bf6ab4928a
+- apiVersion: v1
+  data:
+    N8N_DIAGNOSTICS_CONFIG_BACKEND: ""
+    N8N_DIAGNOSTICS_CONFIG_FRONTEND: ""
+    N8N_DIAGNOSTICS_ENABLED: "false"
+    N8N_DIAGNOSTICS_POSTHOG_API_HOST: ""
+    N8N_DIAGNOSTICS_POSTHOG_API_KEY: ""
+    N8N_FRONTEND_SENTRY_DSN: ""
+    N8N_SENTRY_DSN: ""
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: n8n
+      meta.helm.sh/release-namespace: n8n
+    creationTimestamp: "2026-03-22T08:14:21Z"
+    labels:
+      app: n8n
+      app.kubernetes.io/managed-by: Helm
+      chart: n8n-1.16.31
+      heritage: Helm
+      release: n8n
+    name: n8n-diagnostics-configmap
+    namespace: n8n
+    resourceVersion: "895581"
+    uid: 17d2213e-b8fe-4114-8e0e-72339fc32c08
+- apiVersion: v1
+  data:
+    N8N_LOG_LEVEL: info
+    N8N_LOG_OUTPUT: console
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: n8n
+      meta.helm.sh/release-namespace: n8n
+    creationTimestamp: "2026-03-22T08:14:21Z"
+    labels:
+      app: n8n
+      app.kubernetes.io/managed-by: Helm
+      chart: n8n-1.16.31
+      heritage: Helm
+      release: n8n
+    name: n8n-logging-configmap
+    namespace: n8n
+    resourceVersion: "895578"
+    uid: 7108bd1d-946e-4970-a368-db416c48cf99
+- apiVersion: v1
+  data:
+    N8N_METRICS: "false"
+    N8N_METRICS_INCLUDE_API_ENDPOINTS: "false"
+    N8N_METRICS_INCLUDE_API_METHOD_LABEL: "false"
+    N8N_METRICS_INCLUDE_API_PATH_LABEL: "false"
+    N8N_METRICS_INCLUDE_API_STATUS_CODE_LABEL: "false"
+    N8N_METRICS_INCLUDE_CACHE_METRICS: "false"
+    N8N_METRICS_INCLUDE_CREDENTIAL_TYPE_LABEL: "false"
+    N8N_METRICS_INCLUDE_DEFAULT_METRICS: "true"
+    N8N_METRICS_INCLUDE_MESSAGE_EVENT_BUS_METRICS: "false"
+    N8N_METRICS_INCLUDE_NODE_TYPE_LABEL: "false"
+    N8N_METRICS_INCLUDE_QUEUE_METRICS: "false"
+    N8N_METRICS_INCLUDE_WORKFLOW_ID_LABEL: "false"
+    N8N_METRICS_PREFIX: n8n_
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: n8n
+      meta.helm.sh/release-namespace: n8n
+    creationTimestamp: "2026-03-22T08:14:21Z"
+    labels:
+      app: n8n
+      app.kubernetes.io/managed-by: Helm
+      chart: n8n-1.16.31
+      heritage: Helm
+      release: n8n
+    name: n8n-metrics-configmap
+    namespace: n8n
+    resourceVersion: "895574"
+    uid: 7c3e19f0-937b-49b9-bd81-11714aed3495
+- apiVersion: v1
+  data:
+    N8N_PUBLIC_API_DISABLED: "false"
+    N8N_PUBLIC_API_ENDPOINT: api
+    N8N_PUBLIC_API_SWAGGERUI_DISABLED: "false"
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: n8n
+      meta.helm.sh/release-namespace: n8n
+    creationTimestamp: "2026-03-22T08:14:21Z"
+    labels:
+      app: n8n
+      app.kubernetes.io/managed-by: Helm
+      chart: n8n-1.16.31
+      heritage: Helm
+      release: n8n
+    name: n8n-public-api-configmap
+    namespace: n8n
+    resourceVersion: "895573"
+    uid: 44058d38-9499-4b83-a8a3-346a2f8b3b26
+- apiVersion: v1
+  data:
+    N8N_RUNNERS_ENABLED: "true"
+    N8N_RUNNERS_HEARTBEAT_INTERVAL: "30"
+    N8N_RUNNERS_MAX_CONCURRENCY: "5"
+    N8N_RUNNERS_MODE: internal
+    N8N_RUNNERS_TASK_TIMEOUT: "60"
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: n8n
+      meta.helm.sh/release-namespace: n8n
+    creationTimestamp: "2026-03-22T08:14:21Z"
+    labels:
+      app: n8n
+      app.kubernetes.io/managed-by: Helm
+      chart: n8n-1.16.31
+      heritage: Helm
+      release: n8n
+    name: n8n-task-broker-configmap
+    namespace: n8n
+    resourceVersion: "895576"
+    uid: 4af4e53a-45ae-4d77-a3e5-be8f14d1d816
+- apiVersion: v1
+  data:
+    N8N_VERSION_NOTIFICATIONS_ENABLED: "false"
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: n8n
+      meta.helm.sh/release-namespace: n8n
+    creationTimestamp: "2026-03-22T08:14:21Z"
+    labels:
+      app: n8n
+      app.kubernetes.io/managed-by: Helm
+      chart: n8n-1.16.31
+      heritage: Helm
+      release: n8n
+    name: n8n-version-notifications-configmap
+    namespace: n8n
+    resourceVersion: "895580"
+    uid: 967f5c2c-dd56-49c5-9a7d-3f67e0285e31
+- apiVersion: v1
+  data:
+    N8N_WORKFLOW_HISTORY_ENABLED: "true"
+    N8N_WORKFLOW_HISTORY_PRUNE_TIME: "336"
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: n8n
+      meta.helm.sh/release-namespace: n8n
+    creationTimestamp: "2026-03-22T08:14:21Z"
+    labels:
+      app: n8n
+      app.kubernetes.io/managed-by: Helm
+      chart: n8n-1.16.31
+      heritage: Helm
+      release: n8n
+    name: n8n-workflow-history-configmap
+    namespace: n8n
+    resourceVersion: "895579"
+    uid: 9403fe45-41c1-4375-a03e-ad4ef63f6061
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"n8n-data-orion","namespace":"n8n"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"5Gi"}},"storageClassName":"openebs-hostpath","volumeName":"n8n-data-orion-pv"}}
+      pv.kubernetes.io/bind-completed: "yes"
+    creationTimestamp: "2026-07-03T09:14:58Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: n8n-data-orion
+    namespace: n8n
+    resourceVersion: "25608145"
+    uid: d3e374a1-2527-48ed-aa93-dad4ec3776dc
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 5Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: n8n-data-orion-pv
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 5Gi
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: astra
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-03-29T14:23:37Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: n8n-main-persistence
+    namespace: n8n
+    resourceVersion: "2413292"
+    uid: 0c04902a-19c0-4386-880a-c5db497c9010
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 5Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-0c04902a-19c0-4386-880a-c5db497c9010
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 5Gi
+    phase: Bound
+kind: List
+metadata:
+  resourceVersion: ""

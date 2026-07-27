@@ -1,0 +1,258 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "4"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"bookstack","namespace":"bookstack"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"bookstack"}},"template":{"metadata":{"labels":{"app":"bookstack"}},"spec":{"containers":[{"env":[{"name":"APP_URL","value":"https://wiki.bernad.in"},{"name":"DB_HOST","value":"localhost"},{"name":"DB_DATABASE","value":"bookstack"},{"name":"DB_USERNAME","value":"bookstack"},{"name":"DB_PASSWORD","value":"bookstack"}],"image":"lscr.io/linuxserver/bookstack:latest","name":"bookstack","ports":[{"containerPort":80}],"resources":{"limits":{"cpu":"1","memory":"1Gi"},"requests":{"cpu":"100m","memory":"256Mi"}},"volumeMounts":[{"mountPath":"/config","name":"data"}]},{"env":[{"name":"MYSQL_ROOT_PASSWORD","value":"bookstack"},{"name":"MYSQL_DATABASE","value":"bookstack"},{"name":"MYSQL_USER","value":"bookstack"},{"name":"MYSQL_PASSWORD","value":"bookstack"}],"image":"mariadb:11","name":"mariadb","resources":{"limits":{"cpu":"1","memory":"512Mi"},"requests":{"cpu":"100m","memory":"256Mi"}},"volumeMounts":[{"mountPath":"/var/lib/mysql","name":"db"}]}],"nodeSelector":{"kubernetes.io/hostname":"orion"},"volumes":[{"name":"data","persistentVolumeClaim":{"claimName":"bookstack-data"}},{"name":"db","persistentVolumeClaim":{"claimName":"bookstack-db"}}]}}}}
+    creationTimestamp: "2026-07-07T11:48:43Z"
+    generation: 4
+    name: bookstack
+    namespace: bookstack
+    resourceVersion: "33063293"
+    uid: 166a59a3-e50b-4fdc-9426-1787f646d70a
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: bookstack
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: bookstack
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+        containers:
+        - env:
+          - name: APP_URL
+            value: https://wiki.bernad.in
+          - name: DB_HOST
+            value: 127.0.0.1
+          - name: DB_DATABASE
+            value: bookstack
+          - name: DB_USERNAME
+            value: bookstack
+          - name: DB_PASSWORD
+            value: bookstack
+          - name: APP_KEY
+            value: base64:+g5p275nV9frUz9z5bSCJcg4pZwyNcFuTcavia/mHZc=
+          image: lscr.io/linuxserver/bookstack:latest
+          imagePullPolicy: Always
+          name: bookstack
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /config
+            name: data
+        - env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: bookstack
+          - name: MYSQL_DATABASE
+            value: bookstack
+          - name: MYSQL_USER
+            value: bookstack
+          - name: MYSQL_PASSWORD
+            value: bookstack
+          - name: APP_KEY
+            value: base64:+g5p275nV9frUz9z5bSCJcg4pZwyNcFuTcavia/mHZc=
+          - name: DB_HOST
+            value: 127.0.0.1
+          image: mariadb:11
+          imagePullPolicy: IfNotPresent
+          name: mariadb
+          resources:
+            limits:
+              cpu: "1"
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/mysql
+            name: db
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/hostname: orion
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: bookstack-data
+        - name: db
+          persistentVolumeClaim:
+            claimName: bookstack-db
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-07-07T11:48:43Z"
+      lastUpdateTime: "2026-07-07T12:19:33Z"
+      message: ReplicaSet "bookstack-558b774b6c" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T20:29:13Z"
+      lastUpdateTime: "2026-07-24T20:29:13Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 4
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"bookstack","namespace":"bookstack"},"spec":{"ports":[{"port":80,"targetPort":80}],"selector":{"app":"bookstack"}}}
+    creationTimestamp: "2026-07-07T11:48:44Z"
+    name: bookstack
+    namespace: bookstack
+    resourceVersion: "26780917"
+    uid: a5e0cd02-8f1b-422d-8625-5d87453d9f8c
+  spec:
+    clusterIP: 10.43.225.152
+    clusterIPs:
+    - 10.43.225.152
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+    selector:
+      app: bookstack
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIBdzCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy
+      dmVyLWNhQDE3NzM0OTIwNDMwHhcNMjYwMzE0MTI0MDQzWhcNMzYwMzExMTI0MDQz
+      WjAjMSEwHwYDVQQDDBhrM3Mtc2VydmVyLWNhQDE3NzM0OTIwNDMwWTATBgcqhkjO
+      PQIBBggqhkjOPQMBBwNCAARpgn+LEJSNlp2uAqphT94mk3q/VpLzxAn/KjD1mBH8
+      oQu45uwEkuvSQdTXfKQORPUuxCqO/aaIp9J79K22/cobo0IwQDAOBgNVHQ8BAf8E
+      BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUaFaNeoZQ5OsygNWLwWhw
+      qpQZLbMwCgYIKoZIzj0EAwIDSAAwRQIhAO249TlfJBFz/q6b8Qv9/09lifqmSddW
+      aVbPh0wrSpvCAiAJrxY16wd92CAuR5caK2/1xOqu05sdTiI7O1SXIsotcQ==
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2026-07-07T11:48:41Z"
+    name: kube-root-ca.crt
+    namespace: bookstack
+    resourceVersion: "26780853"
+    uid: 475283d9-9b15-4689-ab80-5dc0708ab06a
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"bookstack-data","namespace":"bookstack"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"5Gi"}}}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: orion
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-07-07T11:48:42Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: bookstack-data
+    namespace: bookstack
+    resourceVersion: "26780941"
+    uid: 0d3a729b-5ea6-4288-ba01-1d91e3839a10
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 5Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-0d3a729b-5ea6-4288-ba01-1d91e3839a10
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 5Gi
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"bookstack-db","namespace":"bookstack"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"5Gi"}}}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: orion
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-07-07T11:48:43Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: bookstack-db
+    namespace: bookstack
+    resourceVersion: "26780944"
+    uid: 036013bf-2aaf-4188-8f23-924b7596d7c9
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 5Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-036013bf-2aaf-4188-8f23-924b7596d7c9
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 5Gi
+    phase: Bound
+kind: List
+metadata:
+  resourceVersion: ""

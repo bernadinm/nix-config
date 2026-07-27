@@ -1,0 +1,466 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "4"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"fleet"},"name":"fleet","namespace":"fleet"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"fleet"}},"template":{"metadata":{"labels":{"app":"fleet"}},"spec":{"containers":[{"command":["fleet","serve"],"env":[{"name":"FLEET_MYSQL_ADDRESS","value":"fleet-mysql:3306"},{"name":"FLEET_MYSQL_DATABASE","value":"fleet"},{"name":"FLEET_MYSQL_USERNAME","value":"fleet"},{"name":"FLEET_MYSQL_PASSWORD","valueFrom":{"secretKeyRef":{"key":"FLEET_MYSQL_PASSWORD","name":"fleet-secrets"}}},{"name":"FLEET_REDIS_ADDRESS","value":"fleet-redis:6379"},{"name":"FLEET_SERVER_ADDRESS","value":"0.0.0.0:8080"},{"name":"FLEET_SERVER_TLS","value":"false"},{"name":"FLEET_LOGGING_JSON","value":"true"}],"image":"fleetdm/fleet:v4.66.0","name":"fleet","ports":[{"containerPort":8080}],"readinessProbe":{"httpGet":{"path":"/healthz","port":8080},"initialDelaySeconds":15,"periodSeconds":10},"resources":{"limits":{"cpu":"1000m","memory":"512Mi"},"requests":{"cpu":"25m","memory":"128Mi"}}}],"initContainers":[{"command":["sh","-c","until nc -z fleet-mysql 3306; do sleep 3; done"],"image":"busybox:1.36","name":"wait-mysql","resources":{"limits":{"cpu":"50m","memory":"32Mi"},"requests":{"cpu":"5m","memory":"16Mi"}}}]}}}}
+    creationTimestamp: "2026-04-06T20:54:03Z"
+    generation: 4
+    labels:
+      app: fleet
+    name: fleet
+    namespace: fleet
+    resourceVersion: "32919805"
+    uid: a9ac44f3-32f9-4e01-83ee-d80566182829
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: fleet
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-04-07T03:56:01-04:00"
+        labels:
+          app: fleet
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+        containers:
+        - command:
+          - fleet
+          - serve
+          env:
+          - name: FLEET_MYSQL_ADDRESS
+            value: fleet-mysql:3306
+          - name: FLEET_MYSQL_DATABASE
+            value: fleet
+          - name: FLEET_MYSQL_USERNAME
+            value: fleet
+          - name: FLEET_MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: FLEET_MYSQL_PASSWORD
+                name: fleet-secrets
+          - name: FLEET_REDIS_ADDRESS
+            value: fleet-redis:6379
+          - name: FLEET_SERVER_ADDRESS
+            value: 0.0.0.0:8080
+          - name: FLEET_SERVER_TLS
+            value: "false"
+          - name: FLEET_LOGGING_JSON
+            value: "true"
+          image: fleetdm/fleet:v4.66.0
+          imagePullPolicy: IfNotPresent
+          name: fleet
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: "1"
+              memory: 512Mi
+            requests:
+              cpu: 25m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        initContainers:
+        - command:
+          - sh
+          - -c
+          - until nc -z fleet-mysql 3306; do sleep 3; done
+          image: busybox:1.36
+          imagePullPolicy: IfNotPresent
+          name: wait-mysql
+          resources:
+            limits:
+              cpu: 50m
+              memory: 32Mi
+            requests:
+              cpu: 5m
+              memory: 16Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-04-06T20:54:03Z"
+      lastUpdateTime: "2026-07-07T12:20:02Z"
+      message: ReplicaSet "fleet-9fd64d6fb" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T17:09:57Z"
+      lastUpdateTime: "2026-07-24T17:09:57Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 4
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "2"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"fleet-mysql","namespace":"fleet"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"fleet-mysql"}},"template":{"metadata":{"labels":{"app":"fleet-mysql"}},"spec":{"containers":[{"env":[{"name":"MYSQL_ROOT_PASSWORD","valueFrom":{"secretKeyRef":{"key":"MYSQL_ROOT_PASSWORD","name":"fleet-secrets"}}},{"name":"MYSQL_DATABASE","value":"fleet"},{"name":"MYSQL_USER","value":"fleet"},{"name":"MYSQL_PASSWORD","valueFrom":{"secretKeyRef":{"key":"MYSQL_PASSWORD","name":"fleet-secrets"}}}],"image":"mysql:8.0","name":"mysql","ports":[{"containerPort":3306}],"resources":{"limits":{"cpu":"500m","memory":"1Gi"},"requests":{"cpu":"10m","memory":"256Mi"}},"volumeMounts":[{"mountPath":"/var/lib/mysql","name":"data"}]}],"volumes":[{"name":"data","persistentVolumeClaim":{"claimName":"fleet-mysql-data"}}]}}}}
+    creationTimestamp: "2026-04-06T20:54:03Z"
+    generation: 2
+    name: fleet-mysql
+    namespace: fleet
+    resourceVersion: "32641317"
+    uid: 71c8843b-693a-47a5-ad56-71462e7b458f
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: fleet-mysql
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: fleet-mysql
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+        containers:
+        - env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: MYSQL_ROOT_PASSWORD
+                name: fleet-secrets
+          - name: MYSQL_DATABASE
+            value: fleet
+          - name: MYSQL_USER
+            value: fleet
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: MYSQL_PASSWORD
+                name: fleet-secrets
+          image: mysql:8.0
+          imagePullPolicy: IfNotPresent
+          name: mysql
+          ports:
+          - containerPort: 3306
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+            requests:
+              cpu: 10m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/mysql
+            name: data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: fleet-mysql-data
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-04-06T20:54:03Z"
+      lastUpdateTime: "2026-07-07T12:19:38Z"
+      message: ReplicaSet "fleet-mysql-cd7b98ddf" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T04:12:32Z"
+      lastUpdateTime: "2026-07-24T04:12:32Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "2"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"fleet-redis","namespace":"fleet"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"fleet-redis"}},"template":{"metadata":{"labels":{"app":"fleet-redis"}},"spec":{"containers":[{"image":"redis:7-alpine","name":"redis","ports":[{"containerPort":6379}],"resources":{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"10m","memory":"32Mi"}}}]}}}}
+    creationTimestamp: "2026-04-06T20:54:03Z"
+    generation: 2
+    name: fleet-redis
+    namespace: fleet
+    resourceVersion: "32925296"
+    uid: 0f5fa382-be7b-432d-8a81-402cdc4ab417
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: fleet-redis
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: fleet-redis
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+        containers:
+        - image: redis:7-alpine
+          imagePullPolicy: IfNotPresent
+          name: redis
+          ports:
+          - containerPort: 6379
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 200m
+              memory: 128Mi
+            requests:
+              cpu: 10m
+              memory: 32Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-04-06T20:54:03Z"
+      lastUpdateTime: "2026-07-07T12:19:37Z"
+      message: ReplicaSet "fleet-redis-6d6c798d98" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T17:15:06Z"
+      lastUpdateTime: "2026-07-24T17:15:06Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"fleet","namespace":"fleet"},"spec":{"ports":[{"port":8080,"targetPort":8080}],"selector":{"app":"fleet"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-04-06T20:54:03Z"
+    name: fleet
+    namespace: fleet
+    resourceVersion: "5232429"
+    uid: a181d367-0ab8-449b-ac6a-ed86cad25988
+  spec:
+    clusterIP: 10.43.188.220
+    clusterIPs:
+    - 10.43.188.220
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: fleet
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"fleet-mysql","namespace":"fleet"},"spec":{"ports":[{"port":3306,"targetPort":3306}],"selector":{"app":"fleet-mysql"}}}
+    creationTimestamp: "2026-04-06T20:54:03Z"
+    name: fleet-mysql
+    namespace: fleet
+    resourceVersion: "5232393"
+    uid: 0bb1f579-5a5a-4a7a-b28f-9ac060d0de4a
+  spec:
+    clusterIP: 10.43.165.209
+    clusterIPs:
+    - 10.43.165.209
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 3306
+      protocol: TCP
+      targetPort: 3306
+    selector:
+      app: fleet-mysql
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"fleet-redis","namespace":"fleet"},"spec":{"ports":[{"port":6379,"targetPort":6379}],"selector":{"app":"fleet-redis"}}}
+    creationTimestamp: "2026-04-06T20:54:03Z"
+    name: fleet-redis
+    namespace: fleet
+    resourceVersion: "5232413"
+    uid: 795400e3-c593-49f7-9f19-57ee93f604b8
+  spec:
+    clusterIP: 10.43.15.251
+    clusterIPs:
+    - 10.43.15.251
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 6379
+      protocol: TCP
+      targetPort: 6379
+    selector:
+      app: fleet-redis
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIBdzCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy
+      dmVyLWNhQDE3NzM0OTIwNDMwHhcNMjYwMzE0MTI0MDQzWhcNMzYwMzExMTI0MDQz
+      WjAjMSEwHwYDVQQDDBhrM3Mtc2VydmVyLWNhQDE3NzM0OTIwNDMwWTATBgcqhkjO
+      PQIBBggqhkjOPQMBBwNCAARpgn+LEJSNlp2uAqphT94mk3q/VpLzxAn/KjD1mBH8
+      oQu45uwEkuvSQdTXfKQORPUuxCqO/aaIp9J79K22/cobo0IwQDAOBgNVHQ8BAf8E
+      BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUaFaNeoZQ5OsygNWLwWhw
+      qpQZLbMwCgYIKoZIzj0EAwIDSAAwRQIhAO249TlfJBFz/q6b8Qv9/09lifqmSddW
+      aVbPh0wrSpvCAiAJrxY16wd92CAuR5caK2/1xOqu05sdTiI7O1SXIsotcQ==
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2026-04-06T20:54:02Z"
+    name: kube-root-ca.crt
+    namespace: fleet
+    resourceVersion: "5232380"
+    uid: 73d7ae31-228d-475f-8761-ee5ae388e10f
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"fleet-mysql-data","namespace":"fleet"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"10Gi"}},"storageClassName":"openebs-hostpath"}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: astra
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-04-06T20:54:03Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: fleet-mysql-data
+    namespace: fleet
+    resourceVersion: "5232491"
+    uid: 8437b276-e9f6-4ea2-874d-85a74b8b176c
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-8437b276-e9f6-4ea2-874d-85a74b8b176c
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 10Gi
+    phase: Bound
+kind: List
+metadata:
+  resourceVersion: ""

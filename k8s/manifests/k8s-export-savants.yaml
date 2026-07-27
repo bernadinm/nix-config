@@ -1,0 +1,200 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "11"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"savants-listener"},"name":"listener","namespace":"savants"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"savants-listener"}},"strategy":{"type":"Recreate"},"template":{"metadata":{"labels":{"app":"savants-listener"}},"spec":{"containers":[{"env":[{"name":"CHUNK_MINUTES","value":"5"},{"name":"AUDIO_DEVICE","value":"dsnooped"},{"name":"WHISPER_MODEL","value":"tiny"},{"name":"SILENCE_THRESHOLD","value":"-50"},{"name":"RETENTION_HOURS","value":"48"},{"name":"OWNER_NAME","value":"Miguel"},{"name":"DATA_DIR","value":"/data"}],"envFrom":[{"secretRef":{"name":"listener-secrets"}}],"image":"fly:latest","imagePullPolicy":"Never","name":"listener","ports":[{"containerPort":8080,"name":"http"}],"resources":{"limits":{"cpu":"2","memory":"2Gi"},"requests":{"cpu":"500m","memory":"512Mi"}},"securityContext":{"privileged":true},"volumeMounts":[{"mountPath":"/data","name":"data"},{"mountPath":"/dev/snd","name":"snd"}]}],"nodeSelector":{"kubernetes.io/hostname":"astra"},"volumes":[{"name":"data","persistentVolumeClaim":{"claimName":"listener-data"}},{"hostPath":{"path":"/dev/snd","type":"Directory"},"name":"snd"}]}}}}
+    creationTimestamp: "2026-05-19T17:31:51Z"
+    generation: 15
+    labels:
+      app: savants-listener
+    name: listener
+    namespace: savants
+    resourceVersion: "32640975"
+    uid: a1f8c9d9-cb13-4789-a103-6776c55bf2bf
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: savants-listener
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-05-21T17:00:23-04:00"
+        labels:
+          app: savants-listener
+      spec:
+        containers:
+        - env:
+          - name: CHUNK_MINUTES
+            value: "5"
+          - name: AUDIO_DEVICE
+            value: dsnooped
+          - name: WHISPER_MODEL
+            value: tiny
+          - name: SILENCE_THRESHOLD
+            value: "-50"
+          - name: RETENTION_HOURS
+            value: "48"
+          - name: OWNER_NAME
+            value: Miguel
+          - name: DATA_DIR
+            value: /data
+          envFrom:
+          - secretRef:
+              name: listener-secrets
+          image: fly:latest
+          imagePullPolicy: Never
+          name: listener
+          ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "2"
+              memory: 2Gi
+            requests:
+              cpu: 500m
+              memory: 512Mi
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /data
+            name: data
+          - mountPath: /dev/snd
+            name: snd
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/hostname: astra
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: listener-data
+        - hostPath:
+            path: /dev/snd
+            type: Directory
+          name: snd
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-05-19T17:31:51Z"
+      lastUpdateTime: "2026-05-21T21:00:56Z"
+      message: ReplicaSet "listener-7ccbf87cdc" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T04:12:20Z"
+      lastUpdateTime: "2026-07-24T04:12:20Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 15
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"fly-stream","namespace":"savants"},"spec":{"ports":[{"name":"http","port":80,"targetPort":8080}],"selector":{"app":"savants-listener"}}}
+    creationTimestamp: "2026-05-21T18:25:00Z"
+    name: fly-stream
+    namespace: savants
+    resourceVersion: "15335132"
+    uid: 84b1b442-5bbf-4efc-97d1-973f876fbfdd
+  spec:
+    clusterIP: 10.43.74.231
+    clusterIPs:
+    - 10.43.74.231
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: savants-listener
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIBdzCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy
+      dmVyLWNhQDE3NzM0OTIwNDMwHhcNMjYwMzE0MTI0MDQzWhcNMzYwMzExMTI0MDQz
+      WjAjMSEwHwYDVQQDDBhrM3Mtc2VydmVyLWNhQDE3NzM0OTIwNDMwWTATBgcqhkjO
+      PQIBBggqhkjOPQMBBwNCAARpgn+LEJSNlp2uAqphT94mk3q/VpLzxAn/KjD1mBH8
+      oQu45uwEkuvSQdTXfKQORPUuxCqO/aaIp9J79K22/cobo0IwQDAOBgNVHQ8BAf8E
+      BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUaFaNeoZQ5OsygNWLwWhw
+      qpQZLbMwCgYIKoZIzj0EAwIDSAAwRQIhAO249TlfJBFz/q6b8Qv9/09lifqmSddW
+      aVbPh0wrSpvCAiAJrxY16wd92CAuR5caK2/1xOqu05sdTiI7O1SXIsotcQ==
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2026-05-19T17:31:50Z"
+    name: kube-root-ca.crt
+    namespace: savants
+    resourceVersion: "14844870"
+    uid: 2f9bb9a6-7bc5-4ae7-a0dd-00f749c40c2f
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"listener-data","namespace":"savants"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"10Gi"}}}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: astra
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-05-19T17:31:51Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: listener-data
+    namespace: savants
+    resourceVersion: "14844915"
+    uid: 24c27ae3-ce44-49ce-b2b4-90011aa702f9
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-24c27ae3-ce44-49ce-b2b4-90011aa702f9
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 10Gi
+    phase: Bound
+kind: List
+metadata:
+  resourceVersion: ""

@@ -1,0 +1,1752 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "3"
+      meta.helm.sh/release-name: temporal
+      meta.helm.sh/release-namespace: temporal
+    creationTimestamp: "2026-03-22T12:22:19Z"
+    generation: 7
+    labels:
+      app.kubernetes.io/component: admintools
+      app.kubernetes.io/instance: temporal
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: temporal
+      app.kubernetes.io/part-of: temporal
+      app.kubernetes.io/version: 1.29.1
+      helm.sh/chart: temporal-0.73.2
+    name: temporal-admintools
+    namespace: temporal
+    resourceVersion: "33056461"
+    uid: 40ebdc53-8cbe-468d-b58e-3344b183802f
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: admintools
+        app.kubernetes.io/instance: temporal
+        app.kubernetes.io/name: temporal
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app.kubernetes.io/component: admintools
+          app.kubernetes.io/instance: temporal
+          app.kubernetes.io/managed-by: Helm
+          app.kubernetes.io/name: temporal
+          app.kubernetes.io/part-of: temporal
+          app.kubernetes.io/version: 1.29.1
+          helm.sh/chart: temporal-0.73.2
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+        containers:
+        - env:
+          - name: TEMPORAL_CLI_ADDRESS
+            value: temporal-frontend:7233
+          - name: TEMPORAL_ADDRESS
+            value: temporal-frontend:7233
+          image: temporalio/admin-tools:1.29.1-tctl-1.18.4-cli-1.5.0
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+              - ls
+              - /
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: admin-tools
+          resources:
+            requests:
+              cpu: 10m
+              memory: 64Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: default
+        serviceAccountName: default
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-03-22T12:22:19Z"
+      lastUpdateTime: "2026-07-07T12:20:04Z"
+      message: ReplicaSet "temporal-admintools-775f5d5845" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T20:20:48Z"
+      lastUpdateTime: "2026-07-24T20:20:48Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 7
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "8"
+      meta.helm.sh/release-name: temporal
+      meta.helm.sh/release-namespace: temporal
+    creationTimestamp: "2026-03-22T12:22:19Z"
+    generation: 14
+    labels:
+      app.kubernetes.io/component: frontend
+      app.kubernetes.io/instance: temporal
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: temporal
+      app.kubernetes.io/part-of: temporal
+      app.kubernetes.io/version: 1.29.1
+      helm.sh/chart: temporal-0.73.2
+    name: temporal-frontend
+    namespace: temporal
+    resourceVersion: "33063112"
+    uid: 65c928d0-c555-49f2-bac2-c1342a3727ad
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: frontend
+        app.kubernetes.io/instance: temporal
+        app.kubernetes.io/name: temporal
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          checksum/config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b-4c14a32dc4779890356523d0fbbb4425b24c7091059fd8332199feb4592d6a93
+          kubectl.kubernetes.io/restartedAt: "2026-03-23T23:31:56-04:00"
+          prometheus.io/job: temporal-frontend
+          prometheus.io/port: "9090"
+          prometheus.io/scrape: "true"
+        labels:
+          app.kubernetes.io/component: frontend
+          app.kubernetes.io/instance: temporal
+          app.kubernetes.io/managed-by: Helm
+          app.kubernetes.io/name: temporal
+          app.kubernetes.io/part-of: temporal
+          app.kubernetes.io/version: 1.29.1
+          helm.sh/chart: temporal-0.73.2
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+        containers:
+        - env:
+          - name: POD_IP
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: status.podIP
+          - name: SERVICES
+            value: frontend
+          - name: TEMPORAL_SERVICES
+            value: frontend
+          - name: TEMPORAL_STORE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: temporal-default-store
+          - name: TEMPORAL_VISIBILITY_STORE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: temporal-visibility-store
+          image: temporalio/server:1.29.1
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 150
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: rpc
+            timeoutSeconds: 1
+          name: temporal-frontend
+          ports:
+          - containerPort: 7233
+            name: rpc
+            protocol: TCP
+          - containerPort: 6933
+            name: membership
+            protocol: TCP
+          - containerPort: 7243
+            name: http
+            protocol: TCP
+          - containerPort: 9090
+            name: metrics
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/temporal/config/config_template.yaml
+            name: config-dockerize
+            subPath: config_template.yaml
+          - mountPath: /etc/temporal/dynamic_config
+            name: dynamic-config
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1000
+          runAsUser: 1000
+        serviceAccount: default
+        serviceAccountName: default
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: temporal-dockerize-config
+          name: config-dockerize
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: dynamic_config.yaml
+              path: dynamic_config.yaml
+            name: temporal-dynamic-config
+          name: dynamic-config
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-03-22T12:22:19Z"
+      lastUpdateTime: "2026-07-07T12:20:05Z"
+      message: ReplicaSet "temporal-frontend-6bfffcc7df" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T20:28:58Z"
+      lastUpdateTime: "2026-07-24T20:28:58Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 14
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "8"
+      meta.helm.sh/release-name: temporal
+      meta.helm.sh/release-namespace: temporal
+    creationTimestamp: "2026-03-22T12:22:19Z"
+    generation: 14
+    labels:
+      app.kubernetes.io/component: history
+      app.kubernetes.io/instance: temporal
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: temporal
+      app.kubernetes.io/part-of: temporal
+      app.kubernetes.io/version: 1.29.1
+      helm.sh/chart: temporal-0.73.2
+    name: temporal-history
+    namespace: temporal
+    resourceVersion: "33063096"
+    uid: 1cb8f4c9-fce9-4adb-bfc5-4121b341245f
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: history
+        app.kubernetes.io/instance: temporal
+        app.kubernetes.io/name: temporal
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          checksum/config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b-4c14a32dc4779890356523d0fbbb4425b24c7091059fd8332199feb4592d6a93
+          kubectl.kubernetes.io/restartedAt: "2026-03-23T23:31:56-04:00"
+          prometheus.io/job: temporal-history
+          prometheus.io/port: "9090"
+          prometheus.io/scrape: "true"
+        labels:
+          app.kubernetes.io/component: history
+          app.kubernetes.io/instance: temporal
+          app.kubernetes.io/managed-by: Helm
+          app.kubernetes.io/name: temporal
+          app.kubernetes.io/part-of: temporal
+          app.kubernetes.io/version: 1.29.1
+          helm.sh/chart: temporal-0.73.2
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+        containers:
+        - env:
+          - name: POD_IP
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: status.podIP
+          - name: SERVICES
+            value: history
+          - name: TEMPORAL_SERVICES
+            value: history
+          - name: TEMPORAL_STORE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: temporal-default-store
+          - name: TEMPORAL_VISIBILITY_STORE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: temporal-visibility-store
+          image: temporalio/server:1.29.1
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 150
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: rpc
+            timeoutSeconds: 1
+          name: temporal-history
+          ports:
+          - containerPort: 7234
+            name: rpc
+            protocol: TCP
+          - containerPort: 6934
+            name: membership
+            protocol: TCP
+          - containerPort: 9090
+            name: metrics
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/temporal/config/config_template.yaml
+            name: config-dockerize
+            subPath: config_template.yaml
+          - mountPath: /etc/temporal/dynamic_config
+            name: dynamic-config
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1000
+          runAsUser: 1000
+        serviceAccount: default
+        serviceAccountName: default
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: temporal-dockerize-config
+          name: config-dockerize
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: dynamic_config.yaml
+              path: dynamic_config.yaml
+            name: temporal-dynamic-config
+          name: dynamic-config
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-03-22T12:22:19Z"
+      lastUpdateTime: "2026-07-07T12:20:06Z"
+      message: ReplicaSet "temporal-history-57dd796495" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T20:28:58Z"
+      lastUpdateTime: "2026-07-24T20:28:58Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 14
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "8"
+      meta.helm.sh/release-name: temporal
+      meta.helm.sh/release-namespace: temporal
+    creationTimestamp: "2026-03-22T12:22:19Z"
+    generation: 14
+    labels:
+      app.kubernetes.io/component: matching
+      app.kubernetes.io/instance: temporal
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: temporal
+      app.kubernetes.io/part-of: temporal
+      app.kubernetes.io/version: 1.29.1
+      helm.sh/chart: temporal-0.73.2
+    name: temporal-matching
+    namespace: temporal
+    resourceVersion: "33063101"
+    uid: d52c2107-adce-49e5-be9d-f402587e9a12
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: matching
+        app.kubernetes.io/instance: temporal
+        app.kubernetes.io/name: temporal
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          checksum/config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b-4c14a32dc4779890356523d0fbbb4425b24c7091059fd8332199feb4592d6a93
+          kubectl.kubernetes.io/restartedAt: "2026-03-23T23:31:56-04:00"
+        labels:
+          app.kubernetes.io/component: matching
+          app.kubernetes.io/instance: temporal
+          app.kubernetes.io/managed-by: Helm
+          app.kubernetes.io/name: temporal
+          app.kubernetes.io/part-of: temporal
+          app.kubernetes.io/version: 1.29.1
+          helm.sh/chart: temporal-0.73.2
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+        containers:
+        - env:
+          - name: POD_IP
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: status.podIP
+          - name: SERVICES
+            value: matching
+          - name: TEMPORAL_SERVICES
+            value: matching
+          - name: TEMPORAL_STORE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: temporal-default-store
+          - name: TEMPORAL_VISIBILITY_STORE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: temporal-visibility-store
+          image: temporalio/server:1.29.1
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 150
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: rpc
+            timeoutSeconds: 1
+          name: temporal-matching
+          ports:
+          - containerPort: 7235
+            name: rpc
+            protocol: TCP
+          - containerPort: 6935
+            name: membership
+            protocol: TCP
+          - containerPort: 9090
+            name: metrics
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/temporal/config/config_template.yaml
+            name: config-dockerize
+            subPath: config_template.yaml
+          - mountPath: /etc/temporal/dynamic_config
+            name: dynamic-config
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1000
+          runAsUser: 1000
+        serviceAccount: default
+        serviceAccountName: default
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: temporal-dockerize-config
+          name: config-dockerize
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: dynamic_config.yaml
+              path: dynamic_config.yaml
+            name: temporal-dynamic-config
+          name: dynamic-config
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-03-22T12:22:19Z"
+      lastUpdateTime: "2026-07-07T12:20:08Z"
+      message: ReplicaSet "temporal-matching-6695f6dfcc" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T20:28:58Z"
+      lastUpdateTime: "2026-07-24T20:28:58Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 14
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "3"
+      meta.helm.sh/release-name: temporal
+      meta.helm.sh/release-namespace: temporal
+    creationTimestamp: "2026-03-22T12:22:19Z"
+    generation: 7
+    labels:
+      app.kubernetes.io/component: web
+      app.kubernetes.io/instance: temporal
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: temporal
+      app.kubernetes.io/part-of: temporal
+      app.kubernetes.io/version: 1.29.1
+      helm.sh/chart: temporal-0.73.2
+    name: temporal-web
+    namespace: temporal
+    resourceVersion: "33056356"
+    uid: be9b4325-00d8-4aac-a7c2-fbd23f2c1ca9
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: web
+        app.kubernetes.io/instance: temporal
+        app.kubernetes.io/name: temporal
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app.kubernetes.io/component: web
+          app.kubernetes.io/instance: temporal
+          app.kubernetes.io/managed-by: Helm
+          app.kubernetes.io/name: temporal
+          app.kubernetes.io/part-of: temporal
+          app.kubernetes.io/version: 1.29.1
+          helm.sh/chart: temporal-0.73.2
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+        containers:
+        - env:
+          - name: TEMPORAL_ADDRESS
+            value: temporal-frontend.temporal.svc:7233
+          image: temporalio/ui:2.44.0
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: http
+            timeoutSeconds: 1
+          name: temporal-web
+          ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 50m
+              memory: 96Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: default
+        serviceAccountName: default
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-03-22T12:22:19Z"
+      lastUpdateTime: "2026-07-07T12:20:09Z"
+      message: ReplicaSet "temporal-web-86886568b8" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T20:20:44Z"
+      lastUpdateTime: "2026-07-24T20:20:44Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 7
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "12"
+      meta.helm.sh/release-name: temporal
+      meta.helm.sh/release-namespace: temporal
+    creationTimestamp: "2026-03-22T12:22:19Z"
+    generation: 18
+    labels:
+      app.kubernetes.io/component: worker
+      app.kubernetes.io/instance: temporal
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: temporal
+      app.kubernetes.io/part-of: temporal
+      app.kubernetes.io/version: 1.29.1
+      helm.sh/chart: temporal-0.73.2
+    name: temporal-worker
+    namespace: temporal
+    resourceVersion: "33063110"
+    uid: 44b3cc52-996d-4b98-903b-5c3e1b728538
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: worker
+        app.kubernetes.io/instance: temporal
+        app.kubernetes.io/name: temporal
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          checksum/config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b-4c14a32dc4779890356523d0fbbb4425b24c7091059fd8332199feb4592d6a93
+          kubectl.kubernetes.io/restartedAt: "2026-03-23T23:51:28-04:00"
+          prometheus.io/job: temporal-worker
+          prometheus.io/port: "9090"
+          prometheus.io/scrape: "true"
+        labels:
+          app.kubernetes.io/component: worker
+          app.kubernetes.io/instance: temporal
+          app.kubernetes.io/managed-by: Helm
+          app.kubernetes.io/name: temporal
+          app.kubernetes.io/part-of: temporal
+          app.kubernetes.io/version: 1.29.1
+          helm.sh/chart: temporal-0.73.2
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+        containers:
+        - env:
+          - name: POD_IP
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: status.podIP
+          - name: SERVICES
+            value: worker
+          - name: TEMPORAL_SERVICES
+            value: worker
+          - name: TEMPORAL_STORE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: temporal-default-store
+          - name: TEMPORAL_VISIBILITY_STORE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: temporal-visibility-store
+          - name: TEMPORAL_ADDRESS
+            value: 10.43.74.41:7233
+          - name: TEMPORAL_CLI_ADDRESS
+            value: 10.43.74.41:7233
+          image: temporalio/server:1.29.1
+          imagePullPolicy: IfNotPresent
+          name: temporal-worker
+          ports:
+          - containerPort: 6939
+            name: membership
+            protocol: TCP
+          - containerPort: 9090
+            name: metrics
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/temporal/config/config_template.yaml
+            name: config-dockerize
+            subPath: config_template.yaml
+          - mountPath: /etc/temporal/dynamic_config
+            name: dynamic-config
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1000
+          runAsUser: 1000
+        serviceAccount: default
+        serviceAccountName: default
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: temporal-dockerize-config
+          name: config-dockerize
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: dynamic_config.yaml
+              path: dynamic_config.yaml
+            name: temporal-dynamic-config
+          name: dynamic-config
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-03-22T12:22:19Z"
+      lastUpdateTime: "2026-07-07T12:20:10Z"
+      message: ReplicaSet "temporal-worker-794b86987" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T20:28:58Z"
+      lastUpdateTime: "2026-07-24T20:28:58Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 18
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: temporal-postgresql
+      meta.helm.sh/release-namespace: temporal
+    creationTimestamp: "2026-03-22T12:23:54Z"
+    generation: 6
+    labels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: temporal-postgresql
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: postgresql
+      app.kubernetes.io/version: 18.3.0
+      helm.sh/chart: postgresql-18.5.11
+    name: temporal-postgresql
+    namespace: temporal
+    resourceVersion: "33031854"
+    uid: 2d78a801-817d-4752-b270-41023360225c
+  spec:
+    persistentVolumeClaimRetentionPolicy:
+      whenDeleted: Retain
+      whenScaled: Retain
+    podManagementPolicy: OrderedReady
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: primary
+        app.kubernetes.io/instance: temporal-postgresql
+        app.kubernetes.io/name: postgresql
+    serviceName: temporal-postgresql-hl
+    template:
+      metadata:
+        labels:
+          app.kubernetes.io/component: primary
+          app.kubernetes.io/instance: temporal-postgresql
+          app.kubernetes.io/managed-by: Helm
+          app.kubernetes.io/name: postgresql
+          app.kubernetes.io/version: 18.3.0
+          helm.sh/chart: postgresql-18.5.11
+        name: temporal-postgresql
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+        automountServiceAccountToken: false
+        containers:
+        - env:
+          - name: BITNAMI_DEBUG
+            value: "false"
+          - name: POSTGRESQL_PORT_NUMBER
+            value: "5432"
+          - name: POSTGRESQL_VOLUME_DIR
+            value: /bitnami/postgresql
+          - name: OPENSSL_FIPS
+            value: "yes"
+          - name: PGDATA
+            value: /bitnami/postgresql/data
+          - name: POSTGRES_USER
+            value: temporal
+          - name: POSTGRES_PASSWORD_FILE
+            value: /opt/bitnami/postgresql/secrets/password
+          - name: POSTGRES_POSTGRES_PASSWORD_FILE
+            value: /opt/bitnami/postgresql/secrets/postgres-password
+          - name: POSTGRES_DATABASE
+            value: temporal
+          - name: POSTGRESQL_ENABLE_LDAP
+            value: "no"
+          - name: POSTGRESQL_ENABLE_TLS
+            value: "no"
+          - name: POSTGRESQL_LOG_HOSTNAME
+            value: "false"
+          - name: POSTGRESQL_LOG_CONNECTIONS
+            value: "false"
+          - name: POSTGRESQL_LOG_DISCONNECTIONS
+            value: "false"
+          - name: POSTGRESQL_PGAUDIT_LOG_CATALOG
+            value: "off"
+          - name: POSTGRESQL_CLIENT_MIN_MESSAGES
+            value: error
+          - name: POSTGRESQL_SHARED_PRELOAD_LIBRARIES
+            value: pgaudit
+          image: registry-1.docker.io/bitnami/postgresql:latest
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - exec pg_isready -U "temporal" -d "dbname=temporal" -h 127.0.0.1 -p
+                5432
+            failureThreshold: 6
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: postgresql
+          ports:
+          - containerPort: 5432
+            name: tcp-postgresql
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - -e
+              - |
+                exec pg_isready -U "temporal" -d "dbname=temporal" -h 127.0.0.1 -p 5432
+                [ -f /opt/bitnami/postgresql/tmp/.initialized ] || [ -f /bitnami/postgresql/.initialized ]
+            failureThreshold: 6
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            limits:
+              cpu: 150m
+              ephemeral-storage: 2Gi
+              memory: 192Mi
+            requests:
+              cpu: 100m
+              ephemeral-storage: 50Mi
+              memory: 128Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            privileged: false
+            readOnlyRootFilesystem: true
+            runAsGroup: 1001
+            runAsNonRoot: true
+            runAsUser: 1001
+            seLinuxOptions: {}
+            seccompProfile:
+              type: RuntimeDefault
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp
+            name: empty-dir
+            subPath: tmp-dir
+          - mountPath: /opt/bitnami/postgresql/conf
+            name: empty-dir
+            subPath: app-conf-dir
+          - mountPath: /opt/bitnami/postgresql/tmp
+            name: empty-dir
+            subPath: app-tmp-dir
+          - mountPath: /docker-entrypoint-initdb.d/
+            name: custom-init-scripts
+          - mountPath: /opt/bitnami/postgresql/secrets/
+            name: postgresql-password
+          - mountPath: /dev/shm
+            name: dshm
+          - mountPath: /bitnami/postgresql
+            name: data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1001
+          fsGroupChangePolicy: Always
+        serviceAccount: temporal-postgresql
+        serviceAccountName: temporal-postgresql
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: empty-dir
+        - name: postgresql-password
+          secret:
+            defaultMode: 420
+            secretName: temporal-postgresql
+        - configMap:
+            defaultMode: 420
+            name: temporal-postgresql-init-scripts
+          name: custom-init-scripts
+        - emptyDir:
+            medium: Memory
+          name: dshm
+    updateStrategy:
+      rollingUpdate:
+        partition: 0
+      type: RollingUpdate
+    volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: longhorn
+        volumeMode: Filesystem
+      status:
+        phase: Pending
+  status:
+    availableReplicas: 1
+    collisionCount: 0
+    currentReplicas: 1
+    currentRevision: temporal-postgresql-655657f846
+    observedGeneration: 6
+    readyReplicas: 1
+    replicas: 1
+    updateRevision: temporal-postgresql-655657f846
+    updatedReplicas: 1
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: temporal
+      meta.helm.sh/release-namespace: temporal
+    creationTimestamp: "2026-03-22T12:22:19Z"
+    labels:
+      app.kubernetes.io/component: frontend
+      app.kubernetes.io/instance: temporal
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: temporal
+      app.kubernetes.io/part-of: temporal
+      app.kubernetes.io/version: 1.29.1
+      helm.sh/chart: temporal-0.73.2
+    name: temporal-frontend
+    namespace: temporal
+    resourceVersion: "940728"
+    uid: 0a3d00c7-befc-4a9d-b7b9-9600ad1a2c32
+  spec:
+    clusterIP: 10.43.74.41
+    clusterIPs:
+    - 10.43.74.41
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - appProtocol: tcp
+      name: grpc-rpc
+      port: 7233
+      protocol: TCP
+      targetPort: rpc
+    - appProtocol: http
+      name: http
+      port: 7243
+      protocol: TCP
+      targetPort: http
+    selector:
+      app.kubernetes.io/component: frontend
+      app.kubernetes.io/instance: temporal
+      app.kubernetes.io/name: temporal
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: temporal
+      meta.helm.sh/release-namespace: temporal
+      prometheus.io/job: temporal-frontend
+      prometheus.io/port: "9090"
+      prometheus.io/scheme: http
+      prometheus.io/scrape: "true"
+      service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+    creationTimestamp: "2026-03-22T12:22:19Z"
+    labels:
+      app.kubernetes.io/component: frontend
+      app.kubernetes.io/headless: "true"
+      app.kubernetes.io/instance: temporal
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: temporal
+      app.kubernetes.io/part-of: temporal
+      app.kubernetes.io/version: 1.29.1
+      helm.sh/chart: temporal-0.73.2
+    name: temporal-frontend-headless
+    namespace: temporal
+    resourceVersion: "940719"
+    uid: 64827474-6c17-4f64-bb21-fc5c63d14ab0
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - appProtocol: tcp
+      name: grpc-rpc
+      port: 7233
+      protocol: TCP
+      targetPort: rpc
+    - appProtocol: tcp
+      name: grpc-membership
+      port: 6933
+      protocol: TCP
+      targetPort: membership
+    - appProtocol: http
+      name: metrics
+      port: 9090
+      protocol: TCP
+      targetPort: metrics
+    publishNotReadyAddresses: true
+    selector:
+      app.kubernetes.io/component: frontend
+      app.kubernetes.io/instance: temporal
+      app.kubernetes.io/name: temporal
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: temporal
+      meta.helm.sh/release-namespace: temporal
+      prometheus.io/job: temporal-history
+      prometheus.io/port: "9090"
+      prometheus.io/scheme: http
+      prometheus.io/scrape: "true"
+      service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+    creationTimestamp: "2026-03-22T12:22:19Z"
+    labels:
+      app.kubernetes.io/component: history
+      app.kubernetes.io/headless: "true"
+      app.kubernetes.io/instance: temporal
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: temporal
+      app.kubernetes.io/part-of: temporal
+      app.kubernetes.io/version: 1.29.1
+      helm.sh/chart: temporal-0.73.2
+    name: temporal-history-headless
+    namespace: temporal
+    resourceVersion: "940722"
+    uid: 0ed43d52-9ee7-405c-8ea6-c0cadce7e9f0
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - appProtocol: tcp
+      name: grpc-rpc
+      port: 7234
+      protocol: TCP
+      targetPort: rpc
+    - appProtocol: tcp
+      name: grpc-membership
+      port: 6934
+      protocol: TCP
+      targetPort: membership
+    - appProtocol: http
+      name: metrics
+      port: 9090
+      protocol: TCP
+      targetPort: metrics
+    publishNotReadyAddresses: true
+    selector:
+      app.kubernetes.io/component: history
+      app.kubernetes.io/instance: temporal
+      app.kubernetes.io/name: temporal
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: temporal
+      meta.helm.sh/release-namespace: temporal
+    creationTimestamp: "2026-03-22T12:22:19Z"
+    labels:
+      app.kubernetes.io/component: internal-frontend
+      app.kubernetes.io/instance: temporal
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: temporal
+      app.kubernetes.io/part-of: temporal
+      app.kubernetes.io/version: 1.29.1
+      helm.sh/chart: temporal-0.73.2
+    name: temporal-internal-frontend
+    namespace: temporal
+    resourceVersion: "940724"
+    uid: e7af4d8a-7c35-433e-8cc1-a75444565a0d
+  spec:
+    clusterIP: 10.43.191.172
+    clusterIPs:
+    - 10.43.191.172
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - appProtocol: tcp
+      name: grpc-rpc
+      port: 7236
+      protocol: TCP
+      targetPort: rpc
+    - appProtocol: http
+      name: http
+      port: 7246
+      protocol: TCP
+      targetPort: http
+    selector:
+      app.kubernetes.io/component: internal-frontend
+      app.kubernetes.io/instance: temporal
+      app.kubernetes.io/name: temporal
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: temporal
+      meta.helm.sh/release-namespace: temporal
+      service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+    creationTimestamp: "2026-03-22T12:22:19Z"
+    labels:
+      app.kubernetes.io/component: matching
+      app.kubernetes.io/headless: "true"
+      app.kubernetes.io/instance: temporal
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: temporal
+      app.kubernetes.io/part-of: temporal
+      app.kubernetes.io/version: 1.29.1
+      helm.sh/chart: temporal-0.73.2
+    name: temporal-matching-headless
+    namespace: temporal
+    resourceVersion: "940723"
+    uid: 5d1de231-e86f-47bf-a61e-8b442af2db84
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - appProtocol: tcp
+      name: grpc-rpc
+      port: 7235
+      protocol: TCP
+      targetPort: rpc
+    - appProtocol: tcp
+      name: grpc-membership
+      port: 6935
+      protocol: TCP
+      targetPort: membership
+    - appProtocol: http
+      name: metrics
+      port: 9090
+      protocol: TCP
+      targetPort: metrics
+    publishNotReadyAddresses: true
+    selector:
+      app.kubernetes.io/component: matching
+      app.kubernetes.io/instance: temporal
+      app.kubernetes.io/name: temporal
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: temporal-postgresql
+      meta.helm.sh/release-namespace: temporal
+    creationTimestamp: "2026-03-22T12:23:54Z"
+    labels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: temporal-postgresql
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: postgresql
+      app.kubernetes.io/version: 18.3.0
+      helm.sh/chart: postgresql-18.5.11
+    name: temporal-postgresql
+    namespace: temporal
+    resourceVersion: "941289"
+    uid: 6553bb7c-24d7-4789-823b-a3a4d0c76b0b
+  spec:
+    clusterIP: 10.43.7.56
+    clusterIPs:
+    - 10.43.7.56
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: tcp-postgresql
+      port: 5432
+      protocol: TCP
+      targetPort: tcp-postgresql
+    selector:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: temporal-postgresql
+      app.kubernetes.io/name: postgresql
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: temporal-postgresql
+      meta.helm.sh/release-namespace: temporal
+    creationTimestamp: "2026-03-22T12:23:54Z"
+    labels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: temporal-postgresql
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: postgresql
+      app.kubernetes.io/version: 18.3.0
+      helm.sh/chart: postgresql-18.5.11
+    name: temporal-postgresql-hl
+    namespace: temporal
+    resourceVersion: "941288"
+    uid: 5b5877d7-3ae9-4a53-8d86-d7e34ff41b8e
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: tcp-postgresql
+      port: 5432
+      protocol: TCP
+      targetPort: tcp-postgresql
+    publishNotReadyAddresses: true
+    selector:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: temporal-postgresql
+      app.kubernetes.io/name: postgresql
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: temporal
+      meta.helm.sh/release-namespace: temporal
+    creationTimestamp: "2026-03-22T12:22:19Z"
+    labels:
+      app.kubernetes.io/component: web
+      app.kubernetes.io/instance: temporal
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: temporal
+      app.kubernetes.io/part-of: temporal
+      app.kubernetes.io/version: 1.29.1
+      helm.sh/chart: temporal-0.73.2
+    name: temporal-web
+    namespace: temporal
+    resourceVersion: "940726"
+    uid: 8aed3afa-e52a-4b0e-873d-78b05be4843e
+  spec:
+    clusterIP: 10.43.43.239
+    clusterIPs:
+    - 10.43.43.239
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - appProtocol: http
+      name: http
+      port: 8080
+      protocol: TCP
+      targetPort: http
+    selector:
+      app.kubernetes.io/component: web
+      app.kubernetes.io/instance: temporal
+      app.kubernetes.io/name: temporal
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: temporal
+      meta.helm.sh/release-namespace: temporal
+      prometheus.io/job: temporal-worker
+      prometheus.io/port: "9090"
+      prometheus.io/scheme: http
+      prometheus.io/scrape: "true"
+      service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+    creationTimestamp: "2026-03-22T12:22:19Z"
+    labels:
+      app.kubernetes.io/component: worker
+      app.kubernetes.io/headless: "true"
+      app.kubernetes.io/instance: temporal
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: temporal
+      app.kubernetes.io/part-of: temporal
+      app.kubernetes.io/version: 1.29.1
+      helm.sh/chart: temporal-0.73.2
+    name: temporal-worker-headless
+    namespace: temporal
+    resourceVersion: "940721"
+    uid: 63312a47-0da1-44be-91cb-752980394be4
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - appProtocol: tcp
+      name: grpc-rpc
+      port: 7239
+      protocol: TCP
+      targetPort: rpc
+    - appProtocol: tcp
+      name: grpc-membership
+      port: 6939
+      protocol: TCP
+      targetPort: membership
+    - appProtocol: http
+      name: metrics
+      port: 9090
+      protocol: TCP
+      targetPort: metrics
+    publishNotReadyAddresses: true
+    selector:
+      app.kubernetes.io/component: worker
+      app.kubernetes.io/instance: temporal
+      app.kubernetes.io/name: temporal
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIBdzCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy
+      dmVyLWNhQDE3NzM0OTIwNDMwHhcNMjYwMzE0MTI0MDQzWhcNMzYwMzExMTI0MDQz
+      WjAjMSEwHwYDVQQDDBhrM3Mtc2VydmVyLWNhQDE3NzM0OTIwNDMwWTATBgcqhkjO
+      PQIBBggqhkjOPQMBBwNCAARpgn+LEJSNlp2uAqphT94mk3q/VpLzxAn/KjD1mBH8
+      oQu45uwEkuvSQdTXfKQORPUuxCqO/aaIp9J79K22/cobo0IwQDAOBgNVHQ8BAf8E
+      BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUaFaNeoZQ5OsygNWLwWhw
+      qpQZLbMwCgYIKoZIzj0EAwIDSAAwRQIhAO249TlfJBFz/q6b8Qv9/09lifqmSddW
+      aVbPh0wrSpvCAiAJrxY16wd92CAuR5caK2/1xOqu05sdTiI7O1SXIsotcQ==
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2026-03-22T12:22:19Z"
+    name: kube-root-ca.crt
+    namespace: temporal
+    resourceVersion: "940712"
+    uid: 6be352b7-2e22-41e5-a658-82000604529a
+- apiVersion: v1
+  data:
+    config_template.yaml: |-
+      log:
+        stdout: true
+        level: "debug,info"
+
+      persistence:
+        defaultStore: default
+        visibilityStore: visibility
+        numHistoryShards: 512
+        datastores:
+          default:
+            sql:
+              pluginName: "postgres12"
+              driverName: "postgres12"
+              databaseName: "temporal"
+              connectAddr: "temporal-postgresql:5432"
+              connectProtocol: "tcp"
+              user: temporal
+              password: {{ .Env.TEMPORAL_STORE_PASSWORD | quote }}
+              maxConnLifetime: 1h
+              maxConns: 20
+              maxIdleConns: 20
+              secretName: ""
+          visibility:
+            sql:
+              pluginName: "postgres12"
+              driverName: "postgres12"
+              databaseName: "temporal_visibility"
+              connectAddr: "temporal-postgresql:5432"
+              connectProtocol: "tcp"
+              user: "temporal"
+              password: {{ .Env.TEMPORAL_VISIBILITY_STORE_PASSWORD  | quote }}
+              maxConnLifetime: 1h
+              maxConns: 20
+              maxIdleConns: 20
+              secretName: ""
+
+      global:
+        membership:
+          name: temporal
+          maxJoinDuration: 30s
+          broadcastAddress: {{ .Env.POD_IP }}
+
+        pprof:
+          port: 7936
+
+        metrics:
+          tags:
+            type: {{ .Env.SERVICES }}
+          prometheus:
+            timerType: histogram
+            listenAddress: "0.0.0.0:9090"
+
+      services:
+        frontend:
+          rpc:
+            grpcPort: 7233
+            httpPort: 7243
+            membershipPort: 6933
+            bindOnIP: "0.0.0.0"
+
+        history:
+          rpc:
+            grpcPort: 7234
+            membershipPort: 6934
+            bindOnIP: "0.0.0.0"
+
+        matching:
+          rpc:
+            grpcPort: 7235
+            membershipPort: 6935
+            bindOnIP: "0.0.0.0"
+
+        worker:
+          rpc:
+            membershipPort: 6939
+            bindOnIP: "0.0.0.0"
+
+      clusterMetadata:
+          clusterInformation:
+            active:
+              enabled: true
+              httpAddress: temporal-frontend.temporal.svc.cluster.local:7243
+              initialFailoverVersion: 1
+              rpcAddress: temporal-frontend.temporal.svc.cluster.local:7233
+              rpcName: temporal-frontend
+          currentClusterName: active
+          enableGlobalDomain: false
+          failoverVersionIncrement: 10
+          masterClusterName: active
+
+      dcRedirectionPolicy:
+        policy: "noop"
+        toDC: ""
+
+      archival:
+        status: "disabled"
+      publicClient:
+        hostPort: "temporal-frontend.temporal.svc.cluster.local:7233"
+
+      dynamicConfigClient:
+        filepath: "/etc/temporal/dynamic_config/dynamic_config.yaml"
+        pollInterval: "10s"
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"config_template.yaml":"log:\n  stdout: true\n  level: \"debug,info\"\n\npersistence:\n  defaultStore: default\n  visibilityStore: visibility\n  numHistoryShards: 512\n  datastores:\n    default:\n      sql:\n        pluginName: \"postgres12\"\n        driverName: \"postgres12\"\n        databaseName: \"temporal\"\n        connectAddr: \"temporal-postgresql:5432\"\n        connectProtocol: \"tcp\"\n        user: temporal\n        password: {{ .Env.TEMPORAL_STORE_PASSWORD | quote }}\n        maxConnLifetime: 1h\n        maxConns: 20\n        maxIdleConns: 20\n        secretName: \"\"\n    visibility:\n      sql:\n        pluginName: \"postgres12\"\n        driverName: \"postgres12\"\n        databaseName: \"temporal_visibility\"\n        connectAddr: \"temporal-postgresql:5432\"\n        connectProtocol: \"tcp\"\n        user: \"temporal\"\n        password: {{ .Env.TEMPORAL_VISIBILITY_STORE_PASSWORD  | quote }}\n        maxConnLifetime: 1h\n        maxConns: 20\n        maxIdleConns: 20\n        secretName: \"\"\n\nglobal:\n  membership:\n    name: temporal\n    maxJoinDuration: 30s\n    broadcastAddress: {{ .Env.POD_IP }}\n\n  pprof:\n    port: 7936\n\n  metrics:\n    tags:\n      type: {{ .Env.SERVICES }}\n    prometheus:\n      timerType: histogram\n      listenAddress: \"0.0.0.0:9090\"\n\nservices:\n  frontend:\n    rpc:\n      grpcPort: 7233\n      httpPort: 7243\n      membershipPort: 6933\n      bindOnIP: \"0.0.0.0\"\n\n  history:\n    rpc:\n      grpcPort: 7234\n      membershipPort: 6934\n      bindOnIP: \"0.0.0.0\"\n\n  matching:\n    rpc:\n      grpcPort: 7235\n      membershipPort: 6935\n      bindOnIP: \"0.0.0.0\"\n\n  worker:\n    rpc:\n      membershipPort: 6939\n      bindOnIP: \"0.0.0.0\"\n\nclusterMetadata:\n    clusterInformation:\n      active:\n        enabled: true\n        httpAddress: temporal-frontend.temporal.svc.cluster.local:7243\n        initialFailoverVersion: 1\n        rpcAddress: temporal-frontend.temporal.svc.cluster.local:7233\n        rpcName: temporal-frontend\n    currentClusterName: active\n    enableGlobalDomain: false\n    failoverVersionIncrement: 10\n    masterClusterName: active\n\ndcRedirectionPolicy:\n  policy: \"noop\"\n  toDC: \"\"\n\narchival:\n  status: \"disabled\"\npublicClient:\n  hostPort: \"temporal-frontend.temporal.svc.cluster.local:7233\"\n\ndynamicConfigClient:\n  filepath: \"/etc/temporal/dynamic_config/dynamic_config.yaml\"\n  pollInterval: \"10s\""},"kind":"ConfigMap","metadata":{"annotations":{},"name":"temporal-dockerize-config","namespace":"temporal"}}
+      meta.helm.sh/release-name: temporal
+      meta.helm.sh/release-namespace: temporal
+    creationTimestamp: "2026-03-22T12:22:19Z"
+    labels:
+      app.kubernetes.io/instance: temporal
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: temporal
+      app.kubernetes.io/part-of: temporal
+      app.kubernetes.io/version: 1.29.1
+      helm.sh/chart: temporal-0.73.2
+    name: temporal-dockerize-config
+    namespace: temporal
+    resourceVersion: "1503682"
+    uid: b6cf676e-6ab4-40e5-befe-4008fbee5126
+- apiVersion: v1
+  data:
+    dynamic_config.yaml: ""
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: temporal
+      meta.helm.sh/release-namespace: temporal
+    creationTimestamp: "2026-03-22T12:22:19Z"
+    labels:
+      app.kubernetes.io/instance: temporal
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: temporal
+      app.kubernetes.io/part-of: temporal
+      app.kubernetes.io/version: 1.29.1
+      helm.sh/chart: temporal-0.73.2
+    name: temporal-dynamic-config
+    namespace: temporal
+    resourceVersion: "1503173"
+    uid: 9d45a644-4947-4e96-91ca-080e9822ac79
+- apiVersion: v1
+  data:
+    init-visibility.sql: CREATE DATABASE temporal_visibility; GRANT ALL PRIVILEGES
+      ON DATABASE temporal_visibility TO temporal;
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: temporal-postgresql
+      meta.helm.sh/release-namespace: temporal
+    creationTimestamp: "2026-03-22T12:23:54Z"
+    labels:
+      app.kubernetes.io/instance: temporal-postgresql
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: postgresql
+      app.kubernetes.io/version: 18.3.0
+      helm.sh/chart: postgresql-18.5.11
+    name: temporal-postgresql-init-scripts
+    namespace: temporal
+    resourceVersion: "941285"
+    uid: 9a97fa19-a221-4cad-9df7-a44ea081717c
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"data-temporal-postgresql-0","namespace":"temporal"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"10Gi"}},"storageClassName":"openebs-hostpath","volumeName":"temporal-postgresql-orion-pv"}}
+      pv.kubernetes.io/bind-completed: "yes"
+    creationTimestamp: "2026-07-03T14:23:40Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: data-temporal-postgresql-0
+    namespace: temporal
+    resourceVersion: "25677923"
+    uid: b4eb02c7-5f41-417b-9fc7-e626cc588286
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: temporal-postgresql-orion-pv
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 10Gi
+    phase: Bound
+kind: List
+metadata:
+  resourceVersion: ""

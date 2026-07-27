@@ -1,0 +1,230 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "5"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"gokapi"},"name":"gokapi","namespace":"gokapi"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"gokapi"}},"template":{"metadata":{"labels":{"app":"gokapi"}},"spec":{"containers":[{"env":[{"name":"GOKAPI_USERNAME","value":"admin"},{"name":"GOKAPI_PASSWORD","valueFrom":{"secretKeyRef":{"key":"ADMIN_PASSWORD","name":"gokapi-secrets"}}},{"name":"GOKAPI_PORT","value":"53842"},{"name":"GOKAPI_EXTERNAL_URL","value":"https://files.bernad.in"},{"name":"GOKAPI_REDIRECT_URL","value":"https://miguel.engineer"},{"name":"GOKAPI_LOCALHOST","value":"false"},{"name":"GOKAPI_USE_SSL","value":"false"},{"name":"GOKAPI_TRUSTED_PROXIES","value":"0.0.0.0/0"}],"image":"f0rc3/gokapi:v2.2.4","livenessProbe":{"httpGet":{"path":"/","port":53842},"initialDelaySeconds":10,"periodSeconds":30},"name":"gokapi","ports":[{"containerPort":53842,"name":"http"}],"readinessProbe":{"httpGet":{"path":"/","port":53842},"initialDelaySeconds":5,"periodSeconds":10},"resources":{"limits":{"cpu":"500m","memory":"256Mi"},"requests":{"cpu":"50m","memory":"64Mi"}},"volumeMounts":[{"mountPath":"/app/data","name":"data"},{"mountPath":"/app/config","name":"data","subPath":"config"}]}],"volumes":[{"name":"data","persistentVolumeClaim":{"claimName":"gokapi-data"}}]}}}}
+    creationTimestamp: "2026-06-12T17:08:34Z"
+    generation: 7
+    labels:
+      app: gokapi
+    name: gokapi
+    namespace: gokapi
+    resourceVersion: "32641037"
+    uid: 450b4411-1f35-4168-a5be-97a5a0d4ee87
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: gokapi
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-06-28T16:58:09-04:00"
+        labels:
+          app: gokapi
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+        containers:
+        - env:
+          - name: GOKAPI_USERNAME
+            value: admin
+          - name: GOKAPI_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: ADMIN_PASSWORD
+                name: gokapi-secrets
+          - name: GOKAPI_PORT
+            value: "53842"
+          - name: GOKAPI_EXTERNAL_URL
+            value: https://files.bernad.in
+          - name: GOKAPI_REDIRECT_URL
+            value: https://miguel.engineer
+          - name: GOKAPI_LOCALHOST
+            value: "false"
+          - name: GOKAPI_USE_SSL
+            value: "false"
+          - name: GOKAPI_TRUSTED_PROXIES
+            value: 0.0.0.0/0
+          image: f0rc3/gokapi:v2.2.4
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 53842
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: gokapi
+          ports:
+          - containerPort: 53842
+            name: http
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 53842
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 500m
+              memory: 256Mi
+            requests:
+              cpu: 50m
+              memory: 64Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /app/data
+            name: data
+          - mountPath: /app/config
+            name: data
+            subPath: config
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: gokapi-data
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-06-12T17:08:34Z"
+      lastUpdateTime: "2026-07-07T12:19:53Z"
+      message: ReplicaSet "gokapi-c78cd997b" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T04:12:22Z"
+      lastUpdateTime: "2026-07-24T04:12:22Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 7
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"gokapi"},"name":"gokapi","namespace":"gokapi"},"spec":{"ports":[{"name":"http","port":53842,"targetPort":53842}],"selector":{"app":"gokapi"}}}
+    creationTimestamp: "2026-06-12T17:08:34Z"
+    labels:
+      app: gokapi
+    name: gokapi
+    namespace: gokapi
+    resourceVersion: "19928055"
+    uid: 361a010f-13fa-4c32-9ab5-fc89fcf3ce1f
+  spec:
+    clusterIP: 10.43.108.168
+    clusterIPs:
+    - 10.43.108.168
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 53842
+      protocol: TCP
+      targetPort: 53842
+    selector:
+      app: gokapi
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIBdzCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy
+      dmVyLWNhQDE3NzM0OTIwNDMwHhcNMjYwMzE0MTI0MDQzWhcNMzYwMzExMTI0MDQz
+      WjAjMSEwHwYDVQQDDBhrM3Mtc2VydmVyLWNhQDE3NzM0OTIwNDMwWTATBgcqhkjO
+      PQIBBggqhkjOPQMBBwNCAARpgn+LEJSNlp2uAqphT94mk3q/VpLzxAn/KjD1mBH8
+      oQu45uwEkuvSQdTXfKQORPUuxCqO/aaIp9J79K22/cobo0IwQDAOBgNVHQ8BAf8E
+      BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUaFaNeoZQ5OsygNWLwWhw
+      qpQZLbMwCgYIKoZIzj0EAwIDSAAwRQIhAO249TlfJBFz/q6b8Qv9/09lifqmSddW
+      aVbPh0wrSpvCAiAJrxY16wd92CAuR5caK2/1xOqu05sdTiI7O1SXIsotcQ==
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2026-06-12T17:08:30Z"
+    name: kube-root-ca.crt
+    namespace: gokapi
+    resourceVersion: "19928038"
+    uid: 38d29649-171e-4148-aed1-327596c07a79
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"gokapi-data","namespace":"gokapi"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"200Gi"}}}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: astra
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-06-12T17:29:21Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: gokapi-data
+    namespace: gokapi
+    resourceVersion: "19932055"
+    uid: 804bdddd-594c-4ab8-9ba1-45e843557fd9
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 200Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-804bdddd-594c-4ab8-9ba1-45e843557fd9
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 200Gi
+    phase: Bound
+kind: List
+metadata:
+  resourceVersion: ""

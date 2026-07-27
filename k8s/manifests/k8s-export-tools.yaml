@@ -1,0 +1,252 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "2"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"it-tools","namespace":"tools"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"it-tools"}},"template":{"metadata":{"labels":{"app":"it-tools"}},"spec":{"containers":[{"image":"corentinth/it-tools:latest","name":"it-tools","ports":[{"containerPort":80}],"resources":{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"10m","memory":"32Mi"}}}],"nodeSelector":{"kubernetes.io/hostname":"orion"}}}}}
+    creationTimestamp: "2026-07-07T11:49:15Z"
+    generation: 2
+    name: it-tools
+    namespace: tools
+    resourceVersion: "33063225"
+    uid: 146e6464-6e7e-4c4e-831f-129fabdfaecd
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: it-tools
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: it-tools
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+        containers:
+        - image: corentinth/it-tools:latest
+          imagePullPolicy: Always
+          name: it-tools
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 200m
+              memory: 128Mi
+            requests:
+              cpu: 10m
+              memory: 32Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/hostname: orion
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-07-07T11:49:15Z"
+      lastUpdateTime: "2026-07-07T12:20:12Z"
+      message: ReplicaSet "it-tools-7f4856f7df" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T20:29:06Z"
+      lastUpdateTime: "2026-07-24T20:29:06Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "3"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"stirling-pdf","namespace":"tools"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"stirling-pdf"}},"template":{"metadata":{"labels":{"app":"stirling-pdf"}},"spec":{"containers":[{"image":"stirlingtools/stirling-pdf:latest","name":"stirling","ports":[{"containerPort":8080}],"resources":{"limits":{"cpu":"2","memory":"1Gi"},"requests":{"cpu":"50m","memory":"256Mi"}}}],"nodeSelector":{"kubernetes.io/hostname":"orion"}}}}}
+    creationTimestamp: "2026-07-07T11:49:14Z"
+    generation: 3
+    name: stirling-pdf
+    namespace: tools
+    resourceVersion: "33063409"
+    uid: c57f6a62-363a-478e-8717-dbf2f7343c24
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: stirling-pdf
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: stirling-pdf
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+        containers:
+        - image: stirlingtools/stirling-pdf:latest
+          imagePullPolicy: Always
+          name: stirling
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "2"
+              memory: 2Gi
+            requests:
+              cpu: 50m
+              memory: 512Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/hostname: orion
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-07-07T11:49:14Z"
+      lastUpdateTime: "2026-07-07T12:20:12Z"
+      message: ReplicaSet "stirling-pdf-5fc5f8fdd8" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T20:29:21Z"
+      lastUpdateTime: "2026-07-24T20:29:21Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 3
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"it-tools","namespace":"tools"},"spec":{"ports":[{"port":80,"targetPort":80}],"selector":{"app":"it-tools"}}}
+    creationTimestamp: "2026-07-07T11:49:17Z"
+    name: it-tools
+    namespace: tools
+    resourceVersion: "26781152"
+    uid: b0c80e11-e1f4-4c18-98da-cd76f003f3fa
+  spec:
+    clusterIP: 10.43.42.57
+    clusterIPs:
+    - 10.43.42.57
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+    selector:
+      app: it-tools
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"stirling-pdf","namespace":"tools"},"spec":{"ports":[{"port":80,"targetPort":8080}],"selector":{"app":"stirling-pdf"}}}
+    creationTimestamp: "2026-07-07T11:49:16Z"
+    name: stirling-pdf
+    namespace: tools
+    resourceVersion: "26781145"
+    uid: 9ae16f6d-35d0-4cd9-acbd-2aca23ae803a
+  spec:
+    clusterIP: 10.43.220.172
+    clusterIPs:
+    - 10.43.220.172
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: stirling-pdf
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIBdzCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy
+      dmVyLWNhQDE3NzM0OTIwNDMwHhcNMjYwMzE0MTI0MDQzWhcNMzYwMzExMTI0MDQz
+      WjAjMSEwHwYDVQQDDBhrM3Mtc2VydmVyLWNhQDE3NzM0OTIwNDMwWTATBgcqhkjO
+      PQIBBggqhkjOPQMBBwNCAARpgn+LEJSNlp2uAqphT94mk3q/VpLzxAn/KjD1mBH8
+      oQu45uwEkuvSQdTXfKQORPUuxCqO/aaIp9J79K22/cobo0IwQDAOBgNVHQ8BAf8E
+      BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUaFaNeoZQ5OsygNWLwWhw
+      qpQZLbMwCgYIKoZIzj0EAwIDSAAwRQIhAO249TlfJBFz/q6b8Qv9/09lifqmSddW
+      aVbPh0wrSpvCAiAJrxY16wd92CAuR5caK2/1xOqu05sdTiI7O1SXIsotcQ==
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2026-07-07T11:49:14Z"
+    name: kube-root-ca.crt
+    namespace: tools
+    resourceVersion: "26781106"
+    uid: 0117da12-3af9-4234-9df2-c94cb0b3968f
+kind: List
+metadata:
+  resourceVersion: ""

@@ -1,0 +1,2288 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "4"
+      meta.helm.sh/release-name: langfuse
+      meta.helm.sh/release-namespace: langfuse
+    creationTimestamp: "2026-03-22T08:11:27Z"
+    generation: 12
+    labels:
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: s3
+      app.kubernetes.io/version: 2024.12.18
+      helm.sh/chart: s3-14.10.5
+    name: langfuse-s3
+    namespace: langfuse
+    resourceVersion: "33024402"
+    uid: 99b49fb1-b129-4df3-b9fe-b7bbdbd250e8
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/instance: langfuse
+        app.kubernetes.io/name: s3
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        annotations:
+          checksum/credentials-secret: b83648a29f4c66b45f0b6805cf2bbd6bddcf4f72984b1677bbe03c10ef84f758
+        labels:
+          app.kubernetes.io/instance: langfuse
+          app.kubernetes.io/managed-by: Helm
+          app.kubernetes.io/name: s3
+          app.kubernetes.io/version: 2024.12.18
+          helm.sh/chart: s3-14.10.5
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/instance: langfuse
+                    app.kubernetes.io/name: s3
+                topologyKey: kubernetes.io/hostname
+              weight: 1
+        automountServiceAccountToken: false
+        containers:
+        - env:
+          - name: BITNAMI_DEBUG
+            value: "false"
+          - name: MINIO_SCHEME
+            value: http
+          - name: MINIO_FORCE_NEW_KEYS
+            value: "no"
+          - name: MINIO_API_PORT_NUMBER
+            value: "9000"
+          - name: MINIO_ROOT_USER
+            valueFrom:
+              secretKeyRef:
+                key: root-user
+                name: langfuse-s3
+          - name: MINIO_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: root-password
+                name: langfuse-s3
+          - name: MINIO_DEFAULT_BUCKETS
+            value: langfuse
+          - name: MINIO_BROWSER
+            value: "on"
+          - name: MINIO_PROMETHEUS_AUTH_TYPE
+            value: public
+          - name: MINIO_CONSOLE_PORT_NUMBER
+            value: "9001"
+          - name: MINIO_DATA_DIR
+            value: /bitnami/minio/data
+          image: docker.io/bitnamilegacy/minio:2024.12.18-debian-12-r1
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /minio/health/live
+              port: minio-api
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: minio
+          ports:
+          - containerPort: 9000
+            name: minio-api
+            protocol: TCP
+          - containerPort: 9001
+            name: minio-console
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 5
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            tcpSocket:
+              port: minio-api
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 375m
+              ephemeral-storage: 2Gi
+              memory: 384Mi
+            requests:
+              cpu: 250m
+              ephemeral-storage: 50Mi
+              memory: 256Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            privileged: false
+            readOnlyRootFilesystem: true
+            runAsGroup: 1001
+            runAsNonRoot: true
+            runAsUser: 1001
+            seLinuxOptions: {}
+            seccompProfile:
+              type: RuntimeDefault
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp
+            name: empty-dir
+            subPath: tmp-dir
+          - mountPath: /opt/bitnami/minio/tmp
+            name: empty-dir
+            subPath: app-tmp-dir
+          - mountPath: /.mc
+            name: empty-dir
+            subPath: app-mc-dir
+          - mountPath: /bitnami/minio/data
+            name: data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1001
+          fsGroupChangePolicy: OnRootMismatch
+        serviceAccount: langfuse-s3
+        serviceAccountName: langfuse-s3
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: empty-dir
+        - name: data
+          persistentVolumeClaim:
+            claimName: langfuse-s3
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-03-22T08:11:27Z"
+      lastUpdateTime: "2026-07-07T12:20:00Z"
+      message: ReplicaSet "langfuse-s3-5976b9d8b5" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T19:22:36Z"
+      lastUpdateTime: "2026-07-24T19:22:36Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 12
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "7"
+      meta.helm.sh/release-name: langfuse
+      meta.helm.sh/release-namespace: langfuse
+    creationTimestamp: "2026-03-22T08:11:27Z"
+    generation: 15
+    labels:
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: langfuse
+      app.kubernetes.io/version: 3.162.0
+      helm.sh/chart: langfuse-1.5.24
+    name: langfuse-web
+    namespace: langfuse
+    resourceVersion: "33063647"
+    uid: 9efee963-b571-4280-a609-3d059f1a3dcc
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: web
+        app.kubernetes.io/instance: langfuse
+        app.kubernetes.io/name: langfuse
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-07-05T14:33:17+03:00"
+        labels:
+          app: web
+          app.kubernetes.io/instance: langfuse
+          app.kubernetes.io/name: langfuse
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+          podAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/name: langfuse
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+        containers:
+        - env:
+          - name: NODE_ENV
+            value: production
+          - name: LANGFUSE_LOG_LEVEL
+            value: info
+          - name: LANGFUSE_LOG_FORMAT
+            value: text
+          - name: SALT
+            value: pj61J9OSQOhqWzvB5dM6od5AzdypXnUfP04tcCDq7RI=
+          - name: ENCRYPTION_KEY
+            value: c8a7eea0e1647d97bc3fd157cc9ca292d00f5d87e170e6bfebdbfdb9fdf8edae
+          - name: TELEMETRY_ENABLED
+            value: "false"
+          - name: AUTH_DISABLE_SIGNUP
+            value: "false"
+          - name: ENABLE_EXPERIMENTAL_FEATURES
+            value: "false"
+          - name: NEXTAUTH_URL
+            value: http://localhost:3000
+          - name: NEXTAUTH_SECRET
+            value: vgqll1L8mRxQaLIRXA00W3OHTGFKgrpYsX2JauyRyic=
+          - name: DATABASE_HOST
+            value: langfuse-postgresql
+          - name: DATABASE_USERNAME
+            value: postgres
+          - name: DATABASE_PASSWORD
+            value: langfuse-db-password
+          - name: DATABASE_NAME
+            value: postgres_langfuse
+          - name: LANGFUSE_AUTO_POSTGRES_MIGRATION_DISABLED
+            value: "false"
+          - name: REDIS_TLS_ENABLED
+            value: "false"
+          - name: REDIS_CONNECTION_STRING
+            value: redis://default@langfuse-redis-primary:6379/0
+          - name: CLICKHOUSE_MIGRATION_URL
+            value: clickhouse://langfuse-clickhouse:9000
+          - name: CLICKHOUSE_MIGRATION_SSL
+            value: "false"
+          - name: CLICKHOUSE_URL
+            value: http://langfuse-clickhouse:8123
+          - name: CLICKHOUSE_DB
+            value: default
+          - name: CLICKHOUSE_USER
+            value: default
+          - name: CLICKHOUSE_PASSWORD
+            value: clickhouse-langfuse-password
+          - name: LANGFUSE_AUTO_CLICKHOUSE_MIGRATION_DISABLED
+            value: "false"
+          - name: LANGFUSE_S3_EVENT_UPLOAD_BUCKET
+            value: langfuse
+          - name: LANGFUSE_S3_EVENT_UPLOAD_REGION
+            value: auto
+          - name: LANGFUSE_S3_EVENT_UPLOAD_ENDPOINT
+            value: http://langfuse-s3:9000
+          - name: LANGFUSE_S3_EVENT_UPLOAD_ACCESS_KEY_ID
+            value: minio
+          - name: LANGFUSE_S3_EVENT_UPLOAD_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                key: root-password
+                name: langfuse-s3
+          - name: LANGFUSE_S3_EVENT_UPLOAD_FORCE_PATH_STYLE
+            value: "true"
+          - name: LANGFUSE_S3_BATCH_EXPORT_ENABLED
+            value: "true"
+          - name: LANGFUSE_S3_BATCH_EXPORT_BUCKET
+            value: langfuse
+          - name: LANGFUSE_S3_BATCH_EXPORT_REGION
+            value: auto
+          - name: LANGFUSE_S3_BATCH_EXPORT_ENDPOINT
+            value: http://langfuse-s3:9000
+          - name: LANGFUSE_S3_BATCH_EXPORT_ACCESS_KEY_ID
+            value: minio
+          - name: LANGFUSE_S3_BATCH_EXPORT_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                key: root-password
+                name: langfuse-s3
+          - name: LANGFUSE_S3_BATCH_EXPORT_FORCE_PATH_STYLE
+            value: "true"
+          - name: LANGFUSE_S3_MEDIA_UPLOAD_BUCKET
+            value: langfuse
+          - name: LANGFUSE_S3_MEDIA_UPLOAD_REGION
+            value: auto
+          - name: LANGFUSE_S3_MEDIA_UPLOAD_ENDPOINT
+            value: http://langfuse-s3:9000
+          - name: LANGFUSE_S3_MEDIA_UPLOAD_ACCESS_KEY_ID
+            value: minio
+          - name: LANGFUSE_S3_MEDIA_UPLOAD_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                key: root-password
+                name: langfuse-s3
+          - name: LANGFUSE_S3_MEDIA_UPLOAD_FORCE_PATH_STYLE
+            value: "true"
+          - name: LANGFUSE_S3_MEDIA_UPLOAD_MAX_CONTENT_LENGTH
+            value: "1e+09"
+          - name: LANGFUSE_S3_MEDIA_UPLOAD_DOWNLOAD_URL_EXPIRY_SECONDS
+            value: "3600"
+          - name: LANGFUSE_S3_CONCURRENT_READS
+            value: "50"
+          - name: LANGFUSE_S3_CONCURRENT_WRITES
+            value: "50"
+          - name: PORT
+            value: "3000"
+          - name: HOSTNAME
+            value: 0.0.0.0
+          image: langfuse/langfuse:3.162.0
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/public/health
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: langfuse-web
+          ports:
+          - containerPort: 3000
+            name: http
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/public/ready
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources: {}
+          securityContext: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: langfuse
+        serviceAccountName: langfuse
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-07-05T11:33:18Z"
+      lastUpdateTime: "2026-07-05T11:35:03Z"
+      message: ReplicaSet "langfuse-web-559dfcbb67" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T20:29:41Z"
+      lastUpdateTime: "2026-07-24T20:29:41Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 15
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "5"
+      meta.helm.sh/release-name: langfuse
+      meta.helm.sh/release-namespace: langfuse
+    creationTimestamp: "2026-03-22T08:11:27Z"
+    generation: 13
+    labels:
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: langfuse
+      app.kubernetes.io/version: 3.162.0
+      helm.sh/chart: langfuse-1.5.24
+    name: langfuse-worker
+    namespace: langfuse
+    resourceVersion: "33063175"
+    uid: 68c00084-00fa-490d-96f9-82c99aeb3fa8
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: worker
+        app.kubernetes.io/instance: langfuse
+        app.kubernetes.io/name: langfuse
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-06-14T14:06:14-04:00"
+        labels:
+          app: worker
+          app.kubernetes.io/instance: langfuse
+          app.kubernetes.io/name: langfuse
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+          podAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/name: langfuse
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+        containers:
+        - env:
+          - name: NODE_ENV
+            value: production
+          - name: LANGFUSE_LOG_LEVEL
+            value: info
+          - name: LANGFUSE_LOG_FORMAT
+            value: text
+          - name: SALT
+            value: pj61J9OSQOhqWzvB5dM6od5AzdypXnUfP04tcCDq7RI=
+          - name: ENCRYPTION_KEY
+            value: c8a7eea0e1647d97bc3fd157cc9ca292d00f5d87e170e6bfebdbfdb9fdf8edae
+          - name: TELEMETRY_ENABLED
+            value: "false"
+          - name: AUTH_DISABLE_SIGNUP
+            value: "false"
+          - name: ENABLE_EXPERIMENTAL_FEATURES
+            value: "false"
+          - name: NEXTAUTH_URL
+            value: http://localhost:3000
+          - name: NEXTAUTH_SECRET
+            value: vgqll1L8mRxQaLIRXA00W3OHTGFKgrpYsX2JauyRyic=
+          - name: DATABASE_HOST
+            value: langfuse-postgresql
+          - name: DATABASE_USERNAME
+            value: postgres
+          - name: DATABASE_PASSWORD
+            value: langfuse-db-password
+          - name: DATABASE_NAME
+            value: postgres_langfuse
+          - name: LANGFUSE_AUTO_POSTGRES_MIGRATION_DISABLED
+            value: "false"
+          - name: REDIS_TLS_ENABLED
+            value: "false"
+          - name: REDIS_CONNECTION_STRING
+            value: redis://default@langfuse-redis-primary:6379/0
+          - name: CLICKHOUSE_MIGRATION_URL
+            value: clickhouse://langfuse-clickhouse:9000
+          - name: CLICKHOUSE_MIGRATION_SSL
+            value: "false"
+          - name: CLICKHOUSE_URL
+            value: http://langfuse-clickhouse:8123
+          - name: CLICKHOUSE_DB
+            value: default
+          - name: CLICKHOUSE_USER
+            value: default
+          - name: CLICKHOUSE_PASSWORD
+            value: clickhouse-langfuse-password
+          - name: LANGFUSE_AUTO_CLICKHOUSE_MIGRATION_DISABLED
+            value: "false"
+          - name: LANGFUSE_S3_EVENT_UPLOAD_BUCKET
+            value: langfuse
+          - name: LANGFUSE_S3_EVENT_UPLOAD_REGION
+            value: auto
+          - name: LANGFUSE_S3_EVENT_UPLOAD_ENDPOINT
+            value: http://langfuse-s3:9000
+          - name: LANGFUSE_S3_EVENT_UPLOAD_ACCESS_KEY_ID
+            value: minio
+          - name: LANGFUSE_S3_EVENT_UPLOAD_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                key: root-password
+                name: langfuse-s3
+          - name: LANGFUSE_S3_EVENT_UPLOAD_FORCE_PATH_STYLE
+            value: "true"
+          - name: LANGFUSE_S3_BATCH_EXPORT_ENABLED
+            value: "true"
+          - name: LANGFUSE_S3_BATCH_EXPORT_BUCKET
+            value: langfuse
+          - name: LANGFUSE_S3_BATCH_EXPORT_REGION
+            value: auto
+          - name: LANGFUSE_S3_BATCH_EXPORT_ENDPOINT
+            value: http://langfuse-s3:9000
+          - name: LANGFUSE_S3_BATCH_EXPORT_ACCESS_KEY_ID
+            value: minio
+          - name: LANGFUSE_S3_BATCH_EXPORT_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                key: root-password
+                name: langfuse-s3
+          - name: LANGFUSE_S3_BATCH_EXPORT_FORCE_PATH_STYLE
+            value: "true"
+          - name: LANGFUSE_S3_MEDIA_UPLOAD_BUCKET
+            value: langfuse
+          - name: LANGFUSE_S3_MEDIA_UPLOAD_REGION
+            value: auto
+          - name: LANGFUSE_S3_MEDIA_UPLOAD_ENDPOINT
+            value: http://langfuse-s3:9000
+          - name: LANGFUSE_S3_MEDIA_UPLOAD_ACCESS_KEY_ID
+            value: minio
+          - name: LANGFUSE_S3_MEDIA_UPLOAD_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                key: root-password
+                name: langfuse-s3
+          - name: LANGFUSE_S3_MEDIA_UPLOAD_FORCE_PATH_STYLE
+            value: "true"
+          - name: LANGFUSE_S3_MEDIA_UPLOAD_MAX_CONTENT_LENGTH
+            value: "1e+09"
+          - name: LANGFUSE_S3_MEDIA_UPLOAD_DOWNLOAD_URL_EXPIRY_SECONDS
+            value: "3600"
+          - name: LANGFUSE_S3_CONCURRENT_READS
+            value: "50"
+          - name: LANGFUSE_S3_CONCURRENT_WRITES
+            value: "50"
+          - name: HOSTNAME
+            value: 0.0.0.0
+          image: langfuse/langfuse-worker:3.162.0
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/health
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: langfuse-worker
+          ports:
+          - containerPort: 3030
+            name: http
+            protocol: TCP
+          resources: {}
+          securityContext: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: langfuse
+        serviceAccountName: langfuse
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-03-22T08:11:27Z"
+      lastUpdateTime: "2026-07-04T02:17:22Z"
+      message: ReplicaSet "langfuse-worker-784888944b" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T20:29:04Z"
+      lastUpdateTime: "2026-07-24T20:29:04Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 13
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"StatefulSet","metadata":{"annotations":{"meta.helm.sh/release-name":"langfuse","meta.helm.sh/release-namespace":"langfuse"},"creationTimestamp":"2026-03-22T08:11:27Z","generation":10,"labels":{"app.kubernetes.io/component":"clickhouse","app.kubernetes.io/instance":"langfuse","app.kubernetes.io/managed-by":"Helm","app.kubernetes.io/name":"clickhouse","app.kubernetes.io/version":"25.2.1","helm.sh/chart":"clickhouse-8.0.5","shard":"0"},"name":"langfuse-clickhouse-shard0","namespace":"langfuse","resourceVersion":"25815815","uid":"044f62dd-0026-4ca2-b9dc-1400e5af3462"},"spec":{"persistentVolumeClaimRetentionPolicy":{"whenDeleted":"Retain","whenScaled":"Retain"},"podManagementPolicy":"Parallel","replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app.kubernetes.io/component":"clickhouse","app.kubernetes.io/instance":"langfuse","app.kubernetes.io/name":"clickhouse"}},"serviceName":"langfuse-clickhouse-headless","template":{"metadata":{"annotations":{"checksum/config":"f940a0f331952d5dcbb5d45a2952ccda49219782d2c6d29c89ae5ec76d7dcc39","checksum/config-extra":"01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b","checksum/config-users-extra":"01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b","kubectl.kubernetes.io/restartedAt":"2026-06-14T14:06:14-04:00"},"labels":{"app.kubernetes.io/component":"clickhouse","app.kubernetes.io/instance":"langfuse","app.kubernetes.io/managed-by":"Helm","app.kubernetes.io/name":"clickhouse","app.kubernetes.io/version":"25.2.1","helm.sh/chart":"clickhouse-8.0.5","shard":"0"}},"spec":{"affinity":{"nodeAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"kubernetes.io/hostname","operator":"In","values":["orion"]}]}]}},"podAntiAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"podAffinityTerm":{"labelSelector":{"matchLabels":{"app.kubernetes.io/component":"clickhouse","app.kubernetes.io/instance":"langfuse","app.kubernetes.io/name":"clickhouse"}},"topologyKey":"kubernetes.io/hostname"},"weight":1}]}},"automountServiceAccountToken":false,"containers":[{"command":["/scripts/setup.sh"],"env":[{"name":"BITNAMI_DEBUG","value":"false"},{"name":"CLICKHOUSE_HTTP_PORT","value":"8123"},{"name":"CLICKHOUSE_TCP_PORT","value":"9000"},{"name":"CLICKHOUSE_MYSQL_PORT","value":"9004"},{"name":"CLICKHOUSE_POSTGRESQL_PORT","value":"9005"},{"name":"CLICKHOUSE_INTERSERVER_HTTP_PORT","value":"9009"},{"name":"CLICKHOUSE_ADMIN_USER","value":"default"},{"name":"CLICKHOUSE_SHARD_ID","value":"shard0"},{"name":"CLICKHOUSE_REPLICA_ID","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"metadata.name"}}},{"name":"CLICKHOUSE_ADMIN_PASSWORD","valueFrom":{"secretKeyRef":{"key":"admin-password","name":"langfuse-clickhouse"}}},{"name":"KEEPER_NODE_0","value":"langfuse-zookeeper-0.langfuse-zookeeper-headless.langfuse.svc.cluster.local"},{"name":"KEEPER_NODE_1","value":"langfuse-zookeeper-1.langfuse-zookeeper-headless.langfuse.svc.cluster.local"},{"name":"KEEPER_NODE_2","value":"langfuse-zookeeper-2.langfuse-zookeeper-headless.langfuse.svc.cluster.local"}],"image":"docker.io/bitnamilegacy/clickhouse:25.2.1-debian-12-r0","imagePullPolicy":"IfNotPresent","livenessProbe":{"failureThreshold":3,"initialDelaySeconds":10,"periodSeconds":10,"successThreshold":1,"tcpSocket":{"port":"http"},"timeoutSeconds":1},"name":"clickhouse","ports":[{"containerPort":8123,"name":"http","protocol":"TCP"},{"containerPort":9000,"name":"tcp","protocol":"TCP"},{"containerPort":9005,"name":"tcp-postgresql","protocol":"TCP"},{"containerPort":9004,"name":"tcp-mysql","protocol":"TCP"},{"containerPort":9009,"name":"http-intersrv","protocol":"TCP"}],"readinessProbe":{"failureThreshold":3,"httpGet":{"path":"/ping","port":"http","scheme":"HTTP"},"initialDelaySeconds":10,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":1},"resources":{"limits":{"cpu":"6","ephemeral-storage":"2Gi","memory":"12Gi"},"requests":{"cpu":"250m","ephemeral-storage":"50Mi","memory":"3Gi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsGroup":1001,"runAsNonRoot":true,"runAsUser":1001,"seLinuxOptions":{},"seccompProfile":{"type":"RuntimeDefault"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/opt/bitnami/clickhouse/etc","name":"empty-dir","subPath":"app-conf-dir"},{"mountPath":"/opt/bitnami/clickhouse/logs","name":"empty-dir","subPath":"app-logs-dir"},{"mountPath":"/opt/bitnami/clickhouse/tmp","name":"empty-dir","subPath":"app-tmp-dir"},{"mountPath":"/tmp","name":"empty-dir","subPath":"tmp-dir"},{"mountPath":"/scripts/setup.sh","name":"scripts","subPath":"setup.sh"},{"mountPath":"/bitnami/clickhouse","name":"data"},{"mountPath":"/bitnami/clickhouse/etc/conf.d/default","name":"config"}]}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{"fsGroup":1001,"fsGroupChangePolicy":"Always"},"serviceAccount":"langfuse-clickhouse","serviceAccountName":"langfuse-clickhouse","terminationGracePeriodSeconds":30,"volumes":[{"configMap":{"defaultMode":493,"name":"langfuse-clickhouse-scripts"},"name":"scripts"},{"emptyDir":{},"name":"empty-dir"},{"configMap":{"defaultMode":420,"name":"langfuse-clickhouse"},"name":"config"}]}},"updateStrategy":{"type":"RollingUpdate"},"volumeClaimTemplates":[{"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"labels":{"app.kubernetes.io/component":"clickhouse","app.kubernetes.io/instance":"langfuse","app.kubernetes.io/name":"clickhouse"},"name":"data"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"10Gi"}},"storageClassName":"openebs-hostpath","volumeMode":"Filesystem"},"status":{"phase":"Pending"}}]},"status":{"availableReplicas":0,"collisionCount":0,"currentRevision":"langfuse-clickhouse-shard0-86d8798778","observedGeneration":10,"replicas":1,"updateRevision":"langfuse-clickhouse-shard0-6746f7fcd8","updatedReplicas":1}}
+      meta.helm.sh/release-name: langfuse
+      meta.helm.sh/release-namespace: langfuse
+    creationTimestamp: "2026-07-04T02:23:28Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/component: clickhouse
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: clickhouse
+      app.kubernetes.io/version: 25.2.1
+      helm.sh/chart: clickhouse-8.0.5
+      shard: "0"
+    name: langfuse-clickhouse-shard0
+    namespace: langfuse
+    resourceVersion: "33056733"
+    uid: 6ab34539-74d8-4c78-9a6e-1c2891c173cc
+  spec:
+    persistentVolumeClaimRetentionPolicy:
+      whenDeleted: Retain
+      whenScaled: Retain
+    podManagementPolicy: Parallel
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: clickhouse
+        app.kubernetes.io/instance: langfuse
+        app.kubernetes.io/name: clickhouse
+    serviceName: langfuse-clickhouse-headless
+    template:
+      metadata:
+        annotations:
+          checksum/config: f940a0f331952d5dcbb5d45a2952ccda49219782d2c6d29c89ae5ec76d7dcc39
+          checksum/config-extra: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+          checksum/config-users-extra: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+          kubectl.kubernetes.io/restartedAt: "2026-06-14T14:06:14-04:00"
+        labels:
+          app.kubernetes.io/component: clickhouse
+          app.kubernetes.io/instance: langfuse
+          app.kubernetes.io/managed-by: Helm
+          app.kubernetes.io/name: clickhouse
+          app.kubernetes.io/version: 25.2.1
+          helm.sh/chart: clickhouse-8.0.5
+          shard: "0"
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/component: clickhouse
+                    app.kubernetes.io/instance: langfuse
+                    app.kubernetes.io/name: clickhouse
+                topologyKey: kubernetes.io/hostname
+              weight: 1
+        automountServiceAccountToken: false
+        containers:
+        - command:
+          - /scripts/setup.sh
+          env:
+          - name: BITNAMI_DEBUG
+            value: "false"
+          - name: CLICKHOUSE_HTTP_PORT
+            value: "8123"
+          - name: CLICKHOUSE_TCP_PORT
+            value: "9000"
+          - name: CLICKHOUSE_MYSQL_PORT
+            value: "9004"
+          - name: CLICKHOUSE_POSTGRESQL_PORT
+            value: "9005"
+          - name: CLICKHOUSE_INTERSERVER_HTTP_PORT
+            value: "9009"
+          - name: CLICKHOUSE_ADMIN_USER
+            value: default
+          - name: CLICKHOUSE_SHARD_ID
+            value: shard0
+          - name: CLICKHOUSE_REPLICA_ID
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          - name: CLICKHOUSE_ADMIN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: admin-password
+                name: langfuse-clickhouse
+          - name: KEEPER_NODE_0
+            value: langfuse-zookeeper-0.langfuse-zookeeper-headless.langfuse.svc.cluster.local
+          - name: KEEPER_NODE_1
+            value: langfuse-zookeeper-1.langfuse-zookeeper-headless.langfuse.svc.cluster.local
+          - name: KEEPER_NODE_2
+            value: langfuse-zookeeper-2.langfuse-zookeeper-headless.langfuse.svc.cluster.local
+          image: docker.io/bitnamilegacy/clickhouse:25.2.1-debian-12-r0
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: http
+            timeoutSeconds: 1
+          name: clickhouse
+          ports:
+          - containerPort: 8123
+            name: http
+            protocol: TCP
+          - containerPort: 9000
+            name: tcp
+            protocol: TCP
+          - containerPort: 9005
+            name: tcp-postgresql
+            protocol: TCP
+          - containerPort: 9004
+            name: tcp-mysql
+            protocol: TCP
+          - containerPort: 9009
+            name: http-intersrv
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /ping
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: "6"
+              ephemeral-storage: 2Gi
+              memory: 12Gi
+            requests:
+              cpu: 250m
+              ephemeral-storage: 50Mi
+              memory: 3Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            privileged: false
+            readOnlyRootFilesystem: true
+            runAsGroup: 1001
+            runAsNonRoot: true
+            runAsUser: 1001
+            seLinuxOptions: {}
+            seccompProfile:
+              type: RuntimeDefault
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /opt/bitnami/clickhouse/etc
+            name: empty-dir
+            subPath: app-conf-dir
+          - mountPath: /opt/bitnami/clickhouse/logs
+            name: empty-dir
+            subPath: app-logs-dir
+          - mountPath: /opt/bitnami/clickhouse/tmp
+            name: empty-dir
+            subPath: app-tmp-dir
+          - mountPath: /tmp
+            name: empty-dir
+            subPath: tmp-dir
+          - mountPath: /scripts/setup.sh
+            name: scripts
+            subPath: setup.sh
+          - mountPath: /bitnami/clickhouse
+            name: data
+          - mountPath: /bitnami/clickhouse/etc/conf.d/default
+            name: config
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1001
+          fsGroupChangePolicy: Always
+        serviceAccount: langfuse-clickhouse
+        serviceAccountName: langfuse-clickhouse
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 493
+            name: langfuse-clickhouse-scripts
+          name: scripts
+        - emptyDir: {}
+          name: empty-dir
+        - configMap:
+            defaultMode: 420
+            name: langfuse-clickhouse
+          name: config
+    updateStrategy:
+      type: RollingUpdate
+    volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        labels:
+          app.kubernetes.io/component: clickhouse
+          app.kubernetes.io/instance: langfuse
+          app.kubernetes.io/name: clickhouse
+        name: data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: openebs-hostpath
+        volumeMode: Filesystem
+      status:
+        phase: Pending
+  status:
+    availableReplicas: 1
+    collisionCount: 0
+    currentReplicas: 1
+    currentRevision: langfuse-clickhouse-shard0-6746f7fcd8
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updateRevision: langfuse-clickhouse-shard0-6746f7fcd8
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"StatefulSet","metadata":{"annotations":{"meta.helm.sh/release-name":"langfuse","meta.helm.sh/release-namespace":"langfuse"},"creationTimestamp":"2026-03-22T08:11:27Z","generation":6,"labels":{"app.kubernetes.io/component":"primary","app.kubernetes.io/instance":"langfuse","app.kubernetes.io/managed-by":"Helm","app.kubernetes.io/name":"postgresql","app.kubernetes.io/version":"17.3.0","helm.sh/chart":"postgresql-16.4.9"},"name":"langfuse-postgresql","namespace":"langfuse","resourceVersion":"25815829","uid":"ba84c724-afae-4246-a14a-5bdc2e46eee7"},"spec":{"persistentVolumeClaimRetentionPolicy":{"whenDeleted":"Retain","whenScaled":"Retain"},"podManagementPolicy":"OrderedReady","replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app.kubernetes.io/component":"primary","app.kubernetes.io/instance":"langfuse","app.kubernetes.io/name":"postgresql"}},"serviceName":"langfuse-postgresql-hl","template":{"metadata":{"labels":{"app.kubernetes.io/component":"primary","app.kubernetes.io/instance":"langfuse","app.kubernetes.io/managed-by":"Helm","app.kubernetes.io/name":"postgresql","app.kubernetes.io/version":"17.3.0","helm.sh/chart":"postgresql-16.4.9"},"name":"langfuse-postgresql"},"spec":{"affinity":{"nodeAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"kubernetes.io/hostname","operator":"In","values":["orion"]}]}]}},"podAntiAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"podAffinityTerm":{"labelSelector":{"matchLabels":{"app.kubernetes.io/component":"primary","app.kubernetes.io/instance":"langfuse","app.kubernetes.io/name":"postgresql"}},"topologyKey":"kubernetes.io/hostname"},"weight":1}]}},"automountServiceAccountToken":false,"containers":[{"env":[{"name":"BITNAMI_DEBUG","value":"false"},{"name":"POSTGRESQL_PORT_NUMBER","value":"5432"},{"name":"POSTGRESQL_VOLUME_DIR","value":"/bitnami/postgresql"},{"name":"PGDATA","value":"/bitnami/postgresql/data"},{"name":"POSTGRES_PASSWORD","valueFrom":{"secretKeyRef":{"key":"postgres-password","name":"langfuse-postgresql"}}},{"name":"POSTGRES_DATABASE","value":"postgres_langfuse"},{"name":"POSTGRESQL_ENABLE_LDAP","value":"no"},{"name":"POSTGRESQL_ENABLE_TLS","value":"no"},{"name":"POSTGRESQL_LOG_HOSTNAME","value":"false"},{"name":"POSTGRESQL_LOG_CONNECTIONS","value":"false"},{"name":"POSTGRESQL_LOG_DISCONNECTIONS","value":"false"},{"name":"POSTGRESQL_PGAUDIT_LOG_CATALOG","value":"off"},{"name":"POSTGRESQL_CLIENT_MIN_MESSAGES","value":"error"},{"name":"POSTGRESQL_SHARED_PRELOAD_LIBRARIES","value":"pgaudit"}],"image":"docker.io/bitnamilegacy/postgresql:17.3.0-debian-12-r1","imagePullPolicy":"IfNotPresent","livenessProbe":{"exec":{"command":["/bin/sh","-c","exec pg_isready -U \"postgres\" -d \"dbname=postgres_langfuse\" -h 127.0.0.1 -p 5432"]},"failureThreshold":6,"initialDelaySeconds":30,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":5},"name":"postgresql","ports":[{"containerPort":5432,"name":"tcp-postgresql","protocol":"TCP"}],"readinessProbe":{"exec":{"command":["/bin/sh","-c","-e","exec pg_isready -U \"postgres\" -d \"dbname=postgres_langfuse\" -h 127.0.0.1 -p 5432\n"]},"failureThreshold":6,"initialDelaySeconds":5,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":5},"resources":{"limits":{"cpu":"150m","ephemeral-storage":"2Gi","memory":"192Mi"},"requests":{"cpu":"100m","ephemeral-storage":"50Mi","memory":"128Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsGroup":1001,"runAsNonRoot":true,"runAsUser":1001,"seLinuxOptions":{},"seccompProfile":{"type":"RuntimeDefault"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/tmp","name":"empty-dir","subPath":"tmp-dir"},{"mountPath":"/opt/bitnami/postgresql/conf","name":"empty-dir","subPath":"app-conf-dir"},{"mountPath":"/opt/bitnami/postgresql/tmp","name":"empty-dir","subPath":"app-tmp-dir"},{"mountPath":"/dev/shm","name":"dshm"},{"mountPath":"/bitnami/postgresql","name":"data"}]}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{"fsGroup":1001,"fsGroupChangePolicy":"Always"},"serviceAccount":"langfuse-postgresql","serviceAccountName":"langfuse-postgresql","terminationGracePeriodSeconds":30,"volumes":[{"emptyDir":{},"name":"empty-dir"},{"emptyDir":{"medium":"Memory"},"name":"dshm"}]}},"updateStrategy":{"rollingUpdate":{"partition":0},"type":"RollingUpdate"},"volumeClaimTemplates":[{"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"name":"data"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"10Gi"}},"storageClassName":"openebs-hostpath","volumeMode":"Filesystem"},"status":{"phase":"Pending"}}]},"status":{"availableReplicas":0,"collisionCount":0,"currentRevision":"langfuse-postgresql-76d8f957c8","observedGeneration":6,"replicas":1,"updateRevision":"langfuse-postgresql-6c79965dd","updatedReplicas":1}}
+      meta.helm.sh/release-name: langfuse
+      meta.helm.sh/release-namespace: langfuse
+    creationTimestamp: "2026-07-04T02:23:39Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: postgresql
+      app.kubernetes.io/version: 17.3.0
+      helm.sh/chart: postgresql-16.4.9
+    name: langfuse-postgresql
+    namespace: langfuse
+    resourceVersion: "33024390"
+    uid: 27bb2bb1-b66c-4be3-afb7-10a09d0cc034
+  spec:
+    persistentVolumeClaimRetentionPolicy:
+      whenDeleted: Retain
+      whenScaled: Retain
+    podManagementPolicy: OrderedReady
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: primary
+        app.kubernetes.io/instance: langfuse
+        app.kubernetes.io/name: postgresql
+    serviceName: langfuse-postgresql-hl
+    template:
+      metadata:
+        labels:
+          app.kubernetes.io/component: primary
+          app.kubernetes.io/instance: langfuse
+          app.kubernetes.io/managed-by: Helm
+          app.kubernetes.io/name: postgresql
+          app.kubernetes.io/version: 17.3.0
+          helm.sh/chart: postgresql-16.4.9
+        name: langfuse-postgresql
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/component: primary
+                    app.kubernetes.io/instance: langfuse
+                    app.kubernetes.io/name: postgresql
+                topologyKey: kubernetes.io/hostname
+              weight: 1
+        automountServiceAccountToken: false
+        containers:
+        - env:
+          - name: BITNAMI_DEBUG
+            value: "false"
+          - name: POSTGRESQL_PORT_NUMBER
+            value: "5432"
+          - name: POSTGRESQL_VOLUME_DIR
+            value: /bitnami/postgresql
+          - name: PGDATA
+            value: /bitnami/postgresql/data
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: postgres-password
+                name: langfuse-postgresql
+          - name: POSTGRES_DATABASE
+            value: postgres_langfuse
+          - name: POSTGRESQL_ENABLE_LDAP
+            value: "no"
+          - name: POSTGRESQL_ENABLE_TLS
+            value: "no"
+          - name: POSTGRESQL_LOG_HOSTNAME
+            value: "false"
+          - name: POSTGRESQL_LOG_CONNECTIONS
+            value: "false"
+          - name: POSTGRESQL_LOG_DISCONNECTIONS
+            value: "false"
+          - name: POSTGRESQL_PGAUDIT_LOG_CATALOG
+            value: "off"
+          - name: POSTGRESQL_CLIENT_MIN_MESSAGES
+            value: error
+          - name: POSTGRESQL_SHARED_PRELOAD_LIBRARIES
+            value: pgaudit
+          image: docker.io/bitnamilegacy/postgresql:17.3.0-debian-12-r1
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - exec pg_isready -U "postgres" -d "dbname=postgres_langfuse" -h 127.0.0.1
+                -p 5432
+            failureThreshold: 6
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: postgresql
+          ports:
+          - containerPort: 5432
+            name: tcp-postgresql
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - -e
+              - |
+                exec pg_isready -U "postgres" -d "dbname=postgres_langfuse" -h 127.0.0.1 -p 5432
+            failureThreshold: 6
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            limits:
+              cpu: 150m
+              ephemeral-storage: 2Gi
+              memory: 192Mi
+            requests:
+              cpu: 100m
+              ephemeral-storage: 50Mi
+              memory: 128Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            privileged: false
+            readOnlyRootFilesystem: true
+            runAsGroup: 1001
+            runAsNonRoot: true
+            runAsUser: 1001
+            seLinuxOptions: {}
+            seccompProfile:
+              type: RuntimeDefault
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp
+            name: empty-dir
+            subPath: tmp-dir
+          - mountPath: /opt/bitnami/postgresql/conf
+            name: empty-dir
+            subPath: app-conf-dir
+          - mountPath: /opt/bitnami/postgresql/tmp
+            name: empty-dir
+            subPath: app-tmp-dir
+          - mountPath: /dev/shm
+            name: dshm
+          - mountPath: /bitnami/postgresql
+            name: data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1001
+          fsGroupChangePolicy: Always
+        serviceAccount: langfuse-postgresql
+        serviceAccountName: langfuse-postgresql
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: empty-dir
+        - emptyDir:
+            medium: Memory
+          name: dshm
+    updateStrategy:
+      rollingUpdate:
+        partition: 0
+      type: RollingUpdate
+    volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: openebs-hostpath
+        volumeMode: Filesystem
+      status:
+        phase: Pending
+  status:
+    availableReplicas: 1
+    collisionCount: 0
+    currentReplicas: 1
+    currentRevision: langfuse-postgresql-6c79965dd
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updateRevision: langfuse-postgresql-6c79965dd
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: langfuse
+      meta.helm.sh/release-namespace: langfuse
+    creationTimestamp: "2026-03-22T08:11:27Z"
+    generation: 6
+    labels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: redis
+      app.kubernetes.io/part-of: valkey
+      app.kubernetes.io/version: 8.0.2
+      helm.sh/chart: redis-2.2.4
+    name: langfuse-redis-primary
+    namespace: langfuse
+    resourceVersion: "33024551"
+    uid: 66ead8c0-291d-4857-944e-aa3e510ed54a
+  spec:
+    persistentVolumeClaimRetentionPolicy:
+      whenDeleted: Retain
+      whenScaled: Retain
+    podManagementPolicy: OrderedReady
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: primary
+        app.kubernetes.io/instance: langfuse
+        app.kubernetes.io/name: redis
+    serviceName: langfuse-redis-headless
+    template:
+      metadata:
+        annotations:
+          checksum/configmap: c8cdc0c4c772ac3192446a08bf401c29f1e39f33614657d36e4bb1692e34b39f
+          checksum/health: e3a0f06458110f02986bb8df4391c43567355d3582dd02f25447184391196fbc
+          checksum/scripts: e9df3e732e82e1d663968bd0fd9d49c410f7a88b0c3196f78e9501c71615256b
+          checksum/secret: 44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a
+        labels:
+          app.kubernetes.io/component: primary
+          app.kubernetes.io/instance: langfuse
+          app.kubernetes.io/managed-by: Helm
+          app.kubernetes.io/name: redis
+          app.kubernetes.io/version: 8.0.2
+          helm.sh/chart: redis-2.2.4
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/component: primary
+                    app.kubernetes.io/instance: langfuse
+                    app.kubernetes.io/name: redis
+                topologyKey: kubernetes.io/hostname
+              weight: 1
+        automountServiceAccountToken: false
+        containers:
+        - args:
+          - -c
+          - /opt/bitnami/scripts/start-scripts/start-primary.sh
+          command:
+          - /bin/bash
+          env:
+          - name: BITNAMI_DEBUG
+            value: "false"
+          - name: VALKEY_REPLICATION_MODE
+            value: primary
+          - name: ALLOW_EMPTY_PASSWORD
+            value: "yes"
+          - name: VALKEY_TLS_ENABLED
+            value: "no"
+          - name: VALKEY_PORT
+            value: "6379"
+          image: docker.io/bitnamilegacy/valkey:8.0.2-debian-12-r2
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+              - sh
+              - -c
+              - /health/ping_liveness_local.sh 5
+            failureThreshold: 5
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 6
+          name: valkey
+          ports:
+          - containerPort: 6379
+            name: redis
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - sh
+              - -c
+              - /health/ping_readiness_local.sh 1
+            failureThreshold: 5
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 2
+          resources:
+            limits:
+              cpu: 150m
+              ephemeral-storage: 2Gi
+              memory: 192Mi
+            requests:
+              cpu: 100m
+              ephemeral-storage: 50Mi
+              memory: 128Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsGroup: 1001
+            runAsNonRoot: true
+            runAsUser: 1001
+            seLinuxOptions: {}
+            seccompProfile:
+              type: RuntimeDefault
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /opt/bitnami/scripts/start-scripts
+            name: start-scripts
+          - mountPath: /health
+            name: health
+          - mountPath: /data
+            name: valkey-data
+          - mountPath: /opt/bitnami/valkey/mounted-etc
+            name: config
+          - mountPath: /opt/bitnami/valkey/etc/
+            name: empty-dir
+            subPath: app-conf-dir
+          - mountPath: /tmp
+            name: empty-dir
+            subPath: tmp-dir
+        dnsPolicy: ClusterFirst
+        enableServiceLinks: true
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1001
+          fsGroupChangePolicy: Always
+        serviceAccount: langfuse-redis-primary
+        serviceAccountName: langfuse-redis-primary
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 493
+            name: langfuse-redis-scripts
+          name: start-scripts
+        - configMap:
+            defaultMode: 493
+            name: langfuse-redis-health
+          name: health
+        - configMap:
+            defaultMode: 420
+            name: langfuse-redis-configuration
+          name: config
+        - emptyDir: {}
+          name: empty-dir
+    updateStrategy:
+      type: RollingUpdate
+    volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        labels:
+          app.kubernetes.io/component: primary
+          app.kubernetes.io/instance: langfuse
+          app.kubernetes.io/name: redis
+        name: valkey-data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 8Gi
+        volumeMode: Filesystem
+      status:
+        phase: Pending
+  status:
+    availableReplicas: 1
+    collisionCount: 0
+    currentReplicas: 1
+    currentRevision: langfuse-redis-primary-75f6d4ff67
+    observedGeneration: 6
+    readyReplicas: 1
+    replicas: 1
+    updateRevision: langfuse-redis-primary-75f6d4ff67
+    updatedReplicas: 1
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: langfuse
+      meta.helm.sh/release-namespace: langfuse
+    creationTimestamp: "2026-03-22T08:11:27Z"
+    labels:
+      app.kubernetes.io/component: clickhouse
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: clickhouse
+      app.kubernetes.io/version: 25.2.1
+      helm.sh/chart: clickhouse-8.0.5
+    name: langfuse-clickhouse
+    namespace: langfuse
+    resourceVersion: "894070"
+    uid: 21babcf1-e82f-4194-a7fb-6f089b38c8f6
+  spec:
+    clusterIP: 10.43.96.31
+    clusterIPs:
+    - 10.43.96.31
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 8123
+      protocol: TCP
+      targetPort: http
+    - name: tcp
+      port: 9000
+      protocol: TCP
+      targetPort: tcp
+    - name: tcp-mysql
+      port: 9004
+      protocol: TCP
+      targetPort: tcp-mysql
+    - name: tcp-postgresql
+      port: 9005
+      protocol: TCP
+      targetPort: tcp-postgresql
+    - name: http-intersrv
+      port: 9009
+      protocol: TCP
+      targetPort: http-intersrv
+    selector:
+      app.kubernetes.io/component: clickhouse
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/name: clickhouse
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: langfuse
+      meta.helm.sh/release-namespace: langfuse
+    creationTimestamp: "2026-03-22T08:11:27Z"
+    labels:
+      app.kubernetes.io/component: clickhouse
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: clickhouse
+      app.kubernetes.io/version: 25.2.1
+      helm.sh/chart: clickhouse-8.0.5
+    name: langfuse-clickhouse-headless
+    namespace: langfuse
+    resourceVersion: "894064"
+    uid: 9a10d4d8-84cc-4e54-aba2-16b2cd1e56f3
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 8123
+      protocol: TCP
+      targetPort: http
+    - name: tcp
+      port: 9000
+      protocol: TCP
+      targetPort: tcp
+    - name: tcp-mysql
+      port: 9004
+      protocol: TCP
+      targetPort: tcp-mysql
+    - name: tcp-postgresql
+      port: 9005
+      protocol: TCP
+      targetPort: tcp-postgresql
+    - name: http-intersrv
+      port: 9009
+      protocol: TCP
+      targetPort: http-intersrv
+    publishNotReadyAddresses: true
+    selector:
+      app.kubernetes.io/component: clickhouse
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/name: clickhouse
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: langfuse
+      meta.helm.sh/release-namespace: langfuse
+    creationTimestamp: "2026-03-22T08:11:27Z"
+    labels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: postgresql
+      app.kubernetes.io/version: 17.3.0
+      helm.sh/chart: postgresql-16.4.9
+    name: langfuse-postgresql
+    namespace: langfuse
+    resourceVersion: "894073"
+    uid: 1038b60b-c4ab-418c-ba6c-c8b64978b9df
+  spec:
+    clusterIP: 10.43.85.28
+    clusterIPs:
+    - 10.43.85.28
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: tcp-postgresql
+      port: 5432
+      protocol: TCP
+      targetPort: tcp-postgresql
+    selector:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/name: postgresql
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: langfuse
+      meta.helm.sh/release-namespace: langfuse
+    creationTimestamp: "2026-03-22T08:11:27Z"
+    labels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: postgresql
+      app.kubernetes.io/version: 17.3.0
+      helm.sh/chart: postgresql-16.4.9
+    name: langfuse-postgresql-hl
+    namespace: langfuse
+    resourceVersion: "894066"
+    uid: 3337d366-acee-4a02-8e52-3263febdb6f8
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: tcp-postgresql
+      port: 5432
+      protocol: TCP
+      targetPort: tcp-postgresql
+    publishNotReadyAddresses: true
+    selector:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/name: postgresql
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: langfuse
+      meta.helm.sh/release-namespace: langfuse
+    creationTimestamp: "2026-03-22T08:11:27Z"
+    labels:
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: redis
+      app.kubernetes.io/part-of: valkey
+      app.kubernetes.io/version: 8.0.2
+      helm.sh/chart: redis-2.2.4
+    name: langfuse-redis-headless
+    namespace: langfuse
+    resourceVersion: "894068"
+    uid: aaf89d94-8a12-44b3-b6b9-c31d965227f4
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: tcp-redis
+      port: 6379
+      protocol: TCP
+      targetPort: redis
+    selector:
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/name: redis
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: langfuse
+      meta.helm.sh/release-namespace: langfuse
+    creationTimestamp: "2026-03-22T08:11:27Z"
+    labels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: redis
+      app.kubernetes.io/part-of: valkey
+      app.kubernetes.io/version: 8.0.2
+      helm.sh/chart: redis-2.2.4
+    name: langfuse-redis-primary
+    namespace: langfuse
+    resourceVersion: "894079"
+    uid: a1ce127d-9ad5-49ce-abaa-4671a5c82416
+  spec:
+    clusterIP: 10.43.164.129
+    clusterIPs:
+    - 10.43.164.129
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: tcp-redis
+      port: 6379
+      protocol: TCP
+      targetPort: redis
+    selector:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/name: redis
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: langfuse
+      meta.helm.sh/release-namespace: langfuse
+    creationTimestamp: "2026-03-22T08:11:27Z"
+    labels:
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: s3
+      app.kubernetes.io/version: 2024.12.18
+      helm.sh/chart: s3-14.10.5
+    name: langfuse-s3
+    namespace: langfuse
+    resourceVersion: "894071"
+    uid: d06a02d3-0f86-4d8c-bd84-b0f6b9259906
+  spec:
+    clusterIP: 10.43.118.111
+    clusterIPs:
+    - 10.43.118.111
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: minio-api
+      port: 9000
+      protocol: TCP
+      targetPort: minio-api
+    - name: minio-console
+      port: 9001
+      protocol: TCP
+      targetPort: minio-console
+    selector:
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/name: s3
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: langfuse
+      meta.helm.sh/release-namespace: langfuse
+    creationTimestamp: "2026-03-22T08:11:27Z"
+    labels:
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: langfuse
+      app.kubernetes.io/version: 3.162.0
+      helm.sh/chart: langfuse-1.5.24
+    name: langfuse-web
+    namespace: langfuse
+    resourceVersion: "25475833"
+    uid: 5f48b71a-441f-471c-8eff-b7755301ccbc
+  spec:
+    clusterIP: 10.43.210.203
+    clusterIPs:
+    - 10.43.210.203
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 3000
+      protocol: TCP
+      targetPort: http
+    selector:
+      app: web
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/name: langfuse
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: langfuse
+      meta.helm.sh/release-namespace: langfuse
+    creationTimestamp: "2026-03-22T08:11:27Z"
+    labels:
+      app.kubernetes.io/component: zookeeper
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: zookeeper
+      app.kubernetes.io/version: 3.9.3
+      helm.sh/chart: zookeeper-13.7.4
+    name: langfuse-zookeeper
+    namespace: langfuse
+    resourceVersion: "894095"
+    uid: 920a6bfe-fd62-49ab-9f9c-570546a1df43
+  spec:
+    clusterIP: 10.43.223.89
+    clusterIPs:
+    - 10.43.223.89
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: tcp-client
+      port: 2181
+      protocol: TCP
+      targetPort: client
+    - name: tcp-follower
+      port: 2888
+      protocol: TCP
+      targetPort: follower
+    - name: tcp-election
+      port: 3888
+      protocol: TCP
+      targetPort: election
+    selector:
+      app.kubernetes.io/component: zookeeper
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/name: zookeeper
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: langfuse
+      meta.helm.sh/release-namespace: langfuse
+    creationTimestamp: "2026-03-22T08:11:27Z"
+    labels:
+      app.kubernetes.io/component: zookeeper
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: zookeeper
+      app.kubernetes.io/version: 3.9.3
+      helm.sh/chart: zookeeper-13.7.4
+    name: langfuse-zookeeper-headless
+    namespace: langfuse
+    resourceVersion: "894063"
+    uid: 524107c3-af84-4c53-9da2-0b0558d303fb
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: tcp-client
+      port: 2181
+      protocol: TCP
+      targetPort: client
+    - name: tcp-follower
+      port: 2888
+      protocol: TCP
+      targetPort: follower
+    - name: tcp-election
+      port: 3888
+      protocol: TCP
+      targetPort: election
+    publishNotReadyAddresses: true
+    selector:
+      app.kubernetes.io/component: zookeeper
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/name: zookeeper
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIBdzCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy
+      dmVyLWNhQDE3NzM0OTIwNDMwHhcNMjYwMzE0MTI0MDQzWhcNMzYwMzExMTI0MDQz
+      WjAjMSEwHwYDVQQDDBhrM3Mtc2VydmVyLWNhQDE3NzM0OTIwNDMwWTATBgcqhkjO
+      PQIBBggqhkjOPQMBBwNCAARpgn+LEJSNlp2uAqphT94mk3q/VpLzxAn/KjD1mBH8
+      oQu45uwEkuvSQdTXfKQORPUuxCqO/aaIp9J79K22/cobo0IwQDAOBgNVHQ8BAf8E
+      BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUaFaNeoZQ5OsygNWLwWhw
+      qpQZLbMwCgYIKoZIzj0EAwIDSAAwRQIhAO249TlfJBFz/q6b8Qv9/09lifqmSddW
+      aVbPh0wrSpvCAiAJrxY16wd92CAuR5caK2/1xOqu05sdTiI7O1SXIsotcQ==
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2026-03-22T08:11:27Z"
+    name: kube-root-ca.crt
+    namespace: langfuse
+    resourceVersion: "894020"
+    uid: 472b50a8-7079-42e3-bb76-1d73818cbdab
+- apiVersion: v1
+  data:
+    00_default_overrides.xml: "<clickhouse>\n  <!-- Macros -->\n  <macros>\n    <shard
+      from_env=\"CLICKHOUSE_SHARD_ID\"></shard>\n    <replica from_env=\"CLICKHOUSE_REPLICA_ID\"></replica>\n
+      \   <layer>langfuse-clickhouse</layer>\n  </macros>\n  <!-- Log Level -->\n
+      \ <logger>\n    <level>information</level>\n  </logger>\n  <!-- Cluster configuration
+      - Any update of the shards and replicas requires helm upgrade -->\n  <remote_servers>\n
+      \   <default>\n      <shard>\n          <replica>\n              <host>langfuse-clickhouse-shard0-0.langfuse-clickhouse-headless.langfuse.svc.cluster.local</host>\n
+      \             <port>9000</port>\n              <user from_env=\"CLICKHOUSE_ADMIN_USER\"></user>\n
+      \             <password from_env=\"CLICKHOUSE_ADMIN_PASSWORD\"></password>\n
+      \         </replica>\n          <replica>\n              <host>langfuse-clickhouse-shard0-1.langfuse-clickhouse-headless.langfuse.svc.cluster.local</host>\n
+      \             <port>9000</port>\n              <user from_env=\"CLICKHOUSE_ADMIN_USER\"></user>\n
+      \             <password from_env=\"CLICKHOUSE_ADMIN_PASSWORD\"></password>\n
+      \         </replica>\n          <replica>\n              <host>langfuse-clickhouse-shard0-2.langfuse-clickhouse-headless.langfuse.svc.cluster.local</host>\n
+      \             <port>9000</port>\n              <user from_env=\"CLICKHOUSE_ADMIN_USER\"></user>\n
+      \             <password from_env=\"CLICKHOUSE_ADMIN_PASSWORD\"></password>\n
+      \         </replica>\n      </shard>\n    </default>\n  </remote_servers>\n
+      \ <!-- Zookeeper configuration -->\n  <zookeeper>\n    \n    <node>\n      <host
+      from_env=\"KEEPER_NODE_0\"></host>\n      <port>2181</port>\n    </node>\n    <node>\n
+      \     <host from_env=\"KEEPER_NODE_1\"></host>\n      <port>2181</port>\n    </node>\n
+      \   <node>\n      <host from_env=\"KEEPER_NODE_2\"></host>\n      <port>2181</port>\n
+      \   </node>\n  </zookeeper>\n  <listen_host>0.0.0.0</listen_host>\n  <listen_host>::</listen_host>\n
+      \ <listen_try>1</listen_try>\n</clickhouse>\n"
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: langfuse
+      meta.helm.sh/release-namespace: langfuse
+    creationTimestamp: "2026-03-22T08:11:27Z"
+    labels:
+      app.kubernetes.io/component: clickhouse
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: clickhouse
+      app.kubernetes.io/version: 25.2.1
+      helm.sh/chart: clickhouse-8.0.5
+    name: langfuse-clickhouse
+    namespace: langfuse
+    resourceVersion: "894047"
+    uid: f824991c-0b84-4b4c-834f-209f0e469254
+- apiVersion: v1
+  data:
+    setup.sh: |-
+      #!/bin/bash
+
+      # Execute entrypoint as usual after obtaining KEEPER_SERVER_ID
+      # check KEEPER_SERVER_ID in persistent volume via myid
+      # if not present, set based on POD hostname
+      if [[ -f "/bitnami/clickhouse/keeper/data/myid" ]]; then
+          export KEEPER_SERVER_ID="$(cat /bitnami/clickhouse/keeper/data/myid)"
+      else
+          HOSTNAME="$(hostname -s)"
+          if [[ $HOSTNAME =~ (.*)-([0-9]+)$ ]]; then
+              export KEEPER_SERVER_ID=${BASH_REMATCH[2]}
+          else
+              echo "Failed to get index from hostname $HOST"
+              exit 1
+          fi
+      fi
+      exec /opt/bitnami/scripts/clickhouse/entrypoint.sh /opt/bitnami/scripts/clickhouse/run.sh  "$@"
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: langfuse
+      meta.helm.sh/release-namespace: langfuse
+    creationTimestamp: "2026-03-22T08:11:27Z"
+    labels:
+      app.kubernetes.io/component: clickhouse
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: clickhouse
+      app.kubernetes.io/version: 25.2.1
+      helm.sh/chart: clickhouse-8.0.5
+    name: langfuse-clickhouse-scripts
+    namespace: langfuse
+    resourceVersion: "894052"
+    uid: bceb6611-f931-4eec-a995-e0475ddd2f92
+- apiVersion: v1
+  data:
+    primary.conf: |-
+      dir /data
+      # User-supplied primary configuration:
+      rename-command FLUSHDB ""
+      rename-command FLUSHALL ""
+      # End of primary configuration
+    replica.conf: |-
+      dir /data
+      # User-supplied replica configuration:
+      rename-command FLUSHDB ""
+      rename-command FLUSHALL ""
+      # End of replica configuration
+    valkey.conf: |-
+      # User-supplied common configuration:
+      # Enable AOF https://valkey.io/docs/topics/persistence.html
+      appendonly yes
+      # Disable RDB persistence, AOF persistence already enabled.
+      save ""
+      # End of common configuration
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: langfuse
+      meta.helm.sh/release-namespace: langfuse
+    creationTimestamp: "2026-03-22T08:11:27Z"
+    labels:
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: redis
+      app.kubernetes.io/part-of: valkey
+      app.kubernetes.io/version: 8.0.2
+      helm.sh/chart: redis-2.2.4
+    name: langfuse-redis-configuration
+    namespace: langfuse
+    resourceVersion: "894049"
+    uid: fc35d5cc-f597-4232-8e45-4777001f94b0
+- apiVersion: v1
+  data:
+    ping_liveness_local.sh: |-
+      #!/bin/bash
+
+      [[ -f $VALKEY_PASSWORD_FILE ]] && export VALKEY_PASSWORD="$(< "${VALKEY_PASSWORD_FILE}")"
+      [[ -n "$VALKEY_PASSWORD" ]] && export REDISCLI_AUTH="$VALKEY_PASSWORD"
+      response=$(
+        timeout -s 15 $1 \
+        valkey-cli \
+          -h localhost \
+          -p $VALKEY_PORT \
+          ping
+      )
+      if [ "$?" -eq "124" ]; then
+        echo "Timed out"
+        exit 1
+      fi
+      responseFirstWord=$(echo $response | head -n1 | awk '{print $1;}')
+      if [ "$response" != "PONG" ] && [ "$responseFirstWord" != "LOADING" ] && [ "$responseFirstWord" != "MASTERDOWN" ]; then
+        echo "$response"
+        exit 1
+      fi
+    ping_liveness_local_and_primary.sh: |-
+      script_dir="$(dirname "$0")"
+      exit_status=0
+      "$script_dir/ping_liveness_local.sh" $1 || exit_status=$?
+      "$script_dir/ping_liveness_primary.sh" $1 || exit_status=$?
+      exit $exit_status
+    ping_liveness_primary.sh: |-
+      #!/bin/bash
+
+      [[ -f $VALKEY_PRIMARY_PASSWORD_FILE ]] && export VALKEY_PRIMARY_PASSWORD="$(< "${VALKEY_PRIMARY_PASSWORD_FILE}")"
+      [[ -n "$VALKEY_PRIMARY_PASSWORD" ]] && export REDISCLI_AUTH="$VALKEY_PRIMARY_PASSWORD"
+      response=$(
+        timeout -s 15 $1 \
+        valkey-cli \
+          -h $VALKEY_PRIMARY_HOST \
+          -p $VALKEY_PRIMARY_PORT_NUMBER \
+          ping
+      )
+      if [ "$?" -eq "124" ]; then
+        echo "Timed out"
+        exit 1
+      fi
+      responseFirstWord=$(echo $response | head -n1 | awk '{print $1;}')
+      if [ "$response" != "PONG" ] && [ "$responseFirstWord" != "LOADING" ]; then
+        echo "$response"
+        exit 1
+      fi
+    ping_readiness_local.sh: |-
+      #!/bin/bash
+
+      [[ -f $VALKEY_PASSWORD_FILE ]] && export VALKEY_PASSWORD="$(< "${VALKEY_PASSWORD_FILE}")"
+      [[ -n "$VALKEY_PASSWORD" ]] && export REDISCLI_AUTH="$VALKEY_PASSWORD"
+      response=$(
+        timeout -s 15 $1 \
+        valkey-cli \
+          -h localhost \
+          -p $VALKEY_PORT \
+          ping
+      )
+      if [ "$?" -eq "124" ]; then
+        echo "Timed out"
+        exit 1
+      fi
+      if [ "$response" != "PONG" ]; then
+        echo "$response"
+        exit 1
+      fi
+    ping_readiness_local_and_primary.sh: |-
+      script_dir="$(dirname "$0")"
+      exit_status=0
+      "$script_dir/ping_readiness_local.sh" $1 || exit_status=$?
+      "$script_dir/ping_readiness_primary.sh" $1 || exit_status=$?
+      exit $exit_status
+    ping_readiness_primary.sh: |-
+      #!/bin/bash
+
+      [[ -f $VALKEY_PRIMARY_PASSWORD_FILE ]] && export VALKEY_PRIMARY_PASSWORD="$(< "${VALKEY_PRIMARY_PASSWORD_FILE}")"
+      [[ -n "$VALKEY_PRIMARY_PASSWORD" ]] && export REDISCLI_AUTH="$VALKEY_PRIMARY_PASSWORD"
+      response=$(
+        timeout -s 15 $1 \
+        valkey-cli \
+          -h $VALKEY_PRIMARY_HOST \
+          -p $VALKEY_PRIMARY_PORT_NUMBER \
+          ping
+      )
+      if [ "$?" -eq "124" ]; then
+        echo "Timed out"
+        exit 1
+      fi
+      if [ "$response" != "PONG" ]; then
+        echo "$response"
+        exit 1
+      fi
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: langfuse
+      meta.helm.sh/release-namespace: langfuse
+    creationTimestamp: "2026-03-22T08:11:27Z"
+    labels:
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: redis
+      app.kubernetes.io/version: 8.0.2
+      helm.sh/chart: redis-2.2.4
+    name: langfuse-redis-health
+    namespace: langfuse
+    resourceVersion: "894045"
+    uid: 2aa7f823-e0f3-4d67-b8b2-b317335c702d
+- apiVersion: v1
+  data:
+    start-primary.sh: |
+      #!/bin/bash
+
+      [[ -f $VALKEY_PASSWORD_FILE ]] && export VALKEY_PASSWORD="$(< "${VALKEY_PASSWORD_FILE}")"
+      if [[ -f /opt/bitnami/valkey/mounted-etc/primary.conf ]];then
+          cp /opt/bitnami/valkey/mounted-etc/primary.conf /opt/bitnami/valkey/etc/primary.conf
+      fi
+      if [[ -f /opt/bitnami/valkey/mounted-etc/valkey.conf ]];then
+          cp /opt/bitnami/valkey/mounted-etc/valkey.conf /opt/bitnami/valkey/etc/valkey.conf
+      fi
+      ARGS=("--port" "${VALKEY_PORT}")
+      ARGS+=("--protected-mode" "no")
+      ARGS+=("--include" "/opt/bitnami/valkey/etc/valkey.conf")
+      ARGS+=("--include" "/opt/bitnami/valkey/etc/primary.conf")
+      ARGS+=("--maxmemory-policy noeviction")
+      exec valkey-server "${ARGS[@]}"
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: langfuse
+      meta.helm.sh/release-namespace: langfuse
+    creationTimestamp: "2026-03-22T08:11:27Z"
+    labels:
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: redis
+      app.kubernetes.io/part-of: valkey
+      app.kubernetes.io/version: 8.0.2
+      helm.sh/chart: redis-2.2.4
+    name: langfuse-redis-scripts
+    namespace: langfuse
+    resourceVersion: "894048"
+    uid: f14495a1-e3e4-4433-815f-901cdea3efd8
+- apiVersion: v1
+  data:
+    init-certs.sh: '#!/bin/bash'
+    setup.sh: |-
+      #!/bin/bash
+
+      # Execute entrypoint as usual after obtaining ZOO_SERVER_ID
+      # check ZOO_SERVER_ID in persistent volume via myid
+      # if not present, set based on POD hostname
+      if [[ -f "/bitnami/zookeeper/data/myid" ]]; then
+          export ZOO_SERVER_ID="$(cat /bitnami/zookeeper/data/myid)"
+      else
+          HOSTNAME="$(hostname -s)"
+          if [[ $HOSTNAME =~ (.*)-([0-9]+)$ ]]; then
+              ORD=${BASH_REMATCH[2]}
+              export ZOO_SERVER_ID="$((ORD + 1 ))"
+          else
+              echo "Failed to get index from hostname $HOSTNAME"
+              exit 1
+          fi
+      fi
+      exec /entrypoint.sh /run.sh
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: langfuse
+      meta.helm.sh/release-namespace: langfuse
+    creationTimestamp: "2026-03-22T08:11:27Z"
+    labels:
+      app.kubernetes.io/component: zookeeper
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: zookeeper
+      app.kubernetes.io/version: 3.9.3
+      helm.sh/chart: zookeeper-13.7.4
+    name: langfuse-zookeeper-scripts
+    namespace: langfuse
+    resourceVersion: "894051"
+    uid: 90a07ad4-f33a-404a-a9b1-1c36916dbd11
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: orion
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-07-04T02:23:53Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    labels:
+      app.kubernetes.io/component: clickhouse
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/name: clickhouse
+    name: data-langfuse-clickhouse-shard0-0
+    namespace: langfuse
+    resourceVersion: "25817072"
+    uid: baf0c861-5d81-44d2-89e2-2e4deb51d709
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-baf0c861-5d81-44d2-89e2-2e4deb51d709
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 10Gi
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: orion
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-07-04T02:23:53Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    labels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/name: postgresql
+    name: data-langfuse-postgresql-0
+    namespace: langfuse
+    resourceVersion: "25817094"
+    uid: be71dd17-1248-4e69-aeec-a614e828ec5b
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-be71dd17-1248-4e69-aeec-a614e828ec5b
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 10Gi
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: orion
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-07-04T02:23:55Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    labels:
+      app.kubernetes.io/component: zookeeper
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/name: zookeeper
+    name: data-langfuse-zookeeper-0
+    namespace: langfuse
+    resourceVersion: "25817117"
+    uid: ceb93d73-c112-413f-90da-9a8b72bfc8a3
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 8Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-ceb93d73-c112-413f-90da-9a8b72bfc8a3
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 8Gi
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: orion
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-07-04T02:23:55Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    labels:
+      app.kubernetes.io/component: zookeeper
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/name: zookeeper
+    name: data-langfuse-zookeeper-1
+    namespace: langfuse
+    resourceVersion: "25817136"
+    uid: 2b29d407-bd0a-416d-9a6f-6150f5c9c350
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 8Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-2b29d407-bd0a-416d-9a6f-6150f5c9c350
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 8Gi
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"langfuse-s3","namespace":"langfuse"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"8Gi"}},"storageClassName":"openebs-hostpath"}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: orion
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-07-04T02:26:23Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: langfuse-s3
+    namespace: langfuse
+    resourceVersion: "25817723"
+    uid: 63ac4340-06e9-44c5-bb48-530aa57ad596
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 8Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-63ac4340-06e9-44c5-bb48-530aa57ad596
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 8Gi
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: orion
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-07-24T17:30:39Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    labels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: langfuse
+      app.kubernetes.io/name: redis
+    name: valkey-data-langfuse-redis-primary-0
+    namespace: langfuse
+    resourceVersion: "32962919"
+    uid: ae27d52f-a63c-41bf-a7e7-acfcdfb702cb
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 8Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-ae27d52f-a63c-41bf-a7e7-acfcdfb702cb
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 8Gi
+    phase: Bound
+kind: List
+metadata:
+  resourceVersion: ""

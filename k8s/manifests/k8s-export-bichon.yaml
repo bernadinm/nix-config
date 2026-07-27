@@ -1,0 +1,222 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "16"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"bichon"},"name":"bichon","namespace":"bichon"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"bichon"}},"template":{"metadata":{"labels":{"app":"bichon"}},"spec":{"containers":[{"env":[{"name":"BICHON_ROOT_DIR","value":"/data"},{"name":"BICHON_LOG_LEVEL","value":"info"},{"name":"BICHON_CORS_ORIGINS","value":"https://mail.bernad.in"}],"image":"rustmailer/bichon:latest","livenessProbe":{"httpGet":{"path":"/api/health","port":15630},"initialDelaySeconds":10,"periodSeconds":30},"name":"bichon","ports":[{"containerPort":15630,"name":"http","protocol":"TCP"}],"readinessProbe":{"httpGet":{"path":"/api/health","port":15630},"initialDelaySeconds":5,"periodSeconds":10},"resources":{"limits":{"cpu":"2000m","memory":"2Gi"},"requests":{"cpu":"100m","memory":"256Mi"}},"volumeMounts":[{"mountPath":"/data","name":"data"}]}],"securityContext":{"fsGroup":1000,"runAsGroup":1000,"runAsUser":1000},"volumes":[{"name":"data","persistentVolumeClaim":{"claimName":"bichon-data"}}]}}}}
+    creationTimestamp: "2026-03-24T18:51:47Z"
+    generation: 54
+    labels:
+      app: bichon
+      velero.io/backup-name: velero-daily-critical-20260603121118
+      velero.io/restore-name: bichon-restore-jun05
+    name: bichon
+    namespace: bichon
+    resourceVersion: "32641322"
+    uid: 0d0a9159-9e50-49e4-b902-ed6a757590fa
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: bichon
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-06-10T01:39:14-04:00"
+        labels:
+          app: bichon
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+        containers:
+        - env:
+          - name: BICHON_ROOT_DIR
+            value: /data
+          - name: BICHON_LOG_LEVEL
+            value: info
+          - name: BICHON_CORS_ORIGINS
+            value: https://mail.bernad.in
+          - name: BICHON_INDEX_DIR
+            value: /data/bichon-indices
+          image: rustmailer/bichon:1.4.3
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/health
+              port: 15630
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: bichon
+          ports:
+          - containerPort: 15630
+            name: http
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/health
+              port: 15630
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: "2"
+              memory: 2Gi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /data
+            name: data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1000
+          runAsGroup: 1000
+          runAsUser: 1000
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: bichon-data
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-07-07T14:31:09Z"
+      lastUpdateTime: "2026-07-07T14:31:09Z"
+      message: ReplicaSet "bichon-74c775cd5" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T04:12:32Z"
+      lastUpdateTime: "2026-07-24T04:12:32Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 54
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"bichon","namespace":"bichon"},"spec":{"ports":[{"name":"http","port":15630,"targetPort":15630}],"selector":{"app":"bichon"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-03-24T18:51:47Z"
+    labels:
+      velero.io/backup-name: velero-daily-critical-20260603121118
+      velero.io/restore-name: bichon-restore-jun05
+    name: bichon
+    namespace: bichon
+    resourceVersion: "18144855"
+    uid: a8971433-a5e7-45b0-bf4b-cdffcedb784c
+  spec:
+    clusterIP: 10.43.14.143
+    clusterIPs:
+    - 10.43.14.143
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 15630
+      protocol: TCP
+      targetPort: 15630
+    selector:
+      app: bichon
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIBdzCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy
+      dmVyLWNhQDE3NzM0OTIwNDMwHhcNMjYwMzE0MTI0MDQzWhcNMzYwMzExMTI0MDQz
+      WjAjMSEwHwYDVQQDDBhrM3Mtc2VydmVyLWNhQDE3NzM0OTIwNDMwWTATBgcqhkjO
+      PQIBBggqhkjOPQMBBwNCAARpgn+LEJSNlp2uAqphT94mk3q/VpLzxAn/KjD1mBH8
+      oQu45uwEkuvSQdTXfKQORPUuxCqO/aaIp9J79K22/cobo0IwQDAOBgNVHQ8BAf8E
+      BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUaFaNeoZQ5OsygNWLwWhw
+      qpQZLbMwCgYIKoZIzj0EAwIDSAAwRQIhAO249TlfJBFz/q6b8Qv9/09lifqmSddW
+      aVbPh0wrSpvCAiAJrxY16wd92CAuR5caK2/1xOqu05sdTiI7O1SXIsotcQ==
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2026-03-24T18:51:47Z"
+    labels:
+      velero.io/backup-name: velero-daily-critical-20260603121118
+      velero.io/restore-name: bichon-restore-jun05
+    name: kube-root-ca.crt
+    namespace: bichon
+    resourceVersion: "18144804"
+    uid: b8d6bb5a-28e6-4243-b581-b04e714bf84e
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      pv.kubernetes.io/bind-completed: "yes"
+    creationTimestamp: "2026-03-29T14:22:57Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    labels:
+      velero.io/backup-name: velero-daily-critical-20260603121118
+      velero.io/restore-name: bichon-restore-jun05
+    name: bichon-data
+    namespace: bichon
+    resourceVersion: "18144802"
+    uid: 6e46ec27-58e5-4f0c-9f64-f43d48acf1a5
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 100Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-92199c87-2e1f-42e1-a551-4542ec11ec4b
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 100Gi
+    phase: Bound
+kind: List
+metadata:
+  resourceVersion: ""
