@@ -1,0 +1,365 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hetzner-watcher-script
+  namespace: atlas-system
+data:
+  watch.sh: |
+    #!/bin/bash
+    set -euo pipefail
+
+    GOTIFY_URL="${GOTIFY_URL:-http://gotify.atlas-system.svc.cluster.local:80}"
+    GOTIFY_TOKEN="${GOTIFY_TOKEN}"
+    CF_ACCOUNT_ID="${CF_ACCOUNT_ID}"
+    CF_EMAIL="${CF_EMAIL}"
+    CF_API_KEY="${CF_API_KEY}"
+    AUCTION_URL="https://www.hetzner.com/_resources/app/data/app/live_data_sb_EUR.json"
+
+    SEEN_FILE="/tmp/seen.json"
+    HISTORY_FILE="/tmp/history.json"
+    kubectl get configmap hetzner-watcher-state -n atlas-system -o jsonpath='{.data.seen\.json}' > "$SEEN_FILE" 2>/dev/null || echo '{}' > "$SEEN_FILE"
+    kubectl get configmap hetzner-watcher-state -n atlas-system -o jsonpath='{.data.history\.json}' > "$HISTORY_FILE" 2>/dev/null || echo '{}' > "$HISTORY_FILE"
+
+    data=$(curl -sf --max-time 30 "$AUCTION_URL") || { echo "Failed to fetch"; exit 1; }
+
+    # Stage 1: Tighter spec filter - only servers worth evaluating
+    matches=$(echo "$data" | jq '[.server[] | select(
+      .ram_size >= 128 and
+      .price <= 220 and
+      .is_ecc and
+      ((.serverDiskData.nvme | length) > 0)
+    ) | {
+      id: (.key | tostring),
+      cpu: .cpu,
+      cores: .cpu_count,
+      ram: .ram_size,
+      price: .price,
+      dc: .datacenter,
+      disks: (.hdd_arr | join(", ")),
+      has_nvme: ((.serverDiskData.nvme | length) > 0),
+      nvme_count: (.serverDiskData.nvme | length),
+      sata_count: (.serverDiskData.sata | length),
+      hdd_count: (.serverDiskData.hdd | length),
+      total_storage_gb: (([.serverDiskData.nvme[], .serverDiskData.sata[], .serverDiskData.hdd[]] | add) // 0),
+      next_reduce: (.next_reduce_timestamp | todate),
+      next_reduce_seconds: .next_reduce,
+      benchmark: (.cpu_benchmark // 0),
+      setup_fee: (.setup_price // 0),
+      specials: (.specials // [])
+    }]')
+
+    count=$(echo "$matches" | jq 'length')
+    echo "Stage 1: $count servers pass filter (128GB+ ECC, NVMe, under 220EUR)"
+
+    if [ "$count" -eq 0 ]; then
+      echo "No matches, exiting."
+      exit 0
+    fi
+
+    # Check for new or price-changed servers
+    seen=$(cat "$SEEN_FILE")
+    history=$(cat "$HISTORY_FILE")
+    changed_servers="[]"
+
+    echo "$matches" | jq -c '.[]' > /tmp/servers.jsonl
+
+    while IFS= read -r server; do
+      sid=$(echo "$server" | jq -r '.id')
+      price=$(echo "$server" | jq -r '.price')
+      seen_price=$(echo "$seen" | jq -r --arg id "$sid" '.[$id] // "0"')
+
+      if [ "$seen_price" = "$price" ]; then
+        continue
+      fi
+
+      # Track price history
+      ts=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+      history=$(echo "$history" | jq --arg id "$sid" --arg p "$price" --arg t "$ts" '
+        .[$id] = ((.[$id] // []) + [{"price": ($p | tonumber), "time": $t}])
+        | .[$id] = (.[$id] | if length > 20 then .[-20:] else . end)
+      ')
+
+      # Add price trend to server data
+      price_history=$(echo "$history" | jq -c --arg id "$sid" '.[$id] // []')
+      server_with_history=$(echo "$server" | jq --argjson hist "$price_history" --arg sp "$seen_price" '. + {
+        price_history: $hist,
+        previous_price: (if $sp == "0" then null else ($sp | tonumber) end),
+        is_new: ($sp == "0")
+      }')
+
+      changed_servers=$(echo "$changed_servers" | jq --argjson s "$server_with_history" '. + [$s]')
+    done < /tmp/servers.jsonl
+
+    changed_count=$(echo "$changed_servers" | jq 'length')
+    echo "Stage 1.5: $changed_count new or price-changed servers"
+
+    if [ "$changed_count" -eq 0 ]; then
+      echo "No changes, saving state and exiting."
+      # Still persist in case history was updated
+      echo "$seen" > "$SEEN_FILE"
+      echo "$history" > "$HISTORY_FILE"
+      kubectl create configmap hetzner-watcher-state -n atlas-system \
+        --from-file=seen.json="$SEEN_FILE" \
+        --from-file=history.json="$HISTORY_FILE" \
+        --dry-run=client -o yaml | kubectl apply -f -
+      exit 0
+    fi
+
+    # Stage 2: LLM evaluation via Cloudflare Workers AI
+    echo "Stage 2: Evaluating $changed_count servers with LLM..."
+
+    server_list=$(echo "$changed_servers" | jq -r '[.[] | "- #\(.id) \(.cpu) | \(.cores) cores | \(.ram)GB ECC | \(.disks) | \(.dc) | \(.price)EUR/mo | NVMe:\(.has_nvme) | benchmark:\(.benchmark) | \(if .is_new then "NEW" else "was \(.previous_price)EUR" end)"] | join("\n")')
+
+    prompt="You are a ruthlessly analytical infrastructure advisor. Evaluate Hetzner Server Auction deals for a company replacing a broken server.
+
+    SITUATION: Replacing polaris (Ryzen 5 3600, 64GB, Helsinki) which has a PROCHOT hardware defect. Need a database server for TimescaleDB (45GB, 7-year backtest data) running as a k3s agent node.
+
+    BASELINE PRICES FOR NEW SERVERS (the benchmark to beat):
+    - AX42: Ryzen 7 PRO 8700GE, 8c, 64GB ECC, 2x1.92TB NVMe = 59EUR/mo
+    - AX102: Ryzen 9 7950X3D, 16c, 128GB ECC, 2x1.92TB NVMe = 130EUR/mo
+    - AX162: EPYC 9454P, 48c, 128GB ECC, 2x1.92TB NVMe = 199EUR/mo
+
+    HARD REQUIREMENTS (fail any = automatic SKIP):
+    - Must have NVMe (SATA SSDs are too slow for TimescaleDB)
+    - Must have ECC RAM
+    - Must be CHEAPER than buying the equivalent new server
+    - Consumer CPUs (i7, Ryzen without ECC boards) = SKIP
+
+    STRONG PREFERENCES:
+    - 128GB+ RAM (64GB works but 128GB is much better for DB caching)
+    - Server-grade CPU: EPYC >> Xeon >> Ryzen (reliability matters for remote server)
+    - Helsinki (HEL1) datacenter preferred (same DC as current server)
+    - More cores = better for parallel DB queries
+
+    SERVERS:
+    ${server_list}
+
+    Respond ONLY with a JSON array. No markdown, no explanation outside JSON.
+    [
+      {
+        \"id\": \"server_id\",
+        \"score\": 1-10,
+        \"verdict\": \"SKIP\" or \"WATCH\" or \"CONSIDER\" or \"BUY_NOW\",
+        \"reason\": \"specific comparison - e.g. 'EPYC 7502P with 128GB at 157EUR is 21% cheaper than new AX162 (199EUR) with similar specs, and in HEL1'\"
+      }
+    ]
+
+    SCORING RULES (be strict):
+    - 1-4 (SKIP): No NVMe, consumer CPU, costs more than new equivalent, <64GB RAM, old architecture (Haswell/Broadwell)
+    - 5-6 (WATCH): Has NVMe+ECC but price is only marginally better than new, or wrong datacenter, or Ryzen (less reliable than EPYC/Xeon for servers)
+    - 7-8 (CONSIDER): 15-25% cheaper than new equivalent, has NVMe+ECC+128GB, server-grade CPU
+    - 9 (BUY_NOW): 25%+ cheaper than new equivalent, EPYC or Xeon, NVMe, 128GB+ ECC, ideally HEL1
+    - 10 (BUY_NOW): Same as 9 but in HEL1 datacenter AND significantly cheaper
+
+    CRITICAL: A Ryzen 7 3700X at 137EUR is NOT a 9/10. The new AX102 (Ryzen 9 7950X3D) costs 130EUR with better specs. That Ryzen is a SKIP. Always compare against what you can buy NEW.
+    Most servers should score 1-5. Score 9+ should be RARE - maybe 1-2 out of 50 servers."
+
+    llm_response=$(curl -sf --max-time 120 \
+      "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/ai/run/@cf/meta/llama-3.1-8b-instruct" \
+      -H "X-Auth-Email: ${CF_EMAIL}" \
+      -H "X-Auth-Key: ${CF_API_KEY}" \
+      -H "Content-Type: application/json" \
+      -d "$(jq -n --arg p "$prompt" '{
+        messages: [
+          {role: "system", content: "You are a server infrastructure advisor. Respond ONLY with valid JSON array. No markdown, no explanation outside the JSON."},
+          {role: "user", content: $p}
+        ],
+        max_tokens: 4000
+      }')" 2>/dev/null)
+
+    if [ -z "$llm_response" ]; then
+      echo "LLM call failed, skipping notifications this cycle"
+      : > /tmp/notify.jsonl
+    else
+      echo "LLM response received"
+      # Parse LLM scores
+      # Extract JSON array from LLM response - handle markdown code blocks
+      raw_response=$(echo "$llm_response" | jq -r '.result.response // empty' 2>/dev/null)
+      scores=$(echo "$raw_response" | sed 's/```json//g; s/```//g' | jq -c '.' 2>/dev/null || echo "[]")
+
+      if [ "$scores" = "[]" ] || [ -z "$scores" ]; then
+        echo "Failed to parse LLM scores, skipping notifications this cycle"
+        : > /tmp/notify.jsonl
+      else
+        echo "Scores parsed: $scores"
+        # Only notify CONSIDER (7-8) and BUY_NOW (9-10)
+        echo "$changed_servers" | jq -c '.[]' > /tmp/notify.jsonl.tmp
+        : > /tmp/notify.jsonl
+        while IFS= read -r server; do
+          sid=$(echo "$server" | jq -r '.id')
+          # Match by id - LLM may return id as "#3040803" or "3040803" or 3040803
+          score_entry=$(echo "$scores" | jq -c --arg id "$sid" '.[] | select((.id | tostring | ltrimstr("#")) == $id)' 2>/dev/null || echo "")
+          if [ -n "$score_entry" ]; then
+            score=$(echo "$score_entry" | jq -r '.score // 0')
+            verdict=$(echo "$score_entry" | jq -r '.verdict // "SKIP"')
+            reason=$(echo "$score_entry" | jq -r '.reason // "No reason given"')
+            echo "  Server #${sid}: score=${score} verdict=${verdict} - ${reason}"
+            if [ "$score" -ge 9 ] 2>/dev/null; then
+              server_scored=$(echo "$server" | jq -c --argjson s "$score" --arg v "$verdict" --arg r "$reason" '. + {llm_score: $s, llm_verdict: $v, llm_reason: $r}' 2>/dev/null)
+              if [ -n "$server_scored" ] && echo "$server_scored" | jq . >/dev/null 2>&1; then
+                echo "$server_scored" >> /tmp/notify.jsonl
+              fi
+            fi
+          else
+            echo "  Server #${sid}: no score from LLM, skipping"
+          fi
+        done < /tmp/notify.jsonl.tmp
+      fi
+    fi
+
+    # Stage 3: Notify only LLM-approved servers
+    notify_count=$(wc -l < /tmp/notify.jsonl | tr -d ' ')
+    echo "Stage 3: Notifying for $notify_count servers"
+
+    while IFS= read -r server; do
+      [ -z "$server" ] && continue
+      sid=$(echo "$server" | jq -r '.id')
+      price=$(echo "$server" | jq -r '.price')
+      cpu=$(echo "$server" | jq -r '.cpu')
+      ram=$(echo "$server" | jq -r '.ram')
+      disks=$(echo "$server" | jq -r '.disks')
+      dc=$(echo "$server" | jq -r '.dc')
+      has_nvme=$(echo "$server" | jq -r '.has_nvme')
+      next_reduce=$(echo "$server" | jq -r '.next_reduce')
+      prev_price=$(echo "$server" | jq -r '.previous_price // "new"')
+      is_new=$(echo "$server" | jq -r '.is_new')
+      llm_score=$(echo "$server" | jq -r '.llm_score // "?"')
+      llm_verdict=$(echo "$server" | jq -r '.llm_verdict // "UNKNOWN"')
+      llm_reason=$(echo "$server" | jq -r '.llm_reason // ""')
+      benchmark=$(echo "$server" | jq -r '.benchmark')
+
+      if [ "$llm_verdict" = "BUY_NOW" ]; then
+        title="BUY NOW: ${cpu} - ${price}EUR/mo [${llm_score}/10]"
+        priority=10
+      elif [ "$is_new" = "true" ]; then
+        title="Good Deal: ${cpu} - ${price}EUR/mo [${llm_score}/10]"
+        priority=8
+      else
+        title="Price Drop: ${cpu} - ${price}EUR (was ${prev_price}EUR) [${llm_score}/10]"
+        priority=8
+      fi
+
+      nvme_label=""
+      [ "$has_nvme" = "true" ] && nvme_label="NVMe" || nvme_label="SATA/HDD"
+
+      msg="[${llm_verdict}] ${llm_reason}
+
+    Server #${sid} in ${dc}
+    CPU: ${cpu} (benchmark: ${benchmark})
+    RAM: ${ram}GB ECC
+    Storage: ${disks} (${nvme_label})
+    Price: ${price} EUR/mo
+    Next price drop: ${next_reduce}
+
+    Order: https://www.hetzner.com/sb#auctions/${sid}"
+
+      echo "Notifying: $title"
+      curl -sf -X POST "${GOTIFY_URL}/message" \
+        -H "Content-Type: application/json" \
+        -H "X-Gotify-Key: ${GOTIFY_TOKEN}" \
+        -d "$(jq -n --arg t "$title" --arg m "$msg" --argjson p "$priority" \
+          '{title: $t, message: $m, priority: $p}')" > /dev/null 2>&1 || true
+
+      # Update seen state
+      updated=$(cat "$SEEN_FILE")
+      updated=$(echo "$updated" | jq --arg id "$sid" --arg p "$price" '.[$id] = $p')
+      echo "$updated" > "$SEEN_FILE"
+    done < /tmp/notify.jsonl
+
+    # Update seen for ALL servers (even ones we didn't notify about) so we don't re-evaluate
+    echo "$matches" | jq -c '.[]' > /tmp/all.jsonl
+    updated_seen=$(cat "$SEEN_FILE")
+    while IFS= read -r server; do
+      sid=$(echo "$server" | jq -r '.id')
+      price=$(echo "$server" | jq -r '.price')
+      updated_seen=$(echo "$updated_seen" | jq --arg id "$sid" --arg p "$price" '.[$id] = $p')
+    done < /tmp/all.jsonl
+    echo "$updated_seen" > "$SEEN_FILE"
+
+    # Persist state
+    kubectl create configmap hetzner-watcher-state -n atlas-system \
+      --from-file=seen.json="$SEEN_FILE" \
+      --from-file=history.json="$HISTORY_FILE" \
+      --dry-run=client -o yaml | kubectl apply -f -
+
+    echo "Done. State saved."
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: hetzner-watcher
+  namespace: atlas-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: hetzner-watcher
+  namespace: atlas-system
+rules:
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "create", "update", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: hetzner-watcher
+  namespace: atlas-system
+subjects:
+  - kind: ServiceAccount
+    name: hetzner-watcher
+    namespace: atlas-system
+roleRef:
+  kind: Role
+  name: hetzner-watcher
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hetzner-auction-watcher
+  namespace: atlas-system
+  labels:
+    app.kubernetes.io/name: hetzner-auction-watcher
+    app.kubernetes.io/part-of: atlas
+spec:
+  schedule: "*/5 * * * *"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      activeDeadlineSeconds: 300
+      template:
+        spec:
+          serviceAccountName: hetzner-watcher
+          restartPolicy: Never
+          containers:
+            - name: watcher
+              image: bitnami/kubectl:latest
+              command: ["/bin/bash", "/scripts/watch.sh"]
+              env:
+                - name: GOTIFY_URL
+                  value: "http://gotify.atlas-system.svc.cluster.local:80"
+                - name: GOTIFY_TOKEN
+                  value: "A8Ap3TmrZr94MTJ"
+                - name: CF_ACCOUNT_ID
+                  value: "4992fd600f9894326a82a0f8573a7c38"
+                - name: CF_EMAIL
+                  valueFrom:
+                    secretKeyRef:
+                      name: cloudflare-ai-creds
+                      key: CLOUDFLARE_EMAIL
+                - name: CF_API_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: cloudflare-ai-creds
+                      key: CLOUDFLARE_GLOBAL_API_KEY
+              volumeMounts:
+                - name: script
+                  mountPath: /scripts
+          volumes:
+            - name: script
+              configMap:
+                name: hetzner-watcher-script
+                defaultMode: 0755
