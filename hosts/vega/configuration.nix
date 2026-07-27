@@ -34,7 +34,7 @@
     enable = true;
     fallbackDns = [ "185.12.64.1" "1.1.1.1" "8.8.8.8" ];
   };
-  services.tailscale.extraDaemonFlags = [ "--accept-dns=false" ];
+  services.tailscale.extraUpFlags = [ "--accept-dns=false" ];
 
   time.timeZone = "Europe/Berlin";
 
@@ -42,9 +42,9 @@
   system.autoUpgrade.enable = lib.mkForce false;
 
   # Hardware watchdog - auto-reboot if system freezes
-  systemd.watchdog = {
-    runtimeTime = "90s";
-    rebootTime = "120s";
+  systemd.settings.Manager = {
+    RuntimeWatchdogSec = "90s";
+    RebootWatchdogSec = "120s";
   };
 
   # Keep SSH accessible even if Tailscale dies
