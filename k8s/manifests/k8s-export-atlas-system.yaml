@@ -1,0 +1,2729 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "195"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"deployment.kubernetes.io/revision":"195"},"creationTimestamp":"2026-03-31T18:27:49Z","generation":203,"labels":{"app.kubernetes.io/name":"atlas-dashboard","app.kubernetes.io/part-of":"atlas"},"name":"atlas-dashboard","namespace":"atlas-system","resourceVersion":"33918684","uid":"870b3d75-2a0c-43d1-bb13-887c2c6c0673"},"spec":{"progressDeadlineSeconds":600,"replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app.kubernetes.io/name":"atlas-dashboard"}},"strategy":{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"},"template":{"metadata":{"annotations":{"kubectl.kubernetes.io/restartedAt":"2026-07-23T01:38:55+03:00"},"labels":{"app.kubernetes.io/name":"atlas-dashboard","app.kubernetes.io/part-of":"atlas"}},"spec":{"affinity":{"podAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchLabels":{"app":"timescaledb-vega"}},"topologyKey":"kubernetes.io/hostname"}]}},"containers":[{"env":[{"name":"VITE_WS_URL","value":"ws://atlas-backend.atlas-system.svc.cluster.local:8765/dashboard"}],"image":"localhost:30500/atlas-dashboard:latest","imagePullPolicy":"Always","name":"dashboard","ports":[{"containerPort":3013,"name":"http","protocol":"TCP"}],"resources":{"limits":{"cpu":"500m","memory":"256Mi"},"requests":{"cpu":"25m","memory":"64Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"terminationGracePeriodSeconds":30}}},"status":{"conditions":[{"lastTransitionTime":"2026-03-31T18:27:49Z","lastUpdateTime":"2026-07-27T00:45:15Z","message":"ReplicaSet \"atlas-dashboard-79cdcf549b\" has successfully progressed.","reason":"NewReplicaSetAvailable","status":"True","type":"Progressing"},{"lastTransitionTime":"2026-07-27T02:16:17Z","lastUpdateTime":"2026-07-27T02:16:17Z","message":"Deployment does not have minimum availability.","reason":"MinimumReplicasUnavailable","status":"False","type":"Available"}],"observedGeneration":203,"replicas":1,"unavailableReplicas":1,"updatedReplicas":1}}
+    creationTimestamp: "2026-03-31T18:27:49Z"
+    generation: 204
+    labels:
+      app.kubernetes.io/name: atlas-dashboard
+      app.kubernetes.io/part-of: atlas
+    name: atlas-dashboard
+    namespace: atlas-system
+    resourceVersion: "33929802"
+    uid: 870b3d75-2a0c-43d1-bb13-887c2c6c0673
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/name: atlas-dashboard
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-07-23T01:38:55+03:00"
+        labels:
+          app.kubernetes.io/name: atlas-dashboard
+          app.kubernetes.io/part-of: atlas
+      spec:
+        affinity:
+          podAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app: timescaledb-vega
+              topologyKey: kubernetes.io/hostname
+        containers:
+        - env:
+          - name: VITE_WS_URL
+            value: ws://atlas-backend.atlas-system.svc.cluster.local:8765/dashboard
+          image: localhost:30500/atlas-dashboard:latest
+          imagePullPolicy: Always
+          name: dashboard
+          ports:
+          - containerPort: 3013
+            name: http
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 256Mi
+            requests:
+              cpu: 25m
+              memory: 64Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-03-31T18:27:49Z"
+      lastUpdateTime: "2026-07-27T00:45:15Z"
+      message: ReplicaSet "atlas-dashboard-79cdcf549b" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-27T03:03:23Z"
+      lastUpdateTime: "2026-07-27T03:03:23Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 204
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "32"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"deployment.kubernetes.io/revision":"31"},"creationTimestamp":"2026-07-17T21:29:55Z","generation":33,"labels":{"app.kubernetes.io/component":"trading-engine","app.kubernetes.io/name":"atlas-hsm","app.kubernetes.io/part-of":"atlas"},"name":"atlas-hsm","namespace":"atlas-system","resourceVersion":"33927494","uid":"34f11242-be33-4230-b233-e680f01b762e"},"spec":{"progressDeadlineSeconds":600,"replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app.kubernetes.io/name":"atlas-hsm"}},"strategy":{"type":"Recreate"},"template":{"metadata":{"annotations":{"kubectl.kubernetes.io/restartedAt":"2026-07-23T21:21:45+03:00"},"labels":{"app.kubernetes.io/component":"trading-engine","app.kubernetes.io/name":"atlas-hsm","app.kubernetes.io/part-of":"atlas"}},"spec":{"affinity":{"podAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchLabels":{"app":"timescaledb-vega"}},"topologyKey":"kubernetes.io/hostname"}]}},"containers":[{"command":["python","-m","src.trading.hsm_main"],"env":[{"name":"ATLAS_TSDB_URL","value":"postgresql://atlas:atlas-tsdb-2026@timescaledb-vega.atlas-system.svc.cluster.local:5432/atlas"},{"name":"TIMESCALEDB_HOST","value":"timescaledb-vega.atlas-system.svc.cluster.local"}],"envFrom":[{"configMapRef":{"name":"atlas-config"}},{"secretRef":{"name":"atlas-secrets"}}],"image":"localhost:30500/atlas-backend:latest","imagePullPolicy":"Always","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/health","port":8766,"scheme":"HTTP"},"initialDelaySeconds":60,"periodSeconds":30,"successThreshold":1,"timeoutSeconds":10},"name":"hsm","ports":[{"containerPort":8766,"name":"http","protocol":"TCP"}],"readinessProbe":{"failureThreshold":2,"httpGet":{"path":"/ready","port":8766,"scheme":"HTTP"},"initialDelaySeconds":30,"periodSeconds":15,"successThreshold":1,"timeoutSeconds":10},"resources":{"limits":{"cpu":"2","memory":"2Gi"},"requests":{"cpu":"50m","memory":"256Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/app/data","name":"worker-data"}]}],"dnsPolicy":"ClusterFirst","initContainers":[{"args":["echo \"Waiting for TimescaleDB...\"\nuntil nc -z timescaledb-vega.atlas-system.svc.cluster.local 5432; do\n  sleep 3\ndone\necho \"TimescaleDB ready\"\n"],"command":["sh","-c"],"env":[{"name":"ATLAS_TSDB_URL","value":"postgresql://atlas:atlas-tsdb-2026@timescaledb-vega.atlas-system.svc.cluster.local:5432/atlas"},{"name":"TIMESCALEDB_HOST","value":"timescaledb-vega.atlas-system.svc.cluster.local"}],"image":"busybox:1.36","imagePullPolicy":"IfNotPresent","name":"wait-timescaledb","resources":{"limits":{"cpu":"50m","memory":"32Mi"},"requests":{"cpu":"10m","memory":"16Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"},{"args":["echo \"Waiting for FalkorDB...\"\nuntil nc -z falkordb.atlas-system.svc.cluster.local 6379; do\n  sleep 3\ndone\necho \"FalkorDB ready\"\n"],"command":["sh","-c"],"env":[{"name":"ATLAS_TSDB_URL","value":"postgresql://atlas:atlas-tsdb-2026@timescaledb-vega.atlas-system.svc.cluster.local:5432/atlas"},{"name":"TIMESCALEDB_HOST","value":"timescaledb-vega.atlas-system.svc.cluster.local"}],"image":"busybox:1.36","imagePullPolicy":"IfNotPresent","name":"wait-falkordb","resources":{"limits":{"cpu":"50m","memory":"32Mi"},"requests":{"cpu":"10m","memory":"16Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"},{"args":["echo \"Waiting for Temporal...\"\nuntil nc -z temporal-frontend.temporal.svc.cluster.local 7233; do\n  sleep 3\ndone\necho \"Temporal ready\"\n"],"command":["sh","-c"],"env":[{"name":"ATLAS_TSDB_URL","value":"postgresql://atlas:atlas-tsdb-2026@timescaledb-vega.atlas-system.svc.cluster.local:5432/atlas"},{"name":"TIMESCALEDB_HOST","value":"timescaledb-vega.atlas-system.svc.cluster.local"}],"image":"busybox:1.36","imagePullPolicy":"IfNotPresent","name":"wait-temporal","resources":{"limits":{"cpu":"50m","memory":"32Mi"},"requests":{"cpu":"10m","memory":"16Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"}],"restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"serviceAccount":"atlas-worker","serviceAccountName":"atlas-worker","terminationGracePeriodSeconds":30,"volumes":[{"name":"worker-data","persistentVolumeClaim":{"claimName":"atlas-worker-data-vega"}}]}}},"status":{"conditions":[{"lastTransitionTime":"2026-07-27T00:43:34Z","lastUpdateTime":"2026-07-27T00:43:34Z","message":"Deployment does not have minimum availability.","reason":"MinimumReplicasUnavailable","status":"False","type":"Available"},{"lastTransitionTime":"2026-07-27T02:54:51Z","lastUpdateTime":"2026-07-27T02:54:52Z","message":"ReplicaSet \"atlas-hsm-79bc8657c7\" is progressing.","reason":"ReplicaSetUpdated","status":"True","type":"Progressing"}],"observedGeneration":33,"replicas":1,"unavailableReplicas":1,"updatedReplicas":1}}
+    creationTimestamp: "2026-07-17T21:29:55Z"
+    generation: 34
+    labels:
+      app.kubernetes.io/component: trading-engine
+      app.kubernetes.io/name: atlas-hsm
+      app.kubernetes.io/part-of: atlas
+    name: atlas-hsm
+    namespace: atlas-system
+    resourceVersion: "33933978"
+    uid: 34f11242-be33-4230-b233-e680f01b762e
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/name: atlas-hsm
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-07-23T21:21:45+03:00"
+        labels:
+          app.kubernetes.io/component: trading-engine
+          app.kubernetes.io/name: atlas-hsm
+          app.kubernetes.io/part-of: atlas
+      spec:
+        affinity:
+          podAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app: timescaledb-vega
+              topologyKey: kubernetes.io/hostname
+        containers:
+        - command:
+          - python
+          - -m
+          - src.trading.hsm_main
+          env:
+          - name: ATLAS_TSDB_URL
+            value: postgresql://atlas:atlas-tsdb-2026@timescaledb-vega.atlas-system.svc.cluster.local:5432/atlas
+          - name: TIMESCALEDB_HOST
+            value: timescaledb-vega.atlas-system.svc.cluster.local
+          envFrom:
+          - configMapRef:
+              name: atlas-config
+          - secretRef:
+              name: atlas-secrets
+          image: localhost:30500/atlas-backend:latest
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 8766
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 10
+          name: hsm
+          ports:
+          - containerPort: 8766
+            name: http
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 2
+            httpGet:
+              path: /ready
+              port: 8766
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            successThreshold: 1
+            timeoutSeconds: 10
+          resources:
+            limits:
+              cpu: "2"
+              memory: 2Gi
+            requests:
+              cpu: 50m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /app/data
+            name: worker-data
+        dnsPolicy: ClusterFirst
+        initContainers:
+        - args:
+          - |
+            echo "Waiting for TimescaleDB..."
+            until nc -z timescaledb-vega.atlas-system.svc.cluster.local 5432; do
+              sleep 3
+            done
+            echo "TimescaleDB ready"
+          command:
+          - sh
+          - -c
+          env:
+          - name: ATLAS_TSDB_URL
+            value: postgresql://atlas:atlas-tsdb-2026@timescaledb-vega.atlas-system.svc.cluster.local:5432/atlas
+          - name: TIMESCALEDB_HOST
+            value: timescaledb-vega.atlas-system.svc.cluster.local
+          image: busybox:1.36
+          imagePullPolicy: IfNotPresent
+          name: wait-timescaledb
+          resources:
+            limits:
+              cpu: 50m
+              memory: 32Mi
+            requests:
+              cpu: 10m
+              memory: 16Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - args:
+          - |
+            echo "Waiting for FalkorDB..."
+            until nc -z falkordb.atlas-system.svc.cluster.local 6379; do
+              sleep 3
+            done
+            echo "FalkorDB ready"
+          command:
+          - sh
+          - -c
+          env:
+          - name: ATLAS_TSDB_URL
+            value: postgresql://atlas:atlas-tsdb-2026@timescaledb-vega.atlas-system.svc.cluster.local:5432/atlas
+          - name: TIMESCALEDB_HOST
+            value: timescaledb-vega.atlas-system.svc.cluster.local
+          image: busybox:1.36
+          imagePullPolicy: IfNotPresent
+          name: wait-falkordb
+          resources:
+            limits:
+              cpu: 50m
+              memory: 32Mi
+            requests:
+              cpu: 10m
+              memory: 16Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - args:
+          - |
+            echo "Waiting for Temporal..."
+            until nc -z temporal-frontend.temporal.svc.cluster.local 7233; do
+              sleep 3
+            done
+            echo "Temporal ready"
+          command:
+          - sh
+          - -c
+          env:
+          - name: ATLAS_TSDB_URL
+            value: postgresql://atlas:atlas-tsdb-2026@timescaledb-vega.atlas-system.svc.cluster.local:5432/atlas
+          - name: TIMESCALEDB_HOST
+            value: timescaledb-vega.atlas-system.svc.cluster.local
+          image: busybox:1.36
+          imagePullPolicy: IfNotPresent
+          name: wait-temporal
+          resources:
+            limits:
+              cpu: 50m
+              memory: 32Mi
+            requests:
+              cpu: 10m
+              memory: 16Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: atlas-worker
+        serviceAccountName: atlas-worker
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: worker-data
+          persistentVolumeClaim:
+            claimName: atlas-worker-data-vega
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-07-27T02:54:51Z"
+      lastUpdateTime: "2026-07-27T03:06:24Z"
+      message: ReplicaSet "atlas-hsm-6fbdbbc77b" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-27T03:16:23Z"
+      lastUpdateTime: "2026-07-27T03:16:23Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 34
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "491"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"deployment.kubernetes.io/revision":"490"},"creationTimestamp":"2026-03-31T10:38:46Z","generation":512,"labels":{"app.kubernetes.io/component":"worker","app.kubernetes.io/name":"atlas-worker","app.kubernetes.io/part-of":"atlas"},"name":"atlas-worker","namespace":"atlas-system","resourceVersion":"33931017","uid":"c611f74a-2ccb-4a27-9f26-39a0d0fe3eb6"},"spec":{"progressDeadlineSeconds":600,"replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app.kubernetes.io/name":"atlas-worker"}},"strategy":{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"},"template":{"metadata":{"annotations":{"deploy-ts":"1783137559","kubectl.kubernetes.io/restartedAt":"2026-07-26T15:17:45+03:00"},"labels":{"app.kubernetes.io/component":"worker","app.kubernetes.io/name":"atlas-worker","app.kubernetes.io/part-of":"atlas"}},"spec":{"containers":[{"command":["sh","-c","mkdir -p /app/data/bars \u0026\u0026 cp -n /app/baked_bars/*.json /app/data/bars/ 2\u003e/dev/null; python /app/src/api/websocket.py"],"env":[{"name":"ATLAS_TSDB_URL","value":"postgresql://atlas:atlas-tsdb-2026@timescaledb-vega.atlas-system.svc.cluster.local:5432/atlas"},{"name":"POLYGON_API_KEY","value":"NLBJA8ierxPjoZFjWtTzfY2pgKCp6oSW"},{"name":"ALPACA_API_KEY","value":"PKYQWU75LOTOEHDKNXVQQIS6SY"},{"name":"ALPACA_SECRET_KEY","value":"9QN626vB8STXR4zPZ8JFZ2vyumTSF43fNYNACHRyoUqG"},{"name":"FINNHUB_API_KEY","value":"d9311g1r01qpou38rib0d9311g1r01qpou38ribg"},{"name":"FORCE_DEPLOY","value":"1783136112"},{"name":"TIMESCALEDB_HOST","value":"timescaledb-vega.atlas-system.svc.cluster.local"}],"envFrom":[{"configMapRef":{"name":"atlas-config"}},{"secretRef":{"name":"atlas-secrets"}}],"image":"localhost:30500/atlas-backend:latest","imagePullPolicy":"Always","name":"worker","ports":[{"containerPort":8765,"name":"ws","protocol":"TCP"}],"resources":{"requests":{"cpu":"50m","memory":"512Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/hotfix","name":"hotfix"},{"mountPath":"/app/data","name":"worker-data"},{"mountPath":"/dev/shm","name":"dshm"}]}],"dnsPolicy":"ClusterFirst","initContainers":[{"args":["echo \"Waiting for TimescaleDB...\"\nuntil nc -z timescaledb-vega.atlas-system.svc.cluster.local 5432; do\n  sleep 3\ndone\necho \"TimescaleDB ready\"\n"],"command":["sh","-c"],"env":[{"name":"ATLAS_TSDB_URL","value":"postgresql://atlas:atlas-tsdb-2026@timescaledb-vega.atlas-system.svc.cluster.local:5432/atlas"},{"name":"POLYGON_API_KEY","value":"NLBJA8ierxPjoZFjWtTzfY2pgKCp6oSW"},{"name":"ALPACA_API_KEY","value":"PKYQWU75LOTOEHDKNXVQQIS6SY"},{"name":"ALPACA_SECRET_KEY","value":"9QN626vB8STXR4zPZ8JFZ2vyumTSF43fNYNACHRyoUqG"},{"name":"FINNHUB_API_KEY","value":"d9311g1r01qpou38rib0d9311g1r01qpou38ribg"},{"name":"FORCE_DEPLOY","value":"1783136112"},{"name":"TIMESCALEDB_HOST","value":"timescaledb-vega.atlas-system.svc.cluster.local"}],"image":"busybox:1.36","imagePullPolicy":"IfNotPresent","name":"wait-timescaledb","resources":{"limits":{"cpu":"50m","memory":"32Mi"},"requests":{"cpu":"10m","memory":"16Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"},{"args":["echo \"Waiting for FalkorDB...\"\nuntil nc -z falkordb.atlas-system.svc.cluster.local 6379; do\n  sleep 3\ndone\necho \"FalkorDB ready\"\n"],"command":["sh","-c"],"env":[{"name":"ATLAS_TSDB_URL","value":"postgresql://atlas:atlas-tsdb-2026@timescaledb-vega.atlas-system.svc.cluster.local:5432/atlas"},{"name":"POLYGON_API_KEY","value":"NLBJA8ierxPjoZFjWtTzfY2pgKCp6oSW"},{"name":"ALPACA_API_KEY","value":"PKYQWU75LOTOEHDKNXVQQIS6SY"},{"name":"ALPACA_SECRET_KEY","value":"9QN626vB8STXR4zPZ8JFZ2vyumTSF43fNYNACHRyoUqG"},{"name":"FINNHUB_API_KEY","value":"d9311g1r01qpou38rib0d9311g1r01qpou38ribg"},{"name":"FORCE_DEPLOY","value":"1783136112"},{"name":"TIMESCALEDB_HOST","value":"timescaledb-vega.atlas-system.svc.cluster.local"}],"image":"busybox:1.36","imagePullPolicy":"IfNotPresent","name":"wait-falkordb","resources":{"limits":{"cpu":"50m","memory":"32Mi"},"requests":{"cpu":"10m","memory":"16Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"},{"args":["echo \"Waiting for Temporal...\"\nuntil nc -z temporal-frontend.temporal.svc.cluster.local 7233; do\n  sleep 3\ndone\necho \"Temporal ready\"\n"],"command":["sh","-c"],"env":[{"name":"ATLAS_TSDB_URL","value":"postgresql://atlas:atlas-tsdb-2026@timescaledb-vega.atlas-system.svc.cluster.local:5432/atlas"},{"name":"POLYGON_API_KEY","value":"NLBJA8ierxPjoZFjWtTzfY2pgKCp6oSW"},{"name":"ALPACA_API_KEY","value":"PKYQWU75LOTOEHDKNXVQQIS6SY"},{"name":"ALPACA_SECRET_KEY","value":"9QN626vB8STXR4zPZ8JFZ2vyumTSF43fNYNACHRyoUqG"},{"name":"FINNHUB_API_KEY","value":"d9311g1r01qpou38rib0d9311g1r01qpou38ribg"},{"name":"FORCE_DEPLOY","value":"1783136112"},{"name":"TIMESCALEDB_HOST","value":"timescaledb-vega.atlas-system.svc.cluster.local"}],"image":"busybox:1.36","imagePullPolicy":"IfNotPresent","name":"wait-temporal","resources":{"limits":{"cpu":"50m","memory":"32Mi"},"requests":{"cpu":"10m","memory":"16Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"}],"restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"serviceAccount":"atlas-worker","serviceAccountName":"atlas-worker","terminationGracePeriodSeconds":30,"volumes":[{"configMap":{"defaultMode":493,"name":"atlas-hotfix"},"name":"hotfix"},{"name":"worker-data","persistentVolumeClaim":{"claimName":"atlas-worker-data-vega"}},{"emptyDir":{"medium":"Memory","sizeLimit":"2Gi"},"name":"dshm"}]}}},"status":{"conditions":[{"lastTransitionTime":"2026-07-09T20:14:52Z","lastUpdateTime":"2026-07-27T03:03:37Z","message":"ReplicaSet \"atlas-worker-7895f5749d\" has successfully progressed.","reason":"NewReplicaSetAvailable","status":"True","type":"Progressing"},{"lastTransitionTime":"2026-07-27T03:07:01Z","lastUpdateTime":"2026-07-27T03:07:01Z","message":"Deployment does not have minimum availability.","reason":"MinimumReplicasUnavailable","status":"False","type":"Available"}],"observedGeneration":512,"replicas":1,"unavailableReplicas":1,"updatedReplicas":1}}
+    creationTimestamp: "2026-03-31T10:38:46Z"
+    generation: 513
+    labels:
+      app.kubernetes.io/component: worker
+      app.kubernetes.io/name: atlas-worker
+      app.kubernetes.io/part-of: atlas
+    name: atlas-worker
+    namespace: atlas-system
+    resourceVersion: "33932243"
+    uid: c611f74a-2ccb-4a27-9f26-39a0d0fe3eb6
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/name: atlas-worker
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          deploy-ts: "1783137559"
+          kubectl.kubernetes.io/restartedAt: "2026-07-26T15:17:45+03:00"
+        labels:
+          app.kubernetes.io/component: worker
+          app.kubernetes.io/name: atlas-worker
+          app.kubernetes.io/part-of: atlas
+      spec:
+        containers:
+        - command:
+          - sh
+          - -c
+          - mkdir -p /app/data/bars && cp -n /app/baked_bars/*.json /app/data/bars/
+            2>/dev/null; python /app/src/api/websocket.py
+          env:
+          - name: ATLAS_TSDB_URL
+            value: postgresql://atlas:atlas-tsdb-2026@timescaledb-vega.atlas-system.svc.cluster.local:5432/atlas
+          - name: POLYGON_API_KEY
+            value: NLBJA8ierxPjoZFjWtTzfY2pgKCp6oSW
+          - name: ALPACA_API_KEY
+            value: PKYQWU75LOTOEHDKNXVQQIS6SY
+          - name: ALPACA_SECRET_KEY
+            value: 9QN626vB8STXR4zPZ8JFZ2vyumTSF43fNYNACHRyoUqG
+          - name: FINNHUB_API_KEY
+            value: d9311g1r01qpou38rib0d9311g1r01qpou38ribg
+          - name: FORCE_DEPLOY
+            value: "1783136112"
+          - name: TIMESCALEDB_HOST
+            value: timescaledb-vega.atlas-system.svc.cluster.local
+          envFrom:
+          - configMapRef:
+              name: atlas-config
+          - secretRef:
+              name: atlas-secrets
+          image: localhost:30500/atlas-backend:latest
+          imagePullPolicy: Always
+          name: worker
+          ports:
+          - containerPort: 8765
+            name: ws
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 50m
+              memory: 512Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /hotfix
+            name: hotfix
+          - mountPath: /app/data
+            name: worker-data
+          - mountPath: /dev/shm
+            name: dshm
+        dnsPolicy: ClusterFirst
+        initContainers:
+        - args:
+          - |
+            echo "Waiting for TimescaleDB..."
+            until nc -z timescaledb-vega.atlas-system.svc.cluster.local 5432; do
+              sleep 3
+            done
+            echo "TimescaleDB ready"
+          command:
+          - sh
+          - -c
+          env:
+          - name: ATLAS_TSDB_URL
+            value: postgresql://atlas:atlas-tsdb-2026@timescaledb-vega.atlas-system.svc.cluster.local:5432/atlas
+          - name: POLYGON_API_KEY
+            value: NLBJA8ierxPjoZFjWtTzfY2pgKCp6oSW
+          - name: ALPACA_API_KEY
+            value: PKYQWU75LOTOEHDKNXVQQIS6SY
+          - name: ALPACA_SECRET_KEY
+            value: 9QN626vB8STXR4zPZ8JFZ2vyumTSF43fNYNACHRyoUqG
+          - name: FINNHUB_API_KEY
+            value: d9311g1r01qpou38rib0d9311g1r01qpou38ribg
+          - name: FORCE_DEPLOY
+            value: "1783136112"
+          - name: TIMESCALEDB_HOST
+            value: timescaledb-vega.atlas-system.svc.cluster.local
+          image: busybox:1.36
+          imagePullPolicy: IfNotPresent
+          name: wait-timescaledb
+          resources:
+            limits:
+              cpu: 50m
+              memory: 32Mi
+            requests:
+              cpu: 10m
+              memory: 16Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - args:
+          - |
+            echo "Waiting for FalkorDB..."
+            until nc -z falkordb.atlas-system.svc.cluster.local 6379; do
+              sleep 3
+            done
+            echo "FalkorDB ready"
+          command:
+          - sh
+          - -c
+          env:
+          - name: ATLAS_TSDB_URL
+            value: postgresql://atlas:atlas-tsdb-2026@timescaledb-vega.atlas-system.svc.cluster.local:5432/atlas
+          - name: POLYGON_API_KEY
+            value: NLBJA8ierxPjoZFjWtTzfY2pgKCp6oSW
+          - name: ALPACA_API_KEY
+            value: PKYQWU75LOTOEHDKNXVQQIS6SY
+          - name: ALPACA_SECRET_KEY
+            value: 9QN626vB8STXR4zPZ8JFZ2vyumTSF43fNYNACHRyoUqG
+          - name: FINNHUB_API_KEY
+            value: d9311g1r01qpou38rib0d9311g1r01qpou38ribg
+          - name: FORCE_DEPLOY
+            value: "1783136112"
+          - name: TIMESCALEDB_HOST
+            value: timescaledb-vega.atlas-system.svc.cluster.local
+          image: busybox:1.36
+          imagePullPolicy: IfNotPresent
+          name: wait-falkordb
+          resources:
+            limits:
+              cpu: 50m
+              memory: 32Mi
+            requests:
+              cpu: 10m
+              memory: 16Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - args:
+          - |
+            echo "Waiting for Temporal..."
+            until nc -z temporal-frontend.temporal.svc.cluster.local 7233; do
+              sleep 3
+            done
+            echo "Temporal ready"
+          command:
+          - sh
+          - -c
+          env:
+          - name: ATLAS_TSDB_URL
+            value: postgresql://atlas:atlas-tsdb-2026@timescaledb-vega.atlas-system.svc.cluster.local:5432/atlas
+          - name: POLYGON_API_KEY
+            value: NLBJA8ierxPjoZFjWtTzfY2pgKCp6oSW
+          - name: ALPACA_API_KEY
+            value: PKYQWU75LOTOEHDKNXVQQIS6SY
+          - name: ALPACA_SECRET_KEY
+            value: 9QN626vB8STXR4zPZ8JFZ2vyumTSF43fNYNACHRyoUqG
+          - name: FINNHUB_API_KEY
+            value: d9311g1r01qpou38rib0d9311g1r01qpou38ribg
+          - name: FORCE_DEPLOY
+            value: "1783136112"
+          - name: TIMESCALEDB_HOST
+            value: timescaledb-vega.atlas-system.svc.cluster.local
+          image: busybox:1.36
+          imagePullPolicy: IfNotPresent
+          name: wait-temporal
+          resources:
+            limits:
+              cpu: 50m
+              memory: 32Mi
+            requests:
+              cpu: 10m
+              memory: 16Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: atlas-worker
+        serviceAccountName: atlas-worker
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 493
+            name: atlas-hotfix
+          name: hotfix
+        - name: worker-data
+          persistentVolumeClaim:
+            claimName: atlas-worker-data-vega
+        - emptyDir:
+            medium: Memory
+            sizeLimit: 2Gi
+          name: dshm
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-07-27T03:10:32Z"
+      lastUpdateTime: "2026-07-27T03:10:32Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2026-07-09T20:14:52Z"
+      lastUpdateTime: "2026-07-27T03:10:32Z"
+      message: ReplicaSet "atlas-worker-7d6cf7fc9f" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 513
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "4"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app.kubernetes.io/name":"falkordb","app.kubernetes.io/part-of":"atlas"},"name":"falkordb","namespace":"atlas-system"},"spec":{"replicas":1,"selector":{"matchLabels":{"app.kubernetes.io/name":"falkordb"}},"template":{"metadata":{"labels":{"app.kubernetes.io/name":"falkordb","app.kubernetes.io/part-of":"atlas"}},"spec":{"affinity":{"nodeAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"preference":{"matchExpressions":[{"key":"kubernetes.io/hostname","operator":"In","values":["orion"]}]},"weight":100}]},"podAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"podAffinityTerm":{"labelSelector":{"matchLabels":{"app.kubernetes.io/part-of":"atlas"}},"topologyKey":"kubernetes.io/hostname"},"weight":100}]}},"containers":[{"args":["--maxmemory","4gb","--maxmemory-policy","noeviction","--save","900 1","--save","300 10","--appendonly","yes"],"image":"falkordb/falkordb:latest","livenessProbe":{"exec":{"command":["redis-cli","ping"]},"initialDelaySeconds":10,"periodSeconds":10},"name":"falkordb","ports":[{"containerPort":6379,"name":"redis"}],"readinessProbe":{"exec":{"command":["redis-cli","ping"]},"initialDelaySeconds":5,"periodSeconds":5},"resources":{"limits":{"cpu":"2000m","memory":"4Gi"},"requests":{"cpu":"50m","memory":"512Mi"}},"volumeMounts":[{"mountPath":"/data","name":"data"}]}],"volumes":[{"name":"data","persistentVolumeClaim":{"claimName":"falkordb-data"}}]}}}}
+    creationTimestamp: "2026-03-31T10:33:28Z"
+    generation: 6
+    labels:
+      app.kubernetes.io/name: falkordb
+      app.kubernetes.io/part-of: atlas
+    name: falkordb
+    namespace: atlas-system
+    resourceVersion: "33063139"
+    uid: 5a4f3724-d59b-42dd-989a-f42f479f8c3a
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/name: falkordb
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-07-02T20:00:41-04:00"
+        labels:
+          app.kubernetes.io/name: falkordb
+          app.kubernetes.io/part-of: atlas
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+          podAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/part-of: atlas
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+        containers:
+        - args:
+          - --maxmemory
+          - 4gb
+          - --maxmemory-policy
+          - noeviction
+          - --save
+          - 900 1
+          - --save
+          - 300 10
+          - --appendonly
+          - "yes"
+          image: falkordb/falkordb:latest
+          imagePullPolicy: Always
+          livenessProbe:
+            exec:
+              command:
+              - redis-cli
+              - ping
+            failureThreshold: 3
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: falkordb
+          ports:
+          - containerPort: 6379
+            name: redis
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - redis-cli
+              - ping
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: "2"
+              memory: 4Gi
+            requests:
+              cpu: 50m
+              memory: 512Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /data
+            name: data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: falkordb-data
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-03-31T10:33:28Z"
+      lastUpdateTime: "2026-07-03T00:00:50Z"
+      message: ReplicaSet "falkordb-5b6f5c899f" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T20:29:00Z"
+      lastUpdateTime: "2026-07-24T20:29:00Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 6
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "6"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app.kubernetes.io/name":"faster-whisper","app.kubernetes.io/part-of":"atlas"},"name":"faster-whisper","namespace":"atlas-system"},"spec":{"replicas":1,"selector":{"matchLabels":{"app.kubernetes.io/name":"faster-whisper"}},"template":{"metadata":{"labels":{"app.kubernetes.io/name":"faster-whisper","app.kubernetes.io/part-of":"atlas"}},"spec":{"affinity":{"nodeAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"preference":{"matchExpressions":[{"key":"kubernetes.io/hostname","operator":"In","values":["orion"]}]},"weight":100}]},"podAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"podAffinityTerm":{"labelSelector":{"matchLabels":{"app.kubernetes.io/part-of":"atlas"}},"topologyKey":"kubernetes.io/hostname"},"weight":100}]}},"containers":[{"env":[{"name":"WHISPER__MODEL","value":"Systran/faster-whisper-base"},{"name":"WHISPER__DEVICE","value":"cpu"},{"name":"WHISPER__COMPUTE_TYPE","value":"int8"}],"image":"fedirz/faster-whisper-server:latest-cpu","livenessProbe":{"httpGet":{"path":"/health","port":8000},"initialDelaySeconds":60,"periodSeconds":30},"name":"whisper","ports":[{"containerPort":8000,"name":"http"}],"readinessProbe":{"httpGet":{"path":"/health","port":8000},"initialDelaySeconds":30,"periodSeconds":10},"resources":{"limits":{"cpu":"4000m","memory":"2Gi"},"requests":{"cpu":"50m","memory":"256Mi"}}}]}}}}
+    creationTimestamp: "2026-03-31T10:38:45Z"
+    generation: 8
+    labels:
+      app.kubernetes.io/name: faster-whisper
+      app.kubernetes.io/part-of: atlas
+    name: faster-whisper
+    namespace: atlas-system
+    resourceVersion: "33063641"
+    uid: af9f31f6-4764-45c7-9b2a-d87ba6042acf
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/name: faster-whisper
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-07-02T18:54:13-04:00"
+        labels:
+          app.kubernetes.io/name: faster-whisper
+          app.kubernetes.io/part-of: atlas
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+          podAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/part-of: atlas
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+        containers:
+        - env:
+          - name: WHISPER__MODEL
+            value: Systran/faster-whisper-base
+          - name: WHISPER__DEVICE
+            value: cpu
+          - name: WHISPER__COMPUTE_TYPE
+            value: int8
+          image: fedirz/faster-whisper-server:latest-cpu
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 8000
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: whisper
+          ports:
+          - containerPort: 8000
+            name: http
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 8000
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: "4"
+              memory: 2Gi
+            requests:
+              cpu: 50m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-07-02T23:10:36Z"
+      lastUpdateTime: "2026-07-07T12:19:53Z"
+      message: ReplicaSet "faster-whisper-5df49f4679" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T20:29:41Z"
+      lastUpdateTime: "2026-07-24T20:29:41Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 8
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "4"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app.kubernetes.io/name":"gotify","app.kubernetes.io/part-of":"atlas"},"name":"gotify","namespace":"atlas-system"},"spec":{"replicas":1,"selector":{"matchLabels":{"app.kubernetes.io/name":"gotify"}},"template":{"metadata":{"labels":{"app.kubernetes.io/name":"gotify","app.kubernetes.io/part-of":"atlas"}},"spec":{"affinity":{"nodeAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"preference":{"matchExpressions":[{"key":"kubernetes.io/hostname","operator":"In","values":["orion"]}]},"weight":100}]},"podAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"podAffinityTerm":{"labelSelector":{"matchLabels":{"app.kubernetes.io/part-of":"atlas"}},"topologyKey":"kubernetes.io/hostname"},"weight":100}]}},"containers":[{"env":[{"name":"GOTIFY_DEFAULTUSER_NAME","value":"atlas"},{"name":"GOTIFY_DEFAULTUSER_PASS","valueFrom":{"secretKeyRef":{"key":"GOTIFY_DEFAULTUSER_PASS","name":"atlas-secrets"}}}],"image":"gotify/server:latest","name":"gotify","ports":[{"containerPort":80,"name":"http"}],"readinessProbe":{"httpGet":{"path":"/health","port":80},"initialDelaySeconds":5,"periodSeconds":10},"resources":{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"25m","memory":"32Mi"}},"volumeMounts":[{"mountPath":"/app/data","name":"data"}]}],"volumes":[{"name":"data","persistentVolumeClaim":{"claimName":"gotify-data"}}]}}}}
+    creationTimestamp: "2026-03-31T10:38:45Z"
+    generation: 6
+    labels:
+      app.kubernetes.io/name: gotify
+      app.kubernetes.io/part-of: atlas
+    name: gotify
+    namespace: atlas-system
+    resourceVersion: "33063090"
+    uid: 9407f844-045a-43c3-a3e4-e9d3aff69cac
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/name: gotify
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-07-02T20:01:08-04:00"
+        labels:
+          app.kubernetes.io/name: gotify
+          app.kubernetes.io/part-of: atlas
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+          podAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/part-of: atlas
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+        containers:
+        - env:
+          - name: GOTIFY_DEFAULTUSER_NAME
+            value: atlas
+          - name: GOTIFY_DEFAULTUSER_PASS
+            valueFrom:
+              secretKeyRef:
+                key: GOTIFY_DEFAULTUSER_PASS
+                name: atlas-secrets
+          image: gotify/server:latest
+          imagePullPolicy: Always
+          name: gotify
+          ports:
+          - containerPort: 80
+            name: http
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 80
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 200m
+              memory: 128Mi
+            requests:
+              cpu: 25m
+              memory: 32Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /app/data
+            name: data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: gotify-data
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-03-31T10:38:45Z"
+      lastUpdateTime: "2026-07-03T00:01:22Z"
+      message: ReplicaSet "gotify-6dccc9c968" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T20:28:57Z"
+      lastUpdateTime: "2026-07-24T20:28:57Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 6
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"StatefulSet","metadata":{"annotations":{},"labels":{"app.kubernetes.io/name":"timescaledb","app.kubernetes.io/part-of":"atlas"},"name":"timescaledb","namespace":"atlas-system"},"spec":{"replicas":1,"selector":{"matchLabels":{"app.kubernetes.io/name":"timescaledb"}},"serviceName":"timescaledb","template":{"metadata":{"labels":{"app.kubernetes.io/name":"timescaledb","app.kubernetes.io/part-of":"atlas"}},"spec":{"affinity":{"nodeAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"preference":{"matchExpressions":[{"key":"kubernetes.io/hostname","operator":"In","values":["orion"]}]},"weight":100}]},"podAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"podAffinityTerm":{"labelSelector":{"matchLabels":{"app.kubernetes.io/part-of":"atlas"}},"topologyKey":"kubernetes.io/hostname"},"weight":100}]}},"containers":[{"env":[{"name":"POSTGRES_USER","value":"atlas"},{"name":"POSTGRES_DB","value":"atlas"},{"name":"POSTGRES_PASSWORD","valueFrom":{"secretKeyRef":{"key":"TIMESCALEDB_PASSWORD","name":"atlas-secrets"}}},{"name":"PGDATA","value":"/var/lib/postgresql/data/pgdata"},{"name":"TS_TUNE_MAX_CONNS","value":"200"},{"name":"TS_TUNE_MEMORY","value":"8GB"}],"image":"timescale/timescaledb:latest-pg16","livenessProbe":{"exec":{"command":["pg_isready","-U","atlas","-d","atlas"]},"initialDelaySeconds":30,"periodSeconds":10},"name":"timescaledb","ports":[{"containerPort":5432,"name":"postgres"}],"readinessProbe":{"exec":{"command":["pg_isready","-U","atlas","-d","atlas"]},"initialDelaySeconds":10,"periodSeconds":5},"resources":{"limits":{"cpu":"4000m","memory":"8Gi"},"requests":{"cpu":"100m","memory":"1Gi"}},"volumeMounts":[{"mountPath":"/var/lib/postgresql/data","name":"data"}]}],"volumes":[{"name":"data","persistentVolumeClaim":{"claimName":"timescaledb-data"}}]}}}}
+    creationTimestamp: "2026-03-31T10:33:28Z"
+    generation: 6
+    labels:
+      app.kubernetes.io/name: timescaledb
+      app.kubernetes.io/part-of: atlas
+    name: timescaledb
+    namespace: atlas-system
+    resourceVersion: "33063311"
+    uid: 951d9c26-6a68-48a8-a799-e9dd24cfce56
+  spec:
+    persistentVolumeClaimRetentionPolicy:
+      whenDeleted: Retain
+      whenScaled: Retain
+    podManagementPolicy: OrderedReady
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/name: timescaledb
+    serviceName: timescaledb
+    template:
+      metadata:
+        labels:
+          app.kubernetes.io/name: timescaledb
+          app.kubernetes.io/part-of: atlas
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+          podAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/part-of: atlas
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+        containers:
+        - env:
+          - name: POSTGRES_USER
+            value: atlas
+          - name: POSTGRES_DB
+            value: atlas
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: TIMESCALEDB_PASSWORD
+                name: atlas-secrets
+          - name: PGDATA
+            value: /var/lib/postgresql/data/pgdata
+          - name: TS_TUNE_MAX_CONNS
+            value: "200"
+          - name: TS_TUNE_MEMORY
+            value: 8GB
+          image: timescale/timescaledb:latest-pg16
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+              - pg_isready
+              - -U
+              - atlas
+              - -d
+              - atlas
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: timescaledb
+          ports:
+          - containerPort: 5432
+            name: postgres
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - pg_isready
+              - -U
+              - atlas
+              - -d
+              - atlas
+            failureThreshold: 3
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: "4"
+              memory: 8Gi
+            requests:
+              cpu: 100m
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: data
+          - mountPath: /dev/shm
+            name: dshm
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: timescaledb-data
+        - emptyDir:
+            medium: Memory
+            sizeLimit: 2Gi
+          name: dshm
+    updateStrategy:
+      rollingUpdate:
+        partition: 0
+      type: RollingUpdate
+  status:
+    availableReplicas: 1
+    collisionCount: 0
+    currentReplicas: 1
+    currentRevision: timescaledb-6f86777f9d
+    observedGeneration: 6
+    readyReplicas: 1
+    replicas: 1
+    updateRevision: timescaledb-6f86777f9d
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"StatefulSet","metadata":{"annotations":{},"name":"timescaledb-polaris","namespace":"atlas-system"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"timescaledb-polaris"}},"serviceName":"timescaledb-polaris","template":{"metadata":{"labels":{"app":"timescaledb-polaris"}},"spec":{"containers":[{"env":[{"name":"POSTGRES_USER","value":"atlas"},{"name":"POSTGRES_PASSWORD","value":"atlas-tsdb-2026"},{"name":"POSTGRES_DB","value":"atlas"},{"name":"PGDATA","value":"/var/lib/postgresql/data/pgdata"}],"image":"timescale/timescaledb:latest-pg16","name":"timescaledb","ports":[{"containerPort":5432}],"resources":{"requests":{"cpu":"1","memory":"4Gi"}},"volumeMounts":[{"mountPath":"/var/lib/postgresql/data","name":"data"},{"mountPath":"/dev/shm","name":"dshm"}]}],"nodeSelector":{"kubernetes.io/hostname":"polaris"},"volumes":[{"name":"data","persistentVolumeClaim":{"claimName":"timescaledb-polaris"}},{"emptyDir":{"medium":"Memory","sizeLimit":"4Gi"},"name":"dshm"}]}}}}
+    creationTimestamp: "2026-07-24T16:21:22Z"
+    generation: 2
+    name: timescaledb-polaris
+    namespace: atlas-system
+    resourceVersion: "33818729"
+    uid: dcc1954b-28fa-4fef-9358-a01bcdf546b5
+  spec:
+    persistentVolumeClaimRetentionPolicy:
+      whenDeleted: Retain
+      whenScaled: Retain
+    podManagementPolicy: OrderedReady
+    replicas: 0
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: timescaledb-polaris
+    serviceName: timescaledb-polaris
+    template:
+      metadata:
+        labels:
+          app: timescaledb-polaris
+      spec:
+        containers:
+        - env:
+          - name: POSTGRES_USER
+            value: atlas
+          - name: POSTGRES_PASSWORD
+            value: atlas-tsdb-2026
+          - name: POSTGRES_DB
+            value: atlas
+          - name: PGDATA
+            value: /var/lib/postgresql/data/pgdata
+          image: timescale/timescaledb:latest-pg16
+          imagePullPolicy: IfNotPresent
+          name: timescaledb
+          ports:
+          - containerPort: 5432
+            protocol: TCP
+          resources:
+            requests:
+              cpu: "1"
+              memory: 4Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: data
+          - mountPath: /dev/shm
+            name: dshm
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/hostname: polaris
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: timescaledb-polaris
+        - emptyDir:
+            medium: Memory
+            sizeLimit: 4Gi
+          name: dshm
+    updateStrategy:
+      rollingUpdate:
+        partition: 0
+      type: RollingUpdate
+  status:
+    availableReplicas: 0
+    collisionCount: 0
+    currentRevision: timescaledb-polaris-75cbc968c9
+    observedGeneration: 2
+    replicas: 0
+    updateRevision: timescaledb-polaris-75cbc968c9
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"StatefulSet","metadata":{"annotations":{},"name":"timescaledb-vega","namespace":"atlas-system"},"spec":{"replicas":0,"selector":{"matchLabels":{"app":"timescaledb-vega"}},"serviceName":"timescaledb-vega","template":{"metadata":{"labels":{"app":"timescaledb-vega"}},"spec":{"containers":[{"env":[{"name":"POSTGRES_USER","value":"atlas"},{"name":"POSTGRES_PASSWORD","value":"atlas-tsdb-2026"},{"name":"POSTGRES_DB","value":"atlas"},{"name":"PGDATA","value":"/var/lib/postgresql/data/pgdata"}],"image":"timescale/timescaledb:latest-pg16","name":"timescaledb","ports":[{"containerPort":5432}],"resources":{"requests":{"cpu":"1","memory":"4Gi"}},"volumeMounts":[{"mountPath":"/var/lib/postgresql/data","name":"data"},{"mountPath":"/dev/shm","name":"dshm"}]}],"nodeSelector":{"kubernetes.io/hostname":"vega"},"volumes":[{"name":"data","persistentVolumeClaim":{"claimName":"timescaledb-vega"}},{"emptyDir":{"medium":"Memory","sizeLimit":"4Gi"},"name":"dshm"}]}}}}
+    creationTimestamp: "2026-07-26T22:42:14Z"
+    generation: 2
+    name: timescaledb-vega
+    namespace: atlas-system
+    resourceVersion: "33957075"
+    uid: cd369850-315a-4dc7-bbbe-442ec98b3541
+  spec:
+    persistentVolumeClaimRetentionPolicy:
+      whenDeleted: Retain
+      whenScaled: Retain
+    podManagementPolicy: OrderedReady
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: timescaledb-vega
+    serviceName: timescaledb-vega
+    template:
+      metadata:
+        labels:
+          app: timescaledb-vega
+      spec:
+        containers:
+        - env:
+          - name: POSTGRES_USER
+            value: atlas
+          - name: POSTGRES_PASSWORD
+            value: atlas-tsdb-2026
+          - name: POSTGRES_DB
+            value: atlas
+          - name: PGDATA
+            value: /var/lib/postgresql/data/pgdata
+          image: timescale/timescaledb:latest-pg16
+          imagePullPolicy: IfNotPresent
+          name: timescaledb
+          ports:
+          - containerPort: 5432
+            protocol: TCP
+          resources:
+            requests:
+              cpu: "1"
+              memory: 4Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: data
+          - mountPath: /dev/shm
+            name: dshm
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/hostname: vega
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: timescaledb-vega
+        - emptyDir:
+            medium: Memory
+            sizeLimit: 4Gi
+          name: dshm
+    updateStrategy:
+      rollingUpdate:
+        partition: 0
+      type: RollingUpdate
+  status:
+    availableReplicas: 1
+    collisionCount: 0
+    currentReplicas: 1
+    currentRevision: timescaledb-vega-777968c554
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+    updateRevision: timescaledb-vega-777968c554
+    updatedReplicas: 1
+- apiVersion: batch/v1
+  kind: CronJob
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"batch/v1","kind":"CronJob","metadata":{"annotations":{},"labels":{"app.kubernetes.io/name":"hetzner-auction-watcher","app.kubernetes.io/part-of":"atlas"},"name":"hetzner-auction-watcher","namespace":"atlas-system"},"spec":{"failedJobsHistoryLimit":3,"jobTemplate":{"spec":{"activeDeadlineSeconds":300,"backoffLimit":1,"template":{"spec":{"containers":[{"command":["/bin/bash","/scripts/watch.sh"],"env":[{"name":"GOTIFY_URL","value":"http://gotify.atlas-system.svc.cluster.local:80"},{"name":"GOTIFY_TOKEN","value":"A8Ap3TmrZr94MTJ"},{"name":"CF_ACCOUNT_ID","value":"4992fd600f9894326a82a0f8573a7c38"},{"name":"CF_EMAIL","valueFrom":{"secretKeyRef":{"key":"CLOUDFLARE_EMAIL","name":"cloudflare-ai-creds"}}},{"name":"CF_API_KEY","valueFrom":{"secretKeyRef":{"key":"CLOUDFLARE_GLOBAL_API_KEY","name":"cloudflare-ai-creds"}}}],"image":"bitnami/kubectl:latest","name":"watcher","volumeMounts":[{"mountPath":"/scripts","name":"script"}]}],"restartPolicy":"Never","serviceAccountName":"hetzner-watcher","volumes":[{"configMap":{"defaultMode":493,"name":"hetzner-watcher-script"},"name":"script"}]}}}},"schedule":"*/5 * * * *","successfulJobsHistoryLimit":3}}
+    creationTimestamp: "2026-07-26T10:26:52Z"
+    generation: 4
+    labels:
+      app.kubernetes.io/name: hetzner-auction-watcher
+      app.kubernetes.io/part-of: atlas
+    name: hetzner-auction-watcher
+    namespace: atlas-system
+    resourceVersion: "33958100"
+    uid: 15648a38-f8af-403d-949e-24b07f2000bf
+  spec:
+    concurrencyPolicy: Allow
+    failedJobsHistoryLimit: 3
+    jobTemplate:
+      metadata: {}
+      spec:
+        activeDeadlineSeconds: 300
+        backoffLimit: 1
+        template:
+          metadata: {}
+          spec:
+            containers:
+            - command:
+              - /bin/bash
+              - /scripts/watch.sh
+              env:
+              - name: GOTIFY_URL
+                value: http://gotify.atlas-system.svc.cluster.local:80
+              - name: GOTIFY_TOKEN
+                value: A8Ap3TmrZr94MTJ
+              - name: CF_ACCOUNT_ID
+                value: 4992fd600f9894326a82a0f8573a7c38
+              - name: CF_EMAIL
+                valueFrom:
+                  secretKeyRef:
+                    key: CLOUDFLARE_EMAIL
+                    name: cloudflare-ai-creds
+              - name: CF_API_KEY
+                valueFrom:
+                  secretKeyRef:
+                    key: CLOUDFLARE_GLOBAL_API_KEY
+                    name: cloudflare-ai-creds
+              image: bitnami/kubectl:latest
+              imagePullPolicy: Always
+              name: watcher
+              resources: {}
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              volumeMounts:
+              - mountPath: /scripts
+                name: script
+            dnsPolicy: ClusterFirst
+            restartPolicy: Never
+            schedulerName: default-scheduler
+            securityContext: {}
+            serviceAccount: hetzner-watcher
+            serviceAccountName: hetzner-watcher
+            terminationGracePeriodSeconds: 30
+            volumes:
+            - configMap:
+                defaultMode: 493
+                name: hetzner-watcher-script
+              name: script
+    schedule: '*/5 * * * *'
+    successfulJobsHistoryLimit: 3
+    suspend: false
+  status:
+    lastScheduleTime: "2026-07-27T04:45:00Z"
+    lastSuccessfulTime: "2026-07-27T04:45:09Z"
+- apiVersion: batch/v1
+  kind: CronJob
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"batch/v1","kind":"CronJob","metadata":{"annotations":{},"name":"market-data-ingest","namespace":"atlas-system"},"spec":{"concurrencyPolicy":"Forbid","failedJobsHistoryLimit":3,"jobTemplate":{"spec":{"backoffLimit":3,"template":{"spec":{"containers":[{"command":["python3","-u","-m","src.workflows.market_data_ingestion","run"],"env":[{"name":"POLYGON_API_KEY","valueFrom":{"secretKeyRef":{"key":"POLYGON_API_KEY","name":"atlas-secrets"}}},{"name":"TIMESCALEDB_PASSWORD","valueFrom":{"secretKeyRef":{"key":"TIMESCALEDB_PASSWORD","name":"atlas-secrets"}}}],"image":"docker.io/library/atlas-backend:latest","imagePullPolicy":"Never","name":"ingest"}],"nodeSelector":{"kubernetes.io/hostname":"polaris"},"restartPolicy":"OnFailure"}}}},"schedule":"0 4 * * 1-5","successfulJobsHistoryLimit":7}}
+    creationTimestamp: "2026-07-26T10:57:51Z"
+    generation: 1
+    name: market-data-ingest
+    namespace: atlas-system
+    resourceVersion: "33658106"
+    uid: afaa819b-1c25-428a-8650-9fe008701f90
+  spec:
+    concurrencyPolicy: Forbid
+    failedJobsHistoryLimit: 3
+    jobTemplate:
+      metadata: {}
+      spec:
+        backoffLimit: 3
+        template:
+          metadata: {}
+          spec:
+            containers:
+            - command:
+              - python3
+              - -u
+              - -m
+              - src.workflows.market_data_ingestion
+              - run
+              env:
+              - name: POLYGON_API_KEY
+                valueFrom:
+                  secretKeyRef:
+                    key: POLYGON_API_KEY
+                    name: atlas-secrets
+              - name: TIMESCALEDB_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    key: TIMESCALEDB_PASSWORD
+                    name: atlas-secrets
+              image: docker.io/library/atlas-backend:latest
+              imagePullPolicy: Never
+              name: ingest
+              resources: {}
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+            dnsPolicy: ClusterFirst
+            nodeSelector:
+              kubernetes.io/hostname: polaris
+            restartPolicy: OnFailure
+            schedulerName: default-scheduler
+            securityContext: {}
+            terminationGracePeriodSeconds: 30
+    schedule: 0 4 * * 1-5
+    successfulJobsHistoryLimit: 7
+    suspend: false
+  status: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app.kubernetes.io/name":"atlas-worker","app.kubernetes.io/part-of":"atlas"},"name":"atlas-backend","namespace":"atlas-system"},"spec":{"ports":[{"name":"websocket","port":8765,"targetPort":8765}],"selector":{"app.kubernetes.io/name":"atlas-worker"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-03-31T14:24:34Z"
+    labels:
+      app.kubernetes.io/name: atlas-worker
+      app.kubernetes.io/part-of: atlas
+    name: atlas-backend
+    namespace: atlas-system
+    resourceVersion: "25595573"
+    uid: ca770144-eb0c-40c3-a55f-e5dd439b9120
+  spec:
+    clusterIP: 10.43.131.187
+    clusterIPs:
+    - 10.43.131.187
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: websocket
+      port: 8765
+      protocol: TCP
+      targetPort: 8765
+    selector:
+      app.kubernetes.io/name: atlas-worker
+    sessionAffinity: ClientIP
+    sessionAffinityConfig:
+      clientIP:
+        timeoutSeconds: 10800
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app.kubernetes.io/name":"atlas-dashboard","app.kubernetes.io/part-of":"atlas"},"name":"atlas-dashboard","namespace":"atlas-system"},"spec":{"ports":[{"name":"http","port":3013,"targetPort":3013}],"selector":{"app.kubernetes.io/name":"atlas-dashboard"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-03-31T18:27:49Z"
+    labels:
+      app.kubernetes.io/name: atlas-dashboard
+      app.kubernetes.io/part-of: atlas
+    name: atlas-dashboard
+    namespace: atlas-system
+    resourceVersion: "26238617"
+    uid: 7083770b-2885-424f-bf82-c7a4fb9d3b9e
+  spec:
+    clusterIP: 10.43.115.115
+    clusterIPs:
+    - 10.43.115.115
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 3013
+      protocol: TCP
+      targetPort: 3013
+    selector:
+      app.kubernetes.io/name: atlas-dashboard
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"atlas-hsm","namespace":"atlas-system"},"spec":{"ports":[{"name":"http","port":8766,"targetPort":8766}],"selector":{"app.kubernetes.io/name":"atlas-hsm"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-07-17T21:29:54Z"
+    name: atlas-hsm
+    namespace: atlas-system
+    resourceVersion: "30315201"
+    uid: b8e00af6-887b-419e-b5c6-4f28c1a3ff18
+  spec:
+    clusterIP: 10.43.5.109
+    clusterIPs:
+    - 10.43.5.109
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 8766
+      protocol: TCP
+      targetPort: 8766
+    selector:
+      app.kubernetes.io/name: atlas-hsm
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app.kubernetes.io/name":"falkordb","app.kubernetes.io/part-of":"atlas"},"name":"falkordb","namespace":"atlas-system"},"spec":{"ports":[{"name":"redis","port":6379,"targetPort":6379}],"selector":{"app.kubernetes.io/name":"falkordb"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-03-31T10:33:28Z"
+    labels:
+      app.kubernetes.io/name: falkordb
+      app.kubernetes.io/part-of: atlas
+    name: falkordb
+    namespace: atlas-system
+    resourceVersion: "3037021"
+    uid: 36625e65-7355-4037-85f8-f4364cdd0b99
+  spec:
+    clusterIP: 10.43.85.36
+    clusterIPs:
+    - 10.43.85.36
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: redis
+      port: 6379
+      protocol: TCP
+      targetPort: 6379
+    selector:
+      app.kubernetes.io/name: falkordb
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app.kubernetes.io/name":"faster-whisper","app.kubernetes.io/part-of":"atlas"},"name":"faster-whisper","namespace":"atlas-system"},"spec":{"ports":[{"name":"http","port":8000,"targetPort":8000}],"selector":{"app.kubernetes.io/name":"faster-whisper"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-03-31T10:38:45Z"
+    labels:
+      app.kubernetes.io/name: faster-whisper
+      app.kubernetes.io/part-of: atlas
+    name: faster-whisper
+    namespace: atlas-system
+    resourceVersion: "3038276"
+    uid: f510f179-ea86-4616-94c2-93053a498900
+  spec:
+    clusterIP: 10.43.124.186
+    clusterIPs:
+    - 10.43.124.186
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 8000
+      protocol: TCP
+      targetPort: 8000
+    selector:
+      app.kubernetes.io/name: faster-whisper
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app.kubernetes.io/name":"faster-whisper","app.kubernetes.io/part-of":"atlas"},"name":"faster-whisper-external","namespace":"atlas-system"},"spec":{"ports":[{"name":"http","nodePort":30181,"port":8000,"targetPort":8000}],"selector":{"app.kubernetes.io/name":"faster-whisper"},"type":"NodePort"}}
+    creationTimestamp: "2026-03-31T10:38:46Z"
+    labels:
+      app.kubernetes.io/name: faster-whisper
+      app.kubernetes.io/part-of: atlas
+    name: faster-whisper-external
+    namespace: atlas-system
+    resourceVersion: "3038355"
+    uid: 40f04cb7-2e6a-4223-8144-6adfcd52d5ac
+  spec:
+    clusterIP: 10.43.99.253
+    clusterIPs:
+    - 10.43.99.253
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      nodePort: 30181
+      port: 8000
+      protocol: TCP
+      targetPort: 8000
+    selector:
+      app.kubernetes.io/name: faster-whisper
+    sessionAffinity: None
+    type: NodePort
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app.kubernetes.io/name":"gotify","app.kubernetes.io/part-of":"atlas"},"name":"gotify","namespace":"atlas-system"},"spec":{"ports":[{"name":"http","port":80,"targetPort":80}],"selector":{"app.kubernetes.io/name":"gotify"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-03-31T10:38:45Z"
+    labels:
+      app.kubernetes.io/name: gotify
+      app.kubernetes.io/part-of: atlas
+    name: gotify
+    namespace: atlas-system
+    resourceVersion: "3038293"
+    uid: 65379af4-2a7f-455c-93f0-904845281493
+  spec:
+    clusterIP: 10.43.16.5
+    clusterIPs:
+    - 10.43.16.5
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 80
+    selector:
+      app.kubernetes.io/name: gotify
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app.kubernetes.io/name":"gotify","app.kubernetes.io/part-of":"atlas"},"name":"gotify-external","namespace":"atlas-system"},"spec":{"ports":[{"name":"http","nodePort":30180,"port":80,"targetPort":80}],"selector":{"app.kubernetes.io/name":"gotify"},"type":"NodePort"}}
+    creationTimestamp: "2026-03-31T10:38:46Z"
+    labels:
+      app.kubernetes.io/name: gotify
+      app.kubernetes.io/part-of: atlas
+    name: gotify-external
+    namespace: atlas-system
+    resourceVersion: "3038350"
+    uid: 955c7cc4-5531-4ae0-8eef-ca716c8d53cc
+  spec:
+    clusterIP: 10.43.242.198
+    clusterIPs:
+    - 10.43.242.198
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      nodePort: 30180
+      port: 80
+      protocol: TCP
+      targetPort: 80
+    selector:
+      app.kubernetes.io/name: gotify
+    sessionAffinity: None
+    type: NodePort
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app.kubernetes.io/name":"timescaledb","app.kubernetes.io/part-of":"atlas"},"name":"timescaledb","namespace":"atlas-system"},"spec":{"ports":[{"name":"postgres","port":5432,"targetPort":5432}],"selector":{"app.kubernetes.io/name":"timescaledb"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-03-31T10:33:28Z"
+    labels:
+      app.kubernetes.io/name: timescaledb
+      app.kubernetes.io/part-of: atlas
+    name: timescaledb
+    namespace: atlas-system
+    resourceVersion: "33941728"
+    uid: 16321c96-beff-4a76-a48a-17afa713e347
+  spec:
+    clusterIP: 10.43.120.187
+    clusterIPs:
+    - 10.43.120.187
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: postgres
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+    selector:
+      app: timescaledb-vega
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"timescaledb-polaris","namespace":"atlas-system"},"spec":{"clusterIP":"None","ports":[{"port":5432,"targetPort":5432}],"selector":{"app":"timescaledb-polaris"}}}
+    creationTimestamp: "2026-07-24T16:21:23Z"
+    name: timescaledb-polaris
+    namespace: atlas-system
+    resourceVersion: "32881481"
+    uid: 19003547-295c-4b06-9a01-10987db3477a
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 5432
+      protocol: TCP
+      targetPort: 5432
+    selector:
+      app: timescaledb-polaris
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"timescaledb-vega","namespace":"atlas-system"},"spec":{"clusterIP":"None","ports":[{"port":5432,"targetPort":5432}],"selector":{"app":"timescaledb-vega"}}}
+    creationTimestamp: "2026-07-26T22:42:13Z"
+    name: timescaledb-vega
+    namespace: atlas-system
+    resourceVersion: "33855550"
+    uid: f45664fe-c120-4131-a339-d1fafb9b116f
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 5432
+      protocol: TCP
+      targetPort: 5432
+    selector:
+      app: timescaledb-vega
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  data:
+    FALKORDB_HOST: falkordb.atlas-system.svc.cluster.local
+    FALKORDB_PORT: "6379"
+    GOTIFY_HOST: http://gotify.atlas-system.svc.cluster.local:80
+    N8N_WEBHOOK_URL: http://n8n.n8n.svc.cluster.local:5678
+    OLLAMA_HOST: http://ollama-host.ollama.svc.cluster.local:11434
+    TEMPORAL_HOST: temporal-frontend.temporal.svc.cluster.local
+    TEMPORAL_NAMESPACE: atlas
+    TEMPORAL_PORT: "7233"
+    TIMESCALEDB_DB: atlas
+    TIMESCALEDB_HOST: timescaledb.atlas-system.svc.cluster.local
+    TIMESCALEDB_PORT: "5432"
+    TIMESCALEDB_USER: atlas
+    WHISPER_HOST: http://faster-whisper.atlas-system.svc.cluster.local:8000
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"FALKORDB_HOST":"falkordb.atlas-system.svc.cluster.local","FALKORDB_PORT":"6379","GOTIFY_HOST":"http://gotify.atlas-system.svc.cluster.local:80","N8N_WEBHOOK_URL":"http://n8n.n8n.svc.cluster.local:5678","OLLAMA_HOST":"http://ollama-host.ollama.svc.cluster.local:11434","TEMPORAL_HOST":"temporal-frontend.temporal.svc.cluster.local","TEMPORAL_NAMESPACE":"atlas","TEMPORAL_PORT":"7233","TIMESCALEDB_DB":"atlas","TIMESCALEDB_HOST":"timescaledb.atlas-system.svc.cluster.local","TIMESCALEDB_PORT":"5432","TIMESCALEDB_USER":"atlas","WHISPER_HOST":"http://faster-whisper.atlas-system.svc.cluster.local:8000"},"kind":"ConfigMap","metadata":{"annotations":{},"labels":{"app.kubernetes.io/part-of":"atlas"},"name":"atlas-config","namespace":"atlas-system"}}
+    creationTimestamp: "2026-03-31T10:33:28Z"
+    labels:
+      app.kubernetes.io/part-of: atlas
+    name: atlas-config
+    namespace: atlas-system
+    resourceVersion: "3036997"
+    uid: 56debca5-a0b8-4372-b85e-41eaa22b9f72
+- apiVersion: v1
+  data:
+    apply.sh: |
+      #!/bin/sh
+      echo "Applying hotfixes..."
+      # Fix VIX NoneType comparison in synthesizer
+      sed -i "s/volatility.get(\"currentVix\", 15)/volatility.get(\"currentVix\") or 15/g" /app/src/signals/synthesizer.py
+      # Add pattern cache import and variables to pattern_handlers
+      sed -i "s/^import json$/import json\nimport time/" /app/src/api/handlers/pattern_handlers.py
+      sed -i "/^logger = logging.getLogger(__name__)$/a\\
+      \\
+      # Module-level cache\\
+      _pattern_cache: dict[str, dict] = {}\\
+      _pattern_cache_ts: dict[str, float] = {}\\
+      PATTERN_CACHE_TTL = 300" /app/src/api/handlers/pattern_handlers.py
+      echo "Hotfixes applied, starting server..."
+      exec python /app/src/api/websocket.py
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"apply.sh":"#!/bin/sh\necho \"Applying hotfixes...\"\n# Fix VIX NoneType comparison in synthesizer\nsed -i \"s/volatility.get(\\\"currentVix\\\", 15)/volatility.get(\\\"currentVix\\\") or 15/g\" /app/src/signals/synthesizer.py\n# Add pattern cache import and variables to pattern_handlers\nsed -i \"s/^import json$/import json\\nimport time/\" /app/src/api/handlers/pattern_handlers.py\nsed -i \"/^logger = logging.getLogger(__name__)$/a\\\\\n\\\\\n# Module-level cache\\\\\n_pattern_cache: dict[str, dict] = {}\\\\\n_pattern_cache_ts: dict[str, float] = {}\\\\\nPATTERN_CACHE_TTL = 300\" /app/src/api/handlers/pattern_handlers.py\necho \"Hotfixes applied, starting server...\"\nexec python /app/src/api/websocket.py\n"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"atlas-hotfix","namespace":"atlas-system"}}
+    creationTimestamp: "2026-07-04T14:20:54Z"
+    name: atlas-hotfix
+    namespace: atlas-system
+    resourceVersion: "25958615"
+    uid: 75c705ba-09c0-4b54-ae90-f479c0d1ab98
+- apiVersion: v1
+  data:
+    run.py: |
+      import os, sys, json, time
+
+      pw = os.environ.get("TIMESCALEDB_PASSWORD", "")
+      os.environ["ATLAS_TSDB_URL"] = f"postgresql://atlas:{pw}@timescaledb-polaris.atlas-system.svc.cluster.local:5432/atlas"
+      import src.data.tick_store as ts; ts._store = None
+
+      from src.backtesting.dux_hifi_backtest import run_hifi_dux_backtest
+
+      print("=" * 70)
+      print("  5-YEAR DUX BACKTEST | Shared Scanner | $27K")
+      print("  Jul 2021 - Jul 2026 | Continuous Aggregate | All Patterns")
+      print("=" * 70)
+
+      t0 = time.time()
+      r = run_hifi_dux_backtest(start_date="2021-07-01", end_date="2026-07-25", initial_capital=27000)
+      elapsed = time.time() - t0
+
+      if "error" in r:
+          print(f"ERROR: {r['error']}")
+          sys.exit(1)
+
+      m = r["metrics"]
+      tp = m.get("totalPnl", 0)
+      ps = r.get("patternBreakdown", {})
+      trades = m.get("trades", [])
+
+      print(f"  Completed in {elapsed:.0f} seconds")
+      print(f"  Setups found: {r.get('setupsFound', '?')}")
+      print(f"  Trades: {m.get('totalTrades')}")
+      print(f"  Win Rate: {m.get('winRate')}%")
+      print(f"  Profit Factor: {m.get('profitFactor')}")
+      print(f"  Sharpe: {m.get('sharpeRatio')}")
+      print(f"  P&L: ${tp:,.0f} ({tp/270:+.1f}%)")
+      print(f"  Final Equity: ${27000+tp:,.0f}")
+      print(f"  Max Drawdown: {m.get('maxDrawdownPct')}%")
+      print(f"  Avg Win: ${m.get('avgWin',0):,.0f}")
+      print(f"  Avg Loss: ${m.get('avgLoss',0):,.0f}")
+      print()
+      for p, s in sorted(ps.items()):
+          wr = s["wins"]/s["trades"]*100 if s["trades"]>0 else 0
+          print(f"  {p:25} {s['trades']:4} trades  WR={wr:5.1f}%  P&L=${s['pnl']:>12,.0f}")
+      print()
+      print(f"  Filtered: {r.get('filtered')}")
+      print()
+
+      # Equity curve milestones
+      eq = 27000
+      milestones = [50000, 100000, 250000, 500000, 1000000]
+      next_m = 0
+      print("  EQUITY MILESTONES:")
+      for t in trades:
+          eq += t["pnl"]
+          while next_m < len(milestones) and eq >= milestones[next_m]:
+              print(f"    ${milestones[next_m]:>10,} reached on {t['entryDate']}")
+              next_m += 1
+      print(f"    Final: ${eq:,.0f}")
+      print()
+
+      # Top 10 trades
+      print("  TOP 10 TRADES:")
+      sorted_trades = sorted(trades, key=lambda t: t["pnl"], reverse=True)
+      for t in sorted_trades[:10]:
+          print(f"    {t['entryDate']} {t['symbol']:8} ${t['entryPrice']:.2f}->${t['exitPrice']:.2f} grade={t.get('grade','?')} +${t['pnl']:,.0f}")
+      print()
+
+      # Worst 5 trades
+      print("  WORST 5 TRADES:")
+      for t in sorted_trades[-5:]:
+          print(f"    {t['entryDate']} {t['symbol']:8} ${t['entryPrice']:.2f}->${t['exitPrice']:.2f} grade={t.get('grade','?')} ${t['pnl']:,.0f}")
+
+      print("=" * 70)
+  kind: ConfigMap
+  metadata:
+    creationTimestamp: "2026-07-26T11:22:06Z"
+    name: backtest-5yr
+    namespace: atlas-system
+    resourceVersion: "33664750"
+    uid: 96471c27-b7da-432b-8c1d-39ebd2198028
+- apiVersion: v1
+  data:
+    run.py: |
+      import os, sys
+
+      # Get password from environment
+      pw = os.environ.get("TIMESCALEDB_PASSWORD", "")
+      os.environ["ATLAS_TSDB_URL"] = f"postgresql://atlas:{pw}@timescaledb-polaris.atlas-system.svc.cluster.local:5432/atlas"
+
+      import src.data.tick_store as ts; ts._store = None
+
+      from src.backtesting.dux_hifi_backtest import run_hifi_dux_backtest
+      r = run_hifi_dux_backtest(start_date="2021-07-01", end_date="2022-11-30", initial_capital=27000)
+
+      if "error" in r:
+          print("ERROR:", r["error"])
+          sys.exit(1)
+
+      m = r.get("metrics", {})
+      tp = m.get("totalPnl", 0)
+      ps = r.get("patternBreakdown", {})
+
+      print("=" * 60)
+      print("SHARED SCANNER BACKTEST | 27K | Jul 2021 - Nov 2022")
+      print("=" * 60)
+      print(f"Trades: {m.get('totalTrades')} | WR: {m.get('winRate')}%")
+      print(f"PF: {m.get('profitFactor')} | Sharpe: {m.get('sharpeRatio')}")
+      print(f"P&L: ${tp:,.0f} | Final: ${27000+tp:,.0f}")
+      print(f"DD: {m.get('maxDrawdownPct')}%")
+      for p, s in sorted(ps.items()):
+          wr = s["wins"]/s["trades"]*100 if s["trades"]>0 else 0
+          print(f"  {p:25} {s['trades']:3} trades  WR={wr:5.1f}%  P&L=${s['pnl']:>10,.0f}")
+      print(f"Filtered: {r.get('filtered')}")
+  kind: ConfigMap
+  metadata:
+    creationTimestamp: "2026-07-26T01:31:15Z"
+    name: backtest-script
+    namespace: atlas-system
+    resourceVersion: "33503330"
+    uid: 182e36f5-c113-462c-95bc-d6f9e0587eaa
+- apiVersion: v1
+  data:
+    import.py: |
+      import csv, gzip, io, logging, os, sys, time, gc
+      from datetime import datetime, timedelta, timezone
+
+      logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
+      log = logging.getLogger("import")
+
+      def get_s3():
+          import boto3
+          from botocore.config import Config
+          return boto3.client("s3", endpoint_url="https://files.massive.com",
+              aws_access_key_id="04675bce-524b-4423-997a-f246ff5ca354",
+              aws_secret_access_key=os.environ.get("POLYGON_API_KEY",""),
+              config=Config(signature_version="s3v4"), region_name="us-east-1")
+
+      def get_conn():
+          import psycopg2
+          pw = os.environ.get("TIMESCALEDB_PASSWORD", "")
+          conn = psycopg2.connect(f"postgresql://atlas:{pw}@timescaledb-polaris.atlas-system.svc.cluster.local:5432/atlas")
+          conn.autocommit = False
+          return conn
+
+      s3 = get_s3()
+      conn = get_conn()
+
+      start = datetime(2025, 5, 1)
+      end = datetime(2026, 7, 25)
+      days = [c.strftime("%Y-%m-%d") for c in (start + timedelta(days=i) for i in range((end - start).days + 1)) if c.weekday() < 5]
+
+      log.info("RESUME: %d days from %s to %s", len(days), days[0], days[-1])
+      total = 0
+
+      for i, d in enumerate(days):
+          key = f"us_stocks_sip/minute_aggs_v1/{d[:4]}/{d[5:7]}/{d}.csv.gz"
+          try:
+              resp = s3.get_object(Bucket="flatfiles", Key=key)
+              compressed = resp["Body"].read()
+              raw = gzip.decompress(compressed)
+              del compressed
+              reader = csv.reader(io.StringIO(raw.decode("utf-8")))
+              del raw
+              import psycopg2.extras
+              batch = []
+              day_total = 0
+              for row in reader:
+                  if len(row) < 7 or row[0] == "ticker":
+                      continue
+                  try:
+                      ts = datetime.fromtimestamp(int(row[6]) / 1e9, tz=timezone.utc)
+                      batch.append((ts, row[0], "1m", float(row[2]), float(row[4]),
+                                 float(row[5]), float(row[3]), int(float(row[1])), None))
+                  except (ValueError, IndexError):
+                      continue
+                  if len(batch) >= 500000:
+                      with conn.cursor() as cur:
+                          psycopg2.extras.execute_values(cur,
+                              "INSERT INTO market_bars (time,symbol,interval,open,high,low,close,volume,vwap) VALUES %s ON CONFLICT DO NOTHING",
+                              batch, page_size=5000)
+                      conn.commit()
+                      day_total += len(batch)
+                      batch = []
+              if batch:
+                  with conn.cursor() as cur:
+                      psycopg2.extras.execute_values(cur,
+                          "INSERT INTO market_bars (time,symbol,interval,open,high,low,close,volume,vwap) VALUES %s ON CONFLICT DO NOTHING",
+                          batch, page_size=5000)
+                  conn.commit()
+                  day_total += len(batch)
+              total += day_total
+              del batch
+              gc.collect()
+              if (i+1) % 10 == 0:
+                  log.info("[%d/%d] %s | day: %s | Total: %s bars", i+1, len(days), d, f"{day_total:,}", f"{total:,}")
+          except Exception as e:
+              if "NoSuchKey" in str(e) or "403" in str(e):
+                  continue
+              log.error("[%d/%d] %s: %s", i+1, len(days), d, e)
+              try:
+                  conn.rollback()
+              except:
+                  conn = get_conn()
+
+      log.info("DONE: %s bars imported", f"{total:,}")
+  kind: ConfigMap
+  metadata:
+    creationTimestamp: "2026-07-25T19:29:41Z"
+    name: flatfile-import-script
+    namespace: atlas-system
+    resourceVersion: "33405025"
+    uid: b50307cb-7337-4d7c-8e41-eeafe8a863a8
+- apiVersion: v1
+  data:
+    watch.sh: |
+      #!/bin/bash
+      set -euo pipefail
+
+      GOTIFY_URL="${GOTIFY_URL:-http://gotify.atlas-system.svc.cluster.local:80}"
+      GOTIFY_TOKEN="${GOTIFY_TOKEN}"
+      CF_ACCOUNT_ID="${CF_ACCOUNT_ID}"
+      CF_EMAIL="${CF_EMAIL}"
+      CF_API_KEY="${CF_API_KEY}"
+      AUCTION_URL="https://www.hetzner.com/_resources/app/data/app/live_data_sb_EUR.json"
+
+      SEEN_FILE="/tmp/seen.json"
+      HISTORY_FILE="/tmp/history.json"
+      kubectl get configmap hetzner-watcher-state -n atlas-system -o jsonpath='{.data.seen\.json}' > "$SEEN_FILE" 2>/dev/null || echo '{}' > "$SEEN_FILE"
+      kubectl get configmap hetzner-watcher-state -n atlas-system -o jsonpath='{.data.history\.json}' > "$HISTORY_FILE" 2>/dev/null || echo '{}' > "$HISTORY_FILE"
+
+      data=$(curl -sf --max-time 30 "$AUCTION_URL") || { echo "Failed to fetch"; exit 1; }
+
+      # Stage 1: Tighter spec filter - only servers worth evaluating
+      matches=$(echo "$data" | jq '[.server[] | select(
+        .ram_size >= 128 and
+        .price <= 220 and
+        .is_ecc and
+        ((.serverDiskData.nvme | length) > 0)
+      ) | {
+        id: (.key | tostring),
+        cpu: .cpu,
+        cores: .cpu_count,
+        ram: .ram_size,
+        price: .price,
+        dc: .datacenter,
+        disks: (.hdd_arr | join(", ")),
+        has_nvme: ((.serverDiskData.nvme | length) > 0),
+        nvme_count: (.serverDiskData.nvme | length),
+        sata_count: (.serverDiskData.sata | length),
+        hdd_count: (.serverDiskData.hdd | length),
+        total_storage_gb: (([.serverDiskData.nvme[], .serverDiskData.sata[], .serverDiskData.hdd[]] | add) // 0),
+        next_reduce: (.next_reduce_timestamp | todate),
+        next_reduce_seconds: .next_reduce,
+        benchmark: (.cpu_benchmark // 0),
+        setup_fee: (.setup_price // 0),
+        specials: (.specials // [])
+      }]')
+
+      count=$(echo "$matches" | jq 'length')
+      echo "Stage 1: $count servers pass filter (128GB+ ECC, NVMe, under 220EUR)"
+
+      if [ "$count" -eq 0 ]; then
+        echo "No matches, exiting."
+        exit 0
+      fi
+
+      # Check for new or price-changed servers
+      seen=$(cat "$SEEN_FILE")
+      history=$(cat "$HISTORY_FILE")
+      changed_servers="[]"
+
+      echo "$matches" | jq -c '.[]' > /tmp/servers.jsonl
+
+      while IFS= read -r server; do
+        sid=$(echo "$server" | jq -r '.id')
+        price=$(echo "$server" | jq -r '.price')
+        seen_price=$(echo "$seen" | jq -r --arg id "$sid" '.[$id] // "0"')
+
+        if [ "$seen_price" = "$price" ]; then
+          continue
+        fi
+
+        # Track price history
+        ts=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+        history=$(echo "$history" | jq --arg id "$sid" --arg p "$price" --arg t "$ts" '
+          .[$id] = ((.[$id] // []) + [{"price": ($p | tonumber), "time": $t}])
+          | .[$id] = (.[$id] | if length > 20 then .[-20:] else . end)
+        ')
+
+        # Add price trend to server data
+        price_history=$(echo "$history" | jq -c --arg id "$sid" '.[$id] // []')
+        server_with_history=$(echo "$server" | jq --argjson hist "$price_history" --arg sp "$seen_price" '. + {
+          price_history: $hist,
+          previous_price: (if $sp == "0" then null else ($sp | tonumber) end),
+          is_new: ($sp == "0")
+        }')
+
+        changed_servers=$(echo "$changed_servers" | jq --argjson s "$server_with_history" '. + [$s]')
+      done < /tmp/servers.jsonl
+
+      changed_count=$(echo "$changed_servers" | jq 'length')
+      echo "Stage 1.5: $changed_count new or price-changed servers"
+
+      if [ "$changed_count" -eq 0 ]; then
+        echo "No changes, saving state and exiting."
+        # Still persist in case history was updated
+        echo "$seen" > "$SEEN_FILE"
+        echo "$history" > "$HISTORY_FILE"
+        kubectl create configmap hetzner-watcher-state -n atlas-system \
+          --from-file=seen.json="$SEEN_FILE" \
+          --from-file=history.json="$HISTORY_FILE" \
+          --dry-run=client -o yaml | kubectl apply -f -
+        exit 0
+      fi
+
+      # Stage 2: LLM evaluation via Cloudflare Workers AI
+      echo "Stage 2: Evaluating $changed_count servers with LLM..."
+
+      server_list=$(echo "$changed_servers" | jq -r '[.[] | "- #\(.id) \(.cpu) | \(.cores) cores | \(.ram)GB ECC | \(.disks) | \(.dc) | \(.price)EUR/mo | NVMe:\(.has_nvme) | benchmark:\(.benchmark) | \(if .is_new then "NEW" else "was \(.previous_price)EUR" end)"] | join("\n")')
+
+      prompt="You are a ruthlessly analytical infrastructure advisor. Evaluate Hetzner Server Auction deals for a company replacing a broken server.
+
+      SITUATION: Replacing polaris (Ryzen 5 3600, 64GB, Helsinki) which has a PROCHOT hardware defect. Need a database server for TimescaleDB (45GB, 7-year backtest data) running as a k3s agent node.
+
+      BASELINE PRICES FOR NEW SERVERS (the benchmark to beat):
+      - AX42: Ryzen 7 PRO 8700GE, 8c, 64GB ECC, 2x1.92TB NVMe = 59EUR/mo
+      - AX102: Ryzen 9 7950X3D, 16c, 128GB ECC, 2x1.92TB NVMe = 130EUR/mo
+      - AX162: EPYC 9454P, 48c, 128GB ECC, 2x1.92TB NVMe = 199EUR/mo
+
+      HARD REQUIREMENTS (fail any = automatic SKIP):
+      - Must have NVMe (SATA SSDs are too slow for TimescaleDB)
+      - Must have ECC RAM
+      - Must be CHEAPER than buying the equivalent new server
+      - Consumer CPUs (i7, Ryzen without ECC boards) = SKIP
+
+      STRONG PREFERENCES:
+      - 128GB+ RAM (64GB works but 128GB is much better for DB caching)
+      - Server-grade CPU: EPYC >> Xeon >> Ryzen (reliability matters for remote server)
+      - Helsinki (HEL1) datacenter preferred (same DC as current server)
+      - More cores = better for parallel DB queries
+
+      SERVERS:
+      ${server_list}
+
+      Respond ONLY with a JSON array. No markdown, no explanation outside JSON.
+      [
+        {
+          \"id\": \"server_id\",
+          \"score\": 1-10,
+          \"verdict\": \"SKIP\" or \"WATCH\" or \"CONSIDER\" or \"BUY_NOW\",
+          \"reason\": \"specific comparison - e.g. 'EPYC 7502P with 128GB at 157EUR is 21% cheaper than new AX162 (199EUR) with similar specs, and in HEL1'\"
+        }
+      ]
+
+      SCORING RULES (be strict):
+      - 1-4 (SKIP): No NVMe, consumer CPU, costs more than new equivalent, <64GB RAM, old architecture (Haswell/Broadwell)
+      - 5-6 (WATCH): Has NVMe+ECC but price is only marginally better than new, or wrong datacenter, or Ryzen (less reliable than EPYC/Xeon for servers)
+      - 7-8 (CONSIDER): 15-25% cheaper than new equivalent, has NVMe+ECC+128GB, server-grade CPU
+      - 9 (BUY_NOW): 25%+ cheaper than new equivalent, EPYC or Xeon, NVMe, 128GB+ ECC, ideally HEL1
+      - 10 (BUY_NOW): Same as 9 but in HEL1 datacenter AND significantly cheaper
+
+      CRITICAL: A Ryzen 7 3700X at 137EUR is NOT a 9/10. The new AX102 (Ryzen 9 7950X3D) costs 130EUR with better specs. That Ryzen is a SKIP. Always compare against what you can buy NEW.
+      Most servers should score 1-5. Score 9+ should be RARE - maybe 1-2 out of 50 servers."
+
+      llm_response=$(curl -sf --max-time 120 \
+        "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/ai/run/@cf/meta/llama-3.1-8b-instruct" \
+        -H "X-Auth-Email: ${CF_EMAIL}" \
+        -H "X-Auth-Key: ${CF_API_KEY}" \
+        -H "Content-Type: application/json" \
+        -d "$(jq -n --arg p "$prompt" '{
+          messages: [
+            {role: "system", content: "You are a server infrastructure advisor. Respond ONLY with valid JSON array. No markdown, no explanation outside the JSON."},
+            {role: "user", content: $p}
+          ],
+          max_tokens: 4000
+        }')" 2>/dev/null)
+
+      if [ -z "$llm_response" ]; then
+        echo "LLM call failed, skipping notifications this cycle"
+        : > /tmp/notify.jsonl
+      else
+        echo "LLM response received"
+        # Parse LLM scores
+        # Extract JSON array from LLM response - handle markdown code blocks
+        raw_response=$(echo "$llm_response" | jq -r '.result.response // empty' 2>/dev/null)
+        scores=$(echo "$raw_response" | sed 's/```json//g; s/```//g' | jq -c '.' 2>/dev/null || echo "[]")
+
+        if [ "$scores" = "[]" ] || [ -z "$scores" ]; then
+          echo "Failed to parse LLM scores, skipping notifications this cycle"
+          : > /tmp/notify.jsonl
+        else
+          echo "Scores parsed: $scores"
+          # Only notify CONSIDER (7-8) and BUY_NOW (9-10)
+          echo "$changed_servers" | jq -c '.[]' > /tmp/notify.jsonl.tmp
+          : > /tmp/notify.jsonl
+          while IFS= read -r server; do
+            sid=$(echo "$server" | jq -r '.id')
+            # Match by id - LLM may return id as "#3040803" or "3040803" or 3040803
+            score_entry=$(echo "$scores" | jq -c --arg id "$sid" '.[] | select((.id | tostring | ltrimstr("#")) == $id)' 2>/dev/null || echo "")
+            if [ -n "$score_entry" ]; then
+              score=$(echo "$score_entry" | jq -r '.score // 0')
+              verdict=$(echo "$score_entry" | jq -r '.verdict // "SKIP"')
+              reason=$(echo "$score_entry" | jq -r '.reason // "No reason given"')
+              echo "  Server #${sid}: score=${score} verdict=${verdict} - ${reason}"
+              if [ "$score" -ge 9 ] 2>/dev/null; then
+                server_scored=$(echo "$server" | jq -c --argjson s "$score" --arg v "$verdict" --arg r "$reason" '. + {llm_score: $s, llm_verdict: $v, llm_reason: $r}' 2>/dev/null)
+                if [ -n "$server_scored" ] && echo "$server_scored" | jq . >/dev/null 2>&1; then
+                  echo "$server_scored" >> /tmp/notify.jsonl
+                fi
+              fi
+            else
+              echo "  Server #${sid}: no score from LLM, skipping"
+            fi
+          done < /tmp/notify.jsonl.tmp
+        fi
+      fi
+
+      # Stage 3: Notify only LLM-approved servers
+      notify_count=$(wc -l < /tmp/notify.jsonl | tr -d ' ')
+      echo "Stage 3: Notifying for $notify_count servers"
+
+      while IFS= read -r server; do
+        [ -z "$server" ] && continue
+        sid=$(echo "$server" | jq -r '.id')
+        price=$(echo "$server" | jq -r '.price')
+        cpu=$(echo "$server" | jq -r '.cpu')
+        ram=$(echo "$server" | jq -r '.ram')
+        disks=$(echo "$server" | jq -r '.disks')
+        dc=$(echo "$server" | jq -r '.dc')
+        has_nvme=$(echo "$server" | jq -r '.has_nvme')
+        next_reduce=$(echo "$server" | jq -r '.next_reduce')
+        prev_price=$(echo "$server" | jq -r '.previous_price // "new"')
+        is_new=$(echo "$server" | jq -r '.is_new')
+        llm_score=$(echo "$server" | jq -r '.llm_score // "?"')
+        llm_verdict=$(echo "$server" | jq -r '.llm_verdict // "UNKNOWN"')
+        llm_reason=$(echo "$server" | jq -r '.llm_reason // ""')
+        benchmark=$(echo "$server" | jq -r '.benchmark')
+
+        if [ "$llm_verdict" = "BUY_NOW" ]; then
+          title="BUY NOW: ${cpu} - ${price}EUR/mo [${llm_score}/10]"
+          priority=10
+        elif [ "$is_new" = "true" ]; then
+          title="Good Deal: ${cpu} - ${price}EUR/mo [${llm_score}/10]"
+          priority=8
+        else
+          title="Price Drop: ${cpu} - ${price}EUR (was ${prev_price}EUR) [${llm_score}/10]"
+          priority=8
+        fi
+
+        nvme_label=""
+        [ "$has_nvme" = "true" ] && nvme_label="NVMe" || nvme_label="SATA/HDD"
+
+        msg="[${llm_verdict}] ${llm_reason}
+
+      Server #${sid} in ${dc}
+      CPU: ${cpu} (benchmark: ${benchmark})
+      RAM: ${ram}GB ECC
+      Storage: ${disks} (${nvme_label})
+      Price: ${price} EUR/mo
+      Next price drop: ${next_reduce}
+
+      Order: https://www.hetzner.com/sb#auctions/${sid}"
+
+        echo "Notifying: $title"
+        curl -sf -X POST "${GOTIFY_URL}/message" \
+          -H "Content-Type: application/json" \
+          -H "X-Gotify-Key: ${GOTIFY_TOKEN}" \
+          -d "$(jq -n --arg t "$title" --arg m "$msg" --argjson p "$priority" \
+            '{title: $t, message: $m, priority: $p}')" > /dev/null 2>&1 || true
+
+        # Update seen state
+        updated=$(cat "$SEEN_FILE")
+        updated=$(echo "$updated" | jq --arg id "$sid" --arg p "$price" '.[$id] = $p')
+        echo "$updated" > "$SEEN_FILE"
+      done < /tmp/notify.jsonl
+
+      # Update seen for ALL servers (even ones we didn't notify about) so we don't re-evaluate
+      echo "$matches" | jq -c '.[]' > /tmp/all.jsonl
+      updated_seen=$(cat "$SEEN_FILE")
+      while IFS= read -r server; do
+        sid=$(echo "$server" | jq -r '.id')
+        price=$(echo "$server" | jq -r '.price')
+        updated_seen=$(echo "$updated_seen" | jq --arg id "$sid" --arg p "$price" '.[$id] = $p')
+      done < /tmp/all.jsonl
+      echo "$updated_seen" > "$SEEN_FILE"
+
+      # Persist state
+      kubectl create configmap hetzner-watcher-state -n atlas-system \
+        --from-file=seen.json="$SEEN_FILE" \
+        --from-file=history.json="$HISTORY_FILE" \
+        --dry-run=client -o yaml | kubectl apply -f -
+
+      echo "Done. State saved."
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"watch.sh":"#!/bin/bash\nset -euo pipefail\n\nGOTIFY_URL=\"${GOTIFY_URL:-http://gotify.atlas-system.svc.cluster.local:80}\"\nGOTIFY_TOKEN=\"${GOTIFY_TOKEN}\"\nCF_ACCOUNT_ID=\"${CF_ACCOUNT_ID}\"\nCF_EMAIL=\"${CF_EMAIL}\"\nCF_API_KEY=\"${CF_API_KEY}\"\nAUCTION_URL=\"https://www.hetzner.com/_resources/app/data/app/live_data_sb_EUR.json\"\n\nSEEN_FILE=\"/tmp/seen.json\"\nHISTORY_FILE=\"/tmp/history.json\"\nkubectl get configmap hetzner-watcher-state -n atlas-system -o jsonpath='{.data.seen\\.json}' \u003e \"$SEEN_FILE\" 2\u003e/dev/null || echo '{}' \u003e \"$SEEN_FILE\"\nkubectl get configmap hetzner-watcher-state -n atlas-system -o jsonpath='{.data.history\\.json}' \u003e \"$HISTORY_FILE\" 2\u003e/dev/null || echo '{}' \u003e \"$HISTORY_FILE\"\n\ndata=$(curl -sf --max-time 30 \"$AUCTION_URL\") || { echo \"Failed to fetch\"; exit 1; }\n\n# Stage 1: Tighter spec filter - only servers worth evaluating\nmatches=$(echo \"$data\" | jq '[.server[] | select(\n  .ram_size \u003e= 128 and\n  .price \u003c= 220 and\n  .is_ecc and\n  ((.serverDiskData.nvme | length) \u003e 0)\n) | {\n  id: (.key | tostring),\n  cpu: .cpu,\n  cores: .cpu_count,\n  ram: .ram_size,\n  price: .price,\n  dc: .datacenter,\n  disks: (.hdd_arr | join(\", \")),\n  has_nvme: ((.serverDiskData.nvme | length) \u003e 0),\n  nvme_count: (.serverDiskData.nvme | length),\n  sata_count: (.serverDiskData.sata | length),\n  hdd_count: (.serverDiskData.hdd | length),\n  total_storage_gb: (([.serverDiskData.nvme[], .serverDiskData.sata[], .serverDiskData.hdd[]] | add) // 0),\n  next_reduce: (.next_reduce_timestamp | todate),\n  next_reduce_seconds: .next_reduce,\n  benchmark: (.cpu_benchmark // 0),\n  setup_fee: (.setup_price // 0),\n  specials: (.specials // [])\n}]')\n\ncount=$(echo \"$matches\" | jq 'length')\necho \"Stage 1: $count servers pass filter (128GB+ ECC, NVMe, under 220EUR)\"\n\nif [ \"$count\" -eq 0 ]; then\n  echo \"No matches, exiting.\"\n  exit 0\nfi\n\n# Check for new or price-changed servers\nseen=$(cat \"$SEEN_FILE\")\nhistory=$(cat \"$HISTORY_FILE\")\nchanged_servers=\"[]\"\n\necho \"$matches\" | jq -c '.[]' \u003e /tmp/servers.jsonl\n\nwhile IFS= read -r server; do\n  sid=$(echo \"$server\" | jq -r '.id')\n  price=$(echo \"$server\" | jq -r '.price')\n  seen_price=$(echo \"$seen\" | jq -r --arg id \"$sid\" '.[$id] // \"0\"')\n\n  if [ \"$seen_price\" = \"$price\" ]; then\n    continue\n  fi\n\n  # Track price history\n  ts=$(date -u +%Y-%m-%dT%H:%M:%SZ)\n  history=$(echo \"$history\" | jq --arg id \"$sid\" --arg p \"$price\" --arg t \"$ts\" '\n    .[$id] = ((.[$id] // []) + [{\"price\": ($p | tonumber), \"time\": $t}])\n    | .[$id] = (.[$id] | if length \u003e 20 then .[-20:] else . end)\n  ')\n\n  # Add price trend to server data\n  price_history=$(echo \"$history\" | jq -c --arg id \"$sid\" '.[$id] // []')\n  server_with_history=$(echo \"$server\" | jq --argjson hist \"$price_history\" --arg sp \"$seen_price\" '. + {\n    price_history: $hist,\n    previous_price: (if $sp == \"0\" then null else ($sp | tonumber) end),\n    is_new: ($sp == \"0\")\n  }')\n\n  changed_servers=$(echo \"$changed_servers\" | jq --argjson s \"$server_with_history\" '. + [$s]')\ndone \u003c /tmp/servers.jsonl\n\nchanged_count=$(echo \"$changed_servers\" | jq 'length')\necho \"Stage 1.5: $changed_count new or price-changed servers\"\n\nif [ \"$changed_count\" -eq 0 ]; then\n  echo \"No changes, saving state and exiting.\"\n  # Still persist in case history was updated\n  echo \"$seen\" \u003e \"$SEEN_FILE\"\n  echo \"$history\" \u003e \"$HISTORY_FILE\"\n  kubectl create configmap hetzner-watcher-state -n atlas-system \\\n    --from-file=seen.json=\"$SEEN_FILE\" \\\n    --from-file=history.json=\"$HISTORY_FILE\" \\\n    --dry-run=client -o yaml | kubectl apply -f -\n  exit 0\nfi\n\n# Stage 2: LLM evaluation via Cloudflare Workers AI\necho \"Stage 2: Evaluating $changed_count servers with LLM...\"\n\nserver_list=$(echo \"$changed_servers\" | jq -r '[.[] | \"- #\\(.id) \\(.cpu) | \\(.cores) cores | \\(.ram)GB ECC | \\(.disks) | \\(.dc) | \\(.price)EUR/mo | NVMe:\\(.has_nvme) | benchmark:\\(.benchmark) | \\(if .is_new then \"NEW\" else \"was \\(.previous_price)EUR\" end)\"] | join(\"\\n\")')\n\nprompt=\"You are a ruthlessly analytical infrastructure advisor. Evaluate Hetzner Server Auction deals for a company replacing a broken server.\n\nSITUATION: Replacing polaris (Ryzen 5 3600, 64GB, Helsinki) which has a PROCHOT hardware defect. Need a database server for TimescaleDB (45GB, 7-year backtest data) running as a k3s agent node.\n\nBASELINE PRICES FOR NEW SERVERS (the benchmark to beat):\n- AX42: Ryzen 7 PRO 8700GE, 8c, 64GB ECC, 2x1.92TB NVMe = 59EUR/mo\n- AX102: Ryzen 9 7950X3D, 16c, 128GB ECC, 2x1.92TB NVMe = 130EUR/mo\n- AX162: EPYC 9454P, 48c, 128GB ECC, 2x1.92TB NVMe = 199EUR/mo\n\nHARD REQUIREMENTS (fail any = automatic SKIP):\n- Must have NVMe (SATA SSDs are too slow for TimescaleDB)\n- Must have ECC RAM\n- Must be CHEAPER than buying the equivalent new server\n- Consumer CPUs (i7, Ryzen without ECC boards) = SKIP\n\nSTRONG PREFERENCES:\n- 128GB+ RAM (64GB works but 128GB is much better for DB caching)\n- Server-grade CPU: EPYC \u003e\u003e Xeon \u003e\u003e Ryzen (reliability matters for remote server)\n- Helsinki (HEL1) datacenter preferred (same DC as current server)\n- More cores = better for parallel DB queries\n\nSERVERS:\n${server_list}\n\nRespond ONLY with a JSON array. No markdown, no explanation outside JSON.\n[\n  {\n    \\\"id\\\": \\\"server_id\\\",\n    \\\"score\\\": 1-10,\n    \\\"verdict\\\": \\\"SKIP\\\" or \\\"WATCH\\\" or \\\"CONSIDER\\\" or \\\"BUY_NOW\\\",\n    \\\"reason\\\": \\\"specific comparison - e.g. 'EPYC 7502P with 128GB at 157EUR is 21% cheaper than new AX162 (199EUR) with similar specs, and in HEL1'\\\"\n  }\n]\n\nSCORING RULES (be strict):\n- 1-4 (SKIP): No NVMe, consumer CPU, costs more than new equivalent, \u003c64GB RAM, old architecture (Haswell/Broadwell)\n- 5-6 (WATCH): Has NVMe+ECC but price is only marginally better than new, or wrong datacenter, or Ryzen (less reliable than EPYC/Xeon for servers)\n- 7-8 (CONSIDER): 15-25% cheaper than new equivalent, has NVMe+ECC+128GB, server-grade CPU\n- 9 (BUY_NOW): 25%+ cheaper than new equivalent, EPYC or Xeon, NVMe, 128GB+ ECC, ideally HEL1\n- 10 (BUY_NOW): Same as 9 but in HEL1 datacenter AND significantly cheaper\n\nCRITICAL: A Ryzen 7 3700X at 137EUR is NOT a 9/10. The new AX102 (Ryzen 9 7950X3D) costs 130EUR with better specs. That Ryzen is a SKIP. Always compare against what you can buy NEW.\nMost servers should score 1-5. Score 9+ should be RARE - maybe 1-2 out of 50 servers.\"\n\nllm_response=$(curl -sf --max-time 120 \\\n  \"https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/ai/run/@cf/meta/llama-3.1-8b-instruct\" \\\n  -H \"X-Auth-Email: ${CF_EMAIL}\" \\\n  -H \"X-Auth-Key: ${CF_API_KEY}\" \\\n  -H \"Content-Type: application/json\" \\\n  -d \"$(jq -n --arg p \"$prompt\" '{\n    messages: [\n      {role: \"system\", content: \"You are a server infrastructure advisor. Respond ONLY with valid JSON array. No markdown, no explanation outside the JSON.\"},\n      {role: \"user\", content: $p}\n    ],\n    max_tokens: 4000\n  }')\" 2\u003e/dev/null)\n\nif [ -z \"$llm_response\" ]; then\n  echo \"LLM call failed, skipping notifications this cycle\"\n  : \u003e /tmp/notify.jsonl\nelse\n  echo \"LLM response received\"\n  # Parse LLM scores\n  # Extract JSON array from LLM response - handle markdown code blocks\n  raw_response=$(echo \"$llm_response\" | jq -r '.result.response // empty' 2\u003e/dev/null)\n  scores=$(echo \"$raw_response\" | sed 's/```json//g; s/```//g' | jq -c '.' 2\u003e/dev/null || echo \"[]\")\n\n  if [ \"$scores\" = \"[]\" ] || [ -z \"$scores\" ]; then\n    echo \"Failed to parse LLM scores, skipping notifications this cycle\"\n    : \u003e /tmp/notify.jsonl\n  else\n    echo \"Scores parsed: $scores\"\n    # Only notify CONSIDER (7-8) and BUY_NOW (9-10)\n    echo \"$changed_servers\" | jq -c '.[]' \u003e /tmp/notify.jsonl.tmp\n    : \u003e /tmp/notify.jsonl\n    while IFS= read -r server; do\n      sid=$(echo \"$server\" | jq -r '.id')\n      # Match by id - LLM may return id as \"#3040803\" or \"3040803\" or 3040803\n      score_entry=$(echo \"$scores\" | jq -c --arg id \"$sid\" '.[] | select((.id | tostring | ltrimstr(\"#\")) == $id)' 2\u003e/dev/null || echo \"\")\n      if [ -n \"$score_entry\" ]; then\n        score=$(echo \"$score_entry\" | jq -r '.score // 0')\n        verdict=$(echo \"$score_entry\" | jq -r '.verdict // \"SKIP\"')\n        reason=$(echo \"$score_entry\" | jq -r '.reason // \"No reason given\"')\n        echo \"  Server #${sid}: score=${score} verdict=${verdict} - ${reason}\"\n        if [ \"$score\" -ge 9 ] 2\u003e/dev/null; then\n          server_scored=$(echo \"$server\" | jq -c --argjson s \"$score\" --arg v \"$verdict\" --arg r \"$reason\" '. + {llm_score: $s, llm_verdict: $v, llm_reason: $r}' 2\u003e/dev/null)\n          if [ -n \"$server_scored\" ] \u0026\u0026 echo \"$server_scored\" | jq . \u003e/dev/null 2\u003e\u00261; then\n            echo \"$server_scored\" \u003e\u003e /tmp/notify.jsonl\n          fi\n        fi\n      else\n        echo \"  Server #${sid}: no score from LLM, skipping\"\n      fi\n    done \u003c /tmp/notify.jsonl.tmp\n  fi\nfi\n\n# Stage 3: Notify only LLM-approved servers\nnotify_count=$(wc -l \u003c /tmp/notify.jsonl | tr -d ' ')\necho \"Stage 3: Notifying for $notify_count servers\"\n\nwhile IFS= read -r server; do\n  [ -z \"$server\" ] \u0026\u0026 continue\n  sid=$(echo \"$server\" | jq -r '.id')\n  price=$(echo \"$server\" | jq -r '.price')\n  cpu=$(echo \"$server\" | jq -r '.cpu')\n  ram=$(echo \"$server\" | jq -r '.ram')\n  disks=$(echo \"$server\" | jq -r '.disks')\n  dc=$(echo \"$server\" | jq -r '.dc')\n  has_nvme=$(echo \"$server\" | jq -r '.has_nvme')\n  next_reduce=$(echo \"$server\" | jq -r '.next_reduce')\n  prev_price=$(echo \"$server\" | jq -r '.previous_price // \"new\"')\n  is_new=$(echo \"$server\" | jq -r '.is_new')\n  llm_score=$(echo \"$server\" | jq -r '.llm_score // \"?\"')\n  llm_verdict=$(echo \"$server\" | jq -r '.llm_verdict // \"UNKNOWN\"')\n  llm_reason=$(echo \"$server\" | jq -r '.llm_reason // \"\"')\n  benchmark=$(echo \"$server\" | jq -r '.benchmark')\n\n  if [ \"$llm_verdict\" = \"BUY_NOW\" ]; then\n    title=\"BUY NOW: ${cpu} - ${price}EUR/mo [${llm_score}/10]\"\n    priority=10\n  elif [ \"$is_new\" = \"true\" ]; then\n    title=\"Good Deal: ${cpu} - ${price}EUR/mo [${llm_score}/10]\"\n    priority=8\n  else\n    title=\"Price Drop: ${cpu} - ${price}EUR (was ${prev_price}EUR) [${llm_score}/10]\"\n    priority=8\n  fi\n\n  nvme_label=\"\"\n  [ \"$has_nvme\" = \"true\" ] \u0026\u0026 nvme_label=\"NVMe\" || nvme_label=\"SATA/HDD\"\n\n  msg=\"[${llm_verdict}] ${llm_reason}\n\nServer #${sid} in ${dc}\nCPU: ${cpu} (benchmark: ${benchmark})\nRAM: ${ram}GB ECC\nStorage: ${disks} (${nvme_label})\nPrice: ${price} EUR/mo\nNext price drop: ${next_reduce}\n\nOrder: https://www.hetzner.com/sb#auctions/${sid}\"\n\n  echo \"Notifying: $title\"\n  curl -sf -X POST \"${GOTIFY_URL}/message\" \\\n    -H \"Content-Type: application/json\" \\\n    -H \"X-Gotify-Key: ${GOTIFY_TOKEN}\" \\\n    -d \"$(jq -n --arg t \"$title\" --arg m \"$msg\" --argjson p \"$priority\" \\\n      '{title: $t, message: $m, priority: $p}')\" \u003e /dev/null 2\u003e\u00261 || true\n\n  # Update seen state\n  updated=$(cat \"$SEEN_FILE\")\n  updated=$(echo \"$updated\" | jq --arg id \"$sid\" --arg p \"$price\" '.[$id] = $p')\n  echo \"$updated\" \u003e \"$SEEN_FILE\"\ndone \u003c /tmp/notify.jsonl\n\n# Update seen for ALL servers (even ones we didn't notify about) so we don't re-evaluate\necho \"$matches\" | jq -c '.[]' \u003e /tmp/all.jsonl\nupdated_seen=$(cat \"$SEEN_FILE\")\nwhile IFS= read -r server; do\n  sid=$(echo \"$server\" | jq -r '.id')\n  price=$(echo \"$server\" | jq -r '.price')\n  updated_seen=$(echo \"$updated_seen\" | jq --arg id \"$sid\" --arg p \"$price\" '.[$id] = $p')\ndone \u003c /tmp/all.jsonl\necho \"$updated_seen\" \u003e \"$SEEN_FILE\"\n\n# Persist state\nkubectl create configmap hetzner-watcher-state -n atlas-system \\\n  --from-file=seen.json=\"$SEEN_FILE\" \\\n  --from-file=history.json=\"$HISTORY_FILE\" \\\n  --dry-run=client -o yaml | kubectl apply -f -\n\necho \"Done. State saved.\"\n"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"hetzner-watcher-script","namespace":"atlas-system"}}
+    creationTimestamp: "2026-07-26T10:26:52Z"
+    name: hetzner-watcher-script
+    namespace: atlas-system
+    resourceVersion: "33725099"
+    uid: ae0bc6d3-0bf5-4eca-97a0-ed2f68d34bff
+- apiVersion: v1
+  data:
+    history.json: |
+      {}
+    seen.json: |
+      {
+        "3044216": "211",
+        "3044355": "128",
+        "3042961": "136",
+        "3037686": "156",
+        "3044549": "176",
+        "3044095": "198",
+        "3044246": "206",
+        "3043449": "207",
+        "3044235": "198",
+        "3044233": "198",
+        "3044247": "207",
+        "3044236": "207",
+        "3044312": "206",
+        "3044239": "198",
+        "3044705": "189",
+        "3044167": "211",
+        "3044244": "212",
+        "3044398": "217",
+        "3044724": "152",
+        "3044138": "198",
+        "3044751": "150",
+        "3044753": "191",
+        "3044752": "199",
+        "3044770": "152",
+        "3044782": "212"
+      }
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"history.json":"{}\n","seen.json":"{\n  \"3044216\": \"211\",\n  \"3044355\": \"128\",\n  \"3042961\": \"136\",\n  \"3037686\": \"156\",\n  \"3044549\": \"176\",\n  \"3044095\": \"198\",\n  \"3044246\": \"206\",\n  \"3043449\": \"207\",\n  \"3044235\": \"198\",\n  \"3044233\": \"198\",\n  \"3044247\": \"207\",\n  \"3044236\": \"207\",\n  \"3044312\": \"206\",\n  \"3044239\": \"198\",\n  \"3044705\": \"189\",\n  \"3044167\": \"211\",\n  \"3044244\": \"212\",\n  \"3044398\": \"217\",\n  \"3044724\": \"152\",\n  \"3044138\": \"198\",\n  \"3044751\": \"150\",\n  \"3044753\": \"191\",\n  \"3044752\": \"199\",\n  \"3044770\": \"152\",\n  \"3044782\": \"212\"\n}\n"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"hetzner-watcher-state","namespace":"atlas-system"}}
+    creationTimestamp: "2026-07-26T14:56:34Z"
+    name: hetzner-watcher-state
+    namespace: atlas-system
+    resourceVersion: "33952658"
+    uid: 9d89fa3e-069b-462a-91f4-ecc30f36c50a
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIBdzCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy
+      dmVyLWNhQDE3NzM0OTIwNDMwHhcNMjYwMzE0MTI0MDQzWhcNMzYwMzExMTI0MDQz
+      WjAjMSEwHwYDVQQDDBhrM3Mtc2VydmVyLWNhQDE3NzM0OTIwNDMwWTATBgcqhkjO
+      PQIBBggqhkjOPQMBBwNCAARpgn+LEJSNlp2uAqphT94mk3q/VpLzxAn/KjD1mBH8
+      oQu45uwEkuvSQdTXfKQORPUuxCqO/aaIp9J79K22/cobo0IwQDAOBgNVHQ8BAf8E
+      BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUaFaNeoZQ5OsygNWLwWhw
+      qpQZLbMwCgYIKoZIzj0EAwIDSAAwRQIhAO249TlfJBFz/q6b8Qv9/09lifqmSddW
+      aVbPh0wrSpvCAiAJrxY16wd92CAuR5caK2/1xOqu05sdTiI7O1SXIsotcQ==
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2026-03-31T10:33:28Z"
+    name: kube-root-ca.crt
+    namespace: atlas-system
+    resourceVersion: "3036994"
+    uid: 60750831-73dd-42e3-916e-329535f7336f
+- apiVersion: v1
+  data:
+    run.py: |
+      import os, sys
+
+      pw = os.environ.get("TIMESCALEDB_PASSWORD", "")
+      os.environ["ATLAS_TSDB_URL"] = f"postgresql://atlas:{pw}@timescaledb-polaris.atlas-system.svc.cluster.local:5432/atlas"
+      import src.data.tick_store as ts; ts._store = None
+
+      from src.screeners.snapshot_provider import get_historical_snapshots
+      from src.screeners.dux_bus_scanner import scan_gap_fades_from_snapshots
+      from src.analytics.dux_bayesian_gates import assess_dux_setup
+
+      conn = None
+      try:
+          store = ts.get_tick_store()
+          if store._ensure_connection():
+              conn = store._conn
+      except:
+          pass
+
+      if not conn:
+          print("ERROR: Cannot connect to TSDB")
+          sys.exit(1)
+
+      # Test 5 dates across different periods
+      TEST_DATES = [
+          "2021-09-15",  # Sep 2021
+          "2022-01-18",  # Jan 2022
+          "2022-06-15",  # Jun 2022
+          "2022-09-16",  # Sep 2022 (AMPX day)
+          "2023-03-15",  # Mar 2023
+      ]
+
+      print("=" * 80)
+      print("MULTI-DATE PARITY TEST: backtest SQL vs forward scanner")
+      print("=" * 80)
+
+      total_bt = 0
+      total_scanner = 0
+      total_both = 0
+      total_bt_only = 0
+
+      for date in TEST_DATES:
+          print(f"\n--- {date} ---")
+
+          # BACKTEST PATH: SQL gap-up query
+          bt_symbols = set()
+          try:
+              with conn.cursor() as cur:
+                  cur.execute(f"""
+                      WITH daily_with_prev AS (
+                          SELECT DISTINCT ON (symbol, time::date)
+                                 symbol, time::date as day, open, high, low, close, volume,
+                                 LAG(close) OVER (PARTITION BY symbol ORDER BY time::date) as prev_close
+                          FROM market_bars
+                          WHERE interval = '1d'
+                            AND time::date BETWEEN ('{date}'::date - interval '3 days') AND '{date}'::date
+                            AND close > 0
+                          ORDER BY symbol, time::date, time DESC
+                      )
+                      SELECT symbol, ((open - prev_close) / prev_close * 100) as gap_pct
+                      FROM daily_with_prev
+                      WHERE day = '{date}'::date AND prev_close > 0
+                        AND ((open - prev_close) / prev_close * 100) >= 15
+                  """)
+                  bt_results = cur.fetchall()
+                  bt_symbols = {r[0] for r in bt_results}
+          except Exception as e:
+              print(f"  BT SQL error: {e}")
+
+          # FORWARD TEST PATH: shared scanner
+          snapshots = get_historical_snapshots(date, conn=conn)
+          setups = scan_gap_fades_from_snapshots(snapshots)
+
+          # Run Bayesian gate on scanner results
+          gated_setups = []
+          for s in setups:
+              gate = assess_dux_setup("gap_up_fade", {
+                  "symbol": s.symbol, "price": s.price,
+                  "gap_pct": s.gap_pct, "volume": s.volume,
+                  "below_vwap": s.below_vwap, "fade_pct": s.fade_pct,
+                  "volume_ratio": s.volume_ratio,
+              })
+              if gate and gate.should_trade:
+                  gated_setups.append((s, gate))
+
+          scanner_symbols = {s.symbol for s in setups}
+          gated_symbols = {s.symbol for s, g in gated_setups}
+
+          in_both = bt_symbols & scanner_symbols
+          bt_only = bt_symbols - scanner_symbols
+
+          print(f"  Snapshots: {len(snapshots)} | BT gaps: {len(bt_symbols)} | Scanner: {len(setups)} | Gated: {len(gated_setups)}")
+          print(f"  In both: {len(in_both)} | BT-only: {len(bt_only)}")
+
+          if bt_only:
+              for sym in list(bt_only)[:3]:
+                  gap = [r[1] for r in bt_results if r[0] == sym]
+                  print(f"    MISS: {sym} gap={gap[0]:.1f}%")
+
+          # Show top gated trades (what forward test would actually trade)
+          for s, g in gated_setups[:3]:
+              print(f"    TRADE: {s.symbol} gap={s.gap_pct:.1f}% grade={g.grade} posterior={g.posterior:.2f}")
+
+          total_bt += len(bt_symbols)
+          total_scanner += len(setups)
+          total_both += len(in_both)
+          total_bt_only += len(bt_only)
+
+      print(f"\n{'=' * 80}")
+      print(f"SUMMARY across {len(TEST_DATES)} dates:")
+      print(f"  Backtest found: {total_bt} gap-ups")
+      print(f"  Scanner found:  {total_scanner} setups")
+      print(f"  In both:        {total_both}")
+      print(f"  BT-only misses: {total_bt_only}")
+      if total_bt > 0:
+          parity = total_both / total_bt * 100
+          print(f"  Parity:         {parity:.1f}%")
+          if parity >= 90:
+              print(f"  *** PARITY PASS ({parity:.0f}%) ***")
+          else:
+              print(f"  *** PARITY NEEDS WORK ({parity:.0f}%) ***")
+  kind: ConfigMap
+  metadata:
+    creationTimestamp: "2026-07-26T10:31:00Z"
+    name: parity-test
+    namespace: atlas-system
+    resourceVersion: "33650362"
+    uid: f7162402-ce1d-4949-ba44-e1754dbc1856
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"atlas-worker-data","namespace":"atlas-system"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"10Gi"}},"storageClassName":"openebs-hostpath"}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: orion
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-07-05T12:58:49Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: atlas-worker-data
+    namespace: atlas-system
+    resourceVersion: "26220938"
+    uid: a9da4656-a431-4546-8103-0b145a6b0f22
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-a9da4656-a431-4546-8103-0b145a6b0f22
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 10Gi
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"atlas-worker-data-polaris","namespace":"atlas-system"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"10Gi"}},"storageClassName":"local-polaris"}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+    creationTimestamp: "2026-07-24T20:58:15Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: atlas-worker-data-polaris
+    namespace: atlas-system
+    resourceVersion: "33071808"
+    uid: b2d37f52-44c2-4254-ad21-d1667c855b9a
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+    storageClassName: local-polaris
+    volumeMode: Filesystem
+    volumeName: polaris-worker-data
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 10Gi
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"atlas-worker-data-vega","namespace":"atlas-system"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"10Gi"}},"storageClassName":"local-vega"}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+    creationTimestamp: "2026-07-27T03:04:24Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: atlas-worker-data-vega
+    namespace: atlas-system
+    resourceVersion: "33930273"
+    uid: 0576ddff-e7c8-47d4-8978-9871062fb1a4
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+    storageClassName: local-vega
+    volumeMode: Filesystem
+    volumeName: vega-worker-data
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 10Gi
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"labels":{"app.kubernetes.io/name":"falkordb","app.kubernetes.io/part-of":"atlas"},"name":"falkordb-data","namespace":"atlas-system"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"10Gi"}},"storageClassName":"openebs-hostpath"}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: orion
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-07-02T23:45:04Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    labels:
+      app.kubernetes.io/name: falkordb
+      app.kubernetes.io/part-of: atlas
+    name: falkordb-data
+    namespace: atlas-system
+    resourceVersion: "25482256"
+    uid: ffead4ee-cd67-4bbd-a5e4-e381e255767c
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-ffead4ee-cd67-4bbd-a5e4-e381e255767c
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 10Gi
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"labels":{"app.kubernetes.io/name":"gotify","app.kubernetes.io/part-of":"atlas"},"name":"gotify-data","namespace":"atlas-system"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"1Gi"}},"storageClassName":"openebs-hostpath"}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: orion
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-07-02T23:45:04Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    labels:
+      app.kubernetes.io/name: gotify
+      app.kubernetes.io/part-of: atlas
+    name: gotify-data
+    namespace: atlas-system
+    resourceVersion: "25482224"
+    uid: 4d46ac9e-2ef4-4d50-8d56-79e9cd7088b8
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-4d46ac9e-2ef4-4d50-8d56-79e9cd7088b8
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 1Gi
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"labels":{"app.kubernetes.io/name":"timescaledb","app.kubernetes.io/part-of":"atlas"},"name":"timescaledb-data","namespace":"atlas-system"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"50Gi"}},"storageClassName":"openebs-hostpath"}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: orion
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-07-02T23:45:03Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    labels:
+      app.kubernetes.io/name: timescaledb
+      app.kubernetes.io/part-of: atlas
+    name: timescaledb-data
+    namespace: atlas-system
+    resourceVersion: "25482247"
+    uid: 435e67c0-6527-40aa-962a-c8411fce7727
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 50Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-435e67c0-6527-40aa-962a-c8411fce7727
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 50Gi
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"timescaledb-polaris","namespace":"atlas-system"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"800Gi"}},"storageClassName":"local-polaris"}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+    creationTimestamp: "2026-07-24T16:20:04Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: timescaledb-polaris
+    namespace: atlas-system
+    resourceVersion: "32881152"
+    uid: 021d7d77-f0e9-4850-8536-15967bf0b176
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 800Gi
+    storageClassName: local-polaris
+    volumeMode: Filesystem
+    volumeName: polaris-data
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 800Gi
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"timescaledb-vega","namespace":"atlas-system"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"1500Gi"}},"storageClassName":"local-vega"}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+    creationTimestamp: "2026-07-26T22:42:13Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: timescaledb-vega
+    namespace: atlas-system
+    resourceVersion: "33889870"
+    uid: 624991bc-d5a0-4331-b6bb-d90bb717b3ce
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1500Gi
+    storageClassName: local-vega
+    volumeMode: Filesystem
+    volumeName: vega-data
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 1500Gi
+    phase: Bound
+kind: List
+metadata:
+  resourceVersion: ""

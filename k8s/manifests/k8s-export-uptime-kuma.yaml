@@ -1,0 +1,209 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "2"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"uptime-kuma"},"name":"uptime-kuma","namespace":"uptime-kuma"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"uptime-kuma"}},"template":{"metadata":{"labels":{"app":"uptime-kuma"}},"spec":{"containers":[{"image":"louislam/uptime-kuma:2","name":"uptime-kuma","ports":[{"containerPort":3001}],"resources":{"limits":{"cpu":"500m","memory":"512Mi"},"requests":{"cpu":"50m","memory":"128Mi"}},"volumeMounts":[{"mountPath":"/app/data","name":"data"}]}],"nodeSelector":{"kubernetes.io/hostname":"orion"},"volumes":[{"name":"data","persistentVolumeClaim":{"claimName":"uptime-kuma-data-orion"}}]}}}}
+    creationTimestamp: "2026-07-12T13:11:10Z"
+    generation: 10
+    labels:
+      app: uptime-kuma
+    name: uptime-kuma
+    namespace: uptime-kuma
+    resourceVersion: "33063033"
+    uid: c9670fc4-2e24-4665-9f97-21d0517646f5
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: uptime-kuma
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: uptime-kuma
+      spec:
+        containers:
+        - image: louislam/uptime-kuma:2
+          imagePullPolicy: IfNotPresent
+          name: uptime-kuma
+          ports:
+          - containerPort: 3001
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 50m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /app/data
+            name: data
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/hostname: orion
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node.kubernetes.io/disk-pressure
+          operator: Exists
+        volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: uptime-kuma-data-orion
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-07-12T13:11:10Z"
+      lastUpdateTime: "2026-07-12T14:02:10Z"
+      message: ReplicaSet "uptime-kuma-65996f5cdb" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T20:28:54Z"
+      lastUpdateTime: "2026-07-24T20:28:54Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 10
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app.kubernetes.io/name":"uptime-kuma"},"name":"uptime-kuma","namespace":"uptime-kuma"},"spec":{"ports":[{"name":"http","port":3001,"targetPort":3001}],"selector":{"app.kubernetes.io/name":"uptime-kuma"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-04-04T18:36:59Z"
+    labels:
+      app.kubernetes.io/name: uptime-kuma
+    name: uptime-kuma
+    namespace: uptime-kuma
+    resourceVersion: "28336333"
+    uid: 3ec77e8d-1e62-440f-849b-7a82c8cc0d37
+  spec:
+    clusterIP: 10.43.77.99
+    clusterIPs:
+    - 10.43.77.99
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 3001
+      protocol: TCP
+      targetPort: 3001
+    selector:
+      app: uptime-kuma
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIBdzCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy
+      dmVyLWNhQDE3NzM0OTIwNDMwHhcNMjYwMzE0MTI0MDQzWhcNMzYwMzExMTI0MDQz
+      WjAjMSEwHwYDVQQDDBhrM3Mtc2VydmVyLWNhQDE3NzM0OTIwNDMwWTATBgcqhkjO
+      PQIBBggqhkjOPQMBBwNCAARpgn+LEJSNlp2uAqphT94mk3q/VpLzxAn/KjD1mBH8
+      oQu45uwEkuvSQdTXfKQORPUuxCqO/aaIp9J79K22/cobo0IwQDAOBgNVHQ8BAf8E
+      BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUaFaNeoZQ5OsygNWLwWhw
+      qpQZLbMwCgYIKoZIzj0EAwIDSAAwRQIhAO249TlfJBFz/q6b8Qv9/09lifqmSddW
+      aVbPh0wrSpvCAiAJrxY16wd92CAuR5caK2/1xOqu05sdTiI7O1SXIsotcQ==
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2026-04-04T18:36:59Z"
+    name: kube-root-ca.crt
+    namespace: uptime-kuma
+    resourceVersion: "4508895"
+    uid: d120f36b-49e5-490f-8661-5b073b941ec8
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"uptime-kuma-data","namespace":"uptime-kuma"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"2Gi"}},"storageClassName":"openebs-hostpath"}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: astra
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-04-04T18:36:59Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: uptime-kuma-data
+    namespace: uptime-kuma
+    resourceVersion: "4508950"
+    uid: 55f27ba8-0211-43a9-9bf0-aea04a7bcd69
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 2Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-55f27ba8-0211-43a9-9bf0-aea04a7bcd69
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 2Gi
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"uptime-kuma-data-orion","namespace":"uptime-kuma"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"2Gi"}},"storageClassName":"openebs-hostpath","volumeName":"uptime-kuma-data-orion-pv"}}
+      pv.kubernetes.io/bind-completed: "yes"
+    creationTimestamp: "2026-07-03T09:11:16Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: uptime-kuma-data-orion
+    namespace: uptime-kuma
+    resourceVersion: "25607221"
+    uid: 922ee920-da27-456e-b08c-54571aaf081b
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 2Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: uptime-kuma-data-orion-pv
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 2Gi
+    phase: Bound
+kind: List
+metadata:
+  resourceVersion: ""

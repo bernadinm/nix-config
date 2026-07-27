@@ -1,0 +1,791 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "2"
+      meta.helm.sh/release-name: authentik
+      meta.helm.sh/release-namespace: authentik
+    creationTimestamp: "2026-04-07T10:56:46Z"
+    generation: 2
+    labels:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: authentik
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: authentik
+      app.kubernetes.io/part-of: authentik
+      app.kubernetes.io/version: 2026.2.1
+      helm.sh/chart: authentik-2026.2.1
+    name: authentik-server
+    namespace: authentik
+    resourceVersion: "33325287"
+    uid: 3a545a4c-ecfb-4559-9dac-5bdbd51650c3
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 3
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: server
+        app.kubernetes.io/instance: authentik
+        app.kubernetes.io/name: authentik
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          checksum/secret: 68bec4b03e510c99d36f6e82308cd19a487235cdd1041167d788702f9b1c1963
+        labels:
+          app.kubernetes.io/component: server
+          app.kubernetes.io/instance: authentik
+          app.kubernetes.io/managed-by: Helm
+          app.kubernetes.io/name: authentik
+          app.kubernetes.io/part-of: authentik
+          app.kubernetes.io/version: 2026.2.1
+          helm.sh/chart: authentik-2026.2.1
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/component: server
+                    app.kubernetes.io/instance: authentik
+                    app.kubernetes.io/name: authentik
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+        containers:
+        - args:
+          - server
+          env:
+          - name: AUTHENTIK_LISTEN__HTTP
+            value: 0.0.0.0:9000
+          - name: AUTHENTIK_LISTEN__HTTPS
+            value: 0.0.0.0:9443
+          - name: AUTHENTIK_LISTEN__METRICS
+            value: 0.0.0.0:9300
+          envFrom:
+          - secretRef:
+              name: authentik
+          image: ghcr.io/goauthentik/server:2026.2.1
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /-/health/live/
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 3
+          name: server
+          ports:
+          - containerPort: 9000
+            name: http
+            protocol: TCP
+          - containerPort: 9443
+            name: https
+            protocol: TCP
+          - containerPort: 9300
+            name: metrics
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /-/health/ready/
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 3
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1Gi
+            requests:
+              cpu: 50m
+              memory: 256Mi
+          startupProbe:
+            failureThreshold: 60
+            httpGet:
+              path: /-/health/live/
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 3
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        enableServiceLinks: true
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-04-07T10:56:46Z"
+      lastUpdateTime: "2026-07-07T12:19:45Z"
+      message: ReplicaSet "authentik-server-58df7cfbdb" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-25T14:32:36Z"
+      lastUpdateTime: "2026-07-25T14:32:36Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "2"
+      meta.helm.sh/release-name: authentik
+      meta.helm.sh/release-namespace: authentik
+    creationTimestamp: "2026-04-07T10:56:46Z"
+    generation: 2
+    labels:
+      app.kubernetes.io/component: worker
+      app.kubernetes.io/instance: authentik
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: authentik
+      app.kubernetes.io/part-of: authentik
+      app.kubernetes.io/version: 2026.2.1
+      helm.sh/chart: authentik-2026.2.1
+    name: authentik-worker
+    namespace: authentik
+    resourceVersion: "33524025"
+    uid: 8f7ac6de-aa10-4e84-8926-bb2ffdf6ac75
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 3
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: worker
+        app.kubernetes.io/instance: authentik
+        app.kubernetes.io/name: authentik
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          checksum/secret: 68bec4b03e510c99d36f6e82308cd19a487235cdd1041167d788702f9b1c1963
+        labels:
+          app.kubernetes.io/component: worker
+          app.kubernetes.io/instance: authentik
+          app.kubernetes.io/managed-by: Helm
+          app.kubernetes.io/name: authentik
+          app.kubernetes.io/part-of: authentik
+          app.kubernetes.io/version: 2026.2.1
+          helm.sh/chart: authentik-2026.2.1
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/component: worker
+                    app.kubernetes.io/instance: authentik
+                    app.kubernetes.io/name: authentik
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+        containers:
+        - args:
+          - worker
+          env:
+          - name: AUTHENTIK_LISTEN__HTTP
+            value: 0.0.0.0:9000
+          - name: AUTHENTIK_LISTEN__METRICS
+            value: 0.0.0.0:9300
+          envFrom:
+          - secretRef:
+              name: authentik
+          image: ghcr.io/goauthentik/server:2026.2.1
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+              - ak
+              - healthcheck
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 3
+          name: worker
+          ports:
+          - containerPort: 9000
+            name: http
+            protocol: TCP
+          - containerPort: 9300
+            name: metrics
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - ak
+              - healthcheck
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 3
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1Gi
+            requests:
+              cpu: 25m
+              memory: 256Mi
+          startupProbe:
+            exec:
+              command:
+              - ak
+              - healthcheck
+            failureThreshold: 60
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 3
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        enableServiceLinks: true
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: authentik
+        serviceAccountName: authentik
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-04-07T10:56:46Z"
+      lastUpdateTime: "2026-07-07T12:19:56Z"
+      message: ReplicaSet "authentik-worker-8558774c74" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-26T02:44:12Z"
+      lastUpdateTime: "2026-07-26T02:44:12Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: authentik
+      meta.helm.sh/release-namespace: authentik
+    creationTimestamp: "2026-04-07T10:56:46Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: authentik
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: postgresql
+      app.kubernetes.io/version: 17.6.0
+      helm.sh/chart: postgresql-16.7.27
+    name: authentik-postgresql
+    namespace: authentik
+    resourceVersion: "32641065"
+    uid: 4096c76d-cccb-4d6d-84b1-0d2d1c062a67
+  spec:
+    persistentVolumeClaimRetentionPolicy:
+      whenDeleted: Retain
+      whenScaled: Retain
+    podManagementPolicy: OrderedReady
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: primary
+        app.kubernetes.io/instance: authentik
+        app.kubernetes.io/name: postgresql
+    serviceName: authentik-postgresql-hl
+    template:
+      metadata:
+        annotations:
+          checksum/configuration: c7768a9df482d4c1de21ac88a598f24ff260dad3ff5925385ab5225b3ef8be39
+          checksum/extended-configuration: f231c584ead90a4176b09eb6d6073240ab2939b8bd09b20013265962083b3208
+        labels:
+          app.kubernetes.io/component: primary
+          app.kubernetes.io/instance: authentik
+          app.kubernetes.io/managed-by: Helm
+          app.kubernetes.io/name: postgresql
+          app.kubernetes.io/version: 17.6.0
+          helm.sh/chart: postgresql-16.7.27
+        name: authentik-postgresql
+      spec:
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/component: primary
+                    app.kubernetes.io/instance: authentik
+                    app.kubernetes.io/name: postgresql
+                topologyKey: kubernetes.io/hostname
+              weight: 1
+        automountServiceAccountToken: false
+        containers:
+        - args:
+          - -c
+          - config_file=/bitnami/postgresql/conf/postgresql.conf
+          - -c
+          - hba_file=/bitnami/postgresql/conf/pg_hba.conf
+          env:
+          - name: BITNAMI_DEBUG
+            value: "false"
+          - name: POSTGRESQL_PORT_NUMBER
+            value: "5432"
+          - name: POSTGRESQL_VOLUME_DIR
+            value: /bitnami/postgresql
+          - name: PGDATA
+            value: /bitnami/postgresql/data
+          - name: POSTGRES_USER
+            value: authentik
+          - name: POSTGRES_PASSWORD_FILE
+            value: /opt/bitnami/postgresql/secrets/password
+          - name: POSTGRES_POSTGRES_PASSWORD_FILE
+            value: /opt/bitnami/postgresql/secrets/postgres-password
+          - name: POSTGRES_DATABASE
+            value: authentik
+          - name: POSTGRESQL_ENABLE_LDAP
+            value: "no"
+          - name: POSTGRESQL_ENABLE_TLS
+            value: "no"
+          - name: POSTGRESQL_LOG_HOSTNAME
+            value: "false"
+          - name: POSTGRESQL_LOG_CONNECTIONS
+            value: "false"
+          - name: POSTGRESQL_LOG_DISCONNECTIONS
+            value: "false"
+          - name: POSTGRESQL_PGAUDIT_LOG_CATALOG
+            value: "off"
+          - name: POSTGRESQL_CLIENT_MIN_MESSAGES
+            value: error
+          - name: POSTGRESQL_SHARED_PRELOAD_LIBRARIES
+            value: pgaudit
+          - name: POSTGRES_DB
+            value: authentik
+          image: docker.io/library/postgres:17.9-bookworm
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - exec pg_isready -U "authentik" -d "dbname=authentik" -h 127.0.0.1
+                -p 5432
+            failureThreshold: 6
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: postgresql
+          ports:
+          - containerPort: 5432
+            name: tcp-postgresql
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - -e
+              - |
+                exec pg_isready -U "authentik" -d "dbname=authentik" -h 127.0.0.1 -p 5432
+                [ -f /opt/bitnami/postgresql/tmp/.initialized ] || [ -f /bitnami/postgresql/.initialized ]
+            failureThreshold: 6
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 10m
+              memory: 128Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            privileged: false
+            readOnlyRootFilesystem: true
+            runAsGroup: 1001
+            runAsNonRoot: true
+            runAsUser: 1001
+            seLinuxOptions: {}
+            seccompProfile:
+              type: RuntimeDefault
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp
+            name: empty-dir
+            subPath: tmp-dir
+          - mountPath: /opt/bitnami/postgresql/conf
+            name: empty-dir
+            subPath: app-conf-dir
+          - mountPath: /opt/bitnami/postgresql/tmp
+            name: empty-dir
+            subPath: app-tmp-dir
+          - mountPath: /bitnami/postgresql/conf/conf.d/
+            name: postgresql-extended-config
+          - mountPath: /opt/bitnami/postgresql/secrets/
+            name: postgresql-password
+          - mountPath: /dev/shm
+            name: dshm
+          - mountPath: /bitnami/postgresql
+            name: data
+          - mountPath: /bitnami/postgresql/conf
+            name: postgresql-config
+          - mountPath: /var/run/postgresql
+            name: postgresql-socket
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1001
+          fsGroupChangePolicy: Always
+        serviceAccount: authentik-postgresql
+        serviceAccountName: authentik-postgresql
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: empty-dir
+        - configMap:
+            defaultMode: 420
+            name: authentik-postgresql-configuration
+          name: postgresql-config
+        - configMap:
+            defaultMode: 420
+            name: authentik-postgresql-extended-configuration
+          name: postgresql-extended-config
+        - name: postgresql-password
+          secret:
+            defaultMode: 420
+            secretName: authentik-postgresql
+        - emptyDir: {}
+          name: postgresql-socket
+        - emptyDir:
+            medium: Memory
+          name: dshm
+    updateStrategy:
+      rollingUpdate:
+        partition: 0
+      type: RollingUpdate
+    volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 5Gi
+        storageClassName: openebs-hostpath
+        volumeMode: Filesystem
+      status:
+        phase: Pending
+  status:
+    availableReplicas: 1
+    collisionCount: 0
+    currentReplicas: 1
+    currentRevision: authentik-postgresql-559bdff8fc
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updateRevision: authentik-postgresql-559bdff8fc
+    updatedReplicas: 1
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: authentik
+      meta.helm.sh/release-namespace: authentik
+    creationTimestamp: "2026-04-07T10:56:46Z"
+    labels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: authentik
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: postgresql
+      app.kubernetes.io/version: 17.6.0
+      helm.sh/chart: postgresql-16.7.27
+    name: authentik-postgresql
+    namespace: authentik
+    resourceVersion: "5440724"
+    uid: ea6cc0e1-f189-4f55-b0c6-528d4ae218d1
+  spec:
+    clusterIP: 10.43.224.47
+    clusterIPs:
+    - 10.43.224.47
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: tcp-postgresql
+      port: 5432
+      protocol: TCP
+      targetPort: tcp-postgresql
+    selector:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: authentik
+      app.kubernetes.io/name: postgresql
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: authentik
+      meta.helm.sh/release-namespace: authentik
+    creationTimestamp: "2026-04-07T10:56:46Z"
+    labels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: authentik
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: postgresql
+      app.kubernetes.io/version: 17.6.0
+      helm.sh/chart: postgresql-16.7.27
+    name: authentik-postgresql-hl
+    namespace: authentik
+    resourceVersion: "5440721"
+    uid: 62a7f246-5bc4-4bd2-ad8c-7d2fc2e78236
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: tcp-postgresql
+      port: 5432
+      protocol: TCP
+      targetPort: tcp-postgresql
+    publishNotReadyAddresses: true
+    selector:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: authentik
+      app.kubernetes.io/name: postgresql
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: authentik
+      meta.helm.sh/release-namespace: authentik
+    creationTimestamp: "2026-04-07T10:56:46Z"
+    labels:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: authentik
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: authentik
+      app.kubernetes.io/part-of: authentik
+      app.kubernetes.io/version: 2026.2.1
+      helm.sh/chart: authentik-2026.2.1
+    name: authentik-server
+    namespace: authentik
+    resourceVersion: "5440726"
+    uid: 6b808c85-4612-4598-8250-92d6662a8b5e
+  spec:
+    clusterIP: 10.43.96.207
+    clusterIPs:
+    - 10.43.96.207
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 9000
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 9443
+    selector:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: authentik
+      app.kubernetes.io/name: authentik
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  data:
+    pg_hba.conf: |
+      host     all             all             0.0.0.0/0               scram-sha-256
+      host     all             all             ::/0                    scram-sha-256
+      local    all             all                                     scram-sha-256
+      host     all             all        127.0.0.1/32                 scram-sha-256
+      host     all             all        ::1/128                      scram-sha-256
+    postgresql.conf: |
+      listen_addresses = '*'
+      port = '5432'
+      wal_level = 'replica'
+      fsync = 'on'
+      hot_standby = 'on'
+      log_connections = 'false'
+      log_disconnections = 'false'
+      log_hostname = 'false'
+      client_min_messages = 'error'
+      include_dir = 'conf.d'
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: authentik
+      meta.helm.sh/release-namespace: authentik
+    creationTimestamp: "2026-04-07T10:56:45Z"
+    labels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: authentik
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: postgresql
+      app.kubernetes.io/version: 17.6.0
+      helm.sh/chart: postgresql-16.7.27
+    name: authentik-postgresql-configuration
+    namespace: authentik
+    resourceVersion: "5440716"
+    uid: 6852b2bf-094a-4a4c-87bd-02e17c1b816e
+- apiVersion: v1
+  data:
+    override.conf: max_connections = 500
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: authentik
+      meta.helm.sh/release-namespace: authentik
+    creationTimestamp: "2026-04-07T10:56:45Z"
+    labels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: authentik
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: postgresql
+      app.kubernetes.io/version: 17.6.0
+      helm.sh/chart: postgresql-16.7.27
+    name: authentik-postgresql-extended-configuration
+    namespace: authentik
+    resourceVersion: "5440715"
+    uid: b31b7740-ef6f-4aa9-96e0-2abafa8a2473
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIBdzCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy
+      dmVyLWNhQDE3NzM0OTIwNDMwHhcNMjYwMzE0MTI0MDQzWhcNMzYwMzExMTI0MDQz
+      WjAjMSEwHwYDVQQDDBhrM3Mtc2VydmVyLWNhQDE3NzM0OTIwNDMwWTATBgcqhkjO
+      PQIBBggqhkjOPQMBBwNCAARpgn+LEJSNlp2uAqphT94mk3q/VpLzxAn/KjD1mBH8
+      oQu45uwEkuvSQdTXfKQORPUuxCqO/aaIp9J79K22/cobo0IwQDAOBgNVHQ8BAf8E
+      BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUaFaNeoZQ5OsygNWLwWhw
+      qpQZLbMwCgYIKoZIzj0EAwIDSAAwRQIhAO249TlfJBFz/q6b8Qv9/09lifqmSddW
+      aVbPh0wrSpvCAiAJrxY16wd92CAuR5caK2/1xOqu05sdTiI7O1SXIsotcQ==
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2026-04-07T10:56:45Z"
+    name: kube-root-ca.crt
+    namespace: authentik
+    resourceVersion: "5440704"
+    uid: f1039b60-ab30-45c8-bfcf-14c3ab919f1c
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: astra
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-04-07T10:56:46Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    labels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: authentik
+      app.kubernetes.io/name: postgresql
+    name: data-authentik-postgresql-0
+    namespace: authentik
+    resourceVersion: "5440797"
+    uid: 248fd2cf-0eb5-4d91-833a-80b8b25358a4
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 5Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-248fd2cf-0eb5-4d91-833a-80b8b25358a4
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 5Gi
+    phase: Bound
+kind: List
+metadata:
+  resourceVersion: ""

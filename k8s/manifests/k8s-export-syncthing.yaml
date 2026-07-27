@@ -1,0 +1,264 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "4"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"syncthing","namespace":"syncthing"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"syncthing"}},"template":{"metadata":{"labels":{"app":"syncthing"}},"spec":{"containers":[{"env":[{"name":"STGUIADDRESS","value":"0.0.0.0:8384"},{"name":"PUID","value":"1000"},{"name":"PGID","value":"1000"}],"image":"syncthing/syncthing:latest","name":"syncthing","ports":[{"containerPort":8384,"name":"gui"},{"containerPort":22000,"name":"tcp","protocol":"TCP"},{"containerPort":22000,"name":"udp","protocol":"UDP"}],"resources":{"limits":{"cpu":"1000m","memory":"512Mi"},"requests":{"cpu":"25m","memory":"64Mi"}},"volumeMounts":[{"mountPath":"/var/syncthing/config","name":"config"},{"mountPath":"/var/syncthing/data","name":"data"}]}],"volumes":[{"name":"config","persistentVolumeClaim":{"claimName":"syncthing-config"}},{"name":"data","persistentVolumeClaim":{"claimName":"syncthing-data"}}]}}}}
+    creationTimestamp: "2026-04-07T10:29:08Z"
+    generation: 4
+    name: syncthing
+    namespace: syncthing
+    resourceVersion: "32641245"
+    uid: 257d5003-4fa0-49fd-a85d-8e5972ac3101
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: syncthing
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: syncthing
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+        containers:
+        - env:
+          - name: STGUIADDRESS
+            value: 0.0.0.0:8384
+          - name: PUID
+            value: "1000"
+          - name: PGID
+            value: "1000"
+          image: syncthing/syncthing:latest
+          imagePullPolicy: Always
+          name: syncthing
+          ports:
+          - containerPort: 8384
+            name: gui
+            protocol: TCP
+          - containerPort: 22000
+            name: tcp
+            protocol: TCP
+          - containerPort: 22000
+            name: udp
+            protocol: UDP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 512Mi
+            requests:
+              cpu: 25m
+              memory: 64Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/syncthing/config
+            name: config
+          - mountPath: /var/syncthing/data
+            name: data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: syncthing-config
+        - name: data
+          persistentVolumeClaim:
+            claimName: syncthing-data
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-04-07T10:29:08Z"
+      lastUpdateTime: "2026-07-07T12:20:08Z"
+      message: ReplicaSet "syncthing-6df9f6cb77" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T04:12:28Z"
+      lastUpdateTime: "2026-07-24T04:12:28Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 4
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"syncthing","namespace":"syncthing"},"spec":{"ports":[{"name":"gui","port":8384,"targetPort":8384}],"selector":{"app":"syncthing"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-04-07T10:29:08Z"
+    name: syncthing
+    namespace: syncthing
+    resourceVersion: "5434019"
+    uid: 12101182-b7cf-4304-a395-812d79969d6c
+  spec:
+    clusterIP: 10.43.102.205
+    clusterIPs:
+    - 10.43.102.205
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: gui
+      port: 8384
+      protocol: TCP
+      targetPort: 8384
+    selector:
+      app: syncthing
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"syncthing-protocol","namespace":"syncthing"},"spec":{"ports":[{"name":"tcp","nodePort":30220,"port":22000,"protocol":"TCP","targetPort":22000}],"selector":{"app":"syncthing"},"type":"NodePort"}}
+    creationTimestamp: "2026-04-07T10:29:08Z"
+    name: syncthing-protocol
+    namespace: syncthing
+    resourceVersion: "5434036"
+    uid: 1ed8d523-27ce-4542-ae49-35f96524657a
+  spec:
+    clusterIP: 10.43.85.255
+    clusterIPs:
+    - 10.43.85.255
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: tcp
+      nodePort: 30220
+      port: 22000
+      protocol: TCP
+      targetPort: 22000
+    selector:
+      app: syncthing
+    sessionAffinity: None
+    type: NodePort
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIBdzCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy
+      dmVyLWNhQDE3NzM0OTIwNDMwHhcNMjYwMzE0MTI0MDQzWhcNMzYwMzExMTI0MDQz
+      WjAjMSEwHwYDVQQDDBhrM3Mtc2VydmVyLWNhQDE3NzM0OTIwNDMwWTATBgcqhkjO
+      PQIBBggqhkjOPQMBBwNCAARpgn+LEJSNlp2uAqphT94mk3q/VpLzxAn/KjD1mBH8
+      oQu45uwEkuvSQdTXfKQORPUuxCqO/aaIp9J79K22/cobo0IwQDAOBgNVHQ8BAf8E
+      BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUaFaNeoZQ5OsygNWLwWhw
+      qpQZLbMwCgYIKoZIzj0EAwIDSAAwRQIhAO249TlfJBFz/q6b8Qv9/09lifqmSddW
+      aVbPh0wrSpvCAiAJrxY16wd92CAuR5caK2/1xOqu05sdTiI7O1SXIsotcQ==
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2026-04-07T10:29:07Z"
+    name: kube-root-ca.crt
+    namespace: syncthing
+    resourceVersion: "5434002"
+    uid: 0d29a5eb-da53-4eb6-993e-b79598db04fc
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"syncthing-config","namespace":"syncthing"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"1Gi"}},"storageClassName":"openebs-hostpath"}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: astra
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-04-07T10:29:08Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: syncthing-config
+    namespace: syncthing
+    resourceVersion: "5434209"
+    uid: ee926bf3-142e-4023-ae9d-3ca2a7b5464e
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-ee926bf3-142e-4023-ae9d-3ca2a7b5464e
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 1Gi
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"syncthing-data","namespace":"syncthing"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"50Gi"}},"storageClassName":"openebs-hostpath"}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: astra
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-04-07T10:29:08Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: syncthing-data
+    namespace: syncthing
+    resourceVersion: "5434213"
+    uid: c2f49e20-4a9b-40e5-b26e-7bdd429e4269
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 50Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-c2f49e20-4a9b-40e5-b26e-7bdd429e4269
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 50Gi
+    phase: Bound
+kind: List
+metadata:
+  resourceVersion: ""

@@ -1,0 +1,296 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "2"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"savants-website","namespace":"savants-cloud"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"savants-website"}},"template":{"metadata":{"labels":{"app":"savants-website"}},"spec":{"containers":[{"image":"nginx:alpine","name":"nginx","ports":[{"containerPort":80}],"volumeMounts":[{"mountPath":"/usr/share/nginx/html","name":"site"}]}],"volumes":[{"emptyDir":{},"name":"site"}]}}}}
+    creationTimestamp: "2026-04-20T19:51:19Z"
+    generation: 2
+    name: savants-website
+    namespace: savants-cloud
+    resourceVersion: "32916271"
+    uid: 769a5c7c-a55a-4b2e-87c6-5fc998f0bdbb
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: savants-website
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: savants-website
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+        containers:
+        - image: nginx:alpine
+          imagePullPolicy: IfNotPresent
+          name: nginx
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /usr/share/nginx/html
+            name: site
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: site
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-04-20T19:51:19Z"
+      lastUpdateTime: "2026-07-07T12:20:02Z"
+      message: ReplicaSet "savants-website-768b77fb87" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T17:07:20Z"
+      lastUpdateTime: "2026-07-24T17:07:20Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: savants-cloud
+      meta.helm.sh/release-namespace: savants-cloud
+    creationTimestamp: "2026-04-17T14:09:15Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: savants-cloud-postgres
+    namespace: savants-cloud
+    resourceVersion: "32640939"
+    uid: 906ad905-fe3f-43aa-adc3-78d961273c09
+  spec:
+    persistentVolumeClaimRetentionPolicy:
+      whenDeleted: Retain
+      whenScaled: Retain
+    podManagementPolicy: OrderedReady
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: savants-cloud
+        component: postgres
+    serviceName: savants-cloud-postgres
+    template:
+      metadata:
+        labels:
+          app: savants-cloud
+          component: postgres
+      spec:
+        containers:
+        - env:
+          - name: POSTGRES_DB
+            value: savants
+          - name: POSTGRES_USER
+            value: savants
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: postgres-password
+                name: savants-cloud-secrets
+          image: postgres:16-alpine
+          imagePullPolicy: IfNotPresent
+          name: postgres
+          ports:
+          - containerPort: 5432
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    updateStrategy:
+      rollingUpdate:
+        partition: 0
+      type: RollingUpdate
+    volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 5Gi
+        volumeMode: Filesystem
+      status:
+        phase: Pending
+  status:
+    availableReplicas: 1
+    collisionCount: 0
+    currentReplicas: 1
+    currentRevision: savants-cloud-postgres-67b6c857d4
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updateRevision: savants-cloud-postgres-67b6c857d4
+    updatedReplicas: 1
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: savants-cloud
+      meta.helm.sh/release-namespace: savants-cloud
+    creationTimestamp: "2026-04-17T14:09:15Z"
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: savants-cloud-postgres
+    namespace: savants-cloud
+    resourceVersion: "8254098"
+    uid: 55c1819d-3501-43f1-b288-ac980b5190db
+  spec:
+    clusterIP: 10.43.221.126
+    clusterIPs:
+    - 10.43.221.126
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 5432
+      protocol: TCP
+      targetPort: 5432
+    selector:
+      app: savants-cloud
+      component: postgres
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"savants-website","namespace":"savants-cloud"},"spec":{"ports":[{"port":80,"targetPort":80}],"selector":{"app":"savants-website"}}}
+    creationTimestamp: "2026-04-20T19:51:19Z"
+    name: savants-website
+    namespace: savants-cloud
+    resourceVersion: "9036162"
+    uid: c45c2006-58dd-41da-bb2f-67da94827d93
+  spec:
+    clusterIP: 10.43.62.67
+    clusterIPs:
+    - 10.43.62.67
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+    selector:
+      app: savants-website
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIBdzCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy
+      dmVyLWNhQDE3NzM0OTIwNDMwHhcNMjYwMzE0MTI0MDQzWhcNMzYwMzExMTI0MDQz
+      WjAjMSEwHwYDVQQDDBhrM3Mtc2VydmVyLWNhQDE3NzM0OTIwNDMwWTATBgcqhkjO
+      PQIBBggqhkjOPQMBBwNCAARpgn+LEJSNlp2uAqphT94mk3q/VpLzxAn/KjD1mBH8
+      oQu45uwEkuvSQdTXfKQORPUuxCqO/aaIp9J79K22/cobo0IwQDAOBgNVHQ8BAf8E
+      BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUaFaNeoZQ5OsygNWLwWhw
+      qpQZLbMwCgYIKoZIzj0EAwIDSAAwRQIhAO249TlfJBFz/q6b8Qv9/09lifqmSddW
+      aVbPh0wrSpvCAiAJrxY16wd92CAuR5caK2/1xOqu05sdTiI7O1SXIsotcQ==
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2026-04-17T14:06:51Z"
+    name: kube-root-ca.crt
+    namespace: savants-cloud
+    resourceVersion: "8253722"
+    uid: 5e2739eb-18ae-4cb4-911f-e6eb0eb4c7c3
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: astra
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-04-17T14:09:16Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    labels:
+      app: savants-cloud
+      component: postgres
+    name: data-savants-cloud-postgres-0
+    namespace: savants-cloud
+    resourceVersion: "8254159"
+    uid: db8057bc-c25b-42c7-a25d-b9d97a5cea25
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 5Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-db8057bc-c25b-42c7-a25d-b9d97a5cea25
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 5Gi
+    phase: Bound
+kind: List
+metadata:
+  resourceVersion: ""

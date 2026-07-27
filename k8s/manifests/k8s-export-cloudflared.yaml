@@ -1,0 +1,154 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "33"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"cloudflared"},"name":"cloudflared","namespace":"cloudflared"},"spec":{"replicas":2,"selector":{"matchLabels":{"app":"cloudflared"}},"template":{"metadata":{"labels":{"app":"cloudflared"}},"spec":{"containers":[{"args":["tunnel","--no-autoupdate","--protocol","http2","--edge-ip-version","auto","--retries","10","--grace-period","30s","--metrics","0.0.0.0:20241","run","--token","$(TUNNEL_TOKEN)"],"env":[{"name":"TUNNEL_TOKEN","valueFrom":{"secretKeyRef":{"key":"token","name":"cloudflared-tunnel-token"}}}],"image":"cloudflare/cloudflared:latest","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/ready","port":20241},"initialDelaySeconds":10,"periodSeconds":15},"name":"cloudflared","ports":[{"containerPort":20241,"name":"metrics"}],"readinessProbe":{"httpGet":{"path":"/ready","port":20241},"initialDelaySeconds":5,"periodSeconds":10},"resources":{"limits":{"cpu":"500m","memory":"256Mi"},"requests":{"cpu":"50m","memory":"64Mi"}}}],"restartPolicy":"Always"}}}}
+    creationTimestamp: "2026-03-24T05:53:06Z"
+    generation: 33
+    labels:
+      app: cloudflared
+    name: cloudflared
+    namespace: cloudflared
+    resourceVersion: "33098678"
+    uid: 6fe216f9-4620-40a6-a129-627dbaf38306
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 2
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: cloudflared
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-07-12T16:18:07+03:00"
+        labels:
+          app: cloudflared
+      spec:
+        affinity:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app: cloudflared
+              topologyKey: kubernetes.io/hostname
+        containers:
+        - args:
+          - tunnel
+          - --no-autoupdate
+          - --protocol
+          - http2
+          - --edge-ip-version
+          - auto
+          - --retries
+          - "10"
+          - --grace-period
+          - 30s
+          - --metrics
+          - 0.0.0.0:20241
+          - run
+          - --token
+          - $(TUNNEL_TOKEN)
+          env:
+          - name: TUNNEL_TOKEN
+            valueFrom:
+              secretKeyRef:
+                key: token
+                name: cloudflared-tunnel-token
+          image: cloudflare/cloudflared@sha256:6b599ca3e974349ead3286d178da61d291961182ec3fe9c505e1dd02c8ac31b0
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 10
+            httpGet:
+              path: /ready
+              port: 20241
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: cloudflared
+          ports:
+          - containerPort: 20241
+            name: metrics
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /ready
+              port: 20241
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            limits:
+              cpu: 500m
+              memory: 256Mi
+            requests:
+              cpu: 50m
+              memory: 64Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 2
+    conditions:
+    - lastTransitionTime: "2026-07-12T18:03:43Z"
+      lastUpdateTime: "2026-07-12T18:04:29Z"
+      message: ReplicaSet "cloudflared-749959b9d6" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T22:30:45Z"
+      lastUpdateTime: "2026-07-24T22:30:45Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 33
+    readyReplicas: 2
+    replicas: 2
+    updatedReplicas: 2
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIBdzCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy
+      dmVyLWNhQDE3NzM0OTIwNDMwHhcNMjYwMzE0MTI0MDQzWhcNMzYwMzExMTI0MDQz
+      WjAjMSEwHwYDVQQDDBhrM3Mtc2VydmVyLWNhQDE3NzM0OTIwNDMwWTATBgcqhkjO
+      PQIBBggqhkjOPQMBBwNCAARpgn+LEJSNlp2uAqphT94mk3q/VpLzxAn/KjD1mBH8
+      oQu45uwEkuvSQdTXfKQORPUuxCqO/aaIp9J79K22/cobo0IwQDAOBgNVHQ8BAf8E
+      BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUaFaNeoZQ5OsygNWLwWhw
+      qpQZLbMwCgYIKoZIzj0EAwIDSAAwRQIhAO249TlfJBFz/q6b8Qv9/09lifqmSddW
+      aVbPh0wrSpvCAiAJrxY16wd92CAuR5caK2/1xOqu05sdTiI7O1SXIsotcQ==
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2026-03-24T05:52:28Z"
+    name: kube-root-ca.crt
+    namespace: cloudflared
+    resourceVersion: "1531268"
+    uid: 2d1990d4-aa39-4be5-af4b-94181282974c
+kind: List
+metadata:
+  resourceVersion: ""

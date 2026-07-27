@@ -1,0 +1,225 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "4"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"protonmail-bridge"},"name":"protonmail-bridge","namespace":"protonmail-bridge"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"protonmail-bridge"}},"template":{"metadata":{"labels":{"app":"protonmail-bridge"}},"spec":{"containers":[{"image":"shenxn/protonmail-bridge:latest","livenessProbe":{"initialDelaySeconds":30,"periodSeconds":60,"tcpSocket":{"port":143}},"name":"protonmail-bridge","ports":[{"containerPort":143,"name":"imap","protocol":"TCP"},{"containerPort":25,"name":"smtp","protocol":"TCP"}],"readinessProbe":{"initialDelaySeconds":10,"periodSeconds":30,"tcpSocket":{"port":143}},"resources":{"limits":{"cpu":"500m","memory":"512Mi"},"requests":{"cpu":"50m","memory":"128Mi"}},"volumeMounts":[{"mountPath":"/root","name":"data"}]}],"volumes":[{"name":"data","persistentVolumeClaim":{"claimName":"protonmail-bridge-data"}}]}}}}
+    creationTimestamp: "2026-04-12T18:56:49Z"
+    generation: 6
+    labels:
+      app: protonmail-bridge
+    name: protonmail-bridge
+    namespace: protonmail-bridge
+    resourceVersion: "32641222"
+    uid: 14f6206d-2d80-4c7f-b17a-2705fbeb4468
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: protonmail-bridge
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: protonmail-bridge
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+        containers:
+        - image: shenxn/protonmail-bridge:latest
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            successThreshold: 1
+            tcpSocket:
+              port: 143
+            timeoutSeconds: 1
+          name: protonmail-bridge
+          ports:
+          - containerPort: 143
+            name: imap
+            protocol: TCP
+          - containerPort: 25
+            name: smtp
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            successThreshold: 1
+            tcpSocket:
+              port: 143
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 50m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /root
+            name: data
+        dnsPolicy: ClusterFirst
+        initContainers:
+        - command:
+          - sh
+          - -c
+          - rm -rf /root/.local/share/protonmail/bridge-v3/updates; rm -f /root/.config/protonmail/bridge-v3/*.lock
+            /root/.cache/protonmail/bridge-v3/*.lock /tmp/bridge*.lock; find /root
+            -name *.lock -path *protonmail* -delete; echo cleaned
+          image: busybox:latest
+          imagePullPolicy: Always
+          name: cleanup-autoupdate
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /root
+            name: data
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: protonmail-bridge-data
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-04-12T18:56:49Z"
+      lastUpdateTime: "2026-07-07T12:20:34Z"
+      message: ReplicaSet "protonmail-bridge-857f9bdb68" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T04:12:26Z"
+      lastUpdateTime: "2026-07-24T04:12:26Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 6
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"protonmail-bridge","namespace":"protonmail-bridge"},"spec":{"ports":[{"name":"imap","port":143,"targetPort":143},{"name":"smtp","port":25,"targetPort":25}],"selector":{"app":"protonmail-bridge"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-04-12T18:56:49Z"
+    name: protonmail-bridge
+    namespace: protonmail-bridge
+    resourceVersion: "30934416"
+    uid: 7a600d20-4366-400d-bf47-899fe26bb67e
+  spec:
+    clusterIP: 10.43.63.242
+    clusterIPs:
+    - 10.43.63.242
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: imap
+      nodePort: 30143
+      port: 143
+      protocol: TCP
+      targetPort: 143
+    - name: smtp
+      nodePort: 30025
+      port: 25
+      protocol: TCP
+      targetPort: 25
+    selector:
+      app: protonmail-bridge
+    sessionAffinity: None
+    type: NodePort
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIBdzCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy
+      dmVyLWNhQDE3NzM0OTIwNDMwHhcNMjYwMzE0MTI0MDQzWhcNMzYwMzExMTI0MDQz
+      WjAjMSEwHwYDVQQDDBhrM3Mtc2VydmVyLWNhQDE3NzM0OTIwNDMwWTATBgcqhkjO
+      PQIBBggqhkjOPQMBBwNCAARpgn+LEJSNlp2uAqphT94mk3q/VpLzxAn/KjD1mBH8
+      oQu45uwEkuvSQdTXfKQORPUuxCqO/aaIp9J79K22/cobo0IwQDAOBgNVHQ8BAf8E
+      BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUaFaNeoZQ5OsygNWLwWhw
+      qpQZLbMwCgYIKoZIzj0EAwIDSAAwRQIhAO249TlfJBFz/q6b8Qv9/09lifqmSddW
+      aVbPh0wrSpvCAiAJrxY16wd92CAuR5caK2/1xOqu05sdTiI7O1SXIsotcQ==
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2026-04-12T18:56:48Z"
+    name: kube-root-ca.crt
+    namespace: protonmail-bridge
+    resourceVersion: "7007964"
+    uid: bcbde6cf-dbdf-45d4-ac18-dd35e9e0f8e6
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"protonmail-bridge-data","namespace":"protonmail-bridge"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"1Gi"}},"storageClassName":"openebs-hostpath"}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: astra
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-04-12T18:56:49Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: protonmail-bridge-data
+    namespace: protonmail-bridge
+    resourceVersion: "7008020"
+    uid: a09c76ca-4805-4ec8-8da7-c402f8fc800d
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-a09c76ca-4805-4ec8-8da7-c402f8fc800d
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 1Gi
+    phase: Bound
+kind: List
+metadata:
+  resourceVersion: ""

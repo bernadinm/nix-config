@@ -1,0 +1,225 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "2"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"adguard-home"},"name":"adguard-home","namespace":"adguard"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"adguard-home"}},"template":{"metadata":{"labels":{"app":"adguard-home"}},"spec":{"containers":[{"image":"adguard/adguardhome:latest","name":"adguard","ports":[{"containerPort":3000,"name":"http"},{"containerPort":53,"name":"dns","protocol":"UDP"}],"resources":{"limits":{"cpu":"500m","memory":"512Mi"},"requests":{"cpu":"10m","memory":"64Mi"}},"volumeMounts":[{"mountPath":"/opt/adguardhome/conf","name":"config"},{"mountPath":"/opt/adguardhome/work","name":"data"}]}],"dnsPolicy":"ClusterFirstWithHostNet","hostNetwork":true,"volumes":[{"name":"config","persistentVolumeClaim":{"claimName":"adguard-config"}},{"name":"data","persistentVolumeClaim":{"claimName":"adguard-data"}}]}}}}
+    creationTimestamp: "2026-04-06T19:53:51Z"
+    generation: 2
+    labels:
+      app: adguard-home
+    name: adguard-home
+    namespace: adguard
+    resourceVersion: "32641230"
+    uid: 7b9ab053-b016-4479-8a3a-fcdae46c580a
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: adguard-home
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: adguard-home
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+        containers:
+        - image: adguard/adguardhome:latest
+          imagePullPolicy: Always
+          name: adguard
+          ports:
+          - containerPort: 3000
+            name: http
+            protocol: TCP
+          - containerPort: 53
+            name: dns
+            protocol: UDP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 10m
+              memory: 64Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /opt/adguardhome/conf
+            name: config
+          - mountPath: /opt/adguardhome/work
+            name: data
+        dnsPolicy: ClusterFirstWithHostNet
+        hostNetwork: true
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: adguard-config
+        - name: data
+          persistentVolumeClaim:
+            claimName: adguard-data
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-07-18T16:37:18Z"
+      lastUpdateTime: "2026-07-18T16:37:18Z"
+      message: ReplicaSet "adguard-home-79bbdd5cd7" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T04:12:27Z"
+      lastUpdateTime: "2026-07-24T04:12:27Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"adguard-home","namespace":"adguard"},"spec":{"ports":[{"name":"http","port":3000,"targetPort":3000}],"selector":{"app":"adguard-home"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-04-06T19:53:51Z"
+    name: adguard-home
+    namespace: adguard
+    resourceVersion: "5215658"
+    uid: 3b68a7b7-1bd5-42bf-ad56-6caa8f5b8299
+  spec:
+    clusterIP: 10.43.47.55
+    clusterIPs:
+    - 10.43.47.55
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+    selector:
+      app: adguard-home
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIBdzCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy
+      dmVyLWNhQDE3NzM0OTIwNDMwHhcNMjYwMzE0MTI0MDQzWhcNMzYwMzExMTI0MDQz
+      WjAjMSEwHwYDVQQDDBhrM3Mtc2VydmVyLWNhQDE3NzM0OTIwNDMwWTATBgcqhkjO
+      PQIBBggqhkjOPQMBBwNCAARpgn+LEJSNlp2uAqphT94mk3q/VpLzxAn/KjD1mBH8
+      oQu45uwEkuvSQdTXfKQORPUuxCqO/aaIp9J79K22/cobo0IwQDAOBgNVHQ8BAf8E
+      BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUaFaNeoZQ5OsygNWLwWhw
+      qpQZLbMwCgYIKoZIzj0EAwIDSAAwRQIhAO249TlfJBFz/q6b8Qv9/09lifqmSddW
+      aVbPh0wrSpvCAiAJrxY16wd92CAuR5caK2/1xOqu05sdTiI7O1SXIsotcQ==
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2026-04-06T19:51:29Z"
+    name: kube-root-ca.crt
+    namespace: adguard
+    resourceVersion: "5214953"
+    uid: 0aa07edc-4486-40e8-b114-38195f260125
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"adguard-config","namespace":"adguard"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"2Gi"}},"storageClassName":"openebs-hostpath"}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: astra
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-04-06T19:53:51Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: adguard-config
+    namespace: adguard
+    resourceVersion: "5215719"
+    uid: 0cdb8247-eedf-438b-904e-4ee26c42f38b
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 2Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-0cdb8247-eedf-438b-904e-4ee26c42f38b
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 2Gi
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"adguard-data","namespace":"adguard"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"5Gi"}},"storageClassName":"openebs-hostpath"}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: astra
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-04-06T19:53:51Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: adguard-data
+    namespace: adguard
+    resourceVersion: "5215716"
+    uid: 89a7b3d6-b2c8-4971-8554-d8b1a33e6ef5
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 5Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-89a7b3d6-b2c8-4971-8554-d8b1a33e6ef5
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 5Gi
+    phase: Bound
+kind: List
+metadata:
+  resourceVersion: ""

@@ -1,0 +1,760 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "229"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"axeon-agent","namespace":"axeon-agent"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"axeon-agent"}},"strategy":{"type":"Recreate"},"template":{"metadata":{"labels":{"app":"axeon-agent"}},"spec":{"containers":[{"env":[{"name":"BICHON_URL","value":"http://bichon.bichon.svc.cluster.local:15630"},{"name":"SCAN_INTERVAL_MINUTES","value":"5"},{"name":"LOOKBACK_HOURS","value":"1"},{"name":"DB_PATH","value":"/data/axeon-agent.db"},{"name":"WHATSAPP_KE_DB","value":"/data/whatsapp-ke/whatsapp.db"},{"name":"WHATSAPP_US_DB","value":"/data/whatsapp-us/whatsapp.db"}],"envFrom":[{"secretRef":{"name":"axeon-agent-secrets"}},{"secretRef":{"name":"smtp-credentials","optional":true}},{"secretRef":{"name":"langfuse-agent-keys","optional":true}}],"image":"ghcr.io/bernadinm/axeon-agent:latest","imagePullPolicy":"Never","name":"axeon-agent","resources":{"limits":{"cpu":"500m","memory":"256Mi"},"requests":{"cpu":"100m","memory":"128Mi"}},"volumeMounts":[{"mountPath":"/data","name":"data"},{"mountPath":"/data/whatsapp-ke","name":"whatsapp-ke","readOnly":true},{"mountPath":"/data/whatsapp-us","name":"whatsapp-us","readOnly":true}]}],"volumes":[{"name":"data","persistentVolumeClaim":{"claimName":"axeon-agent-data"}},{"hostPath":{"path":"/home/miguel/git/bernadinm/whatsapp-mcp-ke/data","type":"DirectoryOrCreate"},"name":"whatsapp-ke"},{"hostPath":{"path":"/home/miguel/git/bernadinm/whatsapp-mcp-ts/data","type":"DirectoryOrCreate"},"name":"whatsapp-us"}]}}}}
+    creationTimestamp: "2026-06-07T23:00:45Z"
+    generation: 229
+    name: axeon-agent
+    namespace: axeon-agent
+    resourceVersion: "33126576"
+    uid: 46531a41-7e58-4df4-a253-30ff0274ac14
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: axeon-agent
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-07-19T18:47:04+03:00"
+        labels:
+          app: axeon-agent
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+        containers:
+        - env:
+          - name: BICHON_URL
+            value: http://bichon.bichon.svc.cluster.local:15630
+          - name: SCAN_INTERVAL_MINUTES
+            value: "5"
+          - name: LOOKBACK_HOURS
+            value: "1"
+          - name: DB_PATH
+            value: /data/axeon-agent.db
+          - name: WHATSAPP_KE_DB
+            value: /data/whatsapp-ke/whatsapp.db
+          - name: WHATSAPP_US_DB
+            value: /data/whatsapp-us/whatsapp.db
+          - name: SCAN_INTERVAL_SECONDS
+            value: "30"
+          envFrom:
+          - secretRef:
+              name: axeon-agent-secrets
+          - secretRef:
+              name: smtp-credentials
+              optional: true
+          - secretRef:
+              name: langfuse-agent-keys
+              optional: true
+          image: ghcr.io/bernadinm/axeon-agent:latest
+          imagePullPolicy: Never
+          name: axeon-agent
+          resources:
+            limits:
+              cpu: 500m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /data
+            name: data
+          - mountPath: /data/whatsapp-ke
+            name: whatsapp-ke
+            readOnly: true
+          - mountPath: /data/whatsapp-us
+            name: whatsapp-us
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: axeon-agent-data
+        - hostPath:
+            path: /home/miguel/git/bernadinm/whatsapp-mcp-ke/data
+            type: DirectoryOrCreate
+          name: whatsapp-ke
+        - hostPath:
+            path: /home/miguel/git/bernadinm/whatsapp-mcp-ts/data
+            type: DirectoryOrCreate
+          name: whatsapp-us
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-06-07T23:00:45Z"
+      lastUpdateTime: "2026-07-19T15:47:39Z"
+      message: ReplicaSet "axeon-agent-6cf4989b45" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-25T00:29:16Z"
+      lastUpdateTime: "2026-07-25T00:29:16Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 229
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "27"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"axeon-mcp"},"name":"axeon-mcp","namespace":"axeon-agent"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"axeon-mcp"}},"template":{"metadata":{"labels":{"app":"axeon-mcp"}},"spec":{"containers":[{"env":[{"name":"PORT","value":"3100"},{"name":"BICHON_URL","value":"http://bichon.bichon.svc.cluster.local:15630"},{"name":"GOKAPI_URL","value":"http://gokapi.gokapi.svc.cluster.local:53842"},{"name":"GOKAPI_PASS","valueFrom":{"secretKeyRef":{"key":"ADMIN_PASSWORD","name":"gokapi-secrets","optional":true}}},{"name":"WHATSAPP_KE_DB","value":"/data/whatsapp-ke/whatsapp.db"},{"name":"WHATSAPP_US_DB","value":"/data/whatsapp-us/whatsapp.db"}],"envFrom":[{"secretRef":{"name":"axeon-agent-secrets"}},{"secretRef":{"name":"smtp-credentials","optional":true}},{"secretRef":{"name":"langfuse-agent-keys","optional":true}},{"secretRef":{"name":"voipms-credentials","optional":true}}],"image":"axeon-mcp:latest","imagePullPolicy":"Never","livenessProbe":{"httpGet":{"path":"/health","port":3100},"initialDelaySeconds":5,"periodSeconds":30},"name":"axeon-mcp","ports":[{"containerPort":3100,"name":"http"}],"readinessProbe":{"httpGet":{"path":"/health","port":3100},"initialDelaySeconds":3,"periodSeconds":10},"resources":{"limits":{"cpu":"500m","memory":"256Mi"},"requests":{"cpu":"100m","memory":"128Mi"}},"volumeMounts":[{"mountPath":"/data/whatsapp-ke","name":"whatsapp-ke","readOnly":true},{"mountPath":"/data/whatsapp-us","name":"whatsapp-us","readOnly":true},{"mountPath":"/opt/whatsapp-ke","name":"whatsapp-ke-mcp","readOnly":true},{"mountPath":"/opt/whatsapp-us","name":"whatsapp-us-mcp","readOnly":true}]}],"serviceAccountName":"default","volumes":[{"hostPath":{"path":"/home/miguel/git/bernadinm/whatsapp-mcp-ke/data","type":"DirectoryOrCreate"},"name":"whatsapp-ke"},{"hostPath":{"path":"/home/miguel/git/bernadinm/whatsapp-mcp-ts/data","type":"DirectoryOrCreate"},"name":"whatsapp-us"},{"hostPath":{"path":"/home/miguel/git/bernadinm/whatsapp-mcp-ke","type":"Directory"},"name":"whatsapp-ke-mcp"},{"hostPath":{"path":"/home/miguel/git/bernadinm/whatsapp-mcp-ts","type":"Directory"},"name":"whatsapp-us-mcp"}]}}}}
+    creationTimestamp: "2026-06-14T12:53:34Z"
+    generation: 27
+    labels:
+      app: axeon-mcp
+    name: axeon-mcp
+    namespace: axeon-agent
+    resourceVersion: "32641291"
+    uid: 43130612-b434-4dec-bace-c2d670c638a6
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: axeon-mcp
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-06-28T19:13:21-04:00"
+        labels:
+          app: axeon-mcp
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+        containers:
+        - env:
+          - name: PORT
+            value: "3100"
+          - name: BICHON_URL
+            value: http://bichon.bichon.svc.cluster.local:15630
+          - name: GOKAPI_URL
+            value: http://gokapi.gokapi.svc.cluster.local:53842
+          - name: GOKAPI_PASS
+            valueFrom:
+              secretKeyRef:
+                key: ADMIN_PASSWORD
+                name: gokapi-secrets
+                optional: true
+          - name: WHATSAPP_KE_DB
+            value: /data/whatsapp-ke/whatsapp.db
+          - name: WHATSAPP_US_DB
+            value: /data/whatsapp-us/whatsapp.db
+          envFrom:
+          - secretRef:
+              name: axeon-agent-secrets
+          - secretRef:
+              name: smtp-credentials
+              optional: true
+          - secretRef:
+              name: langfuse-agent-keys
+              optional: true
+          - secretRef:
+              name: voipms-credentials
+              optional: true
+          image: axeon-mcp:latest
+          imagePullPolicy: Never
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 3100
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: axeon-mcp
+          ports:
+          - containerPort: 3100
+            name: http
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 3100
+              scheme: HTTP
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 500m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /data/whatsapp-ke
+            name: whatsapp-ke
+            readOnly: true
+          - mountPath: /data/whatsapp-us
+            name: whatsapp-us
+            readOnly: true
+          - mountPath: /opt/whatsapp-ke
+            name: whatsapp-ke-mcp
+            readOnly: true
+          - mountPath: /opt/whatsapp-us
+            name: whatsapp-us-mcp
+            readOnly: true
+          - mountPath: /data/agent
+            name: agent-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: default
+        serviceAccountName: default
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - hostPath:
+            path: /home/miguel/git/bernadinm/whatsapp-mcp-ke/data
+            type: DirectoryOrCreate
+          name: whatsapp-ke
+        - hostPath:
+            path: /home/miguel/git/bernadinm/whatsapp-mcp-ts/data
+            type: DirectoryOrCreate
+          name: whatsapp-us
+        - hostPath:
+            path: /home/miguel/git/bernadinm/whatsapp-mcp-ke
+            type: Directory
+          name: whatsapp-ke-mcp
+        - hostPath:
+            path: /home/miguel/git/bernadinm/whatsapp-mcp-ts
+            type: Directory
+          name: whatsapp-us-mcp
+        - name: agent-data
+          persistentVolumeClaim:
+            claimName: axeon-agent-data
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-06-14T12:53:34Z"
+      lastUpdateTime: "2026-07-19T14:05:27Z"
+      message: ReplicaSet "axeon-mcp-5d77785dd5" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T04:12:30Z"
+      lastUpdateTime: "2026-07-24T04:12:30Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 27
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "58"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"whatsapp-ke"},"name":"whatsapp-ke","namespace":"axeon-agent"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"whatsapp-ke"}},"strategy":{"type":"Recreate"},"template":{"metadata":{"labels":{"app":"whatsapp-ke"}},"spec":{"containers":[{"env":[{"name":"PORT","value":"3200"},{"name":"DATA_DIR","value":"/data"}],"image":"whatsapp-mcp:latest","imagePullPolicy":"Never","name":"whatsapp","ports":[{"containerPort":3200,"name":"http"}],"resources":{"limits":{"cpu":"500m","memory":"256Mi"},"requests":{"cpu":"100m","memory":"128Mi"}},"volumeMounts":[{"mountPath":"/data","name":"data"}]}],"volumes":[{"name":"data","persistentVolumeClaim":{"claimName":"whatsapp-ke-data"}}]}}}}
+    creationTimestamp: "2026-06-14T19:18:47Z"
+    generation: 76
+    labels:
+      app: whatsapp-ke
+    name: whatsapp-ke
+    namespace: axeon-agent
+    resourceVersion: "33942465"
+    uid: 37037287-ed32-4658-b4e9-f12d55a65fe9
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: whatsapp-ke
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-07-23T23:33:00+03:00"
+        labels:
+          app: whatsapp-ke
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+        containers:
+        - env:
+          - name: PORT
+            value: "3200"
+          - name: DATA_DIR
+            value: /data
+          - name: WHATSAPP_MCP_DATA_DIR
+            value: /data
+          image: whatsapp-mcp:v13-fullsync
+          imagePullPolicy: Never
+          name: whatsapp
+          ports:
+          - containerPort: 3200
+            name: http
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /data
+            name: data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: whatsapp-ke-data
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-06-14T19:18:47Z"
+      lastUpdateTime: "2026-07-26T01:52:36Z"
+      message: ReplicaSet "whatsapp-ke-7fc74778cf" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-27T03:47:32Z"
+      lastUpdateTime: "2026-07-27T03:47:32Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 76
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "9"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"whatsapp-us"},"name":"whatsapp-us","namespace":"axeon-agent"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"whatsapp-us"}},"strategy":{"type":"Recreate"},"template":{"metadata":{"labels":{"app":"whatsapp-us"}},"spec":{"containers":[{"env":[{"name":"PORT","value":"3200"},{"name":"DATA_DIR","value":"/data"}],"image":"whatsapp-mcp:latest","imagePullPolicy":"Never","name":"whatsapp","ports":[{"containerPort":3200,"name":"http"}],"resources":{"limits":{"cpu":"500m","memory":"256Mi"},"requests":{"cpu":"100m","memory":"128Mi"}},"volumeMounts":[{"mountPath":"/data","name":"data"}]}],"volumes":[{"name":"data","persistentVolumeClaim":{"claimName":"whatsapp-us-data"}}]}}}}
+    creationTimestamp: "2026-06-14T19:18:47Z"
+    generation: 14
+    labels:
+      app: whatsapp-us
+    name: whatsapp-us
+    namespace: axeon-agent
+    resourceVersion: "33112841"
+    uid: 19da740a-33ea-4da8-bfa8-8df7d9aa8f06
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: whatsapp-us
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-06-19T09:46:21-04:00"
+        labels:
+          app: whatsapp-us
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - orion
+              weight: 100
+        containers:
+        - env:
+          - name: PORT
+            value: "3200"
+          - name: DATA_DIR
+            value: /data
+          image: whatsapp-mcp:latest
+          imagePullPolicy: Never
+          name: whatsapp
+          ports:
+          - containerPort: 3200
+            name: http
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /data
+            name: data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: whatsapp-us-data
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-06-14T19:18:47Z"
+      lastUpdateTime: "2026-07-07T12:20:05Z"
+      message: ReplicaSet "whatsapp-us-5876556f67" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-24T23:30:11Z"
+      lastUpdateTime: "2026-07-24T23:30:11Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 14
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: batch/v1
+  kind: CronJob
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"batch/v1","kind":"CronJob","metadata":{"annotations":{},"name":"axeon-reviewer","namespace":"axeon-agent"},"spec":{"concurrencyPolicy":"Forbid","failedJobsHistoryLimit":3,"jobTemplate":{"spec":{"activeDeadlineSeconds":600,"backoffLimit":1,"template":{"spec":{"containers":[{"command":["python","reviewer.py"],"envFrom":[{"secretRef":{"name":"axeon-agent-secrets"}},{"secretRef":{"name":"langfuse-agent-keys"}}],"image":"ghcr.io/bernadinm/axeon-agent:latest","imagePullPolicy":"Always","name":"reviewer","volumeMounts":[{"mountPath":"/data","name":"data"}]}],"restartPolicy":"Never","volumes":[{"name":"data","persistentVolumeClaim":{"claimName":"axeon-agent-data"}}]}}}},"schedule":"0 7 * * *","successfulJobsHistoryLimit":3}}
+    creationTimestamp: "2026-06-19T02:39:35Z"
+    generation: 1
+    name: axeon-reviewer
+    namespace: axeon-agent
+    resourceVersion: "33661431"
+    uid: b20b3dfa-5b02-429c-895d-63c1fc3c8c6f
+  spec:
+    concurrencyPolicy: Forbid
+    failedJobsHistoryLimit: 3
+    jobTemplate:
+      metadata: {}
+      spec:
+        activeDeadlineSeconds: 600
+        backoffLimit: 1
+        template:
+          metadata: {}
+          spec:
+            containers:
+            - command:
+              - python
+              - reviewer.py
+              envFrom:
+              - secretRef:
+                  name: axeon-agent-secrets
+              - secretRef:
+                  name: langfuse-agent-keys
+              image: ghcr.io/bernadinm/axeon-agent:latest
+              imagePullPolicy: Always
+              name: reviewer
+              resources: {}
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              volumeMounts:
+              - mountPath: /data
+                name: data
+            dnsPolicy: ClusterFirst
+            restartPolicy: Never
+            schedulerName: default-scheduler
+            securityContext: {}
+            terminationGracePeriodSeconds: 30
+            volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: axeon-agent-data
+    schedule: 0 7 * * *
+    successfulJobsHistoryLimit: 3
+    suspend: false
+  status:
+    lastScheduleTime: "2026-07-26T11:00:00Z"
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"axeon-mcp"},"name":"axeon-mcp","namespace":"axeon-agent"},"spec":{"ports":[{"name":"http","nodePort":30100,"port":3100,"targetPort":3100}],"selector":{"app":"axeon-mcp"},"type":"NodePort"}}
+    creationTimestamp: "2026-06-14T12:53:34Z"
+    labels:
+      app: axeon-mcp
+    name: axeon-mcp
+    namespace: axeon-agent
+    resourceVersion: "20429616"
+    uid: fb4a7584-9ee5-48c0-b56e-2a0e5e9d6168
+  spec:
+    clusterIP: 10.43.160.120
+    clusterIPs:
+    - 10.43.160.120
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      nodePort: 30100
+      port: 3100
+      protocol: TCP
+      targetPort: 3100
+    selector:
+      app: axeon-mcp
+    sessionAffinity: None
+    type: NodePort
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"whatsapp-ke","namespace":"axeon-agent"},"spec":{"ports":[{"name":"http","port":3200,"targetPort":3200}],"selector":{"app":"whatsapp-ke"}}}
+    creationTimestamp: "2026-06-14T19:18:47Z"
+    name: whatsapp-ke
+    namespace: axeon-agent
+    resourceVersion: "20453597"
+    uid: 3931b246-9230-471a-9da6-f4f5c721bcf4
+  spec:
+    clusterIP: 10.43.171.12
+    clusterIPs:
+    - 10.43.171.12
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 3200
+      protocol: TCP
+      targetPort: 3200
+    selector:
+      app: whatsapp-ke
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"whatsapp-us","namespace":"axeon-agent"},"spec":{"ports":[{"name":"http","port":3200,"targetPort":3200}],"selector":{"app":"whatsapp-us"}}}
+    creationTimestamp: "2026-06-14T19:18:47Z"
+    name: whatsapp-us
+    namespace: axeon-agent
+    resourceVersion: "20453611"
+    uid: 65783cf8-2f54-4e2a-9395-5b31f337b85f
+  spec:
+    clusterIP: 10.43.53.184
+    clusterIPs:
+    - 10.43.53.184
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 3200
+      protocol: TCP
+      targetPort: 3200
+    selector:
+      app: whatsapp-us
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIBdzCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy
+      dmVyLWNhQDE3NzM0OTIwNDMwHhcNMjYwMzE0MTI0MDQzWhcNMzYwMzExMTI0MDQz
+      WjAjMSEwHwYDVQQDDBhrM3Mtc2VydmVyLWNhQDE3NzM0OTIwNDMwWTATBgcqhkjO
+      PQIBBggqhkjOPQMBBwNCAARpgn+LEJSNlp2uAqphT94mk3q/VpLzxAn/KjD1mBH8
+      oQu45uwEkuvSQdTXfKQORPUuxCqO/aaIp9J79K22/cobo0IwQDAOBgNVHQ8BAf8E
+      BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUaFaNeoZQ5OsygNWLwWhw
+      qpQZLbMwCgYIKoZIzj0EAwIDSAAwRQIhAO249TlfJBFz/q6b8Qv9/09lifqmSddW
+      aVbPh0wrSpvCAiAJrxY16wd92CAuR5caK2/1xOqu05sdTiI7O1SXIsotcQ==
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2026-06-07T20:28:56Z"
+    name: kube-root-ca.crt
+    namespace: axeon-agent
+    resourceVersion: "18738309"
+    uid: dd0373cf-ab62-4b65-a249-7a52d40c1381
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"axeon-agent-data","namespace":"axeon-agent"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"1Gi"}}}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: astra
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-06-08T12:39:26Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: axeon-agent-data
+    namespace: axeon-agent
+    resourceVersion: "18914481"
+    uid: 28302826-ffa3-4912-805c-a288ee704fd0
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-28302826-ffa3-4912-805c-a288ee704fd0
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 1Gi
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"whatsapp-ke-data","namespace":"axeon-agent"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"1Gi"}}}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: astra
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-06-14T19:18:47Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: whatsapp-ke-data
+    namespace: axeon-agent
+    resourceVersion: "20453650"
+    uid: 8ad7affd-270e-4b81-ba72-9c2872909ba9
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-8ad7affd-270e-4b81-ba72-9c2872909ba9
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 1Gi
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"whatsapp-us-data","namespace":"axeon-agent"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"1Gi"}}}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: openebs.io/local
+      volume.kubernetes.io/selected-node: astra
+      volume.kubernetes.io/storage-provisioner: openebs.io/local
+    creationTimestamp: "2026-06-14T19:18:47Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: whatsapp-us-data
+    namespace: axeon-agent
+    resourceVersion: "20453653"
+    uid: 209bcf51-3903-4db6-ad12-a34bc6ca42df
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+    storageClassName: openebs-hostpath
+    volumeMode: Filesystem
+    volumeName: pvc-209bcf51-3903-4db6-ad12-a34bc6ca42df
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 1Gi
+    phase: Bound
+kind: List
+metadata:
+  resourceVersion: ""
