@@ -20,8 +20,54 @@
 
   networking.hostName = "vega";
 
-  # DHCP for public IP
-  networking.useDHCP = true;
+  # === NETWORK FIX: Use systemd-networkd with static IP (RCA Jul 27 2026) ===
+  # Root cause: dhcpcd was managing veth interfaces from K3s containers and
+  # USB ethernet adapter, causing it to delete the main route via enp195s0.
+  # Solution: Use systemd-networkd with static IP per Hetzner recommendations.
+
+  # Disable dhcpcd entirely - it conflicts with container networking
+  networking.useDHCP = false;
+
+  # Enable systemd-networkd for network management
+  networking.useNetworkd = true;
+
+  systemd.network = {
+    enable = true;
+
+    # Main WAN interface - static IP configuration
+    networks."10-wan" = {
+      matchConfig.Name = "enp195s0";
+      networkConfig = {
+        DHCP = "no";
+        IPv6AcceptRA = "no";
+      };
+      addresses = [
+        { Address = "167.235.115.39/26"; }
+      ];
+      routes = [
+        { Gateway = "167.235.115.1"; }
+      ];
+      linkConfig.RequiredForOnline = "routable";
+    };
+
+    # Ignore veth interfaces from containers - let K3s manage them
+    networks."99-veth-ignore" = {
+      matchConfig.Name = "veth*";
+      linkConfig.Unmanaged = "yes";
+    };
+
+    # Ignore cni interfaces from K3s
+    networks."99-cni-ignore" = {
+      matchConfig.Name = "cni*";
+      linkConfig.Unmanaged = "yes";
+    };
+
+    # Ignore flannel interfaces
+    networks."99-flannel-ignore" = {
+      matchConfig.Name = "flannel*";
+      linkConfig.Unmanaged = "yes";
+    };
+  };
 
   # === DNS FIX: prevent Tailscale MagicDNS circular dependency ===
   # RCA Jul 27 2026: 3 reboots in 13 hours caused by:
