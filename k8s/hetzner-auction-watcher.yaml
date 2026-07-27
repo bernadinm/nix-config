@@ -110,49 +110,38 @@ data:
 
     server_list=$(echo "$changed_servers" | jq -r '[.[] | "- #\(.id) \(.cpu) | \(.cores) cores | \(.ram)GB ECC | \(.disks) | \(.dc) | \(.price)EUR/mo | NVMe:\(.has_nvme) | benchmark:\(.benchmark) | \(if .is_new then "NEW" else "was \(.previous_price)EUR" end)"] | join("\n")')
 
-    prompt="You are a ruthlessly analytical infrastructure advisor. Evaluate Hetzner Server Auction deals for a company replacing a broken server.
+    prompt="You are an extremely selective infrastructure advisor. We are NOT urgently looking for a server. We already have what we need. Only alert for once-in-a-lifetime deals.
 
-    SITUATION: Replacing polaris (Ryzen 5 3600, 64GB, Helsinki) which has a PROCHOT hardware defect. Need a database server for TimescaleDB (45GB, 7-year backtest data) running as a k3s agent node.
+    CURRENT FLEET (we are happy with this, not looking to add):
+    - Vega: EPYC 7502P, 576GB RAM, 2x960GB NVMe, FSN1 = 212USD/mo
+    - Orion: EPYC Rome, 64GB, control plane, New York = 276USD/mo (planning to remove)
+    - Astra: Intel i7-1260P, 64GB, Nairobi (laptop)
 
-    BASELINE PRICES FOR NEW SERVERS (the benchmark to beat):
-    - AX42: Ryzen 7 PRO 8700GE, 8c, 64GB ECC, 2x1.92TB NVMe = 59EUR/mo
-    - AX102: Ryzen 9 7950X3D, 16c, 128GB ECC, 2x1.92TB NVMe = 130EUR/mo
-    - AX162: EPYC 9454P, 48c, 128GB ECC, 2x1.92TB NVMe = 199EUR/mo
+    WE WOULD ONLY BUY IF:
+    - 256GB+ RAM AND EPYC/Xeon AND NVMe AND under 150EUR/mo (to replace orion cheaply)
+    - OR 512GB+ RAM with any server-grade CPU under 200EUR/mo (another vega-class beast)
+    - OR any EPYC server with 128GB+ at under 100EUR/mo (absurdly cheap extra node)
 
-    HARD REQUIREMENTS (fail any = automatic SKIP):
-    - Must have NVMe (SATA SSDs are too slow for TimescaleDB)
-    - Must have ECC RAM
-    - Must be CHEAPER than buying the equivalent new server
-    - Consumer CPUs (i7, Ryzen without ECC boards) = SKIP
+    NEW SERVER REFERENCE PRICES:
+    - AX42: 8c, 64GB ECC, NVMe = 59EUR/mo
+    - AX102: 16c, 128GB ECC, NVMe = 130EUR/mo
+    - AX162: 48c, 128GB ECC, NVMe = 199EUR/mo
 
-    STRONG PREFERENCES:
-    - 128GB+ RAM (64GB works but 128GB is much better for DB caching)
-    - Server-grade CPU: EPYC >> Xeon >> Ryzen (reliability matters for remote server)
-    - Helsinki (HEL1) datacenter preferred (same DC as current server)
-    - More cores = better for parallel DB queries
+    AUTOMATIC SKIP (do not even score these):
+    - Any Ryzen (consumer board, we had PROCHOT issues)
+    - Any server without NVMe
+    - Any server without ECC
+    - Any server that costs MORE than buying new equivalent
+    - Any server with less than 128GB RAM
+    - Any Intel Core i-series (consumer)
 
     SERVERS:
     ${server_list}
 
-    Respond ONLY with a JSON array. No markdown, no explanation outside JSON.
-    [
-      {
-        \"id\": \"server_id\",
-        \"score\": 1-10,
-        \"verdict\": \"SKIP\" or \"WATCH\" or \"CONSIDER\" or \"BUY_NOW\",
-        \"reason\": \"specific comparison - e.g. 'EPYC 7502P with 128GB at 157EUR is 21% cheaper than new AX162 (199EUR) with similar specs, and in HEL1'\"
-      }
-    ]
+    Respond ONLY with a JSON array. No markdown.
+    [{\"id\": \"server_id\", \"score\": 1-10, \"verdict\": \"SKIP\" or \"BUY_NOW\", \"reason\": \"one sentence with price comparison\"}]
 
-    SCORING RULES (be strict):
-    - 1-4 (SKIP): No NVMe, consumer CPU, costs more than new equivalent, <64GB RAM, old architecture (Haswell/Broadwell)
-    - 5-6 (WATCH): Has NVMe+ECC but price is only marginally better than new, or wrong datacenter, or Ryzen (less reliable than EPYC/Xeon for servers)
-    - 7-8 (CONSIDER): 15-25% cheaper than new equivalent, has NVMe+ECC+128GB, server-grade CPU
-    - 9 (BUY_NOW): 25%+ cheaper than new equivalent, EPYC or Xeon, NVMe, 128GB+ ECC, ideally HEL1
-    - 10 (BUY_NOW): Same as 9 but in HEL1 datacenter AND significantly cheaper
-
-    CRITICAL: A Ryzen 7 3700X at 137EUR is NOT a 9/10. The new AX102 (Ryzen 9 7950X3D) costs 130EUR with better specs. That Ryzen is a SKIP. Always compare against what you can buy NEW.
-    Most servers should score 1-5. Score 9+ should be RARE - maybe 1-2 out of 50 servers."
+    SCORING: Almost everything should be 1-5 (SKIP). Score 9-10 ONLY if the deal is so good it would be stupid not to buy. We got vega (576GB EPYC) for 212USD/mo - that was a 9. Match or beat that value."
 
     llm_response=$(curl -sf --max-time 120 \
       "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/ai/run/@cf/meta/llama-3.1-8b-instruct" \
