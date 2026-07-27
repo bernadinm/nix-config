@@ -12,6 +12,7 @@
     ../../modules/security.nix
     ../../modules/monitoring.nix
     ../../modules/utilities.nix
+    ../../modules/coding.nix
   ];
 
   # GRUB for dedicated server
