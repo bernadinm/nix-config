@@ -22,6 +22,14 @@
   # DHCP for public IP
   networking.useDHCP = true;
 
+  # === DNS FIX: prevent Tailscale MagicDNS circular dependency ===
+  networking.nameservers = [ "185.12.64.1" "185.12.64.2" "1.1.1.1" ];
+  services.resolved = {
+    enable = true;
+    fallbackDns = [ "185.12.64.1" "1.1.1.1" "8.8.8.8" ];
+  };
+  services.tailscale.extraDaemonFlags = [ "--accept-dns=false" ];
+
   time.timeZone = "Europe/Helsinki";
 
   # Disable auto-upgrade for remote servers - can't physically rescue if it breaks

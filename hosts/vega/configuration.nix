@@ -23,6 +23,19 @@
   # DHCP for public IP
   networking.useDHCP = true;
 
+  # === DNS FIX: prevent Tailscale MagicDNS circular dependency ===
+  # RCA Jul 27 2026: 3 reboots in 13 hours caused by:
+  #   Tailscale MagicDNS (100.100.100.100) was sole nameserver →
+  #   Tailscale hiccup → DNS fails → Tailscale can't resolve DERP →
+  #   K3s loses control plane → machine unreachable → hard reboot.
+  # Fix: Hetzner DNS + Cloudflare as primary, Tailscale DNS disabled.
+  networking.nameservers = [ "185.12.64.1" "185.12.64.2" "1.1.1.1" ];
+  services.resolved = {
+    enable = true;
+    fallbackDns = [ "185.12.64.1" "1.1.1.1" "8.8.8.8" ];
+  };
+  services.tailscale.extraDaemonFlags = [ "--accept-dns=false" ];
+
   time.timeZone = "Europe/Berlin";
 
   # Disable auto-upgrade for remote servers
