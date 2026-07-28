@@ -27,14 +27,15 @@
 
   # Static IP - eliminates DHCP DAD conflicts permanently.
   # Chose .148 because astra was historically on this address.
-  networking.interfaces.wlp170s0.ipv4.addresses = [{
-    address = "192.168.100.148";
-    prefixLength = 24;
-  }];
-  networking.defaultGateway = {
-    address = "192.168.100.1";
-    interface = "wlp170s0";
-  };
+  # TODO(bernadinm): remove this we now use a new AP w/ dual-wan
+  # networking.interfaces.wlp170s0.ipv4.addresses = [{
+  #   address = "192.168.100.148";
+  #   prefixLength = 24;
+  # }];
+  # networking.defaultGateway = {
+  #   address = "192.168.100.1";
+  #   interface = "wlp170s0";
+  # };
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
 
   # Set your time zone.
