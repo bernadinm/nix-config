@@ -292,9 +292,11 @@ bindsym $sup+Shift+p exec $term -e bash ~/.power_monitor.sh
 # AUTOSTART APPLICATIONS
 # ============================================
 
-# Import environment to systemd (needed for portals, screen sharing)
-exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+# Import environment to systemd (needed for portals, screen sharing, waybar)
+exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway SWAYSOCK
+# Start graphical-session.target (triggers waybar and other graphical services)
+exec systemctl --user start graphical-session.target
 
 # Environment variables
 exec_always {
@@ -312,8 +314,7 @@ exec mako
 exec wl-paste --type text --watch cliphist store
 exec wl-paste --type image --watch cliphist store
 
-# Status bar - waybar (modern bar like polybar)
-exec_always pkill waybar; sleep 2 && waybar
+# Status bar - waybar (started via graphical-session.target above)
 
 # Idle management (swayidle) - only locks/sleeps on battery
 exec swayidle -w \

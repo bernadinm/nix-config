@@ -122,7 +122,10 @@
       ".config/waybar/config".source = ./.config/waybar/config;
       ".config/waybar/style.css".source = ./.config/waybar/style.css;
     };
-    programs.waybar.enable = true;
+    programs.waybar = {
+      enable = true;
+      systemd.enable = true;
+    };
 
     # Override pinentry for desktop (rofi instead of curses)
     services.gpg-agent.pinentry.package = pkgs.pinentry-rofi;
@@ -386,8 +389,10 @@
   # TODO(bernadinm): required for home manager 23.05
   nixpkgs.config.permittedInsecurePackages = [
     "electron-27.3.11" # used for logseq and obsidian
+    "electron-39.8.10"
     "ventoy-1.1.05"
     "python3.12-ecdsa-0.19.1"
+    "docker-28.5.2"
   ];
 
   # This value determines the NixOS release from which the default

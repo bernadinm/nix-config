@@ -88,6 +88,7 @@
     ripgrep-all # grep alt
     tldr # man alt
     gping # ping alt
+    mtr # network diagnostics (traceroute + ping)
     hck # cut alt
     xh # curl alt
     httpie # curl alt
