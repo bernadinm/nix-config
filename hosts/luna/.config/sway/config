@@ -223,7 +223,7 @@ mode "resize" {
 # ============================================
 
 # Reload config
-bindsym $mod+Shift+c reload
+bindsym Ctrl+Shift+r reload
 
 # Exit sway with confirmation
 bindsym $mod+Shift+e exec bash -c 'if echo -e "No\nYes, exit Sway" | wofi --dmenu --prompt "Exit Sway?" | grep -q "Yes"; then swaymsg exit; fi'

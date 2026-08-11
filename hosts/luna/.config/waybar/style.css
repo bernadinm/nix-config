@@ -20,7 +20,7 @@ window#waybar {
     border-bottom: 3px solid transparent;
 }
 
-#workspaces button.active {
+#workspaces button.focused {
     background: #717CB4;
     border-bottom: 3px solid #89dceb;
     font-weight: bold;
@@ -134,8 +134,9 @@ window#waybar {
 }
 
 @keyframes recording-pulse {
-    0%, 100% { background: #f38ba8; }
+    0% { background: #f38ba8; }
     50% { background: #eba0ac; }
+    100% { background: #f38ba8; }
 }
 
 #tray {
