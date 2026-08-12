@@ -196,7 +196,48 @@
       # that actually backs every running pod, not just manual `docker`
       # builds. Relocating to /data (1.65TB) for the same reason.
       "--data-dir=/data/k3s"
+      # WS-5.4a (Aug 13 2026): proactive image GC so unpruned images get
+      # cleaned at 70% disk usage instead of only at kubelet's default
+      # hard-eviction threshold (85%) -- the original incident's images
+      # only got collected AFTER DiskPressure had already evicted pods.
+      # These are kubelet flags (valid on agents, unlike the earlier
+      # --kube-controller-manager-arg attempt).
+      "--kubelet-arg=image-gc-high-threshold=70"
+      "--kubelet-arg=image-gc-low-threshold=50"
     ]);
+  };
+
+  # WS-5.4b (Aug 13 2026): Gitea 1.25.4 exposes no cleanup-rules API, so
+  # image retention for the container registry is enforced here instead:
+  # keep the newest 15 atlas-backend versions, delete the rest daily.
+  # Token comes from /etc/gitea-prune.env (root:root 0600, created
+  # manually -- NOT in the nix store, which is world-readable).
+  systemd.services.gitea-registry-prune = {
+    description = "Prune old atlas-backend images from Gitea registry (keep 15)";
+    serviceConfig = {
+      Type = "oneshot";
+      EnvironmentFile = "/etc/gitea-prune.env";
+    };
+    script = ''
+      set -euo pipefail
+      HOST="https://git.bernad.in"
+      DOOMED=$(${pkgs.curl}/bin/curl -sf -H "Authorization: token $GITEA_TOKEN" \
+        "$HOST/api/v1/packages/miguel?type=container&q=atlas-backend&limit=100" \
+        | ${pkgs.jq}/bin/jq -r 'sort_by(.created_at) | reverse | .[15:] | .[].version')
+      for V in $DOOMED; do
+        echo "pruning atlas-backend:$V"
+        ${pkgs.curl}/bin/curl -sf -X DELETE -H "Authorization: token $GITEA_TOKEN" \
+          "$HOST/api/v1/packages/miguel/container/atlas-backend/$V" || echo "failed: $V"
+      done
+      echo "done; kept newest 15"
+    '';
+  };
+  systemd.timers.gitea-registry-prune = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "*-*-* 03:30:00";
+      Persistent = true;
+    };
   };
 
   # k3s depends on Tailscale being connected
