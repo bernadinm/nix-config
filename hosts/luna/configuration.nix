@@ -122,6 +122,9 @@
       ".config/libinput-gestures.conf".source = .config/libinput-gestures.conf;
       ".config/waybar/config".source = ./.config/waybar/config;
       ".config/waybar/style.css".source = ./.config/waybar/style.css;
+      ".local/bin/sway-save-session" = { source = ./.local/bin/sway-save-session; executable = true; };
+      ".local/bin/sway-restore-session" = { source = ./.local/bin/sway-restore-session; executable = true; };
+      ".local/bin/sway-session-loop" = { source = ./.local/bin/sway-session-loop; executable = true; };
     };
     programs.waybar = {
       enable = true;

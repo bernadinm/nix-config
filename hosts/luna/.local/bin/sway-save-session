@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Simple sway session saver
+
+SWAYSOCK=$(ls /run/user/$(id -u)/sway-ipc.*.sock 2>/dev/null | head -1)
+export SWAYSOCK
+SESSION_FILE=~/.local/share/sway-session.json
+
+mkdir -p ~/.local/share
+
+swaymsg -t get_tree | jq '[
+  recurse(.nodes[]?, .floating_nodes[]?) |
+  select(.type == "con" and .pid > 0) |
+  {
+    app_id: (.app_id // .window_properties.class // "unknown"),
+    pid: .pid
+  }
+] | unique_by(.app_id)' > "$SESSION_FILE"
+
+echo "Session saved to $SESSION_FILE"
+cat "$SESSION_FILE"

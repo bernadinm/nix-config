@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# Simple sway session restorer
+
+SWAYSOCK=$(ls /run/user/$(id -u)/sway-ipc.*.sock 2>/dev/null | head -1)
+export SWAYSOCK
+SESSION_FILE=~/.local/share/sway-session.json
+
+if [[ ! -f "$SESSION_FILE" ]]; then
+    echo "No session file found"
+    exit 0
+fi
+
+# Map app_id to launch commands
+declare -A APP_COMMANDS=(
+    ["Alacritty"]="alacritty"
+    ["alacritty"]="alacritty"
+    ["firefox"]="firefox"
+    ["brave-browser"]="brave"
+    ["Logseq"]="logseq"
+    ["org.gnome.Nautilus"]="nautilus"
+    ["code"]="code"
+    ["Code"]="code"
+    ["Slack"]="slack"
+    ["discord"]="discord"
+    ["spotify"]="spotify"
+    ["Spotify"]="spotify"
+    ["obsidian"]="obsidian"
+    ["Rustdesk"]="rustdesk"
+)
+
+# Read saved session and launch apps
+jq -r '.[].app_id' "$SESSION_FILE" | while read app_id; do
+    cmd="${APP_COMMANDS[$app_id]}"
+    if [[ -n "$cmd" ]]; then
+        echo "Launching $cmd"
+        $cmd &
+        sleep 0.3
+    fi
+done
+
+echo "Session restored"

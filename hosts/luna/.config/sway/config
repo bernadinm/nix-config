@@ -301,6 +301,10 @@ exec_always {
     gsettings set org.gnome.desktop.interface font-name 'monospace 8'
 }
 
+# Session restore and auto-save (like tmux-continuum)
+exec ~/.local/bin/sway-restore-session
+exec ~/.local/bin/sway-session-loop 60
+
 # Network manager
 exec nm-applet
 

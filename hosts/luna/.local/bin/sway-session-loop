@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Auto-save sway session every N seconds
+INTERVAL=${1:-60}
+
+while true; do
+    ~/.local/bin/sway-save-session > /dev/null 2>&1
+    sleep "$INTERVAL"
+done
