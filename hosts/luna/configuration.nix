@@ -37,36 +37,15 @@
   systemd.targets.suspend.enable = lib.mkForce true;
   systemd.targets.hibernate.enable = lib.mkForce true;
 
-  # Sleep configuration
+  # Sleep configuration - suspend-then-hibernate after 15min
   systemd.sleep.extraConfig = ''
     AllowSuspend=yes
     AllowHibernation=yes
     AllowHybridSleep=no
-    AllowSuspendThenHibernate=no
+    AllowSuspendThenHibernate=yes
     SuspendState=freeze
+    HibernateDelaySec=15min
   '';
-
-  # Workaround for s2idle: manually hibernate after 15 min of suspend using rtcwake
-  # suspend-then-hibernate doesn't work with s2idle, so we use a custom approach
-  systemd.services.suspend-then-hibernate-workaround = {
-    description = "Set RTC wake alarm to hibernate after suspend (s2idle workaround)";
-    before = [ "suspend.target" ];
-    wantedBy = [ "suspend.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.util-linux}/bin/rtcwake -m no -s 900"; # 15 minutes
-    };
-  };
-
-  systemd.services.hibernate-on-rtc-wake = {
-    description = "Hibernate when woken by RTC alarm";
-    after = [ "suspend.target" ];
-    wantedBy = [ "suspend.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.bash}/bin/bash -c 'if [ \"$(cat /sys/class/power_supply/ACAD/online)\" = \"0\" ]; then systemctl hibernate; fi'";
-    };
-  };
 
   # Use the systemd-boot EFI boot loader
   boot.loader.systemd-boot.enable = true;
@@ -109,6 +88,7 @@
     "usbcore.autosuspend=-1"    # Disable USB autosuspend to prevent wake issues
     "ucsi_acpi.dyndbg=+p"       # Enable debug logging for UCSI ACPI
     "resume=/dev/disk/by-uuid/9601ad7a-71f7-48e6-98af-ce5aa44a773e"  # Enable hibernation to swap
+    "rtc_cmos.use_acpi_alarm=1" # Fix suspend-then-hibernate with s2idle (uses ACPI alarm instead of HPET)
   ];
 
   # Workaround for Framework AMD USB-C ACPI wake issues
