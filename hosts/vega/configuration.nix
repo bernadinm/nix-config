@@ -235,5 +235,14 @@
     "kernel.shmall" = lib.mkForce 75497472;       # shmmax / 4096
   };
 
+  # Docker image/layer storage relocated off the small root disk (98G)
+  # onto /data (1.65TB, mounted separately for OpenEBS local volumes)
+  # to prevent root-disk exhaustion during large image builds.
+  # RCA Aug 11 2026: root filled to 98% during a calcom image build,
+  # triggering DiskPressure evictions cluster-wide.
+  virtualisation.docker.daemon.settings = {
+    "data-root" = "/data/docker";
+  };
+
   system.stateVersion = "25.11";
 }

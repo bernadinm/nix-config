@@ -100,8 +100,18 @@
       "--node-ip=100.127.233.30"  # Use Tailscale IP for kubelet
       "--flannel-iface=tailscale0"  # Use Tailscale for flannel VXLAN
       "--node-label=topology.kubernetes.io/zone=us-east"
+      # RCA Aug 11 2026: dead/Evicted pods accumulated to 12,634 objects
+      # (default threshold 12500) with zero GC, degrading kubelet status
+      # sync cluster-wide. Lower threshold so cleanup happens automatically
+      # long before it becomes a problem.
+      "--kube-controller-manager-arg=terminated-pod-gc-threshold=1000"
     ]);
   };
+
+  # Matches the same allowlist entry already used on vega/polaris/luna
+  # (docker-28.5.2 is flagged insecure upstream; orion's k3s server also
+  # depends on docker for the containerd runtime).
+  nixpkgs.config.permittedInsecurePackages = [ "docker-28.5.2" "electron-39.8.10" ];
 
   system.stateVersion = "25.11";
 }
