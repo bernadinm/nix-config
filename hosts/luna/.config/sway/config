@@ -295,9 +295,6 @@ bindsym $sup+Shift+p exec $term -e bash ~/.power_monitor.sh
 # Import environment to systemd (needed for portals, screen sharing, waybar)
 exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway SWAYSOCK
-# Start graphical-session.target (triggers waybar and other graphical services)
-exec systemctl --user start graphical-session.target
-
 # Environment variables
 exec_always {
     gsettings set org.gnome.desktop.interface monospace-font-name 'monospace 8'
@@ -314,7 +311,8 @@ exec mako
 exec wl-paste --type text --watch cliphist store
 exec wl-paste --type image --watch cliphist store
 
-# Status bar - waybar (started via graphical-session.target above)
+# Status bar
+exec waybar
 
 # Idle management (swayidle) - only locks/sleeps on battery
 exec swayidle -w \
