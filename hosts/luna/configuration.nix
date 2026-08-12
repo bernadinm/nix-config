@@ -204,7 +204,7 @@
     percentageLow = 15;
     percentageCritical = 10;
     percentageAction = 5;
-    criticalPowerAction = "PowerOff";
+    criticalPowerAction = "Hibernate";
   };
   services.auto-cpufreq.enable = true;
   services.xserver = {
