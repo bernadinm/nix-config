@@ -196,9 +196,6 @@
       # that actually backs every running pod, not just manual `docker`
       # builds. Relocating to /data (1.65TB) for the same reason.
       "--data-dir=/data/k3s"
-      # Same fix already applied to orion (see f9a2d36) -- vega had its
-      # own ~10k+ dead/Evicted pod pileup during the same incident.
-      "--kube-controller-manager-arg=terminated-pod-gc-threshold=1000"
     ]);
   };
 
