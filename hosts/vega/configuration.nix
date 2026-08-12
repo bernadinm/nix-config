@@ -189,6 +189,16 @@
       "--flannel-iface=tailscale0"
       "--node-label=topology.kubernetes.io/zone=eu-central"
       "--node-label=node.kubernetes.io/role=database"
+      # RCA Aug 11 2026: k3s's own embedded containerd (image cache,
+      # container state) lives under /var/lib/rancher/k3s by default,
+      # on vega's 98G root disk -- the same root-disk-exhaustion class of
+      # bug as the Docker data-root issue below, but for the runtime
+      # that actually backs every running pod, not just manual `docker`
+      # builds. Relocating to /data (1.65TB) for the same reason.
+      "--data-dir=/data/k3s"
+      # Same fix already applied to orion (see f9a2d36) -- vega had its
+      # own ~10k+ dead/Evicted pod pileup during the same incident.
+      "--kube-controller-manager-arg=terminated-pod-gc-threshold=1000"
     ]);
   };
 
