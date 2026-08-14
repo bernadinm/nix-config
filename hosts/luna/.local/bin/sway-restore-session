@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Simple sway session restorer
+# Sway session restorer with workspace positioning
 
 SWAYSOCK=$(ls /run/user/$(id -u)/sway-ipc.*.sock 2>/dev/null | head -1)
 export SWAYSOCK
@@ -28,14 +28,18 @@ declare -A APP_COMMANDS=(
     ["Rustdesk"]="rustdesk"
 )
 
-# Read saved session and launch apps
-jq -r '.[].app_id' "$SESSION_FILE" | while read app_id; do
+# Read saved session and launch apps on their workspaces
+jq -r '.[] | "\(.app_id)|\(.workspace)"' "$SESSION_FILE" | while IFS='|' read app_id workspace; do
     cmd="${APP_COMMANDS[$app_id]}"
     if [[ -n "$cmd" ]]; then
-        echo "Launching $cmd"
-        $cmd &
-        sleep 0.3
+        echo "Launching $cmd on workspace $workspace"
+        # Switch to target workspace, launch app, then it opens there
+        swaymsg "workspace $workspace; exec $cmd"
+        sleep 0.5
     fi
 done
+
+# Return to workspace 1
+swaymsg "workspace 1"
 
 echo "Session restored"
