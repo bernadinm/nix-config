@@ -72,7 +72,8 @@
     enable = true;
     name = "iqn.2026-03.nixos:astra";
   };
-  boot.kernelModules = [ "iscsi_tcp" ];
+  boot.kernelModules = [ "iscsi_tcp" "nvme_tcp" ];
+
 
   # Longhorn expects binaries in /usr/bin (NixOS uses /run/current-system/sw/bin)
   systemd.tmpfiles.rules = [

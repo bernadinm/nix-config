@@ -119,7 +119,16 @@
     enable = true;
     name = "iqn.2026-07.nixos:vega";
   };
-  boot.kernelModules = [ "iscsi_tcp" ];
+  boot.kernelModules = [ "iscsi_tcp" "nvme_tcp" ]; # nvme_tcp: mount Mayastor volumes
+
+  # OpenEBS Mayastor storage node: io-engine needs 2MiB hugepages (2GiB
+  # reserved); DiskPool backing file lives on /data, bind-mounted to the
+  # only path the io-engine container mounts. blk_size=4096 to match rigel.
+  boot.kernel.sysctl."vm.nr_hugepages" = 1024;
+  fileSystems."/var/local/mayastor/io-engine" = {
+    device = "/data/mayastor";
+    options = [ "bind" ];
+  };
 
   # Longhorn expects binaries in /usr/bin + data dir
   systemd.tmpfiles.rules = [
@@ -202,8 +211,8 @@
       # only got collected AFTER DiskPressure had already evicted pods.
       # These are kubelet flags (valid on agents, unlike the earlier
       # --kube-controller-manager-arg attempt).
-      "--kubelet-arg=image-gc-high-threshold=70"
-      "--kubelet-arg=image-gc-low-threshold=50"
+      "--kubelet-arg=image-gc-high-threshold=85"
+      "--kubelet-arg=image-gc-low-threshold=80"
     ]);
   };
 

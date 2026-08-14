@@ -121,6 +121,20 @@
             home-manager.nixosModules.home-manager
           ];
         };
+
+        # Rigel - Highest-memory compute node (Hetzner EPYC 7502P, 1TB RAM, Germany)
+        # Named for Orion's brightest star - eventual successor role to orion.
+        rigel = nixpkgs.lib.nixosSystem {
+          specialArgs = attrs;
+          system = "x86_64-linux";
+          modules = [
+            ./hosts/rigel/configuration.nix
+            ./hosts/rigel/disko.nix
+            disko.nixosModules.disko
+            unstableOverlay
+            home-manager.nixosModules.home-manager
+          ];
+        };
       };
     };
 }

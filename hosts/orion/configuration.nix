@@ -34,7 +34,7 @@
     enable = true;
     name = "iqn.2026-07.nixos:orion";
   };
-  boot.kernelModules = [ "iscsi_tcp" ];
+  boot.kernelModules = [ "iscsi_tcp" "nvme_tcp" ]; # nvme_tcp: mount Mayastor volumes
 
   # Longhorn expects binaries in /usr/bin
   systemd.tmpfiles.rules = [
