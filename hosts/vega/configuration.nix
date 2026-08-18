@@ -161,9 +161,13 @@
   services.tailscale.useRoutingFeatures = "both";
 
   # Strict firewall - only SSH exposed, k8s traffic via Tailscale
+  # RustDesk server (hbbs/hbbr) runs hostNetwork on this node, so unlike
+  # NodePort services these ports actually go through this chain - opened
+  # deliberately for it, everything else stays closed.
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 22 ];
+    allowedTCPPorts = [ 22 21115 21116 21117 ];
+    allowedUDPPorts = [ 21116 ];
     trustedInterfaces = [ "tailscale0" "cni0" ];
   };
 
