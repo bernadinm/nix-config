@@ -197,9 +197,12 @@
 
   nix.settings.trusted-users = [ "root" "miguel" ];
 
-  # k3s agent - joins Orion control plane via Tailscale, same as vega/astra.
+  # 2026-08-19: promoted from agent to server (control-plane + etcd member)
+  # - third and final step of converting to a real 3-node HA control plane
+  # (orion + vega + rigel), now that orion's datastore is etcd. Join
+  # mechanics unchanged, same rationale as vega's identical promotion.
   services.k3s = {
-    role = lib.mkForce "agent";
+    role = lib.mkForce "server";
     serverAddr = lib.mkForce "https://100.127.233.30:6443";
     tokenFile = lib.mkForce "/etc/k3s/token";
     extraFlags = lib.mkForce (toString [
