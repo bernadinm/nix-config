@@ -193,9 +193,16 @@
   # Allow miguel to copy nix store paths for remote deployment
   nix.settings.trusted-users = [ "root" "miguel" ];
 
-  # k3s agent - joins Orion control plane via Tailscale
+  # 2026-08-19: promoted from agent to server (control-plane + etcd member)
+  # as part of converting to a real 3-node HA control plane (orion + vega +
+  # rigel) - see nix-config git log for the full rationale. Join mechanics
+  # (serverAddr, tokenFile) are unchanged - vega already proved it can
+  # reach orion and authenticate with this exact token as an agent; only
+  # the role changes; k3s handles the rest automatically now that orion's
+  # datastore is etcd instead of SQLite (embedded HA requires etcd -
+  # additional servers cannot join a SQLite-backed cluster at all).
   services.k3s = {
-    role = lib.mkForce "agent";
+    role = lib.mkForce "server";
     serverAddr = lib.mkForce "https://100.127.233.30:6443";
     tokenFile = lib.mkForce "/etc/k3s/token";
     extraFlags = lib.mkForce (toString [
