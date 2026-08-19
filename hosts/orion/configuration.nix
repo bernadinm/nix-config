@@ -105,6 +105,20 @@
       # sync cluster-wide. Lower threshold so cleanup happens automatically
       # long before it becomes a problem.
       "--kube-controller-manager-arg=terminated-pod-gc-threshold=1000"
+      # 2026-08-19: converts orion's k3s datastore from embedded SQLite to
+      # embedded etcd, in place, preserving existing cluster state (per
+      # k3s's own docs: restarting an existing SQLite server with
+      # --cluster-init does exactly this). Required so vega/rigel can join
+      # as real control-plane members instead of plain agents - SQLite
+      # can't be joined by additional servers at all. NOTE: once etcd is
+      # initialized on a node, this and the datastore-related flags below
+      # are permanently locked in - a later restart with different
+      # datastore flags is silently ignored, not applied.
+      "--cluster-init"
+      # Reserves this hostname as a valid SAN on the API server cert now,
+      # for the future kube-vip endpoint (separate task) - avoids a second
+      # cert regeneration later. Doesn't need to resolve to anything yet.
+      "--tls-san=k8s.bernad.in"
     ]);
   };
 
