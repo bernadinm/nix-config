@@ -11,6 +11,7 @@
     ../../modules/monitoring.nix
     ../../modules/utilities.nix
     ../../modules/coding.nix
+    ../../modules/k8s-lb.nix
   ];
 
   # Use GRUB for legacy BIOS boot (cloud VMs)

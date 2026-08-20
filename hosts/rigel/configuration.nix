@@ -14,6 +14,7 @@
     ../../modules/monitoring.nix
     ../../modules/utilities.nix
     ../../modules/coding.nix
+    ../../modules/k8s-lb.nix
   ];
 
   # GRUB on both mirror members - either disk can boot if the other fails.

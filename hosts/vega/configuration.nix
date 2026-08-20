@@ -13,6 +13,7 @@
     ../../modules/monitoring.nix
     ../../modules/utilities.nix
     ../../modules/coding.nix
+    ../../modules/k8s-lb.nix
   ];
 
   # GRUB for dedicated server
