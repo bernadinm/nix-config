@@ -27,7 +27,7 @@
   # Override k3s to join orion's cluster as an agent (not run as server)
   services.k3s = {
     role = lib.mkForce "agent";
-    serverAddr = lib.mkForce "https://100.127.233.30:6443";  # orion's Tailscale IP
+    serverAddr = lib.mkForce "https://k8s.bernad.in:16443";  # stable HAProxy endpoint (orion/vega/rigel), not hardcoded to orion
     tokenFile = lib.mkForce "/etc/k3s/token";  # Token stored securely
     extraFlags = lib.mkForce "";
   };
